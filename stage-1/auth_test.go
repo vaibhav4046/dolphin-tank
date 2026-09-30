@@ -43,10 +43,6 @@ func TestForgePasswordHash(t *testing.T) {
 			t.Fatalf("accepted malformed %q", bad)
 		}
 	}
-	got := HashPasswords([]string{"aaaaaaaa", "bbbbbbbb", "cccccccc"})
-	if len(got) != 3 || !CheckPassword(got[0], "aaaaaaaa") || !CheckPassword(got[2], "cccccccc") || CheckPassword(got[1], "aaaaaaaa") {
-		t.Fatal("HashPasswords mismatch")
-	}
 }
 
 func fgSignup(t *testing.T, s *Store, email, pw, name string) (map[string]string, *AppError) {

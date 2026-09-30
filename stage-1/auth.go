@@ -6,7 +6,6 @@ import (
 	"crypto/sha256"
 	"crypto/subtle"
 	"encoding/hex"
-	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -46,24 +45,6 @@ func HashPassword(pw string) string {
 	}
 	return hashScheme + "$" + strconv.Itoa(pbkdf2Iter) + "$" + hex.EncodeToString(salt) + "$" +
 		hex.EncodeToString(pbkdf2Key(pw, salt, pbkdf2Iter, keyLen))
-}
-
-// HashPasswords hashes many passwords on all cores; fixtures with many users must not eat the reset timeout.
-func HashPasswords(pws []string) []string {
-	out := make([]string, len(pws))
-	sem := make(chan struct{}, runtime.NumCPU())
-	var wg sync.WaitGroup
-	for i, pw := range pws {
-		wg.Add(1)
-		sem <- struct{}{}
-		go func() {
-			defer wg.Done()
-			out[i] = HashPassword(pw)
-			<-sem
-		}()
-	}
-	wg.Wait()
-	return out
 }
 
 // CheckPassword compares in constant time; any malformed stored value simply fails.
