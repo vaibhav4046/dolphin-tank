@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	pbkdf2Iter    = 20000 // ~10 ms per hash on a current x86 core
+	pbkdf2Iter    = 60000 // ~8 ms per hash measured on the dev host (20000 iterations = 2.8 ms)
 	pbkdf2MaxIter = 1_000_000
 	saltLen       = 16
 	keyLen        = 32
