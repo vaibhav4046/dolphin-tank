@@ -92,7 +92,7 @@ func TestResetTTLMatrix(t *testing.T) {
 		name, val string
 		want      int64 // 0 = must be rejected
 	}{
-		{"omitted", "", 600}, {"null is omission", "null", 600}, {"one", "1", 1}, {"600.0", "600.0", 600},
+		{"omitted", "", 600}, {"null is supplied, not a positive integer", "null", 0}, {"one", "1", 1}, {"600.0", "600.0", 600},
 		{"exponent", "1e3", 1000}, {"max", "1000000000", 1_000_000_000},
 		{"zero", "0", 0}, {"negative", "-1", 0}, {"numeric string", `"600"`, 0}, {"text", `"x"`, 0},
 		{"fraction", "1.5", 0}, {"over max", "1000000001", 0}, {"bool", "true", 0}, {"array", "[600]", 0},
@@ -345,6 +345,8 @@ func TestStage2ExportRoundTripAndImportRejections(t *testing.T) {
 		"ttl negative":            func(_, st map[string]any) { st["authorization_ttl_seconds"] = -5 },
 		"ttl above max":           func(_, st map[string]any) { st["authorization_ttl_seconds"] = int64(1) << 40 },
 		"ttl not a number":        func(_, st map[string]any) { st["authorization_ttl_seconds"] = "600" },
+		"ttl null":                func(_, st map[string]any) { st["authorization_ttl_seconds"] = nil },
+		"ttl zero":                func(_, st map[string]any) { st["authorization_ttl_seconds"] = 0 },
 		"null authorization":      func(_, st map[string]any) { st["authorizations"] = []any{nil} },
 		"expires_at garbage":      func(_, st map[string]any) { auth(st, 0)["expires_at"] = "garbage" },
 		"payment_ids unknown":     func(_, st map[string]any) { auth(st, 0)["payment_ids"] = []any{"p_nope"} },

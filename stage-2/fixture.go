@@ -132,11 +132,11 @@ const (
 	trMaxTTL     = int64(1_000_000_000)
 )
 
-// trFxTTL reads authorization_ttl_seconds: omitted or null means 600, anything
-// else must be an integer from 1 to 1e9.
+// trFxTTL reads authorization_ttl_seconds: only an absent key means 600; a
+// supplied value (null included) must be an integer from 1 to 1e9.
 func trFxTTL(root map[string]any) (int64, *AppError) {
 	v, ok := root["authorization_ttl_seconds"]
-	if !ok || v == nil {
+	if !ok {
 		return trDefaultTTL, nil
 	}
 	n, isNum := v.(json.Number)

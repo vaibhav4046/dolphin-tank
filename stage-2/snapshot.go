@@ -72,6 +72,13 @@ func trParseExport(raw []byte) (*State, *AppError) {
 	if err := json.Unmarshal(top["state"], &st); err != nil {
 		return nil, trBad("state is not a valid pocketful state")
 	}
+	// Only an absent key (a stage-1 export) defaults the ttl; a present null or 0
+	// decodes to 0 and must not be mistaken for absence by trNormalize.
+	var keys map[string]json.RawMessage
+	_ = json.Unmarshal(top["state"], &keys)
+	if _, supplied := keys["authorization_ttl_seconds"]; supplied && st.AuthTTLSeconds < 1 {
+		return nil, trBad("authorization_ttl_seconds must be an integer from 1 to %d", trMaxTTL)
+	}
 	trNormalize(&st)
 	if e := trValidateState(&st); e != nil {
 		return nil, e
