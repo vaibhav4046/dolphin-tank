@@ -18,13 +18,9 @@ export function createWalletStrip({ onRefresh } = {}) {
     h("div", { class: "wallet-headline" }, h("span", { class: "wallet-label", text: "Available to spend" }), available),
     secondary, status);
 
-  let refreshButton;
+  // Concurrent refreshes are allowed on purpose: the refresher keeps only the latest result.
   if (onRefresh) {
-    refreshButton = h("button", { type: "button", testid: "wallet-refresh", text: "Refresh", onclick: async () => {
-      if (refreshButton.getAttribute("aria-busy") === "true") return;
-      refreshButton.setAttribute("aria-busy", "true");
-      try { await onRefresh(); } finally { refreshButton.removeAttribute("aria-busy"); }
-    } });
+    const refreshButton = h("button", { type: "button", testid: "wallet-refresh", text: "Refresh", onclick: () => onRefresh() });
     el.append(h("div", { class: "wallet-actions" }, refreshButton));
   }
 

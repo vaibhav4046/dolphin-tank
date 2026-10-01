@@ -33,7 +33,8 @@ export async function busy(button, fn) {
 // attempt ended; any changed field mints a new key.
 //   scope/fingerprint  attempt identity (fingerprint = raw field values)
 //   what               noun for the uncertain message ("payment")
-//   onSuccess(json)    runs after the notices are cleared; refresh goes here
+//   onSuccess(json)    runs after the notices are cleared; refresh goes here (not awaited, so the button frees up
+//                      even if a refresh read is slow)
 //   onRefused(res)     runs after the refusal is shown; refresh goes here
 export async function runWrite({ method = "POST", path, body, scope, fingerprint, what, feedback, onSuccess, onRefused, onUncertain }) {
   feedback.clear();
@@ -42,13 +43,13 @@ export async function runWrite({ method = "POST", path, body, scope, fingerprint
   const kind = classify(res);
   if (kind === "success") {
     feedback.clear();
-    await onSuccess?.(res.json);
+    onSuccess?.(res.json);
   } else if (kind === "refused") {
     feedback.showError(refusalText(res.json));
-    await onRefused?.(res);
+    onRefused?.(res);
   } else if (kind === "uncertain") {
     feedback.showUncertain(uncertainText(what));
-    await onUncertain?.(res);
+    onUncertain?.(res);
   }
   return kind;
 }
