@@ -1,0 +1,10 @@
+PASS stage-1 server reset
+PASS stage-1 payment created
+PASS stage-1 export
+PASS stage-2 imports the real stage-1 export
+PASS stage-1 token still valid on stage-2
+PASS stage-1 idempotency key replays after import (200, same payment)
+PASS browser holding a stage-1 token stays signed in
+PASS imported balance and feed shown
+PASS imported pending request payable via the UI
+PASS no page errors

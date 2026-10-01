@@ -1,0 +1,13 @@
+commit 17aa87e2f690ccf0ec582e01f7a44cd5453bcb30
+go vet: ok
+go build: ok
+ok  	pocketful	9.775s
+✔ parseHandles (0.2083ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 249.9918

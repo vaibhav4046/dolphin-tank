@@ -1,0 +1,43 @@
+﻿== commit 17aa87e2f690ccf0ec582e01f7a44cd5453bcb30
+== docker build (clean clone)
+ ---> Removed intermediate container a9e39f2977c9
+ ---> 22c581a16910
+Successfully built 22c581a16910
+Successfully tagged pocketful-s2:latest
+image pocketful-s2:latest 9.23MB
+== startup
+pocketful-s2 run->health_ms=923
+pocketful-s2 run->health_ms=1693
+pocketful-s2 run->health_ms=1274
+pocketful-s2 run->health_ms=1167
+pocketful-s2 run->health_ms=1804
+pocketful-s1 run->health_ms=1756
+pocketful-s1 run->health_ms=1272
+pocketful-s1 run->health_ms=1667
+process_start->health_ms=163
+process_start->health_ms=179
+process_start->health_ms=157
+process_start->health_ms=126
+process_start->health_ms=132
+== offline
+container ip 172.18.0.2
+/health 200 application/json; charset=utf-8 15
+/ 200 text/html; charset=utf-8 1626
+/assets/js/main.js 200 text/javascript; charset=utf-8 1438
+/assets/css/tokens.css 200 text/css; charset=utf-8 1412
+/assets/fonts/dm-sans.woff2 200 font/woff2 36932
+/assets/fonts/inter.woff2 200 font/woff2 48256
+outbound blocked: URLError
+== browser smoke
+215/215 checks passed
+== real stage-1 export -> stage-2 import
+PASS stage-1 server reset
+PASS stage-1 payment created
+PASS stage-1 export
+PASS stage-2 imports the real stage-1 export
+PASS stage-1 token still valid on stage-2
+PASS stage-1 idempotency key replays after import (200, same payment)
+PASS browser holding a stage-1 token stays signed in
+PASS imported balance and feed shown
+PASS imported pending request payable via the UI
+PASS no page errors

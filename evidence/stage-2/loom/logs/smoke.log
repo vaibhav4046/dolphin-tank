@@ -1,0 +1,237 @@
+PASS reset with seeded hold: available is the headline
+PASS total and held secondary
+PASS available font larger than total and held
+PASS activity-item order
+PASS activity amount/note exact
+PASS data-visibility
+PASS visible focus outline on pay form controls
+PASS no horizontal scroll populated /login 375
+PASS contrast >= 4.5 populated /login 375
+INFO populated /login 375: 15 text nodes audited, lowest contrast 6.66
+PASS touch targets >= 44px populated /login 375
+PASS no font weight above 500 populated /login 375
+PASS only DM Sans / Inter populated /login 375
+PASS radii only 5/16/32 (+50% glyphs) populated /login 375
+PASS no drop shadows populated /login 375
+PASS no horizontal scroll populated /signup 375
+PASS no horizontal scroll populated / 375
+PASS contrast >= 4.5 populated / 375
+INFO populated / 375: 57 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px populated / 375
+PASS no font weight above 500 populated / 375
+PASS only DM Sans / Inter populated / 375
+PASS radii only 5/16/32 (+50% glyphs) populated / 375
+PASS no drop shadows populated / 375
+PASS populated / 375: current-user/handle present
+PASS no horizontal scroll populated /requests 375
+PASS contrast >= 4.5 populated /requests 375
+INFO populated /requests 375: 45 text nodes audited, lowest contrast 5.43
+PASS touch targets >= 44px populated /requests 375
+PASS no font weight above 500 populated /requests 375
+PASS only DM Sans / Inter populated /requests 375
+PASS radii only 5/16/32 (+50% glyphs) populated /requests 375
+PASS no drop shadows populated /requests 375
+PASS populated /requests 375: current-user/handle present
+PASS no horizontal scroll populated /split 375
+PASS contrast >= 4.5 populated /split 375
+INFO populated /split 375: 29 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px populated /split 375
+PASS no font weight above 500 populated /split 375
+PASS only DM Sans / Inter populated /split 375
+PASS radii only 5/16/32 (+50% glyphs) populated /split 375
+PASS no drop shadows populated /split 375
+PASS populated /split 375: current-user/handle present
+PASS no horizontal scroll populated /authorizations 375
+PASS contrast >= 4.5 populated /authorizations 375
+INFO populated /authorizations 375: 74 text nodes audited, lowest contrast 5.43
+PASS touch targets >= 44px populated /authorizations 375
+PASS no font weight above 500 populated /authorizations 375
+PASS only DM Sans / Inter populated /authorizations 375
+PASS radii only 5/16/32 (+50% glyphs) populated /authorizations 375
+PASS no drop shadows populated /authorizations 375
+PASS populated /authorizations 375: current-user/handle present
+PASS populated 375: no console errors
+PASS populated 375: no request left the origin
+PASS no horizontal scroll populated /login 1280
+PASS contrast >= 4.5 populated /login 1280
+INFO populated /login 1280: 15 text nodes audited, lowest contrast 6.66
+PASS touch targets >= 44px populated /login 1280
+PASS no font weight above 500 populated /login 1280
+PASS only DM Sans / Inter populated /login 1280
+PASS radii only 5/16/32 (+50% glyphs) populated /login 1280
+PASS no drop shadows populated /login 1280
+PASS no horizontal scroll populated /signup 1280
+PASS no horizontal scroll populated / 1280
+PASS contrast >= 4.5 populated / 1280
+INFO populated / 1280: 57 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px populated / 1280
+PASS no font weight above 500 populated / 1280
+PASS only DM Sans / Inter populated / 1280
+PASS radii only 5/16/32 (+50% glyphs) populated / 1280
+PASS no drop shadows populated / 1280
+PASS populated / 1280: current-user/handle present
+PASS no horizontal scroll populated /requests 1280
+PASS contrast >= 4.5 populated /requests 1280
+INFO populated /requests 1280: 45 text nodes audited, lowest contrast 5.43
+PASS touch targets >= 44px populated /requests 1280
+PASS no font weight above 500 populated /requests 1280
+PASS only DM Sans / Inter populated /requests 1280
+PASS radii only 5/16/32 (+50% glyphs) populated /requests 1280
+PASS no drop shadows populated /requests 1280
+PASS populated /requests 1280: current-user/handle present
+PASS no horizontal scroll populated /split 1280
+PASS contrast >= 4.5 populated /split 1280
+INFO populated /split 1280: 29 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px populated /split 1280
+PASS no font weight above 500 populated /split 1280
+PASS only DM Sans / Inter populated /split 1280
+PASS radii only 5/16/32 (+50% glyphs) populated /split 1280
+PASS no drop shadows populated /split 1280
+PASS populated /split 1280: current-user/handle present
+PASS no horizontal scroll populated /authorizations 1280
+PASS contrast >= 4.5 populated /authorizations 1280
+INFO populated /authorizations 1280: 74 text nodes audited, lowest contrast 5.43
+PASS touch targets >= 44px populated /authorizations 1280
+PASS no font weight above 500 populated /authorizations 1280
+PASS only DM Sans / Inter populated /authorizations 1280
+PASS radii only 5/16/32 (+50% glyphs) populated /authorizations 1280
+PASS no drop shadows populated /authorizations 1280
+PASS populated /authorizations 1280: current-user/handle present
+PASS populated 1280: no console errors
+PASS populated 1280: no request left the origin
+PASS no horizontal scroll empty /login 375
+PASS contrast >= 4.5 empty /login 375
+INFO empty /login 375: 15 text nodes audited, lowest contrast 6.66
+PASS touch targets >= 44px empty /login 375
+PASS no font weight above 500 empty /login 375
+PASS only DM Sans / Inter empty /login 375
+PASS radii only 5/16/32 (+50% glyphs) empty /login 375
+PASS no drop shadows empty /login 375
+PASS no horizontal scroll empty /signup 375
+PASS no horizontal scroll empty / 375
+PASS contrast >= 4.5 empty / 375
+INFO empty / 375: 37 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty / 375
+PASS no font weight above 500 empty / 375
+PASS only DM Sans / Inter empty / 375
+PASS radii only 5/16/32 (+50% glyphs) empty / 375
+PASS no drop shadows empty / 375
+PASS empty / 375: current-user/handle present
+PASS no horizontal scroll empty /requests 375
+PASS contrast >= 4.5 empty /requests 375
+INFO empty /requests 375: 21 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /requests 375
+PASS no font weight above 500 empty /requests 375
+PASS only DM Sans / Inter empty /requests 375
+PASS radii only 5/16/32 (+50% glyphs) empty /requests 375
+PASS no drop shadows empty /requests 375
+PASS empty /requests 375: current-user/handle present
+PASS no horizontal scroll empty /split 375
+PASS contrast >= 4.5 empty /split 375
+INFO empty /split 375: 27 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /split 375
+PASS no font weight above 500 empty /split 375
+PASS only DM Sans / Inter empty /split 375
+PASS radii only 5/16/32 (+50% glyphs) empty /split 375
+PASS no drop shadows empty /split 375
+PASS empty /split 375: current-user/handle present
+PASS no horizontal scroll empty /authorizations 375
+PASS contrast >= 4.5 empty /authorizations 375
+INFO empty /authorizations 375: 24 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /authorizations 375
+PASS no font weight above 500 empty /authorizations 375
+PASS only DM Sans / Inter empty /authorizations 375
+PASS radii only 5/16/32 (+50% glyphs) empty /authorizations 375
+PASS no drop shadows empty /authorizations 375
+PASS empty /authorizations 375: current-user/handle present
+PASS empty 375: no console errors
+PASS empty 375: no request left the origin
+PASS no horizontal scroll empty /login 1280
+PASS contrast >= 4.5 empty /login 1280
+INFO empty /login 1280: 15 text nodes audited, lowest contrast 6.66
+PASS touch targets >= 44px empty /login 1280
+PASS no font weight above 500 empty /login 1280
+PASS only DM Sans / Inter empty /login 1280
+PASS radii only 5/16/32 (+50% glyphs) empty /login 1280
+PASS no drop shadows empty /login 1280
+PASS no horizontal scroll empty /signup 1280
+PASS no horizontal scroll empty / 1280
+PASS contrast >= 4.5 empty / 1280
+INFO empty / 1280: 37 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty / 1280
+PASS no font weight above 500 empty / 1280
+PASS only DM Sans / Inter empty / 1280
+PASS radii only 5/16/32 (+50% glyphs) empty / 1280
+PASS no drop shadows empty / 1280
+PASS empty / 1280: current-user/handle present
+PASS no horizontal scroll empty /requests 1280
+PASS contrast >= 4.5 empty /requests 1280
+INFO empty /requests 1280: 21 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /requests 1280
+PASS no font weight above 500 empty /requests 1280
+PASS only DM Sans / Inter empty /requests 1280
+PASS radii only 5/16/32 (+50% glyphs) empty /requests 1280
+PASS no drop shadows empty /requests 1280
+PASS empty /requests 1280: current-user/handle present
+PASS no horizontal scroll empty /split 1280
+PASS contrast >= 4.5 empty /split 1280
+INFO empty /split 1280: 27 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /split 1280
+PASS no font weight above 500 empty /split 1280
+PASS only DM Sans / Inter empty /split 1280
+PASS radii only 5/16/32 (+50% glyphs) empty /split 1280
+PASS no drop shadows empty /split 1280
+PASS empty /split 1280: current-user/handle present
+PASS no horizontal scroll empty /authorizations 1280
+PASS contrast >= 4.5 empty /authorizations 1280
+INFO empty /authorizations 1280: 24 text nodes audited, lowest contrast 6.78
+PASS touch targets >= 44px empty /authorizations 1280
+PASS no font weight above 500 empty /authorizations 1280
+PASS only DM Sans / Inter empty /authorizations 1280
+PASS radii only 5/16/32 (+50% glyphs) empty /authorizations 1280
+PASS no drop shadows empty /authorizations 1280
+PASS empty /authorizations 1280: current-user/handle present
+PASS empty 1280: no console errors
+PASS empty 1280: no request left the origin
+PASS auth-error absent initially
+PASS auth-error removed on edit
+PASS signup lands on / with empty wallet and no held
+PASS 15.005 rejected, no request sent
+PASS pay sent integer minor units
+PASS pay-error absent after success, values kept
+PASS double submit sends the SAME key and body
+PASS one payment moved money once
+PASS balance fell once
+PASS changed field mints a new key
+PASS feed shows the new payment first
+PASS lost response -> pay-uncertain nonempty, no pay-error
+PASS retry used the same key and body
+PASS uncertain and error gone after retry
+PASS exactly one 7.50 payment
+PASS wallet-balance fell once
+PASS refused: pay-error, balance refreshed, inputs kept
+PASS pending incoming shows pay+decline, no cancel
+PASS request-error shown and stale pay button gone
+PASS request paid via UI, wallet refreshed
+PASS no request-error after a successful pay
+PASS latest refresh wins: delayed older read does not overwrite
+PASS split-preview present when empty
+PASS split preview 3.34/3.33/3.33
+PASS reorder moves the extra unit
+PASS submitted shares equal the preview
+PASS empty-authorizations shown
+PASS available falls, held appears
+PASS payer sees void, no capture
+PASS expires text is RFC 3339
+PASS receiver sees prefilled capture amount, no void
+PASS partial capture keeps remainder open, input re-prefilled
+PASS capture rest closes it; captured shown
+PASS void releases the hold
+PASS expired seeded hold shows expired, no controls
+PASS partial/closed matrix
+PASS capture over remaining refused with message; typed amount kept
+PASS stage-1 shaped export imports
+PASS signed-in after import, retry recovered, one payment
+PASS pending request payable after import
+
+215/215 checks passed
