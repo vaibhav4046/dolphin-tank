@@ -91,3 +91,5 @@
 .sk { height: 72px; border-radius: var(--radius-card); background: var(--color-surface); border: 1px solid var(--color-line); }
 .sk-wide { height: 150px; background: var(--color-raised); }
 .auth-wrap { max-width: 440px; width: 100%; margin: var(--space-6) auto; }
+.row[data-quiet="true"] .chip[data-tone="quiet"] { opacity: 1; }
+p a, .hint a, .empty a { display: inline-flex; align-items: center; min-height: var(--target); }

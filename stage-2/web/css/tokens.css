@@ -55,5 +55,5 @@
   --focus-ring: var(--focus-width) solid var(--color-accent);
   --target: 44px;
   --page-max: 1120px;
-  --opacity-quiet: 0.7;
+  --opacity-quiet: 0.78;
 }
