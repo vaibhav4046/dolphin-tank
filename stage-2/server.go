@@ -27,6 +27,9 @@ func NewServer(store *Store) http.Handler {
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if serveUI(w, r) {
+		return
+	}
 	rt, id, ok := resolve(r.Method, r.URL.Path)
 	if !ok {
 		writeErr(w, NewErr(http.StatusNotFound, "not_found", "no such route"))

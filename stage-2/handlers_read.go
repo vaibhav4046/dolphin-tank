@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/url"
+	"time"
 )
 
 // emptyParam stands in for a present-but-empty filter so the domain rejects it
@@ -21,7 +22,7 @@ func filterParam(q url.Values, name string) string {
 
 func handleMe(s *Server, c *call) (int, []byte, *AppError) {
 	body, e := s.store.Exec(func(st *State) (any, *AppError) {
-		return st.Me(c.uid), nil
+		return st.Me(c.uid, time.Now()), nil
 	})
 	return http.StatusOK, body, e
 }

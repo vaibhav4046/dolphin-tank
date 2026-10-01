@@ -1,5 +1,5 @@
-.git
+jstest/
+testdata/
 *_test.go
-*.md
-Dockerfile
-.dockerignore
+*.exe
+.git

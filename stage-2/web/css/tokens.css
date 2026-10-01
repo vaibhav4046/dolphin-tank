@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/dm-sans.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("/assets/fonts/inter.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --color-canvas: #030014;
+  --color-surface: #060317;
+  --color-raised: #10093a;
+  --color-text: #f4f0ff;
+  --color-text-2: #a8a6b7;
+  --color-accent: #9382ff;
+  --color-on-accent: #030014;
+  --color-rim: rgba(244, 240, 255, 0.08);
+  --color-line: rgba(244, 240, 255, 0.14);
+
+  --font-heading: "DM Sans", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-headline: clamp(2.5rem, 9vw, 3.75rem);
+  --leading: 1.5;
+  --leading-tight: 1.15;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-control: 5px;
+  --radius-card: 16px;
+  --radius-badge: 32px;
+
+  --rim-light: inset 0 1px 0 var(--color-rim);
+  --focus-width: 2px;
+  --focus-offset: 2px;
+  --focus-ring: var(--focus-width) solid var(--color-accent);
+  --target: 44px;
+  --page-max: 1120px;
+  --opacity-quiet: 0.7;
+}

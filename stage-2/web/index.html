@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#030014">
+<title>Pocketful</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<script type="module" src="/assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg><span>Pocketful</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="/" data-nav="/">Wallet</a>
+    <a href="/requests" data-nav="/requests">Requests</a>
+    <a href="/split" data-nav="/split">Split</a>
+    <a href="/authorizations" data-nav="/authorizations">Authorizations</a>
+  </nav>
+  <div class="session" id="session"></div>
+</header>
+<main id="main" class="page" aria-busy="true">
+  <div class="skeleton" aria-hidden="true"><div class="sk sk-wide"></div><div class="sk"></div><div class="sk"></div></div>
+  <p class="vh" role="status">Loading…</p>
+</main>
+<noscript><p class="page">Pocketful needs JavaScript to run in your browser.</p></noscript>
+</body>
+</html>
