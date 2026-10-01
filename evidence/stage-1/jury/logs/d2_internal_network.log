@@ -1,0 +1,8 @@
+outbound blocked to 1.1.1.1 -> OSError
+outbound blocked to 8.8.8.8 -> OSError
+PASS sibling has no outbound network
+PASS health 200 on internal net
+PASS payment 201 on internal net
+PASS balances after payment
+== d2_smoke: 4 pass, 0 fail, 9 requests, 0 5xx
+exit=0

@@ -1,0 +1,29 @@
+image 3ec06cf6cd51 commit 0024598cf4a43b6584171b1f7b8f92523c652c3a
+c01_conservation run1 rc=0 == c01_conservation: 42 pass, 0 fail, 10815 requests, 0 5xx
+c01_conservation run2 rc=0 == c01_conservation: 42 pass, 0 fail, 10655 requests, 0 5xx
+c01_conservation run3 rc=0 == c01_conservation: 42 pass, 0 fail, 10550 requests, 0 5xx
+c02_idempotency run1 rc=0 == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c02_idempotency run2 rc=0 == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c02_idempotency run3 rc=0 == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c03_validation run1 rc=0 == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+c04_auth run1 rc=0 == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c04_auth run2 rc=0 == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c04_auth run3 rc=0 == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c05_requests_feed run1 rc=0 == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+c06_reset_fixture run1 rc=0 == c06_reset_fixture: 40 pass, 0 fail, 1226 requests, 0 5xx
+c07_splits run1 rc=0 == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+c08_export_import run1 rc=0 == c08_export_import: 73 pass, 0 fail, 7888 requests, 0 5xx
+c08_export_import run2 rc=0 == c08_export_import: 73 pass, 0 fail, 7895 requests, 0 5xx
+c08_export_import run3 rc=0 == c08_export_import: 73 pass, 0 fail, 7901 requests, 0 5xx
+c09_no5xx_envelope run1 rc=0 == c09_no5xx_envelope: 10 pass, 0 fail, 8892 requests, 0 5xx
+c09_no5xx_envelope run2 rc=0 == c09_no5xx_envelope: 10 pass, 0 fail, 8905 requests, 0 5xx
+c09_no5xx_envelope run3 rc=0 == c09_no5xx_envelope: 10 pass, 0 fail, 8902 requests, 0 5xx
+c11_settlements run1 rc=0 == c11_settlements: 69 pass, 0 fail, 629 requests, 0 5xx
+c11_settlements run2 rc=0 == c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx
+c11_settlements run3 rc=0 == c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx
+c12_retries_edges run1 rc=0 == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c12_retries_edges run2 rc=0 == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c12_retries_edges run3 rc=0 == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+PASS balances after payment
+== d2_smoke: 4 pass, 0 fail, 9 requests, 0 5xx
+exit=0

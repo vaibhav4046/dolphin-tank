@@ -1,0 +1,10 @@
+OBS 2MiB payments body -> 400 malformed_request
+OBS 900KiB note -> 422 validation_failed
+OBS pay empty-body then {} same key -> 201 200 None
+OBS ?status= -> 422 validation_failed
+OBS ?direction= -> 422 validation_failed
+OBS reset [] -> 400 malformed_request
+OBS import [] -> 422 validation_failed
+OBS fixture display_name '' -> 204 None
+OBS fixture w/o currency -> 204 None
+OBS /me after lenient fixture -> {"user_id":"u_a","display_name":"A","handle":"a","balance":1,"currency":"EUR","minor_units":2}

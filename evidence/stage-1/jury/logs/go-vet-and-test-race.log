@@ -1,0 +1,16 @@
+$ docker run --rm -v /root/jury/s1/stage-1:/src -w /src golang:1.24 sh -c "go vet ./... && go test -race -count=1 ./..."
+go version go1.24.13 linux/amd64
+VET_OK
+      1 ok  	pocketful	31.301s
+      1 PASS
+      1 --- PASS: TestSettleShapeAndPermission (0.15s)
+      1 --- PASS: TestSettleEntryErrorBeatsFundsAndLeavesNoTrace (1.13s)
+      1 --- PASS: TestSettleChainAffordableByNet (0.30s)
+      1 --- PASS: TestSettleAllOrNone (0.16s)
+      1 --- PASS: TestRoutingAndEnvelope (0.26s)
+      1 --- PASS: TestResetRejectsBadFixture (0.37s)
+      1 --- PASS: TestResetRejectsAndKeepsState (0.83s)
+      1 --- PASS: TestResetManyUsersIsFast (20.12s)
+      1 --- PASS: TestRecoverPanics (0.00s)
+      1 --- PASS: TestParseObject (0.01s)
+rc_test=0

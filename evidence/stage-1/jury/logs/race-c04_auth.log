@@ -1,0 +1,95 @@
+PASS signup 'John.Doe+Test@Example.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'john_doe_test' for 'John.Doe+Test@Example.com' resolves; new user id matches
+PASS   /me handle='john_doe_test' balance=7 after receive, fields exact
+PASS signup 'UPPER@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'upper' for 'UPPER@x.com' resolves; new user id matches
+PASS   /me handle='upper' balance=7 after receive, fields exact
+PASS signup 'a-b.c@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'a_b_c' for 'a-b.c@x.com' resolves; new user id matches
+PASS   /me handle='a_b_c' balance=7 after receive, fields exact
+PASS signup 'xxxxxxxxxxxxxxxxxxxxxxxxx@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'xxxxxxxxxxxxxxxxxxxx' for 'xxxxxxxxxxxxxxxxxxxxxxxxx@x.com' resolves; new user id matches
+PASS   /me handle='xxxxxxxxxxxxxxxxxxxx' balance=7 after receive, fields exact
+PASS signup 'é@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle '_' for 'é@x.com' resolves; new user id matches
+PASS   /me handle='_' balance=7 after receive, fields exact
+PASS signup 'éé@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle '__' for 'éé@x.com' resolves; new user id matches
+PASS   /me handle='__' balance=7 after receive, fields exact
+PASS signup '😀a@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle '_a' for '😀a@x.com' resolves; new user id matches
+PASS   /me handle='_a' balance=7 after receive, fields exact
+PASS signup 'aaaaaaaaaaaaaaaaaaaéé@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'aaaaaaaaaaaaaaaaaaa_' for 'aaaaaaaaaaaaaaaaaaaéé@x.com' resolves; new user id matches
+PASS   /me handle='aaaaaaaaaaaaaaaaaaa_' balance=7 after receive, fields exact
+PASS signup '12_ab@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle '12_ab' for '12_ab@x.com' resolves; new user id matches
+PASS   /me handle='12_ab' balance=7 after receive, fields exact
+PASS signup 'Zed_9@x.com' -> 201 {user_id,display_name,token}
+PASS derived handle 'zed_9' for 'Zed_9@x.com' resolves; new user id matches
+PASS   /me handle='zed_9' balance=7 after receive, fields exact
+PASS new user balance 0
+PASS new user can be asked for money immediately (request pending)
+PASS new user can ask
+PASS new user (balance 0) pay 500 -> 409 insufficient_funds, state unchanged
+PASS signup ada@other.com (derived handle 'ada' taken) -> 409 handle_taken
+PASS   no account created: login ada@other.com -> 401
+PASS signup ADA@other.com (derived handle 'ada' taken) -> 409 handle_taken
+PASS   no account created: login ADA@other.com -> 401
+PASS signup ada@third.org (derived handle 'ada' taken) -> 409 handle_taken
+PASS   no account created: login ada@third.org -> 401
+PASS   retry still handle_taken (not email_taken)
+PASS   a free derived handle with the same domain succeeds
+PASS truncated-20 handle collision -> 409 handle_taken
+OBS re-signup same email (email+handle both taken) -> 409 email_taken
+PASS re-signup same email -> 409 (email_taken or handle_taken)
+OBS signup seeded email -> 409 email_taken
+PASS signup seeded email -> 409 email_taken
+OBS signup seeded email different case -> 409 email_taken
+PASS password 7 chars (bytes 7) -> 422
+PASS password 8 chars (bytes 8) -> 201
+PASS password 7 chars (bytes 14) -> 422
+PASS password 8 chars (bytes 16) -> 201
+PASS signup invalid email 'noatsign' -> 422
+PASS signup invalid email '@b.com' -> 422
+PASS signup invalid email 'a@' -> 422
+PASS signup invalid email '' -> 422
+PASS signup invalid email ' ' -> 422
+PASS signup password missing -> 422
+PASS signup email number -> 400 malformed_request
+PASS signup bad json -> 400
+OBS signup without display_name -> 422 validation_failed
+PASS login seeded user 200 {user_id,display_name,token}
+PASS two logins give two valid concurrent tokens; earlier token & fixture token remain valid
+PASS login wrong pw -> 401
+PASS login unknown email -> 401
+PASS login pw case -> 401
+PASS login wrong type -> 400
+OBS login missing password -> 422 validation_failed
+PASS login missing password -> 401 or 422
+PASS signup-created user can log in
+PASS /me with no header -> 401 unauthenticated
+PASS /me with Bearer only -> 401 unauthenticated
+PASS /me with Bearer empty -> 401 unauthenticated
+PASS /me with unknown token -> 401 unauthenticated
+PASS /me with Basic scheme -> 401 unauthenticated
+PASS /me with token without scheme -> 401 unauthenticated
+PASS /me with token + junk -> 401 unauthenticated
+OBS lowercase 'bearer' scheme -> 200
+PASS GET /me without token -> 401
+PASS GET /activity without token -> 401
+PASS GET /requests without token -> 401
+PASS POST /payments without token -> 401
+PASS POST /requests without token -> 401
+PASS POST /splits without token -> 401
+PASS POST /settlements without token -> 401
+PASS POST /requests/x/pay without token -> 401
+PASS POST /requests/x/decline without token -> 401
+PASS POST /requests/x/cancel without token -> 401
+PASS /health, reset, export need no auth
+PASS race: same email x10 -> exactly one 201, rest 409
+PASS race: 10 emails same derived handle 'same' -> exactly one 201, rest 409 handle_taken
+PASS race: only the winner's account exists (login 200 for winner, 401 for losers)
+PASS race: handle 'same' resolves to winner
+PASS conservation after signups/payments (sum of all seeded + new == 17500)
+== c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx

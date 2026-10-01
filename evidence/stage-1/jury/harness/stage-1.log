@@ -1,0 +1,11 @@
+$ docker run --rm --network df-run-f7904add9b544aed818c6745055a3264 -v /mnt/d/project/dolphin-tank/dark-factory-wearedevs:/work:ro -v /mnt/d/project/dolphin-tank/band-work/checks/s1-0024598-a:/out -e PYTHONDONTWRITEBYTECODE=1 -e PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 -e COLUMNS=200 -w /work df-harness-runner python -m pytest pocketful/test/stage_1 --base-url http://df-svc-e23fcb75012f:8080 -p harness.plugin --rootdir pocketful/test -q --harness-summary /out/stage-1.counts.json
+
+...................................................................................................................................................                                              [100%]
+=========================================================================================== warnings summary ===========================================================================================
+../usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469
+  /usr/local/lib/python3.12/site-packages/_pytest/cacheprovider.py:469: PytestCacheWarning: could not create cache path /work/pocketful/test/.pytest_cache/v/cache/nodeids: [Errno 30] Read-only file system: '/work/pocketful/test/pytest-cache-files-t2b1vfqv'
+    config.cache.set("cache/nodeids", sorted(self.cached_nodeids))
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+147 passed, 1 warning in 12.57s
+

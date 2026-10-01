@@ -1,0 +1,45 @@
+PASS JPY fixture: /me currency/minor_units/balance
+PASS JPY payment carries currency, balances exact
+PASS JPY request/split carry currency
+PASS BHD fixture: /me currency/minor_units/balance
+PASS BHD payment carries currency, balances exact
+PASS BHD request/split carry currency
+PASS EUR fixture: /me currency/minor_units/balance
+PASS EUR payment carries currency, balances exact
+PASS EUR request/split carry currency
+PASS reset with negative balance -> 422 validation_failed
+PASS   state intact: old tokens valid, balances, feed identical
+PASS   idempotency record intact: replay -> 200 original
+PASS   old user handles/login still work (ada 'correct horse')
+OBS reset minor_units 1 -> 422 validation_failed
+PASS reset minor_units 1 -> 4xx (not 5xx/204)
+OBS reset minor_units 4 -> 422 validation_failed
+PASS reset minor_units 4 -> 4xx (not 5xx/204)
+OBS reset duplicate handle -> 422 validation_failed
+PASS reset duplicate handle -> 4xx (not 5xx/204)
+PASS reset: invalid JSON -> 400 malformed_request
+PASS state still intact after all rejected resets
+PASS reset 204, empty body, no auth needed
+PASS reset: old tokens 401
+PASS reset: signup-created user gone (login 401), handle/email reusable
+PASS reset: seeded balances restored, no payments/requests
+PASS reset: idempotency keys cleared (same key+body -> 201 not 200)
+PASS reset: ids restart or at least differ from nothing; first payment id is a <=64 char string
+PASS fixture: seeded users log in with their password; wrong password 401
+PASS fixture: balances are as given (not replayed against payments)
+PASS fixture: requests with ids/status/amount/note preserved
+PASS fixture: request fields resolve handles and timestamps
+PASS fixture: seeded pending request payable by ada
+PASS new payment ids never collide with seeded ids or each other
+PASS every payment in cy's feed has a distinct id
+PASS new request ids never collide with seeded (rq_1, rq_7, rq_9) or each other
+PASS signup user_id distinct from seeded ids
+PASS reset with 300 users (distinct passwords) -> 204 in 0.69s (<10s)
+PASS   last user can log in
+PASS reset with 1000 users (identical passwords) -> 204 in 0.01s (<10s)
+PASS   last user can log in
+PASS 20 repeated resets (0.18s)
+PASS reset under load: no 5xx, no unexpected statuses
+OBS /me 200-null observations during concurrent reset: 0
+PASS after final reset: state is exactly the fixture
+== c06_reset_fixture: 40 pass, 0 fail, 1226 requests, 0 5xx
