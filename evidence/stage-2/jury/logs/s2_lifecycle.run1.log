@@ -1,0 +1,84 @@
+PASS A04 /me keys with no holds
+PASS A04 no holds: balance==total==available, held 0
+PASS D01 authorize 201
+PASS D01 field present: authorization_id
+PASS D01 field present: from_user_id
+PASS D01 field present: from_handle
+PASS D01 field present: to_user_id
+PASS D01 field present: to_handle
+PASS D01 field present: amount
+PASS D01 field present: captured_amount
+PASS D01 field present: currency
+PASS D01 field present: note
+PASS D01 field present: visibility
+PASS D01 field present: status
+PASS D01 field present: expires_at
+PASS D01 field present: payment_id
+PASS D01 field present: created_at
+PASS D01 field present: remaining_amount
+PASS D01 values
+PASS C04 expires_at = created_at + 600s
+PASS C04 timestamps RFC3339 with offset
+PASS D01 payment_ids empty or absent at creation
+PASS D05 ada: total 10000 available 8000 held 2000 balance 10000
+PASS A01 bob untouched by hold
+PASS A01 conservation after authorize
+PASS D04 open authorization not in activity for ada
+PASS D04 open authorization not in activity for bob
+PASS D04 open authorization not in activity for cy
+PASS D04 GET /authorizations lists it for payer and receiver, not stranger
+PASS E03 capture 201
+PASS E03 payment field present: payment_id
+PASS E03 payment field present: from_user_id
+PASS E03 payment field present: from_handle
+PASS E03 payment field present: to_user_id
+PASS E03 payment field present: to_handle
+PASS E03 payment field present: amount
+PASS E03 payment field present: currency
+PASS E03 payment field present: note
+PASS E03 payment field present: visibility
+PASS E03 payment field present: request_id
+PASS E03 payment field present: created_at
+PASS E03 payment field present: authorization_id
+PASS E03 payment shape values
+PASS E04 remainder released in same step: ada total 8500 available 8500 held 0
+PASS E04 bob received 1500
+PASS E04 authorization captured, captured_amount 1500, payment_id
+PASS E07 payment_ids lists capture
+PASS A01 conservation after capture
+PASS E03 private capture visible to payer and receiver, hidden from stranger
+PASS E03 feed copy of payment has authorization_id
+PASS E05 second capture after final: 409 authorization_not_open
+PASS E05 second capture default amount: 409 authorization_not_open
+PASS F01 void captured: 409 authorization_not_open
+PASS D02 defaults note '' and visibility public
+PASS E04 default amount captures remaining
+PASS E03 public capture visible to stranger
+PASS A01 conservation
+PASS E06 capture 700 final:false 201
+PASS E06 stays open, captured 700, remaining 2300
+PASS E06 ada total -700, held 2300, available = total - held
+PASS E06 second extended capture
+PASS E07 captured_amount cumulative, payment_id latest, payment_ids ordered
+PASS E07 exceeds REMAINING (1300) -> 422 capture_exceeds_authorization
+PASS E07 refused capture changed nothing
+PASS E06 omitted amount with final:false = whole remainder; closes
+PASS E06 whole remainder closes even with final:false
+PASS E06 hold gone: held 0
+PASS E05 closed hold cannot be captured
+PASS E06 amount == whole remainder, final:false closes
+PASS E06 final capture closes and releases remainder
+PASS E07 final capture shows payment_ids length 2
+PASS E06 explicit final:true releases
+PASS F01 void 200 voided
+PASS E08 void releases only remainder, preserves captures
+PASS E08 ada: held 0; total unchanged by void (500 already moved)
+PASS F01 void twice: 200 current state
+PASS E05 capture after void: 409 authorization_not_open
+PASS A01 conservation
+PASS D05 held 1500
+PASS F01 void plain: released, captured_amount 0, payment_id null
+PASS E03 plain payment authorization_id null, request_id null, no hold
+PASS E03 request-pay payment authorization_id null, request_id set
+== s2_lifecycle: 82 pass, 0 fail, 86 requests, 0 5xx
+rc=0

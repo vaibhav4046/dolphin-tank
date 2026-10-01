@@ -1,0 +1,34 @@
+c01_conservation run1 rc=0 :: == c01_conservation: 42 pass, 0 fail, 10135 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-913-25814 (27c445710e46c1b210763b530df596a85457a84253ad6215c5fff4cded868fe5): failed to bind host port 127.0.0.1:38418/tcp: address already in use
+
+Run 'docker run --help' for more information
+c02_idempotency run1 rc=0 :: == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c03_validation run1 rc=0 :: == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+c04_auth run1 rc=1 :: == c04_auth: 78 pass, 10 fail, 144 requests, 0 5xx
+FAIL   /me handle='john_doe_test' balance=7 after receive, fields exact :: {'user_id': 'u_1', 'display_name': 'N', 'handle': 'john_doe_test', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='upper' balance=7 after receive, fields exact :: {'user_id': 'u_2', 'display_name': 'N', 'handle': 'upper', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='a_b_c' balance=7 after receive, fields exact :: {'user_id': 'u_3', 'display_name': 'N', 'handle': 'a_b_c', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='xxxxxxxxxxxxxxxxxxxx' balance=7 after receive, fields exact :: {'user_id': 'u_4', 'display_name': 'N', 'handle': 'xxxxxxxxxxxxxxxxxxxx', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='_' balance=7 after receive, fields exact :: {'user_id': 'u_5', 'display_name': 'N', 'handle': '_', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='__' balance=7 after receive, fields exact :: {'user_id': 'u_6', 'display_name': 'N', 'handle': '__', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='_a' balance=7 after receive, fields exact :: {'user_id': 'u_7', 'display_name': 'N', 'handle': '_a', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+FAIL   /me handle='aaaaaaaaaaaaaaaaaaa_' balance=7 after receive, fields exact :: {'user_id': 'u_8', 'display_name': 'N', 'handle': 'aaaaaaaaaaaaaaaaaaa_', 'balance': 7, 'total': 7, 'available': 7, 'held': 0, 'currency': 'EUR', 'minor_units': 2}
+c05_requests_feed run1 rc=0 :: == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+c06_reset_fixture run1 rc=0 :: == c06_reset_fixture: 40 pass, 0 fail, 930 requests, 0 5xx
+c07_splits run1 rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+c08_export_import run1 rc=0 :: == c08_export_import: 73 pass, 0 fail, 8171 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-913-20456 (43b4e5644e375db8a54bed7790896b602528341b162c356660eeb42c8ff7ab12): failed to bind host port 127.0.0.1:33898/tcp: address already in use
+
+Run 'docker run --help' for more information
+c09_no5xx_envelope run1 rc=1 :: == c09_no5xx_envelope: 9 pass, 1 fail, 8897 requests, 0 5xx
+FAIL no 5xx / envelope / content-type / unknown-code violations across the sweep (1 problems) :: [('odd GET /', 'content-type 2xx', 200, 'text/html; charset=utf-8')]
+FAILED: ['no 5xx / envelope / content-type / unknown-code violations across the sweep (1 problems)']
+c11_settlements run1 rc=0 :: == c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-913-17851 (754e97b76c822529eb3f22f56e81e9a44aa4f534b01e93cda88c21e543a39409): failed to bind host port 127.0.0.1:35796/tcp: address already in use
+
+Run 'docker run --help' for more information
+c12_retries_edges run1 rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c13_reset_vs_me run1 rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 26544 requests, 0 5xx
+d2_smoke run1 rc=1 :: == d2_smoke: 3 pass, 1 fail, 9 requests, 0 5xx
+FAIL sibling has no outbound network :: 
+FAILED: ['sibling has no outbound network']

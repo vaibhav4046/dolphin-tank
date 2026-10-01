@@ -1,0 +1,31 @@
+PASS H05 export 200 track/format_version/state
+PASS H05 export is read-only: two consecutive exports identical
+PASS H05 export of unchanged state mutates nothing observable
+Traceback (most recent call last):
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/s2_export.py", line 44, in <module>
+    r = dcall("POST", "/_test/import", raw=body)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/s2_export.py", line 42, in dcall
+    return call(*a, **kw)
+           ^^^^^^^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "/usr/lib/python3.12/http/client.py", line 1365, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1411, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1360, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1120, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.12/http/client.py", line 1064, in send
+    self.connect()
+  File "/usr/lib/python3.12/http/client.py", line 1030, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 852, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.12/socket.py", line 837, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+rc=1

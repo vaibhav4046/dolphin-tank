@@ -1,0 +1,31 @@
+c01_conservation run2 rc=0 :: == c01_conservation: 42 pass, 0 fail, 8402 requests, 0 5xx
+c02_idempotency run2 rc=0 :: == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c03_validation run2 rc=0 :: == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+c04_auth run2 rc=0 :: == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c05_requests_feed run2 rc=0 :: == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+c06_reset_fixture run2 rc=0 :: == c06_reset_fixture: 40 pass, 0 fail, 960 requests, 0 5xx
+c07_splits run2 rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+c08_export_import run2 rc=0 :: == c08_export_import: 73 pass, 0 fail, 8188 requests, 0 5xx
+c09_no5xx_envelope run2 rc=0 :: == c09_no5xx_envelope: 10 pass, 0 fail, 8926 requests, 0 5xx
+c11_settlements run2 rc=0 :: == c11_settlements: 69 pass, 0 fail, 623 requests, 0 5xx
+c12_retries_edges run2 rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c13_reset_vs_me run2 rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 26249 requests, 0 5xx
+d2_smoke run2 rc=1 :: == d2_smoke: 3 pass, 1 fail, 9 requests, 0 5xx
+FAIL sibling has no outbound network :: 
+FAILED: ['sibling has no outbound network']
+c01_conservation run3 rc=0 :: == c01_conservation: 42 pass, 0 fail, 9949 requests, 0 5xx
+c02_idempotency run3 rc=0 :: == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c03_validation run3 rc=0 :: == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+c04_auth run3 rc=0 :: == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c05_requests_feed run3 rc=0 :: == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+c06_reset_fixture run3 rc=0 :: == c06_reset_fixture: 40 pass, 0 fail, 1022 requests, 0 5xx
+c07_splits run3 rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+c08_export_import run3 rc=0 :: == c08_export_import: 73 pass, 0 fail, 8188 requests, 0 5xx
+c09_no5xx_envelope run3 rc=0 :: == c09_no5xx_envelope: 10 pass, 0 fail, 8915 requests, 0 5xx
+c11_settlements run3 rc=0 :: == c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx
+c12_retries_edges run3 rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c13_reset_vs_me run3 rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 28925 requests, 0 5xx
+d2_smoke run3 rc=1 :: == d2_smoke: 3 pass, 1 fail, 9 requests, 0 5xx
+FAIL sibling has no outbound network :: 
+FAILED: ['sibling has no outbound network']
+finished

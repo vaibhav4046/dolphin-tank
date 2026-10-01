@@ -1,0 +1,6 @@
+PORT=9999 -> {"status":"ok"}
+PORT=80 -> {"status":"ok"}
+PORT=8080 -> {"status":"ok"}
+default (no PORT) -> {"status":"ok"}
+read-only fs, 2 cpu, 2g, uid 12345 -> {"status":"ok"}
+reset on read-only fs -> 204

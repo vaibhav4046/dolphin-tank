@@ -1,0 +1,25 @@
+PASS stage-1 build /me has no available/held (it is the accepted stage 1)
+PASS stage-1 committed the lost payment (ada paid 1500)
+PASS stage-1: lost payment exists exactly once in the feed
+PASS stage-1 export 200
+PASS H06 stage-2 imports the stage-1 export unchanged: 204
+PASS H06 stage-1 bearer token still valid; /me has stage-2 shape, balance == total == available, held 0
+PASS H06 all balances preserved, sum constant
+PASS H06 hashed-password login works after import
+PASS H06 stage-1 pay replay on stage 2: 200 identical original body
+PASS H06 stage-1 req replay on stage 2: 200 identical original body
+PASS H06 stage-1 spl replay on stage 2: 200 identical original body
+PASS H06 stage-1 set replay on stage 2: 200 identical original body
+PASS H06 stage-1 key with different body: 409 idempotency_key_reuse
+PASS H06 stage-1 failed key reusable on stage 2
+PASS H06 lost-response retry (same key+body) recovers the ORIGINAL payment: 200, same payment_id/amount/created_at
+PASS H06 retry moved no money (balance unchanged), imported balance shown
+PASS H06 payment appears once in the feed after retry
+PASS H06 pending requests survive (seed + pending after)
+PASS H06 imported pending request payable: 201, request_id set, authorization_id null
+PASS H06 new authorization on imported state: 201, available = total - 1000
+PASS H06 capture works on imported state
+PASS H06 ids do not collide with imported payments/requests
+PASS A01 conservation after upgrade + activity
+== s2_upgrade_api: 23 pass, 0 fail, 45 requests, 0 5xx, max latency 0.013s, p99 0.010s
+rc=0

@@ -1,0 +1,96 @@
+PASS B05 omitted authorizations => empty list
+PASS B01 omitted ttl => 600 s
+PASS B01 ttl 1 accepted (204)
+PASS B01 ttl 1 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 ttl 3600 accepted (204)
+PASS B01 ttl 3600 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 ttl 86400 accepted (204)
+PASS B01 ttl 86400 -> expires_at = created_at + ttl (RFC3339)
+FAIL B01 ttl 2^31 accepted (204) :: R(422 b'{"error":{"code":"validation_failed","message":"authorization_ttl_seconds must be an integer from 1 to 1000000000"}}')
+FAIL B01 ttl 2^31 -> expires_at = created_at + ttl (RFC3339) :: R(201 b'{"authorization_id":"a_2","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":100,"captured_amount":0,"remaining_amount":100,"currency":"EUR","note":"","visibility":"public","status":"open","expires_at":"2026-10-02T20:58:21+00:00","payment_id":null,"payment_ids')
+PASS B01 huge ttl 1000000000: no 5xx on reset (got 204)
+PASS B01 huge ttl 1000000000 accepted: authorize no 5xx and valid RFC3339 (got 201)
+PASS B01 huge ttl 1000000000000: no 5xx on reset (got 422)
+PASS B01 huge ttl 9007199254740992: no 5xx on reset (got 422)
+PASS B01 huge ttl 1000000000000000000: no 5xx on reset (got 422)
+PASS B01 huge ttl 9223372036854775807: no 5xx on reset (got 422)
+PASS B01 huge ttl 18446744073709551616: no 5xx on reset (got 422)
+PASS B01 ttl 0 -> 422 validation_failed
+PASS B01 ttl 0: state unchanged (old token, balance, holds)
+PASS B01 ttl -1 -> 422 validation_failed
+PASS B01 ttl -1: state unchanged (old token, balance, holds)
+PASS B01 ttl 'x' -> 422 validation_failed
+PASS B01 ttl 'x': state unchanged (old token, balance, holds)
+PASS B01 ttl '600' -> 422 validation_failed
+PASS B01 ttl '600': state unchanged (old token, balance, holds)
+PASS B01 ttl 1.5 -> 422 validation_failed
+PASS B01 ttl 1.5: state unchanged (old token, balance, holds)
+PASS B01 ttl true -> 422 validation_failed
+PASS B01 ttl true: state unchanged (old token, balance, holds)
+PASS B01 ttl false -> 422 validation_failed
+PASS B01 ttl false: state unchanged (old token, balance, holds)
+PASS B01 ttl null -> 422 validation_failed
+PASS B01 ttl null: state unchanged (old token, balance, holds)
+PASS B01 ttl [] -> 422 validation_failed
+PASS B01 ttl []: state unchanged (old token, balance, holds)
+PASS B01 ttl {} -> 422 validation_failed
+PASS B01 ttl {}: state unchanged (old token, balance, holds)
+PASS B01 ttl 0.0 -> 422 validation_failed
+PASS B01 ttl 0.0: state unchanged (old token, balance, holds)
+PASS B01 ttl -600 -> 422 validation_failed
+PASS B01 ttl -600: state unchanged (old token, balance, holds)
+PASS B02 seeded available/held in users ignored; derived: total 10000 held 2000 available 8000
+PASS B04 bob (payer of a6) held 500
+PASS B04 ids preserved, 6 listed for ada
+PASS B04 statuses read back: open/captured/voided/expired
+PASS B06 seeded open with past expires_at reads expired, remaining 0
+PASS B04 open seeded remaining == amount
+PASS B04 closed seeded remaining 0
+INFO seeded captured a2 captured_amount=3000 payment_id=None payment_ids=[]
+PASS B06 seeded fields echoed (amount, note, visibility, from/to, currency)
+PASS B06 expires_at is RFC3339 with offset
+PASS B04 status filters on seeded
+PASS B04 captured seeded hold cannot be captured again: 409 authorization_not_open
+PASS B04 expired-by-seed hold capture 409 authorization_expired
+PASS D04 seeded open holds are not in activity
+PASS E03 capture of seeded hold: 201, payment authorization_id a1
+PASS E06 seeded hold remainder 1200
+PASS F01 void seeded hold
+PASS A06 payment above available (seeded hold 2000 of 10000) refused
+PASS A02 payment of exactly available (8000) allowed
+PASS B03 sum == balance accepted -> 204
+PASS B03 sum == balance accepted: /me invariants hold, held <= total
+PASS B03 sum == balance + 1 rejected -> 422
+PASS B03 sum == balance + 1 rejected: state unchanged (old token, holds)
+PASS B03 single hold above balance rejected -> 422
+PASS B03 single hold above balance rejected: state unchanged (old token, holds)
+PASS B03 expired-by-clock open hold above balance accepted (holds nothing) -> 204
+PASS B03 expired-by-clock open hold above balance accepted (holds nothing): /me invariants hold, held <= total
+PASS B03 voided/captured/expired above balance accepted -> 204
+PASS B03 voided/captured/expired above balance accepted: /me invariants hold, held <= total
+PASS B03 unexpired holds sum above balance but one expired: only unexpired count -> 204
+PASS B03 unexpired holds sum above balance but one expired: only unexpired count: /me invariants hold, held <= total
+PASS B03 balance 0, hold 1 rejected -> 422
+PASS B03 balance 0, hold 1 rejected: state unchanged (old token, holds)
+PASS B03 holds of different payers do not pool
+INFO seeded unknown payer -> 422 validation_failed
+PASS B07 seeded unknown payer: no 5xx; if rejected state is unchanged
+INFO seeded unknown receiver -> 422 validation_failed
+PASS B07 seeded unknown receiver: no 5xx; if rejected state is unchanged
+INFO seeded bad status -> 422 validation_failed
+PASS B07 seeded bad status: no 5xx; if rejected state is unchanged
+INFO seeded negative amount -> 422 validation_failed
+PASS B07 seeded negative amount: no 5xx; if rejected state is unchanged
+INFO seeded string amount -> 422 validation_failed
+PASS B07 seeded string amount: no 5xx; if rejected state is unchanged
+INFO seeded bad expires_at -> 422 validation_failed
+PASS B07 seeded bad expires_at: no 5xx; if rejected state is unchanged
+INFO seeded payer == receiver -> 422 validation_failed
+PASS B07 seeded payer == receiver: no 5xx; if rejected state is unchanged
+INFO seeded duplicate ids -> 422 validation_failed
+PASS B07 seeded duplicate ids: no 5xx; if rejected state is unchanged
+PASS B07 reset clears authorizations
+PASS B07 reset clears idempotency keys (same key is first use again: 201)
+== s2_fixture: 82 pass, 2 fail, 262 requests, 0 5xx
+FAILED: ['B01 ttl 2^31 accepted (204)', 'B01 ttl 2^31 -> expires_at = created_at + ttl (RFC3339)']
+rc=1

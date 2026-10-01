@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/s2_race.py", line 44, in <module>
+    t = setup(f); ob = Obs(t); ob.start()
+        ^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/lib.py", line 108, in setup
+    reset(f)
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/lib.py", line 95, in reset
+    r = call("POST", "/_test/reset", f if f is not None else fx())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-2/jury/checks/lib.py", line 49, in call
+    c.request(method, path, body=data, headers=h)
+  File "/usr/lib/python3.12/http/client.py", line 1365, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1411, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1360, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1120, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.12/http/client.py", line 1064, in send
+    self.connect()
+  File "/usr/lib/python3.12/http/client.py", line 1030, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 852, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.12/socket.py", line 837, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+rc=1

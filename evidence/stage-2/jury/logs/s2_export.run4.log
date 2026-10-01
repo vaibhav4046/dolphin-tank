@@ -1,0 +1,33 @@
+PASS H05 export 200 track/format_version/state
+PASS H05 export is read-only: two consecutive exports identical
+PASS H05 export of unchanged state mutates nothing observable
+PASS H05 import into FRESH container 204
+PASS H05 source tokens valid on destination; /me identical (balance,total,available,held)
+PASS H05 authorizations lists identical JSON values (ids, statuses, captured, payment_ids, expires_at, created_at)
+PASS H05 activity + requests identical
+PASS H05 imported holds counted: ada held == 3000 + 1300
+PASS H05 authorize replay on destination: 200 identical original body, no new hold
+PASS H05 capture replay on destination: 200 identical payment, money not moved twice
+PASS H05 same key different body on destination: 409 idempotency_key_reuse
+PASS H05 capture replay of CLOSED hold on destination: 200 original
+PASS H05 stage-1 payment replay survives import: 200 original
+PASS H05 failed (409) key remains reusable after import: 201
+PASS H05 capture of imported OPEN hold works; remaining 2000
+PASS H05 imported hold partially captured on destination: captured 1000 remaining 2000, still open
+PASS H05 void of imported partially captured hold: voided, remainder released, payment_ids kept
+PASS H05 operator permission survived import
+PASS H05 new authorization on destination: fresh id not colliding with imported ids
+PASS A01 conservation on destination after continuing
+PASS H05 re-import restores exported state exactly (no duplication)
+PASS H05 import not json -> 4xx (400/422), destination unchanged
+PASS H05 import wrong track -> 4xx (400/422), destination unchanged
+PASS H05 import wrong version -> 4xx (400/422), destination unchanged
+PASS H05 import missing state -> 4xx (400/422), destination unchanged
+PASS H05 import state not object -> 4xx (400/422), destination unchanged
+PASS H05 import empty state -> 4xx (400/422), destination unchanged
+INFO export authorization-related state paths: ['/state/payments/0/authorization_id', '/state/payments/1/authorization_id', '/state/payments/2/authorization_id', '/state/authorizations', '/state/authorizations/0/authorization_id', '/state/authorizations/1/authorization_id', '/state/authorizations/2/authorization_id', '/state/authorizations/3/authorization_id', '/state/authorization_ttl_seconds', '/state/sys/idem/"u_ada" POST "/authorizations" "37118d9424554f34b22b4339f1ff1a68"', '/state/sys/idem/"u_ada" POST "/authorizations" "37118d9424554f34b22b4339f1ff1a68"/resp/authorization_id', '/state/sys/idem/"u_ada" POST "/authorizations" "b8796b864523446db65c6f741b6ede7d"']
+PASS H05 writers ran without errors
+PASS H05 8 exports taken under 12 concurrent writers: each is a consistent snapshot (sum constant, invariants, held == open remainders)
+PASS H05 imported open hold whose deadline passed meanwhile is expired immediately (expires_at not regenerated)
+== s2_export: 30 pass, 0 fail, 2839 requests, 0 5xx, max latency 0.025s, p99 0.013s
+rc=0

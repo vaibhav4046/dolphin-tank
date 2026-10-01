@@ -1,0 +1,8 @@
+signed in url http://127.0.0.1:44532/ token stored: True
+after logout url http://127.0.0.1:44532/login token stored: None
+goto / -> http://127.0.0.1:44532/login current-user count 0 login form 1
+Log in /  / Welcome back. Sign in to see your wallet. /  / Email / Password / Log in /  / New here? Create an account.
+signup url http://127.0.0.1:44532/
+after logout url http://127.0.0.1:44532/login token: None
+goto / -> http://127.0.0.1:44532/login current-user 0 login form 1
+rc=0

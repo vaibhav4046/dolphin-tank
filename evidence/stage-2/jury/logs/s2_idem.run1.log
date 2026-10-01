@@ -1,0 +1,52 @@
+PASS G01 first use 201
+PASS G01 replay (reordered keys, whitespace, 2000.0) 200 identical JSON value
+PASS G01 one hold only
+PASS G02 same key different amount 409 idempotency_key_reuse
+PASS G02 same key different handle 409
+PASS G02 same key different visibility 409
+PASS G03 claimed key beats validation (amount 0) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (amount string) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (unknown handle) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (self) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (huge) -> 409 idempotency_key_reuse
+PASS G03 nothing else created
+PASS G07 setup capture
+PASS G07 replay after capture returns ORIGINAL body (status open, captured 0), 200, no new hold
+PASS G04 first attempt fails 409 insufficient_funds
+PASS G04 failed key reusable as first use with other body: 201
+PASS G04 validation-failed key reusable: 201
+PASS G05 same key different users: both 201, distinct ids
+PASS G05 same key on a different path (POST /payments) is not a replay: 201
+PASS G05 same key by other user on /requests is fresh: 201
+PASS E02 capture {} first use 201 captures full remainder 2000
+PASS E02 replay {} -> 200 identical payment
+PASS E02 {} then {"amount":2000} same key -> 409 idempotency_key_reuse
+PASS E02 {} then {"final":true} same key -> 409 idempotency_key_reuse
+PASS E02 {} then amount 5 same key -> 409
+PASS G03 claimed capture key beats validation (amount 0) -> 409 idempotency_key_reuse
+PASS G01 capture moved money once
+PASS G05 capture key is per user: payer using receiver's key gets 403, not the cached 200
+PASS G07 capture replay after void returns original 200 payment, no extra money
+PASS G04 capture exceeding remaining 422
+PASS G04 failed capture key reusable with another body: 201
+PASS G05 same key on a different authorization path is a fresh capture
+PASS E10 replay after response fields grew still matches body equality
+PASS G06 authorize r0: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r0: one hold only (held 4000)
+PASS G06 capture r0: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r0: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r0 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS G06 authorize r1: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r1: one hold only (held 4000)
+PASS G06 capture r1: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r1: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r1 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS G06 authorize r2: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r2: one hold only (held 4000)
+PASS G06 capture r2: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r2: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r2 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS A03 20 distinct-key default captures: exactly one 201, others 409 authorization_not_open
+PASS A03 moved 3000 once
+== s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx
+rc=0

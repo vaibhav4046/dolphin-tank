@@ -1,0 +1,8 @@
+outbound reachable to 1.1.1.1
+outbound reachable to 8.8.8.8
+FAIL sibling has no outbound network :: 
+PASS health 200 on internal net
+PASS payment 201 on internal net
+PASS balances after payment
+== d2_smoke: 3 pass, 1 fail, 9 requests, 0 5xx
+FAILED: ['sibling has no outbound network']

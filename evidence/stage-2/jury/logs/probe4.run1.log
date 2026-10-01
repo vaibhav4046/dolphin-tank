@@ -1,0 +1,6 @@
+incoming-list 1
+outgoing-list 1
+empty-requests 1
+request-error 0
+['current-user', 'current-handle', 'logout-button', 'wallet-available', 'wallet-balance', 'empty-requests', 'incoming-list', 'request-item-rq_in1', 'request-amount-rq_in1', 'request-pay-rq_in1', 'request-decline-rq_in1', 'outgoing-list']
+rc=0

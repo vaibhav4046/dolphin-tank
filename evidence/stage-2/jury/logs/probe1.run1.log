@@ -1,0 +1,5 @@
+/ -> http://127.0.0.1:43929/login | login form: 1 | text: Log in /  / Welcome back. Sign in to see your wallet. /  / Email / Password / Log in /  / New here? Create an account.
+/requests -> http://127.0.0.1:43929/login | login form: 1 | text: Log in /  / Welcome back. Sign in to see your wallet. /  / Email / Password / Log in /  / New here? Create an account.
+/split -> http://127.0.0.1:43929/login | login form: 1 | text: Log in /  / Welcome back. Sign in to see your wallet. /  / Email / Password / Log in /  / New here? Create an account.
+/authorizations -> http://127.0.0.1:43929/login | login form: 1 | text: Log in /  / Welcome back. Sign in to see your wallet. /  / Email / Password / Log in /  / New here? Create an account.
+rc=0

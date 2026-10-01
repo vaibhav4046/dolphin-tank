@@ -1,0 +1,57 @@
+PASS health exact body + content type
+OBS HEAD /health -> 404
+OBS GET     /nope                                    -> 404 not_found application/json; charset=utf-8
+OBS POST    /nope                                    -> 404 not_found application/json; charset=utf-8
+OBS GET     /                                        -> 200 None text/html; charset=utf-8
+OBS GET     /payments                                -> 404 not_found application/json; charset=utf-8
+OBS PUT     /payments                                -> 404 not_found application/json; charset=utf-8
+OBS DELETE  /me                                      -> 404 not_found application/json; charset=utf-8
+OBS PATCH   /requests                                -> 404 not_found application/json; charset=utf-8
+OBS POST    /me                                      -> 404 not_found application/json; charset=utf-8
+OBS POST    /activity                                -> 404 not_found application/json; charset=utf-8
+OBS OPTIONS /payments                                -> 404 not_found application/json; charset=utf-8
+OBS GET     /me/                                     -> 404 not_found application/json; charset=utf-8
+OBS GET     //me                                     -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests//pay                           -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests/%00/pay                        -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests/%ZZ/pay                        -> 400 None text/plain; charset=utf-8
+OBS POST    /requests/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests/x/pay/extra                    -> 404 not_found application/json; charset=utf-8
+OBS GET     /_test/reset                             -> 404 not_found application/json; charset=utf-8
+OBS POST    /_test/export                            -> 404 not_found application/json; charset=utf-8
+OBS GET     /health?x=%ZZ                            -> 200 None application/json; charset=utf-8
+OBS GET     /requests/x                              -> 404 not_found application/json; charset=utf-8
+OBS DELETE  /requests/x/cancel                       -> 404 not_found application/json; charset=utf-8
+OBS GET     /requests/x/pay                          -> 404 not_found application/json; charset=utf-8
+OBS GET     /auth/login                              -> 404 not_found application/json; charset=utf-8
+OBS GET     /settlements                             -> 404 not_found application/json; charset=utf-8
+OBS GET     /splits                                  -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests/x/PAY                          -> 404 not_found application/json; charset=utf-8
+OBS GET     /ME                                      -> 404 not_found application/json; charset=utf-8
+OBS GET     /../me                                   -> 404 not_found application/json; charset=utf-8
+OBS GET     /me/../health                            -> 404 not_found application/json; charset=utf-8
+PASS unknown route GET /nope -> 404
+malformed sweep 253 requests in 0.2s
+PASS state untouched by garbage (reset/import/pay garbage rejected): balances
+OBS big header Idempotency-Key -> 422 validation_failed
+OBS big header Authorization -> 401 unauthenticated
+OBS big header X-Junk -> 201 None
+OBS big header Content-Type -> 400 None
+OBS payments with Content-Type text/plain -> 201 None
+PASS chunked-encoded JSON body accepted (201)
+PASS GET with body is served normally
+OBS query 'limit=é' client err UnicodeEncodeError('ascii', 'GET /activity?limit=é HTTP/1.1', 20, 21, 'ordinal not in range(128)')
+OBS query 'limit=1 2' client err InvalidURL("URL can't contain control characters. '/activity?limit=1 2' (found at least ' ')")
+OBS query 'limit=é' client err UnicodeEncodeError('ascii', 'GET /requests?limit=é HTTP/1.1', 20, 21, 'ordinal not in range(128)')
+OBS query 'limit=1 2' client err InvalidURL("URL can't contain control characters. '/requests?limit=1 2' (found at least ' ')")
+mixed round 0: 50 threads x 40 ops in 1.5s
+PASS mixed round 0: conservation (sum of all wallets incl. 181 new users == seeded total) and no negative
+mixed round 1: 50 threads x 40 ops in 1.7s
+PASS mixed round 1: conservation (sum of all wallets incl. 330 new users == seeded total) and no negative
+mixed round 2: 50 threads x 40 ops in 2.3s
+PASS mixed round 2: conservation (sum of all wallets incl. 494 new users == seeded total) and no negative
+OBS transport-level plain-text 4xx (stdlib, pre-handler): [('odd POST /requests/%ZZ/pay', 'no envelope', 400, b'400 Bad Request'), ('odd POST /requests/%ZZ/pay', 'content-type', 400, 'text/plain; charset=utf-8'), ('big header Content-Type', 'no envelope', 400, b'400 Bad Request'), ('big header Content-Type', 'content-type', 400, 'text/plain; charset=utf-8')]
+PASS no 5xx / envelope / content-type / unknown-code violations across the sweep (0 problems)
+PASS max latency under 50 concurrent: 0.30s (<5s)
+OBS status histogram: {200: 1241, 201: 1431, 400: 486, 401: 551, 403: 318, 404: 89, 409: 429, 422: 1765}
+== c09_no5xx_envelope: 10 pass, 0 fail, 8926 requests, 0 5xx

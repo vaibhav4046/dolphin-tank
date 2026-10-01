@@ -1,0 +1,4 @@
+go version go1.24.13 linux/amd64
+VET_OK
+ok  	pocketful	45.605s
+finished

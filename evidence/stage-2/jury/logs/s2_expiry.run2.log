@@ -1,0 +1,32 @@
+PASS C01 before deadline: held 3000 available 7000
+PASS C01 before deadline: status open
+PASS C01 (a) first read after deadline is /me: held 0, available == total == 10000, balance 10000
+PASS C02 (b) list shows status expired
+PASS C02 expired holds nothing: remaining_amount 0
+PASS C02 status=expired matches
+PASS C02 status=open never matches a clock-expired hold
+PASS C02 direction+status=expired for payer
+PASS C01 /me restored
+PASS C01 (c) capture at/after expiry -> 409 authorization_expired
+PASS C01 refused expired capture moved nothing
+PASS C01 (d) void of an expired hold -> 409 authorization_not_open
+PASS C01 void did not turn expired into voided
+PASS C01 (e) all funds held -> pay refused before expiry
+PASS C01 (e) first write after deadline: full payment of released funds succeeds
+PASS C01 (e) first write is a new authorization of released funds: 201
+PASS C01 (f) settlement of released funds after expiry 201
+PASS C03 partial capture ok
+PASS C03 after expiry: held 0, total 9000 (the 1000 stays moved), available 9000
+PASS C03 status expired, captured_amount 1000, payment_ids preserved, payment_id latest
+PASS C03 bob kept 1000
+PASS C03 further capture 409 authorization_expired
+PASS A01 conservation
+PASS D04 no authorization items in activity
+PASS G07 authorize replay after expiry: 200 original body, no new hold
+PASS C01 capture before deadline 201
+PASS C01 5 holds: first captured, other 4 expired (none open)
+PASS C01 held 0 available == total
+PASS B01 ttl=1 accepted, expires_at = created_at + 1s
+PASS B01 ttl=1 hold expired by the clock
+== s2_expiry: 30 pass, 0 fail, 95 requests, 0 5xx, max latency 0.011s, p99 0.010s
+rc=0

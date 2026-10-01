@@ -1,0 +1,147 @@
+PASS payments r0: concurrent x20 -> exactly one 201, 19 x 200
+PASS payments r0: all replay bodies identical to original as JSON value
+PASS payments r0: effect applied exactly once
+PASS payments r0: conservation
+PASS payments r0: replay after state change -> 200 original body
+PASS payments r0: replay made no further change
+PASS payments r0: claimed key + invalid fields -> 409 idempotency_key_reuse
+PASS payments r0: claimed key + different valid body -> 409
+PASS payments r0: no key -> 400 missing_idempotency_key
+PASS payments r0: empty key -> 400 missing_idempotency_key
+PASS payments r0: 256-char key -> 422 validation_failed
+PASS payments r0: 255-char key accepted (201)
+PASS payments r0: 255-char key replays (200)
+PASS payments r0: 1-char key accepted
+PASS payments r1: concurrent x20 -> exactly one 201, 19 x 200
+PASS payments r1: all replay bodies identical to original as JSON value
+PASS payments r1: effect applied exactly once
+PASS payments r1: conservation
+PASS payments r2: concurrent x20 -> exactly one 201, 19 x 200
+PASS payments r2: all replay bodies identical to original as JSON value
+PASS payments r2: effect applied exactly once
+PASS payments r2: conservation
+PASS requests r0: concurrent x20 -> exactly one 201, 19 x 200
+PASS requests r0: all replay bodies identical to original as JSON value
+PASS requests r0: effect applied exactly once
+PASS requests r0: conservation
+PASS requests r0: replay after state change -> 200 original body
+PASS requests r0: replay made no further change
+PASS requests r0: claimed key + invalid fields -> 409 idempotency_key_reuse
+PASS requests r0: claimed key + different valid body -> 409
+PASS requests r0: no key -> 400 missing_idempotency_key
+PASS requests r0: empty key -> 400 missing_idempotency_key
+PASS requests r0: 256-char key -> 422 validation_failed
+PASS requests r0: 255-char key accepted (201)
+PASS requests r0: 255-char key replays (200)
+PASS requests r0: 1-char key accepted
+PASS requests r1: concurrent x20 -> exactly one 201, 19 x 200
+PASS requests r1: all replay bodies identical to original as JSON value
+PASS requests r1: effect applied exactly once
+PASS requests r1: conservation
+PASS requests r2: concurrent x20 -> exactly one 201, 19 x 200
+PASS requests r2: all replay bodies identical to original as JSON value
+PASS requests r2: effect applied exactly once
+PASS requests r2: conservation
+PASS pay r0: concurrent x20 -> exactly one 201, 19 x 200
+PASS pay r0: all replay bodies identical to original as JSON value
+PASS pay r0: effect applied exactly once
+PASS pay r0: conservation
+PASS pay r0: replay after state change -> 200 original body
+PASS pay r0: replay made no further change
+PASS pay r0: claimed key + invalid fields -> 409 idempotency_key_reuse
+PASS pay r0: claimed key + different valid body -> 409
+PASS pay r0: no key -> 400 missing_idempotency_key
+PASS pay r0: empty key -> 400 missing_idempotency_key
+PASS pay r0: 256-char key -> 422 validation_failed
+PASS pay r0: 255-char key accepted (201)
+PASS pay r0: 255-char key replays (200)
+PASS pay r1: concurrent x20 -> exactly one 201, 19 x 200
+PASS pay r1: all replay bodies identical to original as JSON value
+PASS pay r1: effect applied exactly once
+PASS pay r1: conservation
+PASS pay r2: concurrent x20 -> exactly one 201, 19 x 200
+PASS pay r2: all replay bodies identical to original as JSON value
+PASS pay r2: effect applied exactly once
+PASS pay r2: conservation
+PASS splits r0: concurrent x20 -> exactly one 201, 19 x 200
+PASS splits r0: all replay bodies identical to original as JSON value
+PASS splits r0: effect applied exactly once
+PASS splits r0: conservation
+PASS splits r0: replay after state change -> 200 original body
+PASS splits r0: replay made no further change
+PASS splits r0: claimed key + invalid fields -> 409 idempotency_key_reuse
+PASS splits r0: claimed key + different valid body -> 409
+PASS splits r0: no key -> 400 missing_idempotency_key
+PASS splits r0: empty key -> 400 missing_idempotency_key
+PASS splits r0: 256-char key -> 422 validation_failed
+PASS splits r0: 255-char key accepted (201)
+PASS splits r0: 255-char key replays (200)
+PASS splits r0: 1-char key accepted
+PASS splits r1: concurrent x20 -> exactly one 201, 19 x 200
+PASS splits r1: all replay bodies identical to original as JSON value
+PASS splits r1: effect applied exactly once
+PASS splits r1: conservation
+PASS splits r2: concurrent x20 -> exactly one 201, 19 x 200
+PASS splits r2: all replay bodies identical to original as JSON value
+PASS splits r2: effect applied exactly once
+PASS splits r2: conservation
+PASS settlements r0: concurrent x20 -> exactly one 201, 19 x 200
+PASS settlements r0: all replay bodies identical to original as JSON value
+PASS settlements r0: effect applied exactly once
+PASS settlements r0: conservation
+PASS settlements r0: replay after state change -> 200 original body
+PASS settlements r0: replay made no further change
+PASS settlements r0: claimed key + invalid fields -> 409 idempotency_key_reuse
+PASS settlements r0: claimed key + different valid body -> 409
+PASS settlements r0: no key -> 400 missing_idempotency_key
+PASS settlements r0: empty key -> 400 missing_idempotency_key
+PASS settlements r0: 256-char key -> 422 validation_failed
+PASS settlements r0: 255-char key accepted (201)
+PASS settlements r0: 255-char key replays (200)
+PASS settlements r0: 1-char key accepted
+PASS settlements r1: concurrent x20 -> exactly one 201, 19 x 200
+PASS settlements r1: all replay bodies identical to original as JSON value
+PASS settlements r1: effect applied exactly once
+PASS settlements r1: conservation
+PASS settlements r2: concurrent x20 -> exactly one 201, 19 x 200
+PASS settlements r2: all replay bodies identical to original as JSON value
+PASS settlements r2: effect applied exactly once
+PASS settlements r2: conservation
+PASS scope: same key different users both 201 (payments)
+PASS scope: bob's different body on his own key -> 409, ada unaffected
+PASS scope: same settlement key two operators both 201
+PASS scope: same split key two users both 201
+PASS scope: same request key two users both 201
+PASS path: same key+body on /payments then /requests -> both 201, separate effects
+PASS path: each replays on its own path
+PASS path: same key+body {} on pay of two different requests -> both 201 (different path)
+PASS eq: first 201
+PASS eq: key order is same JSON value -> 200 original
+PASS eq: whitespace is same JSON value -> 200 original
+PASS eq: 1000.0 is same JSON value -> 200 original
+PASS eq: 1e3 is same JSON value -> 200 original
+PASS eq: 1E3 is same JSON value -> 200 original
+PASS eq: escape is same JSON value -> 200 original
+PASS eq: amount 1001 is a different JSON value -> 409 idempotency_key_reuse
+PASS eq: extra unknown field is a different JSON value -> 409 idempotency_key_reuse
+PASS eq: note omitted vs n is a different JSON value -> 409 idempotency_key_reuse
+PASS eq: visibility explicit is a different JSON value -> 409 idempotency_key_reuse
+PASS eq: ada balance moved exactly once (1000)
+PASS pay: {} then {visibility:public} same key -> 409; {} then '{ }' -> 200
+PASS pay: replay on already-paid request -> 200 original, balance unchanged
+PASS pay: new key on already-paid request -> 409 request_not_pending
+PASS failed: 409 insufficient_funds first
+PASS failed: same key different body after 409 -> treated as first use (201)
+PASS failed: 422 amount 0 status
+PASS failed: 404 unknown handle status
+PASS failed: 422 self_payment status
+PASS failed: key reusable after 422/404/422 -> 201
+PASS failed: same key+body after insufficient_funds then funded -> 201 (not 200/409)
+PASS failed: pay 409 insufficient then funded, same key -> 201
+PASS failed: self_request 422 then valid same key -> 201
+PASS failed: split 404 then valid same key -> 201; 404 created no requests
+PASS failed: settlement 409 then different body same key -> 201
+OBS no token,no key -> 401 unauthenticated | no token,key -> 401 unauthenticated
+OBS bad JSON,key -> 400 malformed_request | bad JSON,no key -> 400 missing_idempotency_key | invalid amount,no key -> 400 missing_idempotency_key
+PASS unauthenticated (no token) -> 401
+== c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx

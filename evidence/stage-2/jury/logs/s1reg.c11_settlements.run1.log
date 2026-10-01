@@ -1,0 +1,79 @@
+PASS no token -> 401
+PASS authenticated non-operator -> 403 forbidden
+PASS operator without key -> 400 missing_idempotency_key
+PASS non-operator with no key: 403 or 400 (recorded)
+OBS non-operator, no key -> 403
+PASS no operators configured -> everyone 403
+PASS money unchanged after rejected attempts
+PASS 201 and shape
+PASS payments in input order with handles/amounts/defaults
+PASS every member: settlement_id == batch id, request_id null, created_at == committed_at, ids unique
+PASS chain affordable by net (bob received 100 before sending 50): balances
+PASS operator is not charged/credited
+PASS cy sees ordinary-visibility members: public ada->bob and dee->ada yes; private bob->cy yes (receiver); settlement_id on members
+PASS third party eve sees public members only, private member hidden
+PASS operator (not a party) sees only public members in own feed (no private of others)
+PASS nonmember payment exposes settlement_id null
+PASS settlement members ordinary payment shape (full key set)
+PASS replay -> 200 identical complete response (incl. committed_at, all receipts), no effect
+PASS same key different body -> 409 idempotency_key_reuse
+PASS claimed key + invalid transfers -> 409 (key resolved before validation)
+PASS zero-balance cycle ada->bob->cy->ada is affordable (net 0 everywhere)
+PASS reverse-order chain (bob sends before receiving) still affordable by net
+PASS ada sends 150 (> balance 100) but receives 60: net -90, affordable
+PASS collectively unaffordable -> 409 insufficient_funds
+PASS all-or-none: no balance change, no payments in any feed
+PASS failed validation/funds claims no key: same key reusable with a corrected body -> 201
+PASS exact-balance drain affordable (balances may reach 0)
+PASS entry error: unknown handle beats insufficient -> 404 not_found
+PASS entry error: self beats insufficient -> 422 self_payment
+PASS entry error: first erroneous entry decides: self(1) before unknown(2) -> 422 self_payment
+PASS entry error: first erroneous entry decides: unknown(1) before self(2) -> 404 not_found
+PASS entry error: unknown from_handle -> 404 not_found
+PASS entry error: amount 0 -> 422 validation_failed
+PASS entry error: amount 1e9+1 -> 422 validation_failed
+PASS entry error: amount string -> 422 validation_failed
+PASS entry error: note 201 -> 422 validation_failed
+PASS entry error: visibility bad -> 422 validation_failed
+PASS entry error: note null -> 422 validation_failed
+PASS entry error: validation error beats later insufficient -> 422 validation_failed
+PASS no money moved by any rejected settlement
+OBS malformed batch transfers missing      -> 422 validation_failed
+PASS malformed batch transfers missing -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch transfers empty        -> 422 validation_failed
+PASS malformed batch transfers empty -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch transfers not array    -> 422 validation_failed
+PASS malformed batch transfers not array -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch transfers null         -> 422 validation_failed
+PASS malformed batch transfers null -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch entry not object       -> 422 validation_failed
+PASS malformed batch entry not object -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch entry missing amount   -> 422 validation_failed
+PASS malformed batch entry missing amount -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch entry missing from     -> 422 validation_failed
+PASS malformed batch entry missing from -> 4xx validation_failed/malformed_request, key unclaimed
+OBS malformed batch entry handle number    -> 422 validation_failed
+PASS malformed batch entry handle number -> 4xx validation_failed/malformed_request, key unclaimed
+PASS bad JSON -> 400 malformed_request
+PASS 33 transfers -> 422 validation_failed
+PASS 32 transfers -> 201, 32 receipts
+PASS unknown body fields ignored; 1e0 amount accepted
+PASS operator GET /requests excludes others' requests
+PASS operator pay/decline/cancel other's request -> 403
+PASS operator feed lacks others' private payment
+PASS request untouched
+PASS second operator ada may settle others' wallets (bob has 0 -> unaffordable 409)
+PASS operator ada as sender in own settlement: 201
+PASS R0 30 concurrent identical settlements: exactly one 201, 29 x 200 same body
+PASS R0 effect once
+PASS R0 30 settlements (100 each) + 10 direct payments (100 each) vs ada 1000: exactly 10 wins total, ada 0, conserved, never negative
+PASS R0 settlement membership intact in ledger (2 members each)
+PASS R1 30 concurrent identical settlements: exactly one 201, 29 x 200 same body
+PASS R1 effect once
+PASS R1 30 settlements (100 each) + 10 direct payments (100 each) vs ada 1000: exactly 10 wins total, ada 0, conserved, never negative
+PASS R1 settlement membership intact in ledger (2 members each)
+PASS R2 30 concurrent identical settlements: exactly one 201, 29 x 200 same body
+PASS R2 effect once
+PASS R2 30 settlements (100 each) + 10 direct payments (100 each) vs ada 1000: exactly 10 wins total, ada 0, conserved, never negative
+PASS R2 settlement membership intact in ledger (2 members each)
+== c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx

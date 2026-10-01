@@ -1,0 +1,90 @@
+--- external url scan of web/ source
+./js/dom.js:1:const SVG_NS = "http://www.w3.org/2000/svg";
+(end scan)
+--- url( / @import / @font-face
+css/tokens.css:1:@font-face {
+css/tokens.css:3:  src: url("/assets/fonts/dm-sans.woff2") format("woff2");
+css/tokens.css:8:@font-face {
+css/tokens.css:10:  src: url("/assets/fonts/inter.woff2") format("woff2");
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/http/client.py", line 971, in _get_hostport
+    port = int(host[i+1:])
+           ^^^^^^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: ','
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/a.py", line 7, in <module>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#030014">
+<title>Pocketful</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/assets/css/tokens.css">
+<link rel="stylesheet" href="/assets/css/base.css">
+<link rel="stylesheet" href="/assets/css/components.css">
+<script type="module" src="/assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/></svg><span>Pocketful</span></a>
+  <nav class="primary-nav" aria-label="Primary">
+    <a href="/" data-nav="/">Wallet</a>
+    <a href="/requests" data-nav="/requests">Requests</a>
+    <a href="/split" data-nav="/split">Split</a>
+    <a href="/authorizations" data-nav="/authorizations">Authorizations</a>
+  </nav>
+  <div class="session" id="session"></div>
+</header>
+<main id="main" class="page" aria-busy="true">
+  <div class="skeleton" aria-hidden="true"><div class="sk sk-wide"></div><div class="sk"></div><div class="sk"></div></div>
+  <p class="vh" role="status">Loading…</p>
+</main>
+<noscript><p class="page">Pocketful needs JavaScript to run in your browser.</p></noscript>
+</body>
+</html>
+
+    st,ct,body=get(m); print("ASSET",m,st,ct,len(body))
+               ^^^^^^
+  File "/a.py", line 4, in get
+    r=urllib.request.urlopen(b+p,timeout=5); return r.status,r.headers.get("Content-Type"),r.read()
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 515, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 532, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 1373, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/urllib/request.py", line 1313, in do_open
+    h = http_class(host, timeout=req.timeout, **http_conn_args)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/http/client.py", line 921, in __init__
+    (self.host, self.port) = self._get_hostport(host, port)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/http/client.py", line 976, in _get_hostport
+    raise InvalidURL("nonnumeric port: '%s'" % host[i+1:])
+http.client.InvalidURL: nonnumeric port: ','
+ASSET /assets/css/tokens.css 200 text/css; charset=utf-8 1412
+ASSET /assets/css/base.css 200 text/css; charset=utf-8 3241
+ASSET /assets/css/components.css 200 text/css; charset=utf-8 7188
+ASSET /assets/js/main.js 200 text/javascript; charset=utf-8 1438
+ASSET /assets/fonts/dm-sans.woff2 200 font/woff2 36932
+ASSET /assets/fonts/inter.woff2 200 font/woff2 48256
+css url -> /assets/fonts/dm-sans.woff2 same-origin
+css url -> /assets/fonts/inter.woff2 same-origin
+/assets/js/main.js 200 text/javascript; charset=utf-8 1438 external fetch targets: []

@@ -1,0 +1,21 @@
+PASS clock sanity: python now is past displayed expires_at (i=0)
+PASS C01 source shows expired past displayed expires_at (i=0)
+PASS H05 destination shows imported hold expired (i=0)
+PASS clock sanity: python now is past displayed expires_at (i=1)
+PASS C01 source shows expired past displayed expires_at (i=1)
+PASS H05 destination shows imported hold expired (i=1)
+PASS clock sanity: python now is past displayed expires_at (i=2)
+PASS C01 source shows expired past displayed expires_at (i=2)
+PASS H05 destination shows imported hold expired (i=2)
+PASS clock sanity: python now is past displayed expires_at (i=3)
+PASS C01 source shows expired past displayed expires_at (i=3)
+PASS H05 destination shows imported hold expired (i=3)
+FAIL clock sanity: python now is past displayed expires_at (i=4) :: (datetime.datetime(2026, 10, 1, 21, 7, 17, 489900, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 1, 21, 7, 18, tzinfo=datetime.timezone.utc))
+FAIL C01 source shows expired past displayed expires_at (i=4) :: ({'authorization_id': 'a_1', 'from_user_id': 'u_ada', 'from_handle': 'ada', 'to_user_id': 'u_bob', 'to_handle': 'bob', 'amount': 4000, 'captured_amount': 0, 'remaining_amount': 4000, 'currency': 'EUR', 'note': '', 'visibility': 'public', 'status': 'open', 'expires_at': '2026-10-01T21:07:18+00:00', 'payment_id': None, 'payment_ids': [], 'created_at': '2026-10-01T21:07:16+00:00'}, '2026-10-01T21:07:17.489900+00:00')
+FAIL H05 destination shows imported hold expired (i=4) :: ({'authorization_id': 'a_1', 'from_user_id': 'u_ada', 'from_handle': 'ada', 'to_user_id': 'u_bob', 'to_handle': 'bob', 'amount': 4000, 'captured_amount': 0, 'remaining_amount': 4000, 'currency': 'EUR', 'note': '', 'visibility': 'public', 'status': 'open', 'expires_at': '2026-10-01T21:07:18+00:00', 'payment_id': None, 'payment_ids': [], 'created_at': '2026-10-01T21:07:16+00:00'}, '2026-10-01T21:07:17.489900+00:00')
+PASS clock sanity: python now is past displayed expires_at (i=5)
+PASS C01 source shows expired past displayed expires_at (i=5)
+PASS H05 destination shows imported hold expired (i=5)
+== s2_export_expiry: 15 pass, 3 fail, 53 requests, 0 5xx, max latency 0.011s, p99 0.010s
+FAILED: ['clock sanity: python now is past displayed expires_at (i=4)', 'C01 source shows expired past displayed expires_at (i=4)', 'H05 destination shows imported hold expired (i=4)']
+rc=1

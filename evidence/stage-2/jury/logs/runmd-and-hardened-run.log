@@ -1,0 +1,25 @@
+== RUN.md exact commands
+Successfully tagged pocketful-s2-runmd:latest
+{"status":"ok"}
+first healthy after 0 ms from docker run returning
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Date: Thu, 01 Oct 2026 21:41:51 GMT
+Content-Length: 15
+
+== hardened run: read-only fs, 2 cpus, 2g, arbitrary uid, no-PORT default 8080, no network
+running map[none:0xc0003ae6c0]
+2026/10/01 21:41:54 pocketful listening on 0.0.0.0:8080
+== PORT=9999 and PORT=80
+docker: invalid proto: 
+
+Run 'docker run --help' for more information
+PORT= -> 
+Error response from daemon: No such container: pp
+docker: invalid proto: 
+
+Run 'docker run --help' for more information
+PORT= -> 
+Error response from daemon: No such container: pp
+== default port (no PORT env)
+default -> 
