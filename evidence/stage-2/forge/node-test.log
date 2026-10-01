@@ -1,0 +1,22 @@
+$ node --test jstest
+✔ same scope and fingerprint keeps the key; a change mints a new one (1.5388ms)
+✔ scopes are independent and forget starts over (0.3791ms)
+✔ default key generator works with and without crypto.randomUUID (3.9407ms)
+✔ only the most recently begun token is current (0.494ms)
+✔ out-of-order responses: the later refresh wins (44.3082ms)
+✔ classify (0.3971ms)
+✔ parseAmount accepts plain decimals (0.319ms)
+✔ parseAmount rejects with the right reason (0.2186ms)
+✔ formatAmount / formatDecimal (0.1939ms)
+✔ parse then format round-trips (0.3524ms)
+✔ splitShares: stage-1 section 9 examples (0.1867ms)
+✔ splitShares matches the shared table (amount 1..60, n 1..8) (1.4988ms)
+✔ parseHandles (0.2122ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 130.0645

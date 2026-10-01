@@ -74,7 +74,7 @@ func TestForgeSignupLogin(t *testing.T) {
 	if _, e = s.Authenticate("nope"); e == nil || e.Status != 401 {
 		t.Fatal(e)
 	}
-	if me := s.st.Me(uid).(meBody); me.Handle != "a_b_c" || me.Balance != 0 {
+	if me := s.st.Me(uid, time.Now()).(meBody); me.Handle != "a_b_c" || me.Balance != 0 || me.Total != 0 || me.Available != 0 || me.Held != 0 {
 		t.Fatalf("%+v", me)
 	}
 	if s.st.usersByID[uid].PassHash == "correct horse" || strings.Contains(s.st.usersByID[uid].PassHash, "correct horse") {

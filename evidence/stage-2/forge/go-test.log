@@ -1,0 +1,49 @@
+$ go vet ./...
+(clean)
+$ go build ./...
+(clean)
+$ go test -count=1 -v -run "TestAuthz|TestSplitSharesTable|TestForge" ./...
+--- PASS: TestForgeDeriveHandle (0.00s)
+--- PASS: TestForgePasswordHash (0.03s)
+--- PASS: TestForgeSignupLogin (0.09s)
+--- PASS: TestAuthzEffectiveExpiry (0.00s)
+--- PASS: TestAuthzTTLBoundary (0.00s)
+--- PASS: TestAuthzAuthorize (0.00s)
+--- PASS: TestAuthzCaptureRules (0.00s)
+--- PASS: TestAuthzCapturePrecedence (0.00s)
+--- PASS: TestAuthzExtendedCapture (0.00s)
+--- PASS: TestAuthzVoid (0.00s)
+--- PASS: TestAuthzHeldFundsCannotFundNewPayments (0.00s)
+--- PASS: TestAuthzList (0.00s)
+--- PASS: TestAuthzMe (0.00s)
+--- PASS: TestAuthzPaymentJSONHasAuthorizationID (0.00s)
+--- PASS: TestAuthzReindex (0.00s)
+--- PASS: TestAuthzOptValidators (0.00s)
+--- PASS: TestAuthzCaptureRace (0.00s)
+--- PASS: TestAuthzFinalCaptureRaceMixedAmounts (0.00s)
+--- PASS: TestAuthzAuthorizePayRace (0.00s)
+    authz_test.go:1009: void won 294, capture won 6
+--- PASS: TestAuthzVoidCaptureRace (0.00s)
+    authz_test.go:1071: successful ops: map[authorize:706 capture:337 pay:356 void:315]
+--- PASS: TestAuthzRandomWalk (0.16s)
+--- PASS: TestForgePay (0.00s)
+--- PASS: TestForgeNewIDSkipsSeeded (0.00s)
+--- PASS: TestForgeRequestLifecycle (0.00s)
+--- PASS: TestForgeFeedAndListing (0.00s)
+--- PASS: TestForgeOverdraftRace (0.00s)
+--- PASS: TestForgePayRequestRace (0.00s)
+--- PASS: TestForgeSplitSharesTable (0.00s)
+--- PASS: TestForgeSplit (0.00s)
+--- PASS: TestForgeSplitsPaidInFull (0.00s)
+--- PASS: TestForgeExportRoundTripAndReindexRejects (0.01s)
+--- PASS: TestSplitSharesTable (0.00s)
+--- PASS: TestForgeReqAmount (0.00s)
+--- PASS: TestForgeReqString (0.00s)
+--- PASS: TestForgeOptNoteAndVisibility (0.00s)
+--- PASS: TestForgeReqHandles (0.00s)
+--- PASS: TestForgeCheckIdemKey (0.00s)
+--- PASS: TestForgeParseLimitOffset (0.00s)
+PASS
+ok  	pocketful	0.328s
+$ go test -count=1 ./...
+ok  	pocketful	7.958s
