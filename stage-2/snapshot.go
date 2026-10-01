@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"time"
 )
 
 const (
@@ -75,14 +76,32 @@ func trParseExport(raw []byte) (*State, *AppError) {
 	if e := trValidateState(&st); e != nil {
 		return nil, e
 	}
-	if err := trSafeReindex(&st); err != nil {
+	// Holds only ever shrink as time passes, so a state valid now is still valid
+	// when Import swaps it in a moment later.
+	now := time.Now()
+	if e := trCheckHolds(&st, now); e != nil {
+		return nil, e
+	}
+	if err := trSafeReindex(&st, now); err != nil {
 		return nil, trBad("invalid state: %v", err)
 	}
 	return &st, nil
 }
 
-// trNormalize makes every collection non-nil, so it marshals as [] or {}.
+// trNormalize makes every collection non-nil, so it marshals as [] or {}, and
+// gives a stage-1 state (no authorizations, no ttl) its stage-2 defaults.
 func trNormalize(st *State) {
+	if st.Authorizations == nil {
+		st.Authorizations = []*Authorization{}
+	}
+	for _, a := range st.Authorizations {
+		if a != nil && a.PaymentIDs == nil {
+			a.PaymentIDs = []string{}
+		}
+	}
+	if st.AuthTTLSeconds == 0 {
+		st.AuthTTLSeconds = trDefaultTTL
+	}
 	if st.Users == nil {
 		st.Users = []*User{}
 	}
@@ -141,6 +160,21 @@ func trValidateState(st *State) *AppError {
 	for _, sp := range st.Splits {
 		if sp == nil {
 			return trBad("state contains a null split")
+		}
+	}
+	if st.AuthTTLSeconds < 1 || st.AuthTTLSeconds > trMaxTTL {
+		return trBad("authorization_ttl_seconds must be an integer from 1 to %d", trMaxTTL)
+	}
+	auths := make(map[string]bool, len(st.Authorizations))
+	for _, a := range st.Authorizations {
+		if a == nil {
+			return trBad("state contains a null authorization")
+		}
+		auths[a.AuthorizationID] = true
+	}
+	for _, p := range st.Payments {
+		if p.AuthorizationID != nil && !auths[*p.AuthorizationID] {
+			return trBad("payment %q references an unknown authorization", p.PaymentID)
 		}
 	}
 	for tok, uid := range st.Tokens {

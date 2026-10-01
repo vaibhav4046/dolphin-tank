@@ -85,6 +85,14 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 	if e != nil {
 		return nil, e
 	}
+	ttl, e := trFxTTL(root)
+	if e != nil {
+		return nil, e
+	}
+	auths, e := trFxAuthorizations(root, ids, byID, created)
+	if e != nil {
+		return nil, e
+	}
 	for _, p := range pays {
 		if p.PaymentID == "" {
 			p.PaymentID = ids.gen("p")
@@ -95,16 +103,204 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 			r.RequestID = ids.gen("rq")
 		}
 	}
+	for _, a := range auths {
+		if a.AuthorizationID == "" {
+			a.AuthorizationID = ids.gen("a")
+		}
+	}
 	st := &State{
 		Currency: cur, MinorUnits: minor,
 		Users: users, Payments: pays, Requests: reqs, Splits: []*Split{},
+		Authorizations: auths, AuthTTLSeconds: ttl,
 		Tokens: map[string]string{}, Seq: ids.seq,
 		Sys: SysState{Operators: ops, Idem: map[string]*IdemRecord{}},
 	}
-	if err := trSafeReindex(st); err != nil {
+	if e := trLinkCaptures(st); e != nil {
+		return nil, e
+	}
+	if e := trCheckHolds(st, now); e != nil {
+		return nil, e
+	}
+	if err := trSafeReindex(st, now); err != nil {
 		return nil, trBad("invalid fixture: %v", err)
 	}
 	return st, nil
+}
+
+const (
+	trDefaultTTL = int64(600)
+	trMaxTTL     = int64(1_000_000_000)
+)
+
+// trFxTTL reads authorization_ttl_seconds: omitted or null means 600, anything
+// else must be an integer from 1 to 1e9.
+func trFxTTL(root map[string]any) (int64, *AppError) {
+	v, ok := root["authorization_ttl_seconds"]
+	if !ok || v == nil {
+		return trDefaultTTL, nil
+	}
+	n, isNum := v.(json.Number)
+	if !isNum {
+		return 0, trBad("authorization_ttl_seconds must be a positive integer")
+	}
+	i, ok := trIntFromNumber(n)
+	if !ok || i < 1 || i > trMaxTTL {
+		return 0, trBad("authorization_ttl_seconds must be an integer from 1 to %d", trMaxTTL)
+	}
+	return i, nil
+}
+
+// trFxAuthorizations reads the seeded holds. The stored status is taken as
+// given; the clock never rewrites it. expires_at is kept exactly as written.
+func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, created string) ([]*Authorization, *AppError) {
+	list, e := trList(root, "authorizations")
+	if e != nil {
+		return nil, e
+	}
+	out := make([]*Authorization, 0, len(list))
+	for _, v := range list {
+		o, ok := v.(map[string]any)
+		if !ok {
+			return nil, trBad("every authorization must be an object")
+		}
+		id, e := trOptID(o, ids)
+		if e != nil {
+			return nil, e
+		}
+		from, e := trFxUser(o, "from_user_id", byID)
+		if e != nil {
+			return nil, e
+		}
+		to, e := trFxUser(o, "to_user_id", byID)
+		if e != nil {
+			return nil, e
+		}
+		if from == to {
+			return nil, trBad("authorization from_user_id and to_user_id must differ")
+		}
+		amount, present, e := trOptInt(o, "amount")
+		if e != nil {
+			return nil, e
+		}
+		if !present || amount < 1 || amount > trMaxFixtureAmount {
+			return nil, trBad("authorization amount must be an integer from 1 to 2^53")
+		}
+		note, _, e := trOptString(o, "note")
+		if e != nil {
+			return nil, e
+		}
+		vis, present, e := trOptString(o, "visibility")
+		if e != nil {
+			return nil, e
+		}
+		if !present {
+			vis = visPublic
+		}
+		if !validVisibility(vis) {
+			return nil, trBad("visibility must be public or private")
+		}
+		status, present, e := trOptString(o, "status")
+		if e != nil {
+			return nil, e
+		}
+		if !present {
+			status = "open"
+		}
+		switch status {
+		case "open", "captured", "voided", "expired":
+		default:
+			return nil, trBad("authorization status %q is invalid", status)
+		}
+		exp, present, e := trOptString(o, "expires_at")
+		if e != nil {
+			return nil, e
+		}
+		if _, err := time.Parse(time.RFC3339, exp); !present || err != nil {
+			return nil, trBad("authorization expires_at must be an RFC 3339 timestamp")
+		}
+		captured := int64(0)
+		if status == "captured" {
+			captured = amount
+		}
+		if c, present, e := trOptInt(o, "captured_amount"); e != nil {
+			return nil, e
+		} else if present {
+			captured = c
+		}
+		if captured < 0 || captured > amount {
+			return nil, trBad("captured_amount must be between 0 and the authorization amount")
+		}
+		payIDs, e := trFxStrings(o, "payment_ids")
+		if e != nil {
+			return nil, e
+		}
+		out = append(out, &Authorization{
+			AuthorizationID: id, FromUserID: from.ID, ToUserID: to.ID,
+			Amount: amount, CapturedAmount: captured, Note: note, Visibility: vis,
+			Status: status, ExpiresAt: exp, PaymentIDs: payIDs, CreatedAt: created,
+		})
+	}
+	return out, nil
+}
+
+func trFxStrings(o map[string]any, k string) ([]string, *AppError) {
+	list, e := trList(o, k)
+	if e != nil {
+		return nil, e
+	}
+	out := make([]string, 0, len(list))
+	for _, v := range list {
+		s, ok := v.(string)
+		if !ok {
+			return nil, trBad("%s must contain strings", k)
+		}
+		out = append(out, s)
+	}
+	return out, nil
+}
+
+// trLinkCaptures checks that every payment_ids entry names a seeded payment and
+// marks that payment as made by the authorization, so a seeded capture reads
+// like one made through the API.
+func trLinkCaptures(st *State) *AppError {
+	pays := make(map[string]*Payment, len(st.Payments))
+	for _, p := range st.Payments {
+		pays[p.PaymentID] = p
+	}
+	for _, a := range st.Authorizations {
+		for _, pid := range a.PaymentIDs {
+			p := pays[pid]
+			if p == nil {
+				return trBad("authorization %s lists unknown payment %q", a.AuthorizationID, pid)
+			}
+			if p.AuthorizationID == nil {
+				id := a.AuthorizationID
+				p.AuthorizationID = &id
+			}
+		}
+	}
+	return nil
+}
+
+// trCheckHolds rejects a state in which some wallet's effectively open holds
+// exceed its balance. It never adds past the balance, so it cannot overflow.
+func trCheckHolds(st *State, now time.Time) *AppError {
+	bal := make(map[string]int64, len(st.Users))
+	for _, u := range st.Users {
+		bal[u.ID] = u.Balance
+	}
+	held := make(map[string]int64, len(st.Authorizations))
+	for _, a := range st.Authorizations {
+		rem := a.RemainingAt(now)
+		if rem <= 0 {
+			continue
+		}
+		if rem > bal[a.FromUserID]-held[a.FromUserID] {
+			return trBad("open holds of user %s exceed their balance", a.FromUserID)
+		}
+		held[a.FromUserID] += rem
+	}
+	return nil
 }
 
 func trFxCurrency(root map[string]any) (string, int, *AppError) {
@@ -474,11 +670,11 @@ func trFxOperators(root map[string]any) (map[string]bool, *AppError) {
 
 // trSafeReindex turns a panic on a malformed State into an error so imports
 // and resets can never crash the service.
-func trSafeReindex(st *State) (err error) {
+func trSafeReindex(st *State, now time.Time) (err error) {
 	defer func() {
 		if r := recover(); r != nil {
 			err = fmt.Errorf("inconsistent state: %v", r)
 		}
 	}()
-	return st.Reindex()
+	return st.ReindexAt(now)
 }

@@ -54,9 +54,11 @@ func trSettle(st *State, body map[string]any, now time.Time) (any, *AppError) {
 		net[l.from] -= l.amount
 		net[l.to] += l.amount
 	}
+	// A wallet's open holds stay reserved: its balance after the batch must still
+	// cover them. A net-credited wallet always passes (Held <= Balance).
 	for u, delta := range net {
-		if u.Balance+delta < 0 {
-			return nil, NewErr(409, "insufficient_funds", "settlement would leave a wallet below zero")
+		if u.Balance+delta < st.Held(u.ID, now) {
+			return nil, NewErr(409, "insufficient_funds", "settlement would leave a wallet below its held funds")
 		}
 	}
 
