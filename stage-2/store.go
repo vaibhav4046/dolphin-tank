@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math"
 	"sync"
 	"time"
 )
@@ -74,7 +75,10 @@ func validVisibility(v string) bool { return v == visPublic || v == visPrivate }
 // It also derives denormalised fields (handles, currency) and applies fixture defaults
 // (payment visibility public, request status pending, missing created_at = now).
 // On error the State must be discarded.
-func (st *State) Reindex() error {
+func (st *State) Reindex() error { return st.ReindexAt(time.Now()) }
+
+// ReindexAt is Reindex with an explicit clock: which authorizations still hold funds depends on now.
+func (st *State) ReindexAt(now time.Time) error {
 	if st.Currency == "" {
 		return errors.New("currency is required")
 	}
@@ -93,13 +97,19 @@ func (st *State) Reindex() error {
 	if st.Splits == nil {
 		st.Splits = []*Split{}
 	}
+	if st.Authorizations == nil {
+		st.Authorizations = []*Authorization{}
+	}
+	if st.AuthTTLSeconds < 0 || st.AuthTTLSeconds > maxAuthTTLSeconds {
+		return fmt.Errorf("authorization_ttl_seconds must be 0 (unset) or 1 to %d, got %d", maxAuthTTLSeconds, st.AuthTTLSeconds)
+	}
 	if st.Tokens == nil {
 		st.Tokens = map[string]string{}
 	}
 	if st.Seq == nil {
 		st.Seq = map[string]int64{}
 	}
-	now := FormatTime(time.Now())
+	nowStr := FormatTime(now)
 	ids := map[string]struct{}{}
 	byID := map[string]*User{}
 	byHandle := map[string]*User{}
@@ -153,7 +163,7 @@ func (st *State) Reindex() error {
 		}
 		p.FromHandle, p.ToHandle, p.Currency = from.Handle, to.Handle, st.Currency
 		if p.CreatedAt == "" {
-			p.CreatedAt = now
+			p.CreatedAt = nowStr
 		}
 		payByID[p.PaymentID] = p
 		ids[p.PaymentID] = struct{}{}
@@ -184,7 +194,7 @@ func (st *State) Reindex() error {
 		}
 		r.RequesterHandle, r.PayerHandle, r.Currency = requester.Handle, payer.Handle, st.Currency
 		if r.CreatedAt == "" {
-			r.CreatedAt = now
+			r.CreatedAt = nowStr
 		}
 		reqByID[r.RequestID] = r
 		ids[r.RequestID] = struct{}{}
@@ -214,12 +224,93 @@ func (st *State) Reindex() error {
 		}
 		ids[sp.SplitID] = struct{}{}
 	}
+	authByID, err := indexAuthorizations(st.Authorizations, byID, payByID, ids, nowStr)
+	if err != nil {
+		return err
+	}
+	if err := checkHolds(st.Authorizations, byID, now); err != nil {
+		return err
+	}
 	for tok, uid := range st.Tokens {
 		if tok == "" || byID[uid] == nil {
 			return errors.New("token references an unknown user")
 		}
 	}
 	st.usersByID, st.usersByHandle, st.usersByEmail = byID, byHandle, byEmail
-	st.reqByID, st.ids = reqByID, ids
+	st.reqByID, st.authByID, st.ids = reqByID, authByID, ids
+	return nil
+}
+
+// indexAuthorizations validates each authorization's own fields and references, applies
+// defaults (visibility public, status open, empty payment_ids, missing created_at = now)
+// and returns the id index.
+func indexAuthorizations(auths []*Authorization, users map[string]*User, pays map[string]*Payment,
+	ids map[string]struct{}, nowStr string) (map[string]*Authorization, error) {
+	byID := make(map[string]*Authorization, len(auths))
+	for _, a := range auths {
+		if a == nil || a.AuthorizationID == "" {
+			return nil, errors.New("authorization without id")
+		}
+		if byID[a.AuthorizationID] != nil {
+			return nil, fmt.Errorf("duplicate authorization id %q", a.AuthorizationID)
+		}
+		if users[a.FromUserID] == nil || users[a.ToUserID] == nil {
+			return nil, fmt.Errorf("authorization %q references an unknown user", a.AuthorizationID)
+		}
+		if a.Amount < 1 {
+			return nil, fmt.Errorf("authorization %q: amount must be at least 1", a.AuthorizationID)
+		}
+		if a.CapturedAmount < 0 || a.CapturedAmount > a.Amount {
+			return nil, fmt.Errorf("authorization %q: captured_amount must be between 0 and amount", a.AuthorizationID)
+		}
+		if a.Status == "" {
+			a.Status = authOpen
+		}
+		if !validAuthStatus(a.Status) {
+			return nil, fmt.Errorf("authorization %q: invalid status %q", a.AuthorizationID, a.Status)
+		}
+		if a.Visibility == "" {
+			a.Visibility = visPublic
+		}
+		if !validVisibility(a.Visibility) {
+			return nil, fmt.Errorf("authorization %q: invalid visibility %q", a.AuthorizationID, a.Visibility)
+		}
+		exp, err := time.Parse(time.RFC3339, a.ExpiresAt)
+		if err != nil {
+			return nil, fmt.Errorf("authorization %q: expires_at must be RFC 3339", a.AuthorizationID)
+		}
+		a.expiry = exp
+		if a.PaymentIDs == nil {
+			a.PaymentIDs = []string{}
+		}
+		for _, pid := range a.PaymentIDs {
+			if pays[pid] == nil {
+				return nil, fmt.Errorf("authorization %q references unknown payment %q", a.AuthorizationID, pid)
+			}
+		}
+		if a.CreatedAt == "" {
+			a.CreatedAt = nowStr
+		}
+		byID[a.AuthorizationID] = a
+		ids[a.AuthorizationID] = struct{}{}
+	}
+	return byID, nil
+}
+
+// checkHolds enforces Held <= Balance per user at now. Expired and closed authorizations hold nothing.
+func checkHolds(auths []*Authorization, users map[string]*User, now time.Time) error {
+	held := map[string]int64{}
+	for _, a := range auths {
+		rem := a.RemainingAt(now)
+		if rem > math.MaxInt64-held[a.FromUserID] {
+			return fmt.Errorf("user %q: holds overflow", a.FromUserID)
+		}
+		held[a.FromUserID] += rem
+	}
+	for uid, h := range held {
+		if h > users[uid].Balance {
+			return fmt.Errorf("user %q: open holds exceed balance", uid)
+		}
+	}
 	return nil
 }

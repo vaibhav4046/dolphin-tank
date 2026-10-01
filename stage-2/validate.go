@@ -112,6 +112,31 @@ func exactAmount(lit string) (int64, bool) {
 	return v, v >= 1 && v <= maxAmount
 }
 
+// OptCaptureAmount: absent means "capture the remainder" (nil); present follows ReqAmount exactly.
+func OptCaptureAmount(obj map[string]any) (*int64, *AppError) {
+	if _, ok := obj["amount"]; !ok {
+		return nil, nil
+	}
+	a, e := ReqAmount(obj, "amount")
+	if e != nil {
+		return nil, e
+	}
+	return &a, nil
+}
+
+// OptFinal: absent means true (a single capture closes the authorization); present must be a boolean.
+func OptFinal(obj map[string]any) (bool, *AppError) {
+	v, ok := obj["final"]
+	if !ok {
+		return true, nil
+	}
+	b, isBool := v.(bool)
+	if !isBool {
+		return false, errMalformed("final must be a boolean")
+	}
+	return b, nil
+}
+
 func OptNote(obj map[string]any) (string, *AppError) {
 	v, ok := obj["note"]
 	if !ok {

@@ -28,6 +28,9 @@ type State struct {
 	Requests []*Request `json:"requests"`
 	Splits   []*Split   `json:"splits"`
 
+	Authorizations []*Authorization `json:"authorizations"`
+	AuthTTLSeconds int64            `json:"authorization_ttl_seconds"` // 0 = unset, see TTL()
+
 	Tokens map[string]string `json:"tokens"` // bearer token -> user id
 	Seq    map[string]int64  `json:"seq"`    // id counters per prefix
 	Sys    SysState          `json:"sys"`
@@ -36,6 +39,7 @@ type State struct {
 	usersByHandle map[string]*User
 	usersByEmail  map[string]*User // key: lower-cased email
 	reqByID       map[string]*Request
+	authByID      map[string]*Authorization
 	ids           map[string]struct{} // every id of any kind
 }
 
@@ -49,18 +53,19 @@ type User struct {
 }
 
 type Payment struct {
-	PaymentID    string  `json:"payment_id"`
-	FromUserID   string  `json:"from_user_id"`
-	FromHandle   string  `json:"from_handle"`
-	ToUserID     string  `json:"to_user_id"`
-	ToHandle     string  `json:"to_handle"`
-	Amount       int64   `json:"amount"`
-	Currency     string  `json:"currency"`
-	Note         string  `json:"note"`
-	Visibility   string  `json:"visibility"`
-	RequestID    *string `json:"request_id"`
-	SettlementID *string `json:"settlement_id"`
-	CreatedAt    string  `json:"created_at"`
+	PaymentID       string  `json:"payment_id"`
+	FromUserID      string  `json:"from_user_id"`
+	FromHandle      string  `json:"from_handle"`
+	ToUserID        string  `json:"to_user_id"`
+	ToHandle        string  `json:"to_handle"`
+	Amount          int64   `json:"amount"`
+	Currency        string  `json:"currency"`
+	Note            string  `json:"note"`
+	Visibility      string  `json:"visibility"`
+	RequestID       *string `json:"request_id"`
+	SettlementID    *string `json:"settlement_id"`
+	AuthorizationID *string `json:"authorization_id"`
+	CreatedAt       string  `json:"created_at"`
 }
 
 type Request struct {

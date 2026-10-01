@@ -21,7 +21,10 @@ type meBody struct {
 	UserID      string `json:"user_id"`
 	DisplayName string `json:"display_name"`
 	Handle      string `json:"handle"`
-	Balance     int64  `json:"balance"`
+	Balance     int64  `json:"balance"` // always equal to Total
+	Total       int64  `json:"total"`
+	Available   int64  `json:"available"`
+	Held        int64  `json:"held"`
 	Currency    string `json:"currency"`
 	MinorUnits  int    `json:"minor_units"`
 }
@@ -39,21 +42,27 @@ type paymentPage struct {
 // Transfer is the ONLY place balances move. It does not check funds: callers verify affordability
 // first (a settlement applies its transfers in order and checks the net result up front).
 func (st *State) Transfer(from, to *User, amount int64, note, visibility string, requestID, settlementID *string, now time.Time) *Payment {
+	return st.TransferFor(from, to, amount, note, visibility, requestID, settlementID, nil, now)
+}
+
+// TransferFor is Transfer plus the authorization a capture belongs to (nil otherwise).
+func (st *State) TransferFor(from, to *User, amount int64, note, visibility string, requestID, settlementID, authorizationID *string, now time.Time) *Payment {
 	from.Balance -= amount
 	to.Balance += amount
 	p := &Payment{
-		PaymentID:    st.NewID("p"),
-		FromUserID:   from.ID,
-		FromHandle:   from.Handle,
-		ToUserID:     to.ID,
-		ToHandle:     to.Handle,
-		Amount:       amount,
-		Currency:     st.Currency,
-		Note:         note,
-		Visibility:   visibility,
-		RequestID:    requestID,
-		SettlementID: settlementID,
-		CreatedAt:    FormatTime(now),
+		PaymentID:       st.NewID("p"),
+		FromUserID:      from.ID,
+		FromHandle:      from.Handle,
+		ToUserID:        to.ID,
+		ToHandle:        to.Handle,
+		Amount:          amount,
+		Currency:        st.Currency,
+		Note:            note,
+		Visibility:      visibility,
+		RequestID:       requestID,
+		SettlementID:    settlementID,
+		AuthorizationID: authorizationID,
+		CreatedAt:       FormatTime(now),
 	}
 	st.Payments = append(st.Payments, p)
 	return p
@@ -71,8 +80,8 @@ func (st *State) Pay(caller string, in PaymentIn, now time.Time) (*Payment, *App
 	if to.ID == from.ID {
 		return nil, NewErr(422, "self_payment", "cannot pay yourself")
 	}
-	if from.Balance < in.Amount {
-		return nil, NewErr(409, "insufficient_funds", "balance is below the amount")
+	if st.Available(from, now) < in.Amount {
+		return nil, NewErr(409, "insufficient_funds", "available funds are below the amount")
 	}
 	return st.Transfer(from, to, in.Amount, in.Note, in.Visibility, nil, nil, now), nil
 }
@@ -125,8 +134,8 @@ func (st *State) PayRequest(caller, requestID string, in PayIn, now time.Time) (
 	if r.Status != statusPending {
 		return nil, NewErr(409, "request_not_pending", "request is not pending")
 	}
-	if payer.Balance < r.Amount {
-		return nil, NewErr(409, "insufficient_funds", "balance is below the amount")
+	if st.Available(payer, now) < r.Amount {
+		return nil, NewErr(409, "insufficient_funds", "available funds are below the amount")
 	}
 	requester := st.userByID(r.RequesterID)
 	rid := r.RequestID
@@ -225,11 +234,13 @@ func (st *State) Activity(caller string, limit, offset int) any {
 	return paymentPage{Payments: page, HasMore: more}
 }
 
-func (st *State) Me(caller string) any {
+func (st *State) Me(caller string, now time.Time) any {
 	u := st.userByID(caller)
 	if u == nil {
 		return nil
 	}
-	return meBody{UserID: u.ID, DisplayName: u.DisplayName, Handle: u.Handle, Balance: u.Balance,
+	held := st.Held(u.ID, now)
+	return meBody{UserID: u.ID, DisplayName: u.DisplayName, Handle: u.Handle,
+		Balance: u.Balance, Total: u.Balance, Available: u.Balance - held, Held: held,
 		Currency: st.Currency, MinorUnits: st.MinorUnits}
 }
