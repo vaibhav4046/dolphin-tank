@@ -1,0 +1,83 @@
+{
+  "revision": "dbf467cf409c0fb8336ca5d990b44b872b62260a",
+  "track": "pocketful",
+  "stages": {
+    "1": "pass",
+    "2": "pass"
+  },
+  "highest_contiguous": 2,
+  "started_at": "2026-10-01T10:47:57.389644+00:00",
+  "finished_at": "2026-10-01T10:48:48.991283+00:00",
+  "schema_version": 2,
+  "run_id": "66e088ad97154f86a5d133f059045dfd",
+  "mode": "isolated",
+  "provenance": "working-tree",
+  "state": "completed",
+  "pytest_args": [],
+  "suite_digest": "c92a320eeaaa8c710e12dacec09b6e05ef2958cdb98c1283f0fd5265c63a9a1e",
+  "checks": {
+    "1": {
+      "collected": 147,
+      "passed": 147,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_1/test_me_payments.py": {
+          "passed": 24,
+          "total": 24
+        },
+        "stage_1/test_requests_splits_feed.py": {
+          "passed": 39,
+          "total": 39
+        },
+        "stage_1/test_retries_splits_input.py": {
+          "passed": 51,
+          "total": 51
+        },
+        "stage_1/test_sample.py": {
+          "passed": 19,
+          "total": 19
+        },
+        "stage_1/test_seeded_state.py": {
+          "passed": 14,
+          "total": 14
+        }
+      }
+    },
+    "2": {
+      "collected": 35,
+      "passed": 35,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_2/test_sample.py": {
+          "passed": 10,
+          "total": 10
+        },
+        "stage_2/test_ui.py": {
+          "passed": 25,
+          "total": 25
+        }
+      }
+    }
+  },
+  "overshoot": null,
+  "claimed_stage": "2",
+  "share": 1.0,
+  "upgrade_sources": {
+    "2": {
+      "folder": "/mnt/d/project/dolphin-tank/band-work/result/stage-1",
+      "revision": "dbf467cf409c0fb8336ca5d990b44b872b62260a"
+    },
+    "3": {
+      "folder": "/mnt/d/project/dolphin-tank/band-work/result/stage-2",
+      "revision": "dbf467cf409c0fb8336ca5d990b44b872b62260a"
+    }
+  }
+}
