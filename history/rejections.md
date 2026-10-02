@@ -60,3 +60,6 @@ rejected build.
 `D-IMPORT-FUTURE` (import does not reject a hand-crafted future-dated payment) was raised,
 considered against the written specification and **declined**; see `evidence/stage-3/decisions.md`
 and commit `71d08d4`. Recorded here so it is not silently re-opened later.
+
+### Stage 3 outcome
+Jury ACCEPTED `5e6f83f0a2d9fe9e09615341dde23a376d273967` on its second pass (verdict `evidence/stage-3/jury/r3-verdict.md`, evidence commit 829e053). F1 and F2 repaired and each guarded by a check that fails on 3c7c411; L1 and L-F2-1 repaired at b2d9bf3 and 5e6f83f. Residual risks and what the shipped harness never exercised: `evidence/stage-3/route-summary.md`.
