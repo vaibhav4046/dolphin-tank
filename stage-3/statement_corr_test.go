@@ -511,3 +511,29 @@ func TestAttackFutureAsOfPastAHoldDeadlineAndKnownAtBetweenEvents(t *testing.T) 
 		t.Fatal("a future as_of past the deadline releases the hold")
 	}
 }
+
+// Reading A of the spec (what the service implements): a payment is exactly its selected revision, so
+// a correction with a later effective_at moves the whole movement later, and the original amount is no
+// longer anywhere before it. The other reading (apply only the difference at effective_at, keep the
+// original at created_at) would accept the first correction below; this pins the behaviour so a change
+// of reading is a conscious one.
+func TestAttackLaterEffectiveDecreaseMovesTheWholeMovement(t *testing.T) {
+	// bob: +500 (p_1 @T1), -450 (p_2 @T2), holds 50 now. ada's p_1 -> 450, effective T3 (after p_2).
+	setup := func() *tsEnv {
+		return tsNewU(t, [4]int64{500, 50, 450, 0}, tsPays(tsSeedPay("p_1", "ada", "bob", 500, tsT1), tsSeedPay("p_2", "bob", "cy", 450, tsT2)))
+	}
+	e := setup()
+	before := e.export()
+	e.refuse("ada", "p_1", "later", 1, 450, tsT3, 409, "historical_overdraft")
+	if !bytes.Equal(before, e.export()) {
+		t.Fatal("the refusal left a trace")
+	}
+	e = setup()
+	r := e.mustCorrect("ada", "p_1", "same", 1, 450, tsT1) // same effective time: only the difference moves
+	if r.Amount != 450 || e.total("bob", "") != 0 {
+		t.Fatalf("revision %+v, bob now %d (50 less the 50 taken back)", r, e.total("bob", ""))
+	}
+	if got := e.total("bob", tsQ("as_of", tsT2)); got != 0 {
+		t.Fatalf("bob at T2: %d, want 450-450 = 0", got)
+	}
+}

@@ -224,7 +224,13 @@ func (w *tsWorld) correctRandom(st *State, now time.Time) *AppError {
 		amount = int64(w.r.Intn(int(2*latest.Amount) + 2))
 	}
 	eff := tsFormatInstant(w.r, w.someInstant())
+	effT, _ := ParseInstant(eff)
+	want := w.oVerdict(st, p, expected, amount, effT, now)
 	rev, e := st.Correct(p.FromUserID, p.PaymentID, CorrectionIn{ExpectedRevision: expected, Amount: amount, EffectiveAt: eff, Reason: "r"}, now)
+	tsVerdicts[want]++
+	if got := tsCode(e); got != want {
+		w.failf("correct %s (expected_revision %d, amount %d, effective_at %s): got %q, the oracle says %q", p.PaymentID, expected, amount, eff, got, want)
+	}
 	if e == nil {
 		w.pool = append(w.pool, rev.rec)
 		if rev.Revision != latest.Revision+1 || rev.EffectiveAt != eff || rev.Amount != amount {
@@ -252,6 +258,108 @@ func (w *tsWorld) captureRandom(st *State, now time.Time) *AppError {
 }
 
 // ---- the oracle: straight from the spec text -------------------------------------------------
+
+// tsVerdicts tallies what the oracle decided for every random correction, so the test can prove it
+// exercised accepts and every refusal.
+var tsVerdicts = map[string]int{}
+
+func tsCode(e *AppError) string {
+	if e == nil {
+		return ""
+	}
+	return e.Code
+}
+
+// oVerdict is what Correct must answer, decided without Correct's helpers: refusal order is linked,
+// stale, current funds, then the historical check of both wallets with the candidate applied.
+func (w *tsWorld) oVerdict(st *State, p *Payment, expected, amount int64, eff, now time.Time) string {
+	stamp := now.UTC().Truncate(time.Microsecond)
+	if floor := st.lastStamp.Add(time.Microsecond); floor.After(stamp) {
+		stamp = floor
+	}
+	if p.SettlementID != nil || p.AuthorizationID != nil {
+		return "linked_payment_immutable"
+	}
+	latest := w.oSel(st, p.PaymentID, tsInfinity)
+	if expected != latest.Revision {
+		return "stale_revision"
+	}
+	debited, moved := p.FromUserID, amount-latest.Amount
+	if moved < 0 {
+		debited, moved = p.ToUserID, -moved
+	}
+	if moved > 0 && w.oTotal(st, debited, tsInfinity, tsInfinity)-w.oHeldPlaced(st, debited, stamp, tsInfinity, true) < moved {
+		return "insufficient_funds"
+	}
+	for _, wallet := range []string{p.FromUserID, p.ToUserID} {
+		if w.oOverdrawn(st, wallet, p, amount, eff, stamp) {
+			return "historical_overdraft"
+		}
+	}
+	return ""
+}
+
+// oOverdrawn: with payment p replaced by (amount, eff) and everything else at its latest revision, is
+// the wallet's total or available negative at any boundary up to now?
+func (w *tsWorld) oOverdrawn(st *State, uid string, p *Payment, amount int64, eff, now time.Time) bool {
+	type move struct {
+		at    time.Time
+		delta int64
+	}
+	var moves []move
+	for _, q := range st.Payments {
+		if q.FromUserID != uid && q.ToUserID != uid {
+			continue
+		}
+		amt, at := w.oSel(st, q.PaymentID, tsInfinity).Amount, oInstant(w, w.oSel(st, q.PaymentID, tsInfinity).EffectiveAt)
+		if q == p {
+			amt, at = amount, eff
+		}
+		var d int64
+		if q.ToUserID == uid {
+			d += amt
+		}
+		if q.FromUserID == uid {
+			d -= amt
+		}
+		moves = append(moves, move{at, d})
+	}
+	var bounds []time.Time
+	for _, m := range moves {
+		bounds = append(bounds, m.at)
+	}
+	for _, a := range st.Authorizations {
+		if a.FromUserID != uid {
+			continue
+		}
+		created := oInstant(w, a.CreatedAt)
+		if a.CreatedExact != nil {
+			created = oInstant(w, *a.CreatedExact)
+		}
+		bounds = append(bounds, created, oInstant(w, a.ExpiresAt))
+		if a.ClosedAt != nil {
+			bounds = append(bounds, oInstant(w, *a.ClosedAt))
+		}
+		for _, pid := range a.PaymentIDs {
+			bounds = append(bounds, oInstant(w, st.payByID[pid].CreatedAt))
+		}
+	}
+	for _, b := range bounds {
+		if b.After(now) {
+			continue
+		}
+		total := st.userByID(uid).OpeningBalance
+		for _, m := range moves {
+			if !m.at.After(b) {
+				total += m.delta
+			}
+		}
+		if total < 0 || total-w.oHeldPlaced(st, uid, b, tsInfinity, true) < 0 {
+			return true
+		}
+	}
+	return false
+}
 
 type oEntry struct {
 	id           string
@@ -667,6 +775,7 @@ func TestStatementPropertyRandomSequences(t *testing.T) {
 	if testing.Short() {
 		seeds, steps = 4, 40
 	}
+	clear(tsVerdicts)
 	for seed := int64(1); seed <= int64(seeds); seed++ {
 		w := tsNewWorld(t, seed)
 		w.checkWorld()
@@ -696,6 +805,14 @@ func TestStatementPropertyRandomSequences(t *testing.T) {
 		corrections := 0
 		w.with(func(st *State) { corrections = len(st.Revisions) - len(st.Payments) })
 		t.Logf("seed %d: %d payments, %d corrections, %d authorizations, %d snapshots", seed, ttPaymentCount(w.s), corrections, len(w.s.st.Authorizations), len(w.snaps))
+	}
+	t.Logf("oracle verdicts over every random correction attempt: %v", tsVerdicts)
+	if !testing.Short() {
+		for _, code := range []string{"", "historical_overdraft", "insufficient_funds", "stale_revision", "linked_payment_immutable"} {
+			if tsVerdicts[code] < 5 {
+				t.Errorf("the random corrections hardly ever end in %q (%d): the differential check proves little", code, tsVerdicts[code])
+			}
+		}
 	}
 }
 
