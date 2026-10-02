@@ -91,7 +91,9 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 	if e != nil {
 		return nil, e
 	}
-	auths, e := trFxAuthorizations(root, ids, byID, created, resetAt)
+	// Like an omitted payment created_at, an omitted hold created_at is the reset instant itself;
+	// the whole second would place the hold before the payments that funded it.
+	auths, e := trFxAuthorizations(root, ids, byID, FormatMicro(resetAt), resetAt)
 	if e != nil {
 		return nil, e
 	}
@@ -244,7 +246,7 @@ func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, 
 			AuthorizationID: id, FromUserID: from.ID, ToUserID: to.ID,
 			Amount: amount, CapturedAmount: captured, Note: note, Visibility: vis,
 			Status: status, ExpiresAt: exp, PaymentIDs: payIDs, CreatedAt: createdAt,
-			ClosedAt: trSeededClosedAt(status, createdAt, exp),
+			ClosedAt: trSeededClosedAt(status, createdAt, exp, resetAt),
 		})
 	}
 	return out, nil
@@ -252,15 +254,31 @@ func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, 
 
 // trSeededClosedAt is the closed_at of a seeded hold. A seeded closed hold has no
 // lifecycle to reconstruct: it closed when it was created, or at its deadline if
-// stored as expired. An open one has no closed_at.
-func trSeededClosedAt(status, createdAt, expiresAt string) *string {
+// stored as expired (see trExpiredClosedAt). An open one has no closed_at.
+func trSeededClosedAt(status, createdAt, expiresAt string, resetAt time.Time) *string {
 	switch status {
 	case authExpired:
-		return &expiresAt
+		return trExpiredClosedAt(createdAt, expiresAt, resetAt)
 	case authCaptured, authVoided:
 		return &createdAt
 	}
 	return nil
+}
+
+// trExpiredClosedAt is when a stored-expired hold closed: at its deadline, except that a
+// deadline still ahead of at (the instant the state is loaded) cannot have happened yet,
+// so it closed then, and never before the hold was created.
+func trExpiredClosedAt(createdAt, expiresAt string, at time.Time) *string {
+	exp, err := time.Parse(time.RFC3339, expiresAt)
+	if err != nil || !exp.After(at) {
+		return &expiresAt
+	}
+	closed := at
+	if created, ok := ParseInstant(createdAt); ok && created.After(closed) {
+		closed = created
+	}
+	s := FormatMicro(closed)
+	return &s
 }
 
 func trFxStrings(o map[string]any, k string) ([]string, *AppError) {

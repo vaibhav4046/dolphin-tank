@@ -257,7 +257,7 @@ func (st *State) ReindexAt(now time.Time) error {
 	st.reqByID, st.authByID, st.ids = reqByID, authByID, ids
 	st.payByID, st.revByPay = payByID, revByPay
 	st.payOrdered = paymentsOrdered(st.Payments)
-	st.lastStamp = newestInstant(st)
+	st.lastStamp = newestInstant(st, now)
 	st.HistoryVersion = historyVersion
 	return nil
 }
@@ -449,11 +449,19 @@ func paymentsOrdered(pays []*Payment) bool {
 	return true
 }
 
+// clockSlack is how far past now a recorded instant may lie and still count as a write this
+// service made: Stamp runs a microsecond per write ahead of a wall clock that ticks only every
+// millisecond or so (about 1 ms on Windows), so honest stamps can lead the clock a little.
+const clockSlack = 50 * time.Millisecond
+
 // newestInstant is the latest moment any write has used, so Stamp resumes strictly after it.
-func newestInstant(st *State) time.Time {
+// An instant beyond now+clockSlack is data a loader supplied, not a write this clock made:
+// counting it would put every later stamp and read hours ahead of the real clock, so it is ignored.
+func newestInstant(st *State, now time.Time) time.Time {
 	newest := st.lastStamp
+	horizon := now.UTC().Add(clockSlack).Truncate(time.Microsecond)
 	later := func(t time.Time) {
-		if t = t.Truncate(time.Microsecond); t.After(newest) {
+		if t = t.Truncate(time.Microsecond); t.After(newest) && !t.After(horizon) {
 			newest = t
 		}
 	}

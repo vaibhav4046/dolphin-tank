@@ -1,0 +1,76 @@
+Jury's own F1 checks (evidence/stage-3/jury/checks, s2reg) run against REAL server binaries on this host: stage-2 (accepted) :18101, stage-3 pre-fix (git archive of ce30bcd; stage-3 code = 3c7c411) :18102, stage-3 with the F1+F1b fix :18103.
+binaries built into /tmp/bin (not committed). python via 'uv run python'. Run order: repro RED, repro GREEN, s2_fixture on all three, probe_clock_jump on both stage-3 builds.
+
+=== repro_expired_future.py  PF1=stage-2  PF2=stage-3 PRE-FIX
+stage-2 (accepted)     /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+stage-3 (under test)   /me held=2000 available=8000 | capture seeded open hold -> 409 authorization_expired | pay 8001 (> available 8000) -> 201 | payment.created_at - now = 7199 s
+PASS REGRESSION: accepted stage 2 captures the seeded open hold and refuses a payment above available
+FAIL stage 3: seeded expired-status hold with future expires_at must not move the server clock: capture 201, over-available payment 409, created_at ~ now :: (409, 201, 7199.331587)
+== repro_expired_future: 1 pass, 1 fail, 12 requests, 0 5xx, max latency 0.043s, p99 0.035s
+FAILED: ['stage 3: seeded expired-status hold with future expires_at must not move the server clock: capture 201, over-available payment 409, created_at ~ now']
+
+=== repro_expired_future.py  PF1=stage-2  PF2=stage-3 + FIX
+stage-2 (accepted)     /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+stage-3 (under test)   /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+PASS REGRESSION: accepted stage 2 captures the seeded open hold and refuses a payment above available
+PASS stage 3: seeded expired-status hold with future expires_at must not move the server clock: capture 201, over-available payment 409, created_at ~ now
+== repro_expired_future: 2 pass, 0 fail, 12 requests, 0 5xx, max latency 0.043s, p99 0.029s
+
+=== s2reg/s2_fixture.py vs stage-3 PRE-FIX
+FAIL E03 capture of seeded hold: 201, payment authorization_id a1 :: R(409 b'{"error":{"code":"authorization_expired","message":"authorization has expired"}}')
+FAIL E06 seeded hold remainder 1200 :: 
+FAIL F01 void seeded hold :: 
+FAIL A06 payment above available (seeded hold 2000 of 10000) refused :: R(201 b'{"payment_id":"p_1","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":8001,"currency":"EUR","note":"","visibili
+FAIL A02 payment of exactly available (8000) allowed :: 
+== s2_fixture: 79 pass, 5 fail, 258 requests, 0 5xx, max latency 0.045s, p99 0.039s
+FAILED: ['E03 capture of seeded hold: 201, payment authorization_id a1', 'E06 seeded hold remainder 1200', 'F01 void seeded hold', 'A06 payment above available (seeded hold 2000 of 10000) refused', 'A02 payment of exactly availabl
+
+=== s2reg/s2_fixture.py vs stage-3 + FIX
+== s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.037s, p99 0.033s
+
+=== s2reg/s2_fixture.py vs stage-2 (accepted)
+== s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.041s, p99 0.034s
+
+=== checks/probe_clock_jump.py vs stage-3 PRE-FIX
+captured +48h                payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 2000, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "statu
+voided +48h                  payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 0, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status":
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\probe_clock_jump.py", line 16, in <module>
+    t = setup(f)
+        ^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\lib.py", line 111, in setup
+    reset(f)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\lib.py", line 99, in reset
+    assert r.s == 204, r
+           ^^^^^^^^^^
+AssertionError: R(422 b'{"error":{"code":"validation_failed","message":"created_at must not be in the future"}}')
+
+=== checks/probe_clock_jump.py vs stage-3 + FIX
+captured +48h                payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 2000, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "statu
+voided +48h                  payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 0, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status":
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\probe_clock_jump.py", line 16, in <module>
+    t = setup(f)
+        ^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\lib.py", line 111, in setup
+    reset(f)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\checks\lib.py", line 99, in reset
+    assert r.s == 204, r
+           ^^^^^^^^^^
+AssertionError: R(422 b'{"error":{"code":"validation_failed","message":"created_at must not be in the future"}}')
+
+=== probe_clock_jump.py, the payment.created_at skew line of each case (the script itself aborts at its 5th case 'open +2h with created_at +1h' on BOTH builds: reset correctly answers 422 and the script asserts 204 - a script limitation, not a server difference)
+--- stage-3 PRE-FIX
+expired-status +2h (future expires_at) payment.created_at - local now = +7199.2 s ; /me held=0 available=9990
+expired-status -2h (past expires_at) payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+captured +48h                payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+voided +48h                  payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+--- stage-3 + FIX
+expired-status +2h (future expires_at) payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+expired-status -2h (past expires_at) payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+captured +48h                payment.created_at - local now = +0.0 s ; /me held=0 available=9990
+voided +48h                  payment.created_at - local now = -0.0 s ; /me held=0 available=9990

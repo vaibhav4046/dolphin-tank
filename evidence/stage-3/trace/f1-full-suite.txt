@@ -1,0 +1,17 @@
+cd stage-3 (Go go1.26.2, Windows, no -race: no gcc)
+$ gofmt -l .
+$ go vet ./...
+(clean)
+$ go build ./...
+(clean)
+$ go test ./... -count=1 -v   (summary; full log omitted)
+exit 0
+top-level tests PASS: 181  FAIL: 0  SKIP: 0   subtests PASS: 12  FAIL: 0
+PASS
+ok  	pocketful	47.113s
+$ go test ./... -count=1
+ok  	pocketful	50.754s
+$ (cd jstest && node --test)
+ℹ tests 16
+ℹ pass 16
+ℹ fail 0

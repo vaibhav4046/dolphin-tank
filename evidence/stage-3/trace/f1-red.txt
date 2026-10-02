@@ -1,0 +1,154 @@
+F1/F1b RED: new tests against a PRISTINE export of the result repo HEAD (git archive HEAD stage-3 -> /tmp/red2; HEAD = 11e76f9 code incl. forge F2) plus ONLY the two new test files and a stub 'const clockSlack' (the fix adds it).
+command: cd <export>/stage-3 && go test -run '<new tests>' -count=1 -v .
+pins that are green before and after by design: TestSeededExpiredHoldHoldsNothingInAnyView, TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline, TestImportedHoldWithoutCreatedAtKeepsViewsSound
+
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future
+    clock_ratchet_test.go:104: the clock is 633323h45m17.1725691s ahead right after reset
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead
+    clock_ratchet_test.go:104: the clock is 1h59m59.1213275s ahead right after reset
+--- FAIL: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour (0.10s)
+    --- FAIL: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future (0.05s)
+    --- FAIL: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead (0.05s)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead
+    clock_ratchet_test.go:175: closed_at 2026-10-02T14:14:42+00:00 is not the reset instant (reset between 2026-10-02 13:14:41.8786735 +0100 BST m=-0.893049999 and 2026-10-02 13:14:43.9023401 +0100 BST m=+1.130616601)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead
+    clock_ratchet_test.go:175: closed_at 2026-10-02T13:14:47+00:00 is not the reset instant (reset between 2026-10-02 13:14:41.8786735 +0100 BST m=-0.893049999 and 2026-10-02 13:14:43.9110342 +0100 BST m=+1.139310701)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099
+    clock_ratchet_test.go:175: closed_at 2099-01-01T00:00:00+00:00 is not the reset instant (reset between 2026-10-02 13:14:41.8786735 +0100 BST m=-0.893049999 and 2026-10-02 13:14:43.9247334 +0100 BST m=+1.153009901)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds
+    clock_ratchet_test.go:175: closed_at 2026-10-02T14:14:42+00:00 is not the reset instant (reset between 2026-10-02 13:14:41.8786735 +0100 BST m=-0.893049999 and 2026-10-02 13:14:43.9370932 +0100 BST m=+1.165369701)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at
+    clock_ratchet_test.go:175: closed_at 2026-10-02T14:14:42+00:00 is not the reset instant (reset between 2026-10-02 13:14:41.8786735 +0100 BST m=-0.893049999 and 2026-10-02 13:14:43.9475783 +0100 BST m=+1.175854801)
+--- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset (0.07s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past (0.01s)
+    --- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead (0.01s)
+    --- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead (0.01s)
+    --- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099 (0.01s)
+    --- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds (0.01s)
+    --- FAIL: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at (0.01s)
+=== RUN   TestSeededExpiredHoldHoldsNothingInAnyView
+--- PASS: TestSeededExpiredHoldHoldsNothingInAnyView (0.03s)
+=== RUN   TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline
+--- PASS: TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline (0.01s)
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future
+    clock_ratchet_test.go:259: the clock is 633323h45m17.0119911s ahead right after import
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead
+    clock_ratchet_test.go:259: the clock is 1h59m59.0090223s ahead right after import
+--- FAIL: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds (0.00s)
+    --- FAIL: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future (0.00s)
+    --- FAIL: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead (0.00s)
+=== RUN   TestResetNeverMovesTheClockAhead
+    clock_ratchet_test.go:348: expired deadline +2h: the clock is 1h59m58.997435s ahead of the real clock right after reset
+    clock_ratchet_test.go:348: expired deadline 2099: the clock is 633323h45m16.9861283s ahead of the real clock right after reset
+    clock_ratchet_test.go:348: expired +2h with past created_at: the clock is 1h59m58.8939147s ahead of the real clock right after reset
+    clock_ratchet_test.go:351: Reset: fixtures with a future value
+          rejected 422 (5): payment created_at +2h; payment created_at 2099; hold created_at +2h; hold created_at +2h, expired; hold created_at 2099, voided
+          accepted    (10): expired deadline +2h (skew 1h59m58.997s); expired deadline 2099 (skew 633323h45m16.986s); expired deadline -2h (skew 0s); open deadline +2h (skew 0s); open deadline -2h (skew 0s); captured deadline +2h (skew 0s); captured deadline 2099 (skew 0s); voided deadline +2h (skew 0s); voided deadline 2099 (skew 0s); expired +2h with past created_at (skew 1h59m58.894s)
+--- FAIL: TestResetNeverMovesTheClockAhead (0.17s)
+=== RUN   TestImportNeverMovesTheClockAheadStage3Export
+    clock_ratchet_test.go:430: payments[0].created_at: imported with a future value, the clock is now 1h59m59.9994403s ahead
+    clock_ratchet_test.go:430: payments[1].created_at: imported with a future value, the clock is now 1h59m59.9974148s ahead
+    clock_ratchet_test.go:430: payments[2].created_at: imported with a future value, the clock is now 1h59m59.9935714s ahead
+    clock_ratchet_test.go:430: payments[3].created_at: imported with a future value, the clock is now 1h59m59.9922771s ahead
+    clock_ratchet_test.go:430: payments[4].created_at: imported with a future value, the clock is now 1h59m59.9909224s ahead
+    clock_ratchet_test.go:430: payments[5].created_at: imported with a future value, the clock is now 1h59m59.9870459s ahead
+    clock_ratchet_test.go:430: payments[6].created_at: imported with a future value, the clock is now 1h59m59.9855368s ahead
+    clock_ratchet_test.go:430: payments[7].created_at: imported with a future value, the clock is now 1h59m59.9824642s ahead
+    clock_ratchet_test.go:430: payments[8].created_at: imported with a future value, the clock is now 1h59m59.9791434s ahead
+    clock_ratchet_test.go:430: payments[9].created_at: imported with a future value, the clock is now 1h59m59.9769413s ahead
+    clock_ratchet_test.go:430: payments[10].created_at: imported with a future value, the clock is now 1h59m59.974123s ahead
+    clock_ratchet_test.go:430: payments[11].created_at: imported with a future value, the clock is now 1h59m59.9722417s ahead
+    clock_ratchet_test.go:430: revisions[0].recorded_at: imported with a future value, the clock is now 1h59m59.9707508s ahead
+    clock_ratchet_test.go:430: revisions[1].recorded_at: imported with a future value, the clock is now 1h59m59.9619156s ahead
+    clock_ratchet_test.go:430: revisions[2].recorded_at: imported with a future value, the clock is now 1h59m59.9597703s ahead
+    clock_ratchet_test.go:430: revisions[3].recorded_at: imported with a future value, the clock is now 1h59m59.9573656s ahead
+    clock_ratchet_test.go:430: revisions[4].recorded_at: imported with a future value, the clock is now 1h59m59.9559908s ahead
+    clock_ratchet_test.go:430: revisions[5].recorded_at: imported with a future value, the clock is now 1h59m59.9540291s ahead
+    clock_ratchet_test.go:430: revisions[6].recorded_at: imported with a future value, the clock is now 1h59m59.951733s ahead
+    clock_ratchet_test.go:430: revisions[7].recorded_at: imported with a future value, the clock is now 1h59m59.9506809s ahead
+    clock_ratchet_test.go:430: revisions[8].recorded_at: imported with a future value, the clock is now 1h59m59.9483973s ahead
+    clock_ratchet_test.go:430: revisions[9].recorded_at: imported with a future value, the clock is now 1h59m59.9447133s ahead
+    clock_ratchet_test.go:430: revisions[11].recorded_at: imported with a future value, the clock is now 1h59m59.9422741s ahead
+    clock_ratchet_test.go:430: revisions[12].recorded_at: imported with a future value, the clock is now 1h59m59.9395275s ahead
+    clock_ratchet_test.go:430: authorizations[0].created_at: imported with a future value, the clock is now 1h59m59.9028442s ahead
+    clock_ratchet_test.go:430: authorizations[1].created_at: imported with a future value, the clock is now 1h59m59.9014752s ahead
+    clock_ratchet_test.go:430: authorizations[2].created_at: imported with a future value, the clock is now 1h59m59.9000526s ahead
+    clock_ratchet_test.go:430: authorizations[3].created_at: imported with a future value, the clock is now 1h59m59.8974122s ahead
+    clock_ratchet_test.go:430: authorizations[4].created_at: imported with a future value, the clock is now 1h59m59.8955276s ahead
+    clock_ratchet_test.go:430: authorizations[5].created_at: imported with a future value, the clock is now 1h59m59.8945806s ahead
+    clock_ratchet_test.go:430: authorizations[6].created_at: imported with a future value, the clock is now 1h59m59.8926726s ahead
+    clock_ratchet_test.go:430: authorizations[7].created_at: imported with a future value, the clock is now 1h59m59.8901107s ahead
+    clock_ratchet_test.go:430: authorizations[8].created_at: imported with a future value, the clock is now 1h59m59.8876736s ahead
+    clock_ratchet_test.go:430: authorizations[9].created_at: imported with a future value, the clock is now 1h59m59.8860833s ahead
+    clock_ratchet_test.go:430: authorizations[10].created_at: imported with a future value, the clock is now 1h59m59.8836606s ahead
+    clock_ratchet_test.go:430: authorizations[1].closed_at: imported with a future value, the clock is now 1h59m59.8803035s ahead
+    clock_ratchet_test.go:430: authorizations[2].closed_at: imported with a future value, the clock is now 1h59m59.8776517s ahead
+    clock_ratchet_test.go:430: authorizations[3].closed_at: imported with a future value, the clock is now 1h59m59.8759303s ahead
+    clock_ratchet_test.go:430: authorizations[4].closed_at: imported with a future value, the clock is now 1h59m59.8743528s ahead
+    clock_ratchet_test.go:430: authorizations[5].closed_at: imported with a future value, the clock is now 1h59m59.8713635s ahead
+    clock_ratchet_test.go:430: authorizations[6].closed_at: imported with a future value, the clock is now 1h59m59.8692855s ahead
+    clock_ratchet_test.go:430: authorizations[9].closed_at: imported with a future value, the clock is now 1h59m59.8677114s ahead
+    clock_ratchet_test.go:430: authorizations[8].created_exact: imported with a future value, the clock is now 1h59m59.8472804s ahead
+    clock_ratchet_test.go:430: authorizations[9].created_exact: imported with a future value, the clock is now 1h59m59.8452499s ahead
+    clock_ratchet_test.go:430: authorizations[10].created_exact: imported with a future value, the clock is now 1h59m59.8441544s ahead
+    clock_ratchet_test.go:440: Import of a stage-3 export, 74 positions set to +2h
+          rejected 422 (1): revisions[10].recorded_at
+          accepted    (73): payments[0].created_at (skew 1h59m59.999s); payments[1].created_at (skew 1h59m59.997s); payments[2].created_at (skew 1h59m59.994s); payments[3].created_at (skew 1h59m59.992s); payments[4].created_at (skew 1h59m59.991s); payments[5].created_at (skew 1h59m59.987s); payments[6].created_at (skew 1h59m59.986s); payments[7].created_at (skew 1h59m59.982s); payments[8].created_at (skew 1h59m59.979s); payments[9].created_at (skew 1h59m59.977s); payments[10].created_at (skew 1h59m59.974s); payments[11].created_at (skew 1h59m59.972s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); revisions[0].recorded_at (skew 1h59m59.971s); revisions[1].recorded_at (skew 1h59m59.962s); revisions[2].recorded_at (skew 1h59m59.96s); revisions[3].recorded_at (skew 1h59m59.957s); revisions[4].recorded_at (skew 1h59m59.956s); revisions[5].recorded_at (skew 1h59m59.954s); revisions[6].recorded_at (skew 1h59m59.952s); revisions[7].recorded_at (skew 1h59m59.951s); revisions[8].recorded_at (skew 1h59m59.948s); revisions[9].recorded_at (skew 1h59m59.945s); revisions[11].recorded_at (skew 1h59m59.942s); revisions[12].recorded_at (skew 1h59m59.94s); revisions[0].effective_at (skew 0s); revisions[1].effective_at (skew 0s); revisions[2].effective_at (skew 0s); revisions[3].effective_at (skew 0s); revisions[4].effective_at (skew 0s); revisions[5].effective_at (skew 0s); revisions[6].effective_at (skew 0s); revisions[7].effective_at (skew 0s); revisions[8].effective_at (skew 0s); revisions[9].effective_at (skew 0s); revisions[10].effective_at (skew 0s); revisions[11].effective_at (skew 0s); revisions[12].effective_at (skew 0s); authorizations[0].created_at (skew 1h59m59.903s); authorizations[1].created_at (skew 1h59m59.901s); authorizations[2].created_at (skew 1h59m59.9s); authorizations[3].created_at (skew 1h59m59.897s); authorizations[4].created_at (skew 1h59m59.896s); authorizations[5].created_at (skew 1h59m59.895s); authorizations[6].created_at (skew 1h59m59.893s); authorizations[7].created_at (skew 1h59m59.89s); authorizations[8].created_at (skew 1h59m59.888s); authorizations[9].created_at (skew 1h59m59.886s); authorizations[10].created_at (skew 1h59m59.884s); authorizations[1].closed_at (skew 1h59m59.88s); authorizations[2].closed_at (skew 1h59m59.878s); authorizations[3].closed_at (skew 1h59m59.876s); authorizations[4].closed_at (skew 1h59m59.874s); authorizations[5].closed_at (skew 1h59m59.871s); authorizations[6].closed_at (skew 1h59m59.869s); authorizations[9].closed_at (skew 1h59m59.868s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 0s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); authorizations[8].expires_at (skew 0s); authorizations[9].expires_at (skew 0s); authorizations[10].expires_at (skew 0s); authorizations[8].created_exact (skew 1h59m59.847s); authorizations[9].created_exact (skew 1h59m59.845s); authorizations[10].created_exact (skew 1h59m59.844s)
+--- FAIL: TestImportNeverMovesTheClockAheadStage3Export (0.16s)
+=== RUN   TestImportNeverMovesTheClockAheadStage2Export
+    clock_ratchet_test.go:464: payments[0].created_at: imported with a future value, the clock is now 1h59m59.6751463s ahead
+    clock_ratchet_test.go:464: payments[1].created_at: imported with a future value, the clock is now 1h59m59.6732894s ahead
+    clock_ratchet_test.go:464: payments[2].created_at: imported with a future value, the clock is now 1h59m59.6718061s ahead
+    clock_ratchet_test.go:464: payments[3].created_at: imported with a future value, the clock is now 1h59m59.6712929s ahead
+    clock_ratchet_test.go:464: payments[4].created_at: imported with a future value, the clock is now 1h59m59.6689831s ahead
+    clock_ratchet_test.go:464: payments[5].created_at: imported with a future value, the clock is now 1h59m59.6681775s ahead
+    clock_ratchet_test.go:464: payments[6].created_at: imported with a future value, the clock is now 1h59m59.6676307s ahead
+    clock_ratchet_test.go:464: payments[7].created_at: imported with a future value, the clock is now 1h59m59.6671015s ahead
+    clock_ratchet_test.go:464: payments[8].created_at: imported with a future value, the clock is now 1h59m59.6660503s ahead
+    clock_ratchet_test.go:464: payments[9].created_at: imported with a future value, the clock is now 1h59m59.6655279s ahead
+    clock_ratchet_test.go:464: authorizations[0].created_at: imported with a future value, the clock is now 1h59m59.6610529s ahead
+    clock_ratchet_test.go:464: authorizations[1].created_at: imported with a future value, the clock is now 1h59m59.6605172s ahead
+    clock_ratchet_test.go:464: authorizations[2].created_at: imported with a future value, the clock is now 1h59m59.6594793s ahead
+    clock_ratchet_test.go:464: authorizations[3].created_at: imported with a future value, the clock is now 1h59m59.6584104s ahead
+    clock_ratchet_test.go:464: authorizations[4].created_at: imported with a future value, the clock is now 1h59m59.6568034s ahead
+    clock_ratchet_test.go:464: authorizations[5].created_at: imported with a future value, the clock is now 1h59m59.6555319s ahead
+    clock_ratchet_test.go:464: authorizations[6].created_at: imported with a future value, the clock is now 1h59m59.6549973s ahead
+    clock_ratchet_test.go:464: authorizations[7].created_at: imported with a future value, the clock is now 1h59m59.6538959s ahead
+    clock_ratchet_test.go:464: authorizations[1].expires_at: imported with a future value, the clock is now 1h59m59.6528432s ahead
+    clock_ratchet_test.go:486: new expired hold, deadline 2026: the clock is now 1h59m59.6480893s ahead
+    clock_ratchet_test.go:486: new expired hold, deadline 2099: the clock is now 633323h45m16.6457616s ahead
+    clock_ratchet_test.go:490: Import of a stage-2 export, 38 probes
+          rejected 422 (0): 
+          accepted    (38): payments[0].created_at (skew 1h59m59.675s); payments[1].created_at (skew 1h59m59.673s); payments[2].created_at (skew 1h59m59.672s); payments[3].created_at (skew 1h59m59.671s); payments[4].created_at (skew 1h59m59.669s); payments[5].created_at (skew 1h59m59.668s); payments[6].created_at (skew 1h59m59.668s); payments[7].created_at (skew 1h59m59.667s); payments[8].created_at (skew 1h59m59.666s); payments[9].created_at (skew 1h59m59.666s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); authorizations[0].created_at (skew 1h59m59.661s); authorizations[1].created_at (skew 1h59m59.661s); authorizations[2].created_at (skew 1h59m59.659s); authorizations[3].created_at (skew 1h59m59.658s); authorizations[4].created_at (skew 1h59m59.657s); authorizations[5].created_at (skew 1h59m59.656s); authorizations[6].created_at (skew 1h59m59.655s); authorizations[7].created_at (skew 1h59m59.654s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 1h59m59.653s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); new expired hold, deadline 2026 (skew 1h59m59.648s); new expired hold, deadline 2099 (skew 633323h45m16.646s); new captured hold, deadline 2026 (skew 0s); new captured hold, deadline 2099 (skew 0s); new voided hold, deadline 2026 (skew 0s); new voided hold, deadline 2099 (skew 0s); new open hold, deadline 2026 (skew 0s); new open hold, deadline 2099 (skew 0s)
+--- FAIL: TestImportNeverMovesTheClockAheadStage2Export (0.04s)
+=== RUN   TestReindexClockIgnoresInstantsAfterNow
+    clock_ratchet_test.go:556: expired hold closed_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: expired hold closed_at: ReadNow is 2h0m0.0000005s ahead
+    clock_ratchet_test.go:556: payment created_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: payment created_at: ReadNow is 2h0m0.0000005s ahead
+    clock_ratchet_test.go:556: revision recorded_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: revision recorded_at: ReadNow is 2h0m0.0000005s ahead
+    clock_ratchet_test.go:556: hold created_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: hold created_at: ReadNow is 2h0m0.0000005s ahead
+    clock_ratchet_test.go:556: voided hold closed_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: voided hold closed_at: ReadNow is 2h0m0.0000005s ahead
+    clock_ratchet_test.go:556: captured hold closed_at: lastStamp 2026-10-02T14:14:43.355317Z is after the reindex instant 2026-10-02T13:14:43.3553175+01:00 plus the 50ms slack
+    clock_ratchet_test.go:559: captured hold closed_at: ReadNow is 2h0m0.0000005s ahead
+--- FAIL: TestReindexClockIgnoresInstantsAfterNow (0.00s)
+=== RUN   TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant
+    seeded_defaults_test.go:128: seeded hold created_at "2026-10-02T12:14:43+00:00", seeded payment created_at "2026-10-02T12:14:43.355317+00:00": both must be the reset instant in microseconds
+--- FAIL: TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant (0.05s)
+=== RUN   TestSeededViewsNeverNegativeAtAnySeededInstant
+    seeded_defaults_test.go:165: reset: bob as_of=2026-10-02T12:14:43.000000+00:00: total 500 held 700 available -200 (available must be total - held and never negative)
+    seeded_defaults_test.go:165: reset: bob as_of=2026-10-02T12:14:43.000001+00:00: total 500 held 700 available -200 (available must be total - held and never negative)
+    seeded_defaults_test.go:165: reset: bob as_of=2026-10-02T12:14:43.410961+00:00: total 500 held 700 available -200 (available must be total - held and never negative)
+--- FAIL: TestSeededViewsNeverNegativeAtAnySeededInstant (0.05s)
+=== RUN   TestImportedHoldWithoutCreatedAtKeepsViewsSound
+--- PASS: TestImportedHoldWithoutCreatedAtKeepsViewsSound (0.03s)
+FAIL
+FAIL	pocketful	0.750s
+FAIL

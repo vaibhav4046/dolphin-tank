@@ -214,7 +214,7 @@ func trFillClosedAt(st *State, pays map[string]*Payment, now time.Time) {
 		closed := a.CreatedAt
 		switch a.Status {
 		case authExpired:
-			closed = a.ExpiresAt
+			closed = *trExpiredClosedAt(a.CreatedAt, a.ExpiresAt, now)
 		case authCaptured:
 			if n := len(a.PaymentIDs); n > 0 && pays[a.PaymentIDs[n-1]] != nil {
 				closed = pays[a.PaymentIDs[n-1]].CreatedAt

@@ -237,10 +237,10 @@ func TestResetSeededHoldsHaveCreatedAtAndClosedAt(t *testing.T) {
 	if bodies["a_open"]["created_at"] != past || bodies["a_void"]["created_at"] != past {
 		t.Errorf("supplied created_at kept verbatim: %v %v", bodies["a_open"]["created_at"], bodies["a_void"]["created_at"])
 	}
-	// Omitted: the reset instant, whole seconds as in stage 2.
+	// Omitted: the reset instant to the microsecond, the same instant an omitted payment created_at gets.
 	def := bodies["a_open_now"]["created_at"].(string)
 	d, ok := ParseInstant(def)
-	if !ok || strings.Contains(def, ".") || d.Before(before) || d.After(time.Now().UTC().Add(time.Second)) {
+	if !ok || !crMicroRe.MatchString(def) || d.Before(before) || d.After(time.Now().UTC().Add(time.Second)) {
 		t.Fatalf("omitted authorization created_at = %q", def)
 	}
 	// The export keeps the persisted closed_at: expiry by clock is derived, never stored.

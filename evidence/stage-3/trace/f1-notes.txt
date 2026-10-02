@@ -1,0 +1,57 @@
+trace - F1 / F1b repair notes (stage 3 repair 1)
+
+ROOT CAUSE (verified by test and by the jury's own scripts against real binaries)
+  1. fixture.go trSeededClosedAt gave a seeded stored-expired hold closed_at = expires_at; snapshot.go trFillClosedAt did the same
+     on the migrating import. With a deadline in the future that is a closed_at in the future.
+  2. store.go ReindexAt sets st.lastStamp = newestInstant(st); newestInstant folded in every payment.created, revision.rec,
+     authorization.created and authorization.closed. Stamp/ReadNow never run behind lastStamp, so one future instant put every
+     later stamp and every read (expiry included) at that instant: payments stamped +7199 s, open holds read as expired at once.
+  3. The jury fixture was only the reproduced trigger. Sweeping every input that feeds newestInstant shows the import accepted a
+     future value in 4 more positions and each moved the clock (pre-fix: 45 of 74 positions of a stage-3 export, 21 of 38 probes of a
+     stage-2 export; the Reset path moved it only for stored-expired + future deadline). See f1-red.txt.
+
+CHANGES (fixture.go, snapshot.go, store.go; one updated pin in history_fixture_test.go)
+  store.go     newestInstant(st, now): an instant later than now+clockSlack is ignored (loader data, not a write this clock made).
+               clockSlack = 50 ms: Stamp runs 1 us per write ahead of a wall clock that ticks every ~0.3-1 ms on this Windows host
+               (measured 220 distinct time.Now() values in 200 ms, min step 305 us), so honest burst stamps can lead now by a few
+               us and must still count. Without the slack, an honest state imported inside the same tick would stamp/read before its
+               own newest write (my own test caught exactly that with a 5 us lead).
+  fixture.go   trExpiredClosedAt(created, expires, at): expired hold closes at expires_at, except a deadline after the load instant
+               closes at max(created_at, load instant) written in microseconds. trSeededClosedAt takes resetAt.
+               F1b: trBuildFixture passes FormatMicro(resetAt) as the default created_at of seeded holds (was FormatTime(now), the
+               floor second). trFxRequests keeps the whole-second default (stage 1).
+  snapshot.go  trFillClosedAt uses trExpiredClosedAt(created, expires, import now). Payment/hold created_at defaults on import
+               unchanged (both whole second = consistent, proven by TestImportedHoldWithoutCreatedAtKeepsViewsSound, a pin).
+  history_fixture_test.go: TestResetSeededHoldsHaveCreatedAtAndClosedAt asserted "omitted authorization created_at has no fraction";
+               that pinned the F1b bug, now asserts the microsecond reset instant.
+
+I1 SWEEP (what is rejected, what is accepted; the clock is honest for every accepted one after the fix)
+  Reset  rejected 422 (existing, kept): payments[].created_at in the future (+2h, 2099); holds[].created_at in the future (any status).
+         accepted: expires_at in the future or past for every status (open/captured/voided/expired). skew 0 after the fix.
+  Import stage-3 export, each instant set to +2h one at a time, 74 positions: rejected 422: 1 (revisions[10].recorded_at, breaks
+         the strictly-increasing rule against its payment's next revision). accepted 73: payments.created_at, requests.created_at,
+         revisions.recorded_at/effective_at, authorizations.created_at/closed_at/expires_at/created_exact. skew 0 after the fix.
+  Import stage-2 export (migrating), 38 probes incl. a new hold of every status with a 2h / 2099 deadline: all accepted, skew 0.
+  Reindex below the import checks (TestReindexClockIgnoresInstantsAfterNow): every instant position future -> lastStamp <= now+slack.
+
+I2/I3/I4 CHECKS
+  jury repro_expired_future.py on real binaries: pre-fix capture 409 authorization_expired, pay 8001 -> 201, created_at +7199 s;
+  fixed = stage 2 (capture 201, pay 8001 -> 409, no skew). s2_fixture.py: pre-fix 79/84, fixed 84/84, stage-2 84/84 (f1-jury-checks.txt).
+  closed_at of expired seeds: past deadline keeps expires_at verbatim; future deadline -> reset instant, never before created_at,
+  never after expires_at. HeldAt identical with and without the expired hold over a 9x9 (as_of, known_at) grid for every user.
+  Stored-open hold past its deadline still derives closed_at = expires_at at read time, stored hold untouched.
+  Existing imports/round trips: whole go test suite green, incl. stage-2 export upgrade and export->import->export byte identity.
+
+LIMITATIONS / FOR ROUTE
+  L1 (found, not fixed - correct.go is not mine). An import accepts a revision recorded in the future (as before). The clock no longer
+     follows it (I1), so a later correction of that payment gets recorded_at = now < that revision, and the exported state then fails
+     re-import: 422 'payment "p_10": recorded_at must strictly increase'. TestProbeFutureRecordedRevisionThenCorrection logs the
+     verdict (report only). Pre-fix the ratchet hid this by moving the whole clock. One-line remedy in correct.go (owner: forge/route):
+     record the correction at max(stamp, previous revision.rec + 1us). Only hand-crafted or buggy-build exports carry such a revision.
+  L2 Explicit but contradictory seeded created_at (a hold dated before the payments that fund it) can still show available < 0 in a view
+     between them; the spec only fixes the omitted-created_at default. Not validated, not changed.
+  L3 Windows ephemeral-port exhaustion (WinError 10048) stopped s2_export.py, s2_race.py and a rerun of s2_upgrade_api on this host after
+     many Python harness connections; those jury scripts were not re-run on the final tree (the Go suite covers export/import and races).
+     s2_upgrade_api's single failure ('stage-1 build /me has no available/held') was my wrong PFD (stage-2 binary instead of a stage-1 build).
+  L4 probe_clock_jump.py aborts at its 5th case on every build (reset correctly answers 422, the script asserts 204).
+  L5 While clearing my hung harness runs I ran 'taskkill /IM python.exe', which ended every python.exe on this host, not only mine.

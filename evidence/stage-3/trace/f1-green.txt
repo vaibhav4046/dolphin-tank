@@ -1,0 +1,72 @@
+F1/F1b GREEN: same tests on the working tree with the fix (fixture.go, snapshot.go, store.go) + the one updated pin (history_fixture_test.go: omitted hold created_at is micro, not whole second).
+command: cd stage-3 && go test -run '<new tests + TestResetSeededHoldsHaveCreatedAtAndClosedAt + TestProbeA4>' -count=1 -v .
+
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead
+--- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour (0.07s)
+    --- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future (0.04s)
+    --- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead (0.04s)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at
+--- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset (0.05s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099 (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at (0.01s)
+=== RUN   TestSeededExpiredHoldHoldsNothingInAnyView
+--- PASS: TestSeededExpiredHoldHoldsNothingInAnyView (0.02s)
+=== RUN   TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline
+--- PASS: TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline (0.01s)
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead
+--- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds (0.00s)
+    --- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future (0.00s)
+    --- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead (0.00s)
+=== RUN   TestResetNeverMovesTheClockAhead
+    clock_ratchet_test.go:351: Reset: fixtures with a future value
+          rejected 422 (5): payment created_at +2h; payment created_at 2099; hold created_at +2h; hold created_at +2h, expired; hold created_at 2099, voided
+          accepted    (10): expired deadline +2h (skew 0s); expired deadline 2099 (skew 0s); expired deadline -2h (skew 0s); open deadline +2h (skew 0s); open deadline -2h (skew 0s); captured deadline +2h (skew 0s); captured deadline 2099 (skew 0s); voided deadline +2h (skew 0s); voided deadline 2099 (skew 0s); expired +2h with past created_at (skew 0s)
+--- PASS: TestResetNeverMovesTheClockAhead (0.13s)
+=== RUN   TestImportNeverMovesTheClockAheadStage3Export
+    clock_ratchet_test.go:440: Import of a stage-3 export, 74 positions set to +2h
+          rejected 422 (1): revisions[10].recorded_at
+          accepted    (73): payments[0].created_at (skew 0s); payments[1].created_at (skew 0s); payments[2].created_at (skew 0s); payments[3].created_at (skew 0s); payments[4].created_at (skew 0s); payments[5].created_at (skew 0s); payments[6].created_at (skew 0s); payments[7].created_at (skew 0s); payments[8].created_at (skew 0s); payments[9].created_at (skew 0s); payments[10].created_at (skew 0s); payments[11].created_at (skew 0s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); revisions[0].recorded_at (skew 0s); revisions[1].recorded_at (skew 0s); revisions[2].recorded_at (skew 0s); revisions[3].recorded_at (skew 0s); revisions[4].recorded_at (skew 0s); revisions[5].recorded_at (skew 0s); revisions[6].recorded_at (skew 0s); revisions[7].recorded_at (skew 0s); revisions[8].recorded_at (skew 0s); revisions[9].recorded_at (skew 0s); revisions[11].recorded_at (skew 0s); revisions[12].recorded_at (skew 0s); revisions[0].effective_at (skew 0s); revisions[1].effective_at (skew 0s); revisions[2].effective_at (skew 0s); revisions[3].effective_at (skew 0s); revisions[4].effective_at (skew 0s); revisions[5].effective_at (skew 0s); revisions[6].effective_at (skew 0s); revisions[7].effective_at (skew 0s); revisions[8].effective_at (skew 0s); revisions[9].effective_at (skew 0s); revisions[10].effective_at (skew 0s); revisions[11].effective_at (skew 0s); revisions[12].effective_at (skew 0s); authorizations[0].created_at (skew 0s); authorizations[1].created_at (skew 0s); authorizations[2].created_at (skew 0s); authorizations[3].created_at (skew 0s); authorizations[4].created_at (skew 0s); authorizations[5].created_at (skew 0s); authorizations[6].created_at (skew 0s); authorizations[7].created_at (skew 0s); authorizations[8].created_at (skew 0s); authorizations[9].created_at (skew 0s); authorizations[10].created_at (skew 0s); authorizations[1].closed_at (skew 0s); authorizations[2].closed_at (skew 0s); authorizations[3].closed_at (skew 0s); authorizations[4].closed_at (skew 0s); authorizations[5].closed_at (skew 0s); authorizations[6].closed_at (skew 0s); authorizations[9].closed_at (skew 0s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 0s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); authorizations[8].expires_at (skew 0s); authorizations[9].expires_at (skew 0s); authorizations[10].expires_at (skew 0s); authorizations[8].created_exact (skew 0s); authorizations[9].created_exact (skew 0s); authorizations[10].created_exact (skew 0s)
+--- PASS: TestImportNeverMovesTheClockAheadStage3Export (0.11s)
+=== RUN   TestImportNeverMovesTheClockAheadStage2Export
+    clock_ratchet_test.go:490: Import of a stage-2 export, 38 probes
+          rejected 422 (0): 
+          accepted    (38): payments[0].created_at (skew 0s); payments[1].created_at (skew 0s); payments[2].created_at (skew 0s); payments[3].created_at (skew 0s); payments[4].created_at (skew 0s); payments[5].created_at (skew 0s); payments[6].created_at (skew 0s); payments[7].created_at (skew 0s); payments[8].created_at (skew 0s); payments[9].created_at (skew 0s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); authorizations[0].created_at (skew 0s); authorizations[1].created_at (skew 0s); authorizations[2].created_at (skew 0s); authorizations[3].created_at (skew 0s); authorizations[4].created_at (skew 0s); authorizations[5].created_at (skew 0s); authorizations[6].created_at (skew 0s); authorizations[7].created_at (skew 0s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 0s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); new expired hold, deadline 2026 (skew 0s); new expired hold, deadline 2099 (skew 0s); new captured hold, deadline 2026 (skew 0s); new captured hold, deadline 2099 (skew 0s); new voided hold, deadline 2026 (skew 0s); new voided hold, deadline 2099 (skew 0s); new open hold, deadline 2026 (skew 0s); new open hold, deadline 2099 (skew 0s)
+--- PASS: TestImportNeverMovesTheClockAheadStage2Export (0.03s)
+=== RUN   TestReindexClockIgnoresInstantsAfterNow
+--- PASS: TestReindexClockIgnoresInstantsAfterNow (0.00s)
+=== RUN   TestProbeA4SeededHoldDefaultsToTruncatedResetSecond
+    f2_probe_a4_test.go:36: seeded payment created_at 2026-10-02T12:16:52.877000+00:00, seeded hold created_at 2026-10-02T12:16:52.877000+00:00 (bob balance 1000 = opening 200 + 800 seeded, hold 500)
+    f2_probe_a4_test.go:39: as_of=2026-10-02T12:16:52.877000+00:00 [hold created_at (floor of the reset second)]: total 1000 held 500 available 500
+    f2_probe_a4_test.go:39: as_of=2026-10-02T12:16:52.877000+00:00 [payment created_at (reset instant)]: total 1000 held 500 available 500
+    f2_probe_a4_test.go:44: VERDICT: not reproducible on this run (reset landed on a whole second)
+--- PASS: TestProbeA4SeededHoldDefaultsToTruncatedResetSecond (0.01s)
+=== RUN   TestResetSeededHoldsHaveCreatedAtAndClosedAt
+--- PASS: TestResetSeededHoldsHaveCreatedAtAndClosedAt (0.06s)
+=== RUN   TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant
+--- PASS: TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant (0.04s)
+=== RUN   TestSeededViewsNeverNegativeAtAnySeededInstant
+--- PASS: TestSeededViewsNeverNegativeAtAnySeededInstant (0.04s)
+=== RUN   TestImportedHoldWithoutCreatedAtKeepsViewsSound
+--- PASS: TestImportedHoldWithoutCreatedAtKeepsViewsSound (0.03s)
+PASS
+ok  	pocketful	0.639s
+
+=== report-only probe (future-recorded revision then correction)
+    clock_ratchet_test.go:623: PROBE: VERDICT YES - re-import of the exported state after the correction: 422 invalid state: payment "p_10": recorded_at must strictly increase
+--- PASS: TestProbeFutureRecordedRevisionThenCorrection (0.00s)
+PASS
+ok  	pocketful	0.028s
