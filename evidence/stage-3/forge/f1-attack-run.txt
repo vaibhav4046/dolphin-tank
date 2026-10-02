@@ -1,0 +1,28 @@
+=== RUN   TestZZE1ExpiredSeededHolds
+    zz_f1_attack_test.go:72: clock skew after reset: -200ns
+    zz_f1_attack_test.go:77: a1 status=open created_at=2026-10-02T16:51:56.782182+00:00 expires_at=2026-10-02T18:51:56+00:00 closed_at=<nil> remaining=2000
+    zz_f1_attack_test.go:77: a4 status=expired created_at=2026-10-02T16:51:56.782182+00:00 expires_at=2026-10-02T18:51:56+00:00 closed_at=2026-10-02T16:51:56.782182+00:00 remaining=0
+    zz_f1_attack_test.go:77: a5 status=expired created_at=2026-10-02T16:51:56.782182+00:00 expires_at=2026-10-02T15:51:56+00:00 closed_at=2026-10-02T15:51:56+00:00 remaining=0
+    zz_f1_attack_test.go:77: a6 status=expired created_at=2026-10-02T13:51:56.781645+00:00 expires_at=2026-10-02T18:51:56+00:00 closed_at=2026-10-02T16:51:56.782182+00:00 remaining=0
+    zz_f1_attack_test.go:89: NOTE a5 (expired, deadline in the past, created_at omitted): closed_at 2026-10-02T15:51:56+00:00 is before created_at 2026-10-02T16:51:56.782182+00:00
+    zz_f1_attack_test.go:106: export -> import -> export identical (3560 bytes)
+    zz_f1_attack_test.go:119: /me grid identical before and after the round trip (150 reads)
+    zz_f1_attack_test.go:121: clock skew after import: -900ns
+--- PASS: TestZZE1ExpiredSeededHolds (0.04s)
+=== RUN   TestZZE2Burst
+    zz_f1_attack_test.go:167: 200000 honest Pay writes in 421ms (2.1 us each); max lastStamp lead over the wall clock: 2.1092ms
+    zz_f1_attack_test.go:171: lead at the end of the burst: -900ns (slack 50ms)
+    zz_f1_attack_test.go:180: after the honest burst: next payment created_at 2026-10-02T16:51:59.914106+00:00 is after the newest recorded 2026-10-02T16:51:57.246128+00:00
+--- PASS: TestZZE2Burst (3.09s)
+=== RUN   TestZZE2bFrozenClockBurst
+    zz_f1_attack_test.go:225: 60000 writes at one frozen instant: lastStamp is 59.9982ms ahead of it
+    zz_f1_attack_test.go:233: after import at the frozen instant: lastStamp is 49.9992ms ahead
+    zz_f1_attack_test.go:244: next payment created_at 2026-10-02T16:51:59.964107+00:00 vs newest recorded 2026-10-02T16:51:59.974105+00:00: behind by 9.998ms
+--- PASS: TestZZE2bFrozenClockBurst (1.09s)
+=== RUN   TestZZE3FutureDatedPaymentImport
+    zz_f1_attack_test.go:344: payer /me now: balance 7290 total 7290 | as_of=now: balance 7790 total 7790 held 270
+    zz_f1_attack_test.go:346: VERDICT: /me and /me?as_of=now disagree for a future-dated imported payment
+--- PASS: TestZZE3FutureDatedPaymentImport (0.01s)
+PASS
+ok  	pocketful	4.319s
+S2_EXPORT real stage-2 service export: NOT RUN (E4 probe present in f1-attack-probe.go.txt, skipped without S2_EXPORT)

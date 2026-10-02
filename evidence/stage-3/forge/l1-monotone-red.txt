@@ -1,0 +1,13 @@
+=== RUN   TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing
+    correct_monotone_test.go:92: step 0: recorded_at 2026-10-02T16:44:56.052450+00:00 is not after the previous revision's 2026-10-02T17:44:56.051368+00:00
+--- FAIL: TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing (0.00s)
+=== RUN   TestRejectedCorrectionDoesNotMoveClockToFutureRevision
+--- PASS: TestRejectedCorrectionDoesNotMoveClockToFutureRevision (0.00s)
+=== RUN   TestCorrectPastRevisionRecordsAtTheStamp
+--- PASS: TestCorrectPastRevisionRecordsAtTheStamp (0.00s)
+=== RUN   TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater
+    correct_monotone_test.go:171: recorded_at 2026-10-02T16:44:56.055841+00:00 is not after 2026-10-02T17:44:56.054619123Z
+--- FAIL: TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater (0.00s)
+FAIL
+FAIL	pocketful	0.040s
+FAIL

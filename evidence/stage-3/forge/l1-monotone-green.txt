@@ -1,0 +1,13 @@
+=== RUN   TestProbeFutureRecordedRevisionThenCorrection
+    clock_ratchet_test.go:625: PROBE: VERDICT NO - the exported state re-imports
+--- PASS: TestProbeFutureRecordedRevisionThenCorrection (0.00s)
+=== RUN   TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing
+--- PASS: TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing (0.00s)
+=== RUN   TestRejectedCorrectionDoesNotMoveClockToFutureRevision
+--- PASS: TestRejectedCorrectionDoesNotMoveClockToFutureRevision (0.00s)
+=== RUN   TestCorrectPastRevisionRecordsAtTheStamp
+--- PASS: TestCorrectPastRevisionRecordsAtTheStamp (0.00s)
+=== RUN   TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater
+--- PASS: TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater (0.00s)
+PASS
+ok  	pocketful	0.039s

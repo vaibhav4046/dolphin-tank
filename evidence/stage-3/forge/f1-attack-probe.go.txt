@@ -1,0 +1,350 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"net/url"
+	"os"
+	"strings"
+	"testing"
+	"time"
+)
+
+// forge cross-attack on ac96360 (F1): throwaway probes, not committed as tests.
+
+func zzFixture(R time.Time) (fixture, exp string) {
+	exp = FormatTime(R.Add(2 * time.Hour))
+	past := FormatTime(R.Add(-time.Hour))
+	long := FormatMicro(R.Add(-3 * time.Hour))
+	holds := strings.Join([]string{
+		crHoldBetween("a1", "ada", "bob", "open", 2000, exp, ""),
+		crHoldBetween("a4", "ada", "bob", "expired", 4000, exp, ""),
+		crHoldBetween("a5", "ada", "bob", "expired", 300, past, ""),
+		crHoldBetween("a6", "ada", "bob", "expired", 500, exp, `"created_at":"`+long+`"`),
+		crHoldBetween("a7", "bob", "cy", "open", 100, exp, ""),
+	}, ",")
+	fixture = `{"currency":"EUR","minor_units":2,"users":[` + strings.Join([]string{crUser("ada", "ada", 10000), crUser("bob", "bob", 2500), crUser("cy", "cy", 50)}, ",") +
+		`],"payments":[` + crPayment("p_1", "ada", "bob", 800, "") + `,` + crPayment("p_2", "bob", "cy", 50, `"created_at":"`+long+`"`) +
+		`],"authorizations":[` + holds + `]}`
+	return
+}
+
+func zzAsOfGrid(t *testing.T, h http.Handler, tok map[string]string, R, expT time.Time) (string, int) {
+	t.Helper()
+	asOfs := []string{"", FormatMicro(R.Add(-4 * time.Hour)), FormatMicro(R.Add(-time.Second)), FormatMicro(R.Add(-time.Microsecond)), FormatMicro(R),
+		FormatMicro(R.Add(time.Microsecond)), FormatMicro(expT.Add(-time.Microsecond)), FormatMicro(expT), FormatMicro(expT.Add(time.Hour)), "2099-01-01T00:00:00+00:00"}
+	knowns := []string{"", FormatMicro(R.Add(-time.Second)), FormatMicro(R.Add(-time.Microsecond)), FormatMicro(R), FormatMicro(expT.Add(time.Hour))}
+	var out strings.Builder
+	bad := 0
+	for _, user := range []string{"ada", "bob", "cy"} {
+		for _, a := range asOfs {
+			for _, k := range knowns {
+				q := url.Values{}
+				if a != "" {
+					q.Set("as_of", a)
+				}
+				if k != "" {
+					q.Set("known_at", k)
+				}
+				rec := txDo(h, "GET", "/me?"+q.Encode(), tok[user], "", "")
+				if rec.Code != 200 {
+					t.Fatalf("GET /me?%s as %s: %d %s", q.Encode(), user, rec.Code, rec.Body)
+				}
+				me := txJSON(t, rec.Body.Bytes())
+				total, held, avail, bal := txNum(me, "total"), txNum(me, "held"), txNum(me, "available"), txNum(me, "balance")
+				fmt.Fprintf(&out, "%s as_of=%s known_at=%s total=%d held=%d avail=%d\n", user, a, k, total, held, avail)
+				if avail < 0 || held < 0 || held > total || avail != total-held || bal != total {
+					bad++
+					t.Errorf("UNSOUND %s as_of=%q known_at=%q: total %d held %d available %d balance %d", user, a, k, total, held, avail, bal)
+				}
+			}
+		}
+	}
+	return out.String(), bad
+}
+
+// E1: seeded stored-expired holds (future / past / created-in-the-past deadlines) next to open ones.
+func TestZZE1ExpiredSeededHolds(t *testing.T) {
+	R := time.Now()
+	fixture, exp := zzFixture(R)
+	h, tok, s := crServer(t, fixture)
+	expT := hsInstant(t, exp)
+	t.Logf("clock skew after reset: %v", crSkew(s))
+
+	holds := crHolds(t, h, tok["ada"])
+	for _, id := range []string{"a1", "a4", "a5", "a6"} {
+		a := holds[id]
+		t.Logf("%s status=%v created_at=%v expires_at=%v closed_at=%v remaining=%v", id, a["status"], a["created_at"], a["expires_at"], a["closed_at"], a["remaining_amount"])
+	}
+	for _, id := range []string{"a4", "a6"} {
+		c := hsInstant(t, holds[id]["closed_at"].(string))
+		if c.After(time.Now().Add(crSkewLimit)) {
+			t.Errorf("%s closed_at %v is in the future", id, holds[id]["closed_at"])
+		}
+		if cr := hsInstant(t, holds[id]["created_at"].(string)); c.Before(cr) {
+			t.Logf("NOTE %s closed_at %s is before created_at %s", id, holds[id]["closed_at"], holds[id]["created_at"])
+		}
+	}
+	if c, cr := hsInstant(t, holds["a5"]["closed_at"].(string)), hsInstant(t, holds["a5"]["created_at"].(string)); c.Before(cr) {
+		t.Logf("NOTE a5 (expired, deadline in the past, created_at omitted): closed_at %v is before created_at %v", holds["a5"]["closed_at"], holds["a5"]["created_at"])
+	}
+
+	gridA, _ := zzAsOfGrid(t, h, tok, R, expT)
+
+	exp1 := crExportOf(t, h)
+	s2 := NewStore()
+	if e := s2.importAt(exp1, time.Now()); e != nil {
+		t.Fatalf("re-import of own export: %d %s", e.Status, e.Message)
+	}
+	exp2, ae := s2.Export()
+	if ae != nil {
+		t.Fatal(ae.Message)
+	}
+	if string(exp1) != string(exp2) {
+		t.Errorf("export -> import -> export differs:\n%s\n%s", exp1, exp2)
+	} else {
+		t.Logf("export -> import -> export identical (%d bytes)", len(exp1))
+	}
+	h2 := NewServer(s2)
+	gridB, _ := zzAsOfGrid(t, h2, tok, R, expT)
+	if gridA != gridB {
+		a, b := strings.Split(gridA, "\n"), strings.Split(gridB, "\n")
+		for i := range a {
+			if i < len(b) && a[i] != b[i] {
+				t.Errorf("grid differs after round trip:\n  before %s\n  after  %s", a[i], b[i])
+				break
+			}
+		}
+	} else {
+		t.Logf("/me grid identical before and after the round trip (%d reads)", strings.Count(gridA, "\n"))
+	}
+	t.Logf("clock skew after import: %v", crSkew(s2))
+	hb := crHolds(t, h2, tok["ada"])
+	for _, id := range []string{"a4", "a5", "a6"} {
+		if hb[id]["closed_at"] != holds[id]["closed_at"] || hb[id]["status"] != holds[id]["status"] {
+			t.Errorf("%s changed over the round trip: %v -> %v", id, holds[id], hb[id])
+		}
+	}
+	// lifecycle on the imported state
+	for _, id := range []string{"a4", "a5", "a6"} {
+		rec := txDo(h2, "POST", "/authorizations/"+id+"/capture", tok["bob"], "k-"+id, `{"amount":10,"final":false}`)
+		t.Logf("capture of stored-expired %s after import: %d %s", id, rec.Code, strings.TrimSpace(rec.Body.String()))
+		rec = txDo(h2, "POST", "/authorizations/"+id+"/void", tok["ada"], "v-"+id, ``)
+		t.Logf("void of stored-expired %s after import: %d %s", id, rec.Code, strings.TrimSpace(rec.Body.String()))
+	}
+	rec := txDo(h2, "POST", "/authorizations/a1/capture", tok["bob"], "k-a1", `{"amount":500,"final":false}`)
+	t.Logf("capture of open a1 after import: %d", rec.Code)
+	pay := txWant(t, "pay after import", txDo(h2, "POST", "/payments", tok["ada"], "k-pay", `{"to_handle":"cy","amount":10}`), 201)
+	crNear(t, "payment.created_at after import", txJSON(t, pay)["created_at"].(string))
+}
+
+// E2: the 50 ms slack against honest write bursts.
+func TestZZE2Burst(t *testing.T) {
+	s := fgStore(fgU{"ada", 1 << 40}, fgU{"bob", 1 << 40})
+	var maxLead time.Duration
+	const n = 200000
+	start := time.Now()
+	for i := 0; i < n; i++ {
+		from, to := "ada", "bob"
+		if i%2 == 1 {
+			from, to = to, from
+		}
+		now := time.Now()
+		if _, e := s.Exec(func(st *State) (any, *AppError) {
+			return st.Pay("u_"+from, PaymentIn{ToHandle: to, Amount: 1, Visibility: visPublic}, now)
+		}); e != nil {
+			t.Fatal(e.Message)
+		}
+		if i%500 == 0 {
+			s.mu.Lock()
+			if d := s.st.lastStamp.Sub(time.Now()); d > maxLead {
+				maxLead = d
+			}
+			s.mu.Unlock()
+		}
+	}
+	el := time.Since(start)
+	t.Logf("%d honest Pay writes in %v (%.1f us each); max lastStamp lead over the wall clock: %v", n, el.Round(time.Millisecond), float64(el.Microseconds())/n, maxLead)
+	s.mu.Lock()
+	lead := s.st.lastStamp.Sub(time.Now())
+	s.mu.Unlock()
+	t.Logf("lead at the end of the burst: %v (slack %v)", lead, clockSlack)
+	out, ae := s.Export()
+	if ae != nil {
+		t.Fatal(ae.Message)
+	}
+	s2 := NewStore()
+	if e := s2.importAt(out, time.Now()); e != nil {
+		t.Fatalf("import after the burst: %v", e.Message)
+	}
+	zzNextNotBefore(t, s2, "after the honest burst")
+}
+
+// zzNextNotBefore: the next write on s must be recorded strictly after every recorded instant.
+func zzNextNotBefore(t *testing.T, s *Store, label string) {
+	t.Helper()
+	var newest time.Time
+	s.mu.Lock()
+	for _, p := range s.st.Payments {
+		newest = laterOf(newest, p.created)
+	}
+	s.mu.Unlock()
+	var got *Payment
+	now := time.Now()
+	if _, e := s.Exec(func(st *State) (any, *AppError) {
+		p, e := st.Pay("u_ada", PaymentIn{ToHandle: "bob", Amount: 1, Visibility: visPublic}, now)
+		got = p
+		return p, e
+	}); e != nil {
+		t.Fatal(e.Message)
+	}
+	if !got.created.After(newest) {
+		t.Errorf("%s: next payment created_at %s is not after the newest recorded %s (behind by %v)", label, FormatMicro(got.created), FormatMicro(newest), newest.Sub(got.created))
+	} else {
+		t.Logf("%s: next payment created_at %s is after the newest recorded %s", label, FormatMicro(got.created), FormatMicro(newest))
+	}
+}
+
+// E2b: a clock frozen over > 50 000 writes (theoretical: needs > 1M writes per second).
+func TestZZE2bFrozenClockBurst(t *testing.T) {
+	s := fgStore(fgU{"ada", 1 << 40}, fgU{"bob", 1 << 40})
+	frozen := time.Now()
+	const n = 60000
+	for i := 0; i < n; i++ {
+		from, to := "ada", "bob"
+		if i%2 == 1 {
+			from, to = to, from
+		}
+		if _, e := s.Exec(func(st *State) (any, *AppError) {
+			return st.Pay("u_"+from, PaymentIn{ToHandle: to, Amount: 1, Visibility: visPublic}, frozen)
+		}); e != nil {
+			t.Fatal(e.Message)
+		}
+	}
+	s.mu.Lock()
+	t.Logf("%d writes at one frozen instant: lastStamp is %v ahead of it", n, s.st.lastStamp.Sub(frozen))
+	s.mu.Unlock()
+	out, _ := s.Export()
+	s2 := NewStore()
+	if e := s2.importAt(out, frozen); e != nil {
+		t.Fatalf("import: %v", e.Message)
+	}
+	s2.mu.Lock()
+	t.Logf("after import at the frozen instant: lastStamp is %v ahead", s2.st.lastStamp.Sub(frozen))
+	s2.mu.Unlock()
+	var newest time.Time
+	s2.mu.Lock()
+	for _, p := range s2.st.Payments {
+		newest = laterOf(newest, p.created)
+	}
+	var got *Payment
+	st := s2.st
+	got, _ = st.Pay("u_ada", PaymentIn{ToHandle: "bob", Amount: 1, Visibility: visPublic}, frozen)
+	s2.mu.Unlock()
+	t.Logf("next payment created_at %s vs newest recorded %s: behind by %v", FormatMicro(got.created), FormatMicro(newest), newest.Sub(got.created))
+}
+
+// E4: a REAL stage-2 export (file named in S2_EXPORT) imported into stage 3.
+func TestZZE4RealStage2Export(t *testing.T) {
+	path := os.Getenv("S2_EXPORT")
+	if path == "" {
+		t.Skip("S2_EXPORT not set")
+	}
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := NewStore()
+	if e := s.importAt(raw, time.Now()); e != nil {
+		t.Fatalf("import of the stage-2 export: %d %s", e.Status, e.Message)
+	}
+	h := NewServer(s)
+	tok := map[string]string{}
+	for _, n := range []string{"ada", "bob", "cy"} {
+		rec := txDo(h, "POST", "/auth/login", "", "", `{"email":"`+n+`@example.com","password":"correct horse"}`)
+		tok[n], _ = txJSON(t, rec.Body.Bytes())["token"].(string)
+	}
+	t.Logf("clock skew after import: %v", crSkew(s))
+	holds := crHolds(t, h, tok["ada"])
+	for id, a := range holds {
+		t.Logf("%s status=%v created_at=%v expires_at=%v closed_at=%v remaining=%v", id, a["status"], a["created_at"], a["expires_at"], a["closed_at"], a["remaining_amount"])
+	}
+	me := txMe(t, h, tok["ada"])
+	t.Logf("ada /me now: total %d held %d available %d", txNum(me, "total"), txNum(me, "held"), txNum(me, "available"))
+	now := time.Now()
+	for _, as := range []time.Duration{-time.Hour, -time.Second, 0, time.Second, time.Hour, 3 * time.Hour} {
+		for _, user := range []string{"ada", "bob"} {
+			rec := txDo(h, "GET", "/me?as_of="+url.QueryEscape(FormatMicro(now.Add(as))), tok[user], "", "")
+			m := txJSON(t, rec.Body.Bytes())
+			t.Logf("%s as_of=now%+v: total %d held %d available %d", user, as, txNum(m, "total"), txNum(m, "held"), txNum(m, "available"))
+			if txNum(m, "available") < 0 || txNum(m, "available") != txNum(m, "total")-txNum(m, "held") {
+				t.Errorf("unsound view %v", m)
+			}
+		}
+	}
+	out, ae := s.Export()
+	if ae != nil {
+		t.Fatal(ae.Message)
+	}
+	s2 := NewStore()
+	if e := s2.importAt(out, time.Now()); e != nil {
+		t.Fatalf("re-import: %d %s", e.Status, e.Message)
+	}
+	out2, _ := s2.Export()
+	if string(out) != string(out2) {
+		t.Errorf("export/import/export differs after a stage-2 import")
+	} else {
+		t.Logf("stage-2 import -> export -> import -> export identical (%d bytes)", len(out))
+	}
+	pay := txWant(t, "pay", txDo(h, "POST", "/payments", tok["ada"], "k-pay", `{"to_handle":"cy","amount":1}`), 201)
+	crNear(t, "payment.created_at", txJSON(t, pay)["created_at"].(string))
+}
+
+// E3: an import whose payment (and revision 1) is dated an hour ahead: do the current balance and the
+// as_of=now view describe the same wallet?
+func TestZZE3FutureDatedPaymentImport(t *testing.T) {
+	good := crRichExport(t)
+	fut := FormatMicro(time.Now().Add(time.Hour))
+	var pid string
+	body := ttMutateExport(t, good, func(_, st map[string]any) {
+		p := st["payments"].([]any)[0].(map[string]any)
+		pid = p["payment_id"].(string)
+		p["created_at"] = fut
+		for _, r := range st["revisions"].([]any) {
+			if m := r.(map[string]any); m["payment_id"] == pid && m["revision"].(float64) == 1 {
+				m["recorded_at"], m["effective_at"] = fut, fut
+			}
+		}
+	})
+	s := NewStore()
+	if e := s.importAt(body, time.Now()); e != nil {
+		t.Logf("future-dated payment import rejected: %d %s", e.Status, e.Message)
+		return
+	}
+	h := NewServer(s)
+	var from string
+	s.mu.Lock()
+	from = s.st.payByID[pid].FromUserID
+	email := ""
+	for _, u := range s.st.Users {
+		if u.ID == from {
+			email = u.Email
+		}
+	}
+	s.mu.Unlock()
+	rec := txDo(h, "POST", "/auth/login", "", "", `{"email":"`+email+`","password":"correct horse"}`)
+	tok, _ := txJSON(t, rec.Body.Bytes())["token"].(string)
+	if tok == "" {
+		t.Logf("cannot log in as the payer (%d %s): password unknown for the rich state", rec.Code, rec.Body)
+		return
+	}
+	cur := txMe(t, h, tok)
+	rec = txDo(h, "GET", "/me?as_of="+url.QueryEscape(FormatMicro(time.Now())), tok, "", "")
+	asOf := txJSON(t, rec.Body.Bytes())
+	t.Logf("payer /me now: balance %d total %d | as_of=now: balance %d total %d held %d", txNum(cur, "balance"), txNum(cur, "total"), txNum(asOf, "balance"), txNum(asOf, "total"), txNum(asOf, "held"))
+	if txNum(cur, "balance") != txNum(asOf, "balance") {
+		t.Logf("VERDICT: /me and /me?as_of=now disagree for a future-dated imported payment")
+	} else {
+		t.Logf("VERDICT: consistent")
+	}
+}

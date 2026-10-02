@@ -54,8 +54,14 @@ func (st *State) Correct(caller, paymentID string, in CorrectionIn, now time.Tim
 		return nil, NewErr(409, "insufficient_funds", "available funds are below the correction")
 	}
 
+	// Recorded times of one payment strictly increase even when an import carried a revision recorded
+	// after the stamp (the clock ignores such instants), so the new one is never earlier than that + 1us.
+	rec := now
+	if floor := latest.rec.Truncate(time.Microsecond).Add(time.Microsecond); rec.Before(floor) {
+		rec = floor
+	}
 	rev := &Revision{PaymentID: paymentID, Revision: latest.Revision + 1, Amount: in.Amount,
-		EffectiveAt: in.EffectiveAt, RecordedAt: FormatMicro(now), Reason: in.Reason, eff: eff, rec: now}
+		EffectiveAt: in.EffectiveAt, RecordedAt: FormatMicro(rec), Reason: in.Reason, eff: eff, rec: rec}
 	st.appendRevision(rev)
 	debited.Balance -= moved
 	credited.Balance += moved
@@ -71,6 +77,11 @@ func (st *State) Correct(caller, paymentID string, in CorrectionIn, now time.Tim
 		return nil, NewErr(409, "historical_overdraft", "the correction would leave a wallet negative at a past moment")
 	}
 	keep = true
+	// A read that begins after this returns must see the revision (known_at = everything known when
+	// the read begins), so the clock may not lag the instant it was recorded at.
+	if rec.After(st.lastStamp) {
+		st.lastStamp = rec
+	}
 	return rev, nil
 }
 

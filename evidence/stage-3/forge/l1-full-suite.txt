@@ -1,0 +1,18 @@
+$ gofmt -l .
+$ go vet ./...
+VET_OK
+$ go build ./...
+BUILD_OK
+$ go test ./... -count=1
+ok  	pocketful	43.087s
+$ node --test jstest
+✔ splitShares matches the shared table (amount 1..60, n 1..8) (1.4705ms)
+✔ parseHandles (0.2023ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 167.5026
