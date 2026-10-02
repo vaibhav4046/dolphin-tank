@@ -1,0 +1,78 @@
+seed 45
+payments 60 corrections 30
+PASS J13/J14/J15 ada full statement equals oracle (order by selected effective_at then id, delta, balance_after, revision, amount, open/close)
+PASS J12 ada entry keys payment/delta/balance_after/revision/effective_at/recorded_at; payment.amount selected amount
+PASS J15 ada opening + sum(delta) == closing; sent negative, received positive
+PASS J13 ada keys: effective_at asc, ties by payment id bytewise asc
+PASS J15 ada closing_balance equals current /me balance
+PASS J13/J14/J15 bob full statement equals oracle (order by selected effective_at then id, delta, balance_after, revision, amount, open/close)
+PASS J12 bob entry keys payment/delta/balance_after/revision/effective_at/recorded_at; payment.amount selected amount
+PASS J15 bob opening + sum(delta) == closing; sent negative, received positive
+PASS J13 bob keys: effective_at asc, ties by payment id bytewise asc
+PASS J15 bob closing_balance equals current /me balance
+PASS J13/J14/J15 cy full statement equals oracle (order by selected effective_at then id, delta, balance_after, revision, amount, open/close)
+PASS J12 cy entry keys payment/delta/balance_after/revision/effective_at/recorded_at; payment.amount selected amount
+PASS J15 cy opening + sum(delta) == closing; sent negative, received positive
+PASS J13 cy keys: effective_at asc, ties by payment id bytewise asc
+PASS J15 cy closing_balance equals current /me balance
+PASS J13/J14/J15 dee full statement equals oracle (order by selected effective_at then id, delta, balance_after, revision, amount, open/close)
+PASS J12 dee entry keys payment/delta/balance_after/revision/effective_at/recorded_at; payment.amount selected amount
+PASS J15 dee opening + sum(delta) == closing; sent negative, received positive
+PASS J13 dee keys: effective_at asc, ties by payment id bytewise asc
+PASS J15 dee closing_balance equals current /me balance
+PASS J29 sum of current balances constant after corrections
+INFO payments currently at zero amount: 3
+PASS J33 zero-amount revision of p_13 appears for ada with delta 0 and payment.amount 0
+PASS J33 zero-amount revision of p_13 appears for dee with delta 0 and payment.amount 0
+PASS J33 zero-amount revision of p_33 appears for cy with delta 0 and payment.amount 0
+PASS J33 zero-amount revision of p_33 appears for dee with delta 0 and payment.amount 0
+PASS J33 zero-amount revision of p_54 appears for ada with delta 0 and payment.amount 0
+PASS J33 zero-amount revision of p_54 appears for cy with delta 0 and payment.amount 0
+PASS J11/J14 240 random windows (incl. from-only/to-only/empty/inverted pairs excluded, exact instants +-1us): opening/closing/entries/balance_after equal oracle
+PASS J11 inverted window (from > to): no 5xx (spec silent)
+PASS J11 payment effective exactly at `from` is INCLUDED
+PASS J11 payment effective exactly at `to` is EXCLUDED (window half-open)
+PASS J11 from == to is an empty window; opening == closing
+PASS J16 pages of every size concatenate to the full result with identical balance_after/opening/closing; has_more only when more exists
+PASS J16 offset=0 limit=32 of 32: has_more=False, 32 entries, balances unchanged
+PASS J16 offset=0 limit=31 of 32: has_more=True, 31 entries, balances unchanged
+PASS J16 offset=31 limit=1 of 32: has_more=False, 1 entries, balances unchanged
+PASS J16 offset=32 limit=5 of 32: has_more=False, 0 entries, balances unchanged
+PASS J16 offset=82 limit=5 of 32: has_more=False, 0 entries, balances unchanged
+PASS J16 offset=30 limit=5 of 32: has_more=False, 2 entries, balances unchanged
+PASS J16 offset=30 limit=2 of 32: has_more=False, 2 entries, balances unchanged
+PASS J16 offset=29 limit=2 of 32: has_more=True, 2 entries, balances unchanged
+PASS J10 default limit is 50 (entries <= 50, has_more consistent with 32 total)
+PASS J10 limit=0 -> 422 validation_failed
+PASS J10 limit=201 -> 422 validation_failed
+PASS J10 limit=-1 -> 422 validation_failed
+PASS J10 limit=abc -> 422 validation_failed
+PASS J10 limit=1e1 -> 422 validation_failed
+PASS J10 limit=%2B4 -> 422 validation_failed
+PASS J10 limit=4.0 -> 422 validation_failed
+PASS J10 limit= -> 422 validation_failed
+PASS J10 offset=-1 -> 422 validation_failed
+PASS J10 offset=1.5 -> 422 validation_failed
+PASS J10 offset=x -> 422 validation_failed
+PASS J10 offset=1e0 -> 422 validation_failed
+PASS J10 limit=1 accepted
+PASS J10 limit=200 accepted
+PASS J10 offset=0 accepted
+PASS J10 limit=50&offset=3 accepted
+PASS J10 unknown parameters ignored
+PASS J10 from= -> 422 validation_failed
+PASS J10 from=garbage -> 422 validation_failed
+PASS J10 to=2026-01-01 -> 422 validation_failed
+PASS J10 from=2026-01-01T00:00:00 -> 422 validation_failed
+PASS J10 to= -> 422 validation_failed
+PASS J10 known_at= -> 422 validation_failed
+PASS J10 known_at=x -> 422 validation_failed
+PASS J10 statement requires auth (401)
+PASS J17 ada statement contains only payments sent/received by ada (public of others excluded), incl. private ones
+PASS J17 bob statement contains only payments sent/received by bob (public of others excluded), incl. private ones
+PASS J17 cy statement contains only payments sent/received by cy (public of others excluded), incl. private ones
+PASS J17 dee statement contains only payments sent/received by dee (public of others excluded), incl. private ones
+INFO tie groups (same effective instant, same payer): 1
+PASS J13 at least one effective-time tie exercised
+== t3_statement: 72 pass, 0 fail, 552 requests, 0 5xx, max latency 0.011s, p99 0.001s
+rc=0

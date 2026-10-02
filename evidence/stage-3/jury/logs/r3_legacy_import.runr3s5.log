@@ -1,0 +1,37 @@
+PASS legacy history built: correction accepted on the legacy server
+PASS legacy history has >= 8 authorizations
+INFO control: legacy views at authorization.created_at with available<0: 14 of 17
+PASS control: the legacy export really carries the F2 defect (>=1 legacy view with available<0 at authorization.created_at)
+PASS legacy export -> 200 and carries created_exact on authorizations
+PASS import #1 of the legacy export -> 204
+PASS #1 same authorizations and payments after import
+PASS #1 closed_at / expires_at / payment_ids / status / amounts unchanged by import (0 diffs)
+PASS #1 imported created_at == legacy created_exact (microsecond), same second as the legacy created_at (0 diffs)
+PASS #1 payments (ids, created_at, amounts, links) identical
+PASS #1 current /me identical for every user
+PASS #1 revision history identical (18 payments compared, incl. the corrected one)
+PASS #1 153 instants x 4 users: invariant, available>=0 (0 negative), held == public-field oracle, total == legacy total, conserved; first bad: []
+PASS #1 ada statement: opening + deltas == closing == /me.total
+PASS #1 bob statement: opening + deltas == closing == /me.total
+PASS #1 cy statement: opening + deltas == closing == /me.total
+PASS #1 dee statement: opening + deltas == closing == /me.total
+PASS #1 next payment stamped at its own request time (+-30 ms) and after every imported payment
+PASS #1 next authorization created_at within its request window
+PASS import #2 of the legacy export -> 204
+PASS #2 same authorizations and payments after import
+PASS #2 closed_at / expires_at / payment_ids / status / amounts unchanged by import (0 diffs)
+PASS #2 imported created_at == legacy created_exact (microsecond), same second as the legacy created_at (0 diffs)
+PASS #2 payments (ids, created_at, amounts, links) identical
+PASS #2 current /me identical for every user
+PASS #2 revision history identical (18 payments compared, incl. the corrected one)
+PASS #2 153 instants x 4 users: invariant, available>=0 (0 negative), held == public-field oracle, total == legacy total, conserved; first bad: []
+PASS #2 ada statement: opening + deltas == closing == /me.total
+PASS #2 bob statement: opening + deltas == closing == /me.total
+PASS #2 cy statement: opening + deltas == closing == /me.total
+PASS #2 dee statement: opening + deltas == closing == /me.total
+PASS #2 next payment stamped at its own request time (+-30 ms) and after every imported payment
+PASS #2 next authorization created_at within its request window
+PASS correction of an imported payment accepted or refused with a documented code (never 5xx), recorded strictly after the imported revision
+INFO host wall-clock steps seen during this run: []
+== r3_legacy_import seed 5 (17 legacy authorizations, 26 payments): 33 pass, 0 fail, 2675 requests, 0 5xx, max latency 0.012s, p99 0.001s
+rc=0

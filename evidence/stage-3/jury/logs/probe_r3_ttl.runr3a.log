@@ -1,0 +1,19 @@
+stage2 (1, 'authorize', 201, '2026-10-02T22:39:12+00:00', 'me.held', 100, 'me.status', 200)
+stage2 (3600, 'authorize', 201, '2026-10-02T23:39:11+00:00', 'me.held', 100, 'me.status', 200)
+stage2 (10000000000, 'reset', 422, 'validation_failed')
+stage2 (300000000000, 'reset', 422, 'validation_failed')
+stage2 (9007199254740992, 'reset', 422, 'validation_failed')
+stage2 (9223372036854775807, 'reset', 422, 'validation_failed')
+stage2 (9223372036854775808, 'reset', 422, 'validation_failed')
+stage2 (1000000000000000000000000000000, 'reset', 422, 'validation_failed')
+stage3 (1, 'authorize', 201, '2026-10-02T22:39:12.697293+00:00', 'me.held', 100, 'me.status', 200)
+stage3 (3600, 'authorize', 201, '2026-10-02T23:39:11.717214+00:00', 'me.held', 100, 'me.status', 200)
+stage3 (10000000000, 'reset', 422, 'validation_failed')
+stage3 (300000000000, 'reset', 422, 'validation_failed')
+stage3 (9007199254740992, 'reset', 422, 'validation_failed')
+stage3 (9223372036854775807, 'reset', 422, 'validation_failed')
+stage3 (9223372036854775808, 'reset', 422, 'validation_failed')
+stage3 (1000000000000000000000000000000, 'reset', 422, 'validation_failed')
+PASS authorization_ttl_seconds extremes: stage-3 answers with the same status codes as accepted stage 2 for every value, never 5xx
+== probe_r3_ttl: 1 pass, 0 fail, 28 requests, 0 5xx, max latency 0.012s, p99 0.011s
+rc=0

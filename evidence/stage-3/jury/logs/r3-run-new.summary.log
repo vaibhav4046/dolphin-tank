@@ -1,0 +1,11 @@
+r3_sweep.py r3s1 :: == r3_sweep seed 1 (50 payments, 35 authorizations): 118 pass, 0 fail, 1781 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+r3_sweep.py r3s2 :: == r3_sweep seed 2 (58 payments, 34 authorizations): 115 pass, 0 fail, 1765 requests, 0 5xx, max latency 0.013s, p99 0.001s :: rc=0 :: FAILS=0
+r3_sweep.py r3s3 :: == r3_sweep seed 3 (48 payments, 39 authorizations): 130 pass, 0 fail, 1783 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+r3_sweep.py r3s4 :: == r3_sweep seed 4 (48 payments, 41 authorizations): 136 pass, 0 fail, 1655 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+r3_sweep.py r3s5 :: == r3_sweep seed 5 (52 payments, 37 authorizations): 124 pass, 0 fail, 1803 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+r3_sweep.py r3s6 :: == r3_sweep seed 6 (48 payments, 41 authorizations): 136 pass, 0 fail, 1867 requests, 0 5xx, max latency 0.013s, p99 0.001s :: rc=0 :: FAILS=0
+r3_seedmatrix.py r3a :: == r3_seedmatrix (24 cases): 1407 pass, 0 fail, 1504 requests, 0 5xx, max latency 0.011s, p99 0.009s :: rc=0 :: FAILS=0
+r3_legacy_import.py r3s5 :: == r3_legacy_import seed 5 (17 legacy authorizations, 26 payments): 33 pass, 0 fail, 2675 requests, 0 5xx, max latency 0.012s, p99 0.001s :: rc=0 :: FAILS=0
+r3_legacy_import.py r3s6 :: == r3_legacy_import seed 6 (16 legacy authorizations, 20 payments): 33 pass, 0 fail, 2377 requests, 0 5xx, max latency 0.012s, p99 0.001s :: rc=0 :: FAILS=0
+r3_legacy_import.py r3s7 :: == r3_legacy_import seed 7 (18 legacy authorizations, 26 payments): 33 pass, 0 fail, 2971 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+== NEW DONE

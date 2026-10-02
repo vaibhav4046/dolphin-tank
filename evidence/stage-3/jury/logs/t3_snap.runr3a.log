@@ -1,0 +1,57 @@
+ada payments 41
+PASS J34 first statement returns a non-empty opaque string snapshot token
+PASS J34 two reads return distinct tokens
+PASS setup: world changed (fresh statement differs from baseline)
+PASS J34 snapshot pages reproduce the frozen entries exactly (amounts, deltas, balance_after, revision, times) after new payments and corrections
+PASS J34 snapshot opening/closing frozen on every page
+PASS J35 snapshot limit=200 offset omitted returns frozen first 200 entries; has_more false
+PASS J34 the live statement did move on (new entries visible live)
+PASS J38 correction after the read does not change the snapshot: payment p_5 keeps frozen amount 197 (live now 0)
+PASS J37 snapshot offset=0 limit=41 of 41 -> has_more=False, 41 entries
+PASS J37 snapshot offset=0 limit=40 of 41 -> has_more=True, 40 entries
+PASS J37 snapshot offset=40 limit=1 of 41 -> has_more=False, 1 entries
+PASS J37 snapshot offset=41 limit=5 of 41 -> has_more=False, 0 entries
+PASS J37 snapshot offset=141 limit=5 of 41 -> has_more=False, 0 entries
+PASS J37 snapshot offset=39 limit=5 of 41 -> has_more=False, 2 entries
+PASS J37 snapshot offset=38 limit=2 of 41 -> has_more=True, 2 entries
+PASS J37 snapshot offset=38 limit=3 of 41 -> has_more=False, 3 entries
+PASS J37 snapshot offset=0 limit=1 of 41 -> has_more=True, 1 entries
+PASS J35 snapshot with no limit/offset: default limit 50 from 0
+PASS J35 snapshot + from=2020-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + to=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + known_at=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + from= -> 422 validation_failed
+PASS J35 snapshot + to= -> 422 validation_failed
+PASS J35 snapshot + known_at= -> 422 validation_failed
+PASS J35 snapshot + from=garbage -> 422 validation_failed
+PASS J35 snapshot + from=2020-01-01T00:00:00Z&to=2030-01-01T00:00:00Z&known_at=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + unrecognised parameter ignored
+PASS J35 snapshot + limit=0 -> 422
+PASS J35 snapshot + limit=201 -> 422
+PASS J35 snapshot + limit=x -> 422
+PASS J35 snapshot + offset=-1 -> 422
+PASS J35 snapshot + offset=1.5 -> 422
+PASS J35 a 422 for params did not destroy the snapshot
+PASS J36 unknown token -> 404 not_found
+PASS J36 garbage token -> 404 not_found
+PASS J36 other user's token (bob presents ada's) -> 404 not_found
+PASS J36 stranger presents it -> 404 not_found
+PASS J36 empty snapshot value: refused without 5xx (404/422)
+PASS J36 snapshot requires auth: 401
+PASS J36 token still valid after >1s and other activity
+PASS J36 each user's own token works for them
+PASS J36 ada cannot use bob's token
+PASS J34 snapshot of a [from,to) window pages the whole window (opening/closing/entries) frozen
+PASS J15 snapshot window: opening + sum(delta) == closing
+PASS J34 first read with limit/offset also returns a snapshot
+PASS J34 that snapshot paged at the same offset equals the first read
+INFO snapshot page response carries snapshot key: True keys ['closing_balance', 'entries', 'has_more', 'opening_balance', 'snapshot']
+PASS J36 token from before reset -> 404 not_found (same user id/email, fresh login)
+PASS J36 a token minted after reset works
+PASS J36 second reset invalidates the post-reset token too
+storm: payments 2095 corrections 1225 full snapshot reads 672
+PASS J38 snapshot stays byte-identical under concurrent payments + corrections (6 writers, 6 paging readers, 672 full reads)
+PASS J29 sum of balances constant after the storm
+PASS J15 live statement after storm: opening + sum(delta) == closing == /me balance (all pages)
+== t3_snap: 52 pass, 0 fail, 10164 requests, 0 5xx, max latency 0.019s, p99 0.011s
+rc=0

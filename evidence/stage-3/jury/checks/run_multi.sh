@@ -12,7 +12,7 @@ for IMG in "$@"; do
   for t in $(seq 1 150); do curl -sf "http://127.0.0.1:$P/health" >/dev/null && break; sleep 0.1; done
 done
 . /root/dfv/bin/activate; cd "$HERE"
-env "${ENVS[@]}" PF="$(echo "${ENVS[0]}" | cut -d= -f2)" python -u "$SCRIPT" 2>&1 | tee "$LOGS/${SCRIPT%.py}.run$RUN.log"
+env "${ENVS[@]}" PF="$(echo "${ENVS[0]}" | cut -d= -f2)" python -u "$SCRIPT" ${ARGS:-} 2>&1 | tee "$LOGS/${SCRIPT%.py}.run$RUN.log"
 RC=${PIPESTATUS[0]}
 j=0; for N in "${NAMES[@]}"; do j=$((j+1)); docker logs "$N" > "$LOGS/${SCRIPT%.py}.run$RUN.c$j.server.log" 2>&1; done
 docker rm -f "${NAMES[@]}" >/dev/null

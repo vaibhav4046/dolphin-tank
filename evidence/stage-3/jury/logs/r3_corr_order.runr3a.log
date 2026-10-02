@@ -1,0 +1,23 @@
+PASS A 60 rapid corrections: all 201, each recorded strictly after the previous, /me and /statement reflect each at once; bad=[]
+PASS A GET revisions: recorded_at strictly increasing over 61 revisions; revision 1 recorded_at == created_at
+PASS A known_at == recorded_at selects that revision (inclusive), 1 us earlier the previous one (none before revision 1)
+PASS B seeded payment (created_at omitted=reset instant) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:28:38.046503+00:00', '2026-10-02T22:28:38.076544+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at omitted=reset instant) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:28:38.080447+00:00', '2026-10-02T22:28:38.111555+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at supplied) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:28:37.115189+00:00', '2026-10-02T22:28:38.146504+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at supplied) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:28:37.149535+00:00', '2026-10-02T22:28:38.180403+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS C import with revision 1 recorded 0.03 s ahead: correction 201 and recorded strictly after it ['2026-10-02T22:28:38.245019+00:00', '2026-10-02T22:28:38.245020+00:00']
+PASS C ... and the correction is visible to the very next read (/me ada 9200, statement shows revision 2)
+PASS C sum of totals unchanged
+PASS C import with revision 1 recorded 0.60 s ahead: correction 201 and recorded strictly after it ['2026-10-02T22:28:38.870845+00:00', '2026-10-02T22:28:38.870846+00:00']
+PASS C ... and the correction is visible to the very next read (/me ada 9200, statement shows revision 2)
+PASS C sum of totals unchanged
+PASS D 70 s loop: 529 payments, 739 corrections, 105 import round trips: every correction 201, strictly after the previous revision, visible to the next read; first bad []
+PASS D every payment's recorded_at strictly increasing in GET revisions at the end (529 payments)
+PASS D sum of totals == 1000000
+INFO host wall-clock steps seen during this run: [('22:29:05.144230', -932.6), ('22:29:36.769053', -617.4)]
+== r3_corr_order: 20 pass, 0 fail, 3546 requests, 0 5xx, max latency 0.024s, p99 0.015s
+rc=0

@@ -1,0 +1,4 @@
+OBS 675 resets under 16 hammer threads; outcomes: {'/payments 201': 19, '/payments 401': 6679, '/requests 201': 11, '/requests 401': 6687, 'me 200 object': 22, 'me 401': 6676}
+PASS no 5xx, no 200-with-non-object from /me or /activity during 675 racing resets
+PASS final state exactly the fixture
+== c13_reset_vs_me: 2 pass, 0 fail, 27481 requests, 0 5xx

@@ -1,0 +1,61 @@
+PASS J47 open authorization exposes closed_at: null
+PASS J01 capture payment created_at RFC3339; authorization_id set
+PASS J47 closed_at still null after a non-final capture
+PASS J47 final capture closes: status captured, remaining 0, closed_at not null
+PASS J47 closed_at is the event time of the final capture (within 1 s of the capture payment, not after it)
+PASS J45 ada before authorization: total/held/available = (10000, 0, 10000)
+PASS J45/J46 ada at authorization creation instant (created_at): hold present: total/held/available = (10000, 3000, 7000)
+PASS J45 ada just before 1st capture: hold 3000 total 10000: total/held/available = (10000, 3000, 7000)
+PASS J45 ada at 1st (non-final) capture: total 9000, hold reduced to 2000 at capture time: total/held/available = (9000, 2000, 7000)
+PASS J45 ada between captures: total/held/available = (9000, 2000, 7000)
+PASS J45 ada just before final capture: total/held/available = (9000, 2000, 7000)
+PASS J45 ada at final capture: total 8500, remainder 1500 released at the event time: total/held/available = (8500, 0, 8500)
+PASS J45 ada far future: total/held/available = (8500, 0, 8500)
+PASS J47 ada at closed_at: hold released: total/held/available = (8500, 0, 8500)
+PASS J44 bob (receiver) never sees ada's hold: at Ca: total/held/available = (0, 0, 0)
+PASS J44 bob at Pb: total/held/available = (1000, 0, 1000)
+PASS J44 bob at Pc: total/held/available = (1500, 0, 1500)
+PASS J44 current ada: total/held/available = (8500, 0, 8500)
+PASS J29 sum of totals constant at Ca, Pb, Pc, closed_at
+PASS J46 known_at before the authorization was known: no hold (as_of far future, known_at=Ca-1s): total/held/available = (10000, 0, 10000)
+PASS J46 known_at = creation: hold known, as_of=Ca: total/held/available = (10000, 3000, 7000)
+PASS J46 known_at just before 1st capture, as_of = after it: capture unknown -> payment absent, hold 3000 then expires at deadline (as_of = Pb+1s): total/held/available = (10000, 3000, 7000)
+PASS J46 once creation is known the deadline is known: as_of far future with known_at before 1st capture -> hold expired: total/held/available = (10000, 0, 10000)
+PASS J46 known_at between captures, as_of now: 1st capture known, 2nd not: total/held/available = (9000, 2000, 7000)
+PASS J46 known_at = final capture event: everything known: total/held/available = (8500, 0, 8500)
+PASS J50 statement lists the two capture payments exactly once each, nothing for authorize/release/expiry
+PASS J50 statement balance_after follows total (not available): 9000 then 8500; closing 8500 == /me.total
+PASS J50 authorization is not an activity item
+PASS J18 capture payment revision 1: effective_at == recorded_at == created_at
+PASS J43 payer/sender correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 receiver/capturer correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 attempt left everything unchanged
+PASS J47 void closes: status voided, closed_at set, payment_ids kept, captured_amount 1500, remaining 0
+PASS J45 before void: hold = remainder 2500 (after non-final capture): total/held/available = (8500, 2500, 6000)
+PASS J45 at closed_at (void time): remainder released: total/held/available = (8500, 0, 8500)
+PASS J45 hold during window between capture and void: total/held/available = (8500, 2500, 6000)
+PASS J47 void twice is 200 and closed_at is stable
+PASS J45 void without capture: held 700 just before, 0 at closed_at: total/held/available = (8500, 700, 7800)
+PASS J45 void without capture: released at closed_at: total/held/available = (8500, 0, 8500)
+PASS J47 expires_at = created_at + ttl(3s)
+PASS J46 while still open: as_of = expires_at - 1us (future or now) holds: total/held/available = (10000, 2500, 7500)
+PASS J46 queries beyond now: an open hold expires at its deadline (as_of = expires_at): total/held/available = (10000, 0, 10000)
+PASS J46 as_of far future: open hold already released: total/held/available = (10000, 0, 10000)
+PASS J47 closed_at is null while the hold is still open (clock has not reached expires_at)
+PASS J47 after expires_at (no request at the deadline): status expired, remaining 0, closed_at set
+PASS J47 closed_at of an expired authorization is its expires_at (event time of the expiry)
+PASS J45 after expiry current view: released: total/held/available = (10000, 0, 10000)
+PASS J45 history after expiry: hold present just before expires_at: total/held/available = (10000, 2500, 7500)
+PASS J45 history after expiry: released at expires_at: total/held/available = (10000, 0, 10000)
+PASS J47 partial capture then expiry: expired, payment_ids kept, captured 800, closed_at == expires_at
+PASS J45 expiry releases only the remainder: total 9200, held 0 after; just before expiry held 1200: total/held/available = (9200, 1200, 8000)
+PASS J45 after expiry: total/held/available = (9200, 0, 9200)
+PASS setup H4: ada total 1900 held 800 available 1100
+PASS J48 correction making AVAILABLE negative at a past boundary (total 750 >= 0 but hold 800) -> 409 historical_overdraft, currently affordable
+PASS J48 failure changed nothing
+PASS J48 correction leaving available exactly 0 at the boundary -> 201
+PASS J48 hold already voided before the payment instant: correction to 900 is fine (total 100 >= 0, no hold)
+PASS J48 correction making total exactly 0 at a past boundary -> accepted
+PASS J44/stage-2-invariant: /me?as_of=<authorization.created_at> never shows available < 0 or held > total (hold funded by a payment made just before it) - 0 of 25 views violated
+== t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.011s, p99 0.010s
+rc=0

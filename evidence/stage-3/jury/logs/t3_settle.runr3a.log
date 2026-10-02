@@ -1,0 +1,29 @@
+PASS setup settlement 201
+PASS J40 every member created_at == committed_at (instant)
+PASS J40 member p_2 revision 1: effective_at == recorded_at == committed_at, reason '', amount 1000
+PASS J31 receiver can read member revisions
+PASS J40 member p_3 revision 1: effective_at == recorded_at == committed_at, reason '', amount 500
+PASS J31 receiver can read member revisions
+PASS J40 member p_4 revision 1: effective_at == recorded_at == committed_at, reason '', amount 250
+PASS J31 receiver can read member revisions
+PASS J40 private member: operator (not a party) -> 404 on revisions
+PASS J40 private member: third party -> 404 on revisions
+PASS J40 private member invisible in third party's and operator's activity feed
+PASS J40 public member: third party sees it in the feed but still gets 404 on revisions
+PASS J40 original settlement receipt replay unchanged (200 identical)
+PASS J41 sender correcting settlement member p_2 -> 422 linked_payment_immutable
+PASS J41 same key reusable after the failed attempt (still 422 linked_payment_immutable, never 409 idempotency_key_reuse)
+PASS J41 sender correcting settlement member p_3 -> 422 linked_payment_immutable
+PASS J41 same key reusable after the failed attempt (still 422 linked_payment_immutable, never 409 idempotency_key_reuse)
+PASS J41 sender correcting settlement member p_4 -> 422 linked_payment_immutable
+PASS J41 same key reusable after the failed attempt (still 422 linked_payment_immutable, never 409 idempotency_key_reuse)
+PASS J41 operator (not the sender) -> 403 forbidden (or 422), never 201
+PASS J41 rejected corrections changed nothing
+PASS J41 a payment made outside any settlement is still correctable
+PASS J40 settlement members appear in parties' statements with settlement_id and effective_at == committed_at
+PASS J15 statement invariant
+PASS J40 ada current balance 9100
+PASS J08 as_of=committed_at counts the settlement for ada (-1000 +250 vs just before)
+PASS J29 sum constant at committed_at and just before
+== t3_settle: 27 pass, 0 fail, 58 requests, 0 5xx, max latency 0.011s, p99 0.010s
+rc=0

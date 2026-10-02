@@ -1,0 +1,8 @@
+# 120 s probe inside the jury WSL2 VM (Ubuntu-24.04, tsc clocksource): python polls time.time()-time.monotonic() every 0.5 ms
+samples 183124 total drift ms -2840.69 steps>2ms [(216.132, -820.19), (248.379, -1037.38), (280.634, -983.12)]
+# => the guest wall clock is stepped BACK by ~0.8-1.0 s about every 32 s. A strictly monotonic stamp source then leads the wall clock until it catches up.
+# r3_sweep seed 4 (first run, log superseded by the rerun; failing line copied here) saw payment created_at 60 ms ahead of its request window for 3+ consecutive writes: this effect, not a service defect.
+# checks/clk.py (monitor thread) widens the request-window tolerance by the steps it sees; later runs report them as INFO.
+FAIL every payment/authorization created_at lies within its own request window (+-30 ms): one wall clock, no ratchet :: [('pay', '2026-10-02T22:19:40.209787+00:00', '2026-10-02T22:19:40.269996+00:00', '2026-10-02T22:19:40.210522+00:00'), ('authorize', '2026-10-02T22:19:40.210544+00:00', '2026-10-02T22:19:40.269997+00:00', '2026-10-02T22:19:40.211195+00:00'), ('pay', '2026-10-02T22:19:40.211243+00:00', '2026-10-02T22:19:40.269998+00:00', '2026-10-02T22:19:40.211820+00:00')]
+# (fields: label, request start, created_at, request end; stamps advance 1 us per write from a point 60 ms ahead of the stepped-back wall clock)
+# first r3_seedmatrix run also showed 16 FAILs "import #2 ... unchanged": my test bug (compared a re-import of the ORIGINAL export with a snapshot taken after an extra payment). Fixed in the script.

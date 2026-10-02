@@ -1,0 +1,29 @@
+s1 c01_conservation runr3 rc=0 :: == c01_conservation: 42 pass, 0 fail, 10097 requests, 0 5xx
+s1 c02_idempotency runr3 rc=0 :: == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-569-30751 (fdd4e18f3240e1c99decfe52a3ea6a49d95b7f220c95a2997a4c40e7e99ef783): failed to bind host port 127.0.0.1:37412/tcp: address already in use
+
+Run 'docker run --help' for more information
+s1 c03_validation runr3 rc=0 :: == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+s1 c04_auth runr3 rc=0 :: == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+s1 c05_requests_feed runr3 rc=0 :: == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+s1 c06_reset_fixture runr3 rc=0 :: == c06_reset_fixture: 40 pass, 0 fail, 982 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-569-5333 (9120f6ceba1c8e92cd955758f35944b15211f726d782eb030153aaaf63f26487): failed to bind host port 127.0.0.1:33964/tcp: address already in use
+
+Run 'docker run --help' for more information
+s1 c07_splits runr3 rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+s1 c08_export_import runr3 rc=0 :: == c08_export_import: 74 pass, 0 fail, 8623 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-569-15695 (73cf080c36458dbd9db5182cef861e4f591453f1a7c154fe0a6c93ea92f2d16e): failed to bind host port 127.0.0.1:39880/tcp: address already in use
+
+Run 'docker run --help' for more information
+s1 c09_no5xx_envelope runr3 rc=0 :: == c09_no5xx_envelope: 10 pass, 0 fail, 8898 requests, 0 5xx
+s1 c11_settlements runr3 rc=0 :: == c11_settlements: 69 pass, 0 fail, 635 requests, 0 5xx
+s1 c12_retries_edges runr3 rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+s1 c13_reset_vs_me runr3 rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 27481 requests, 0 5xx
+s2 s2_lifecycle runr3 rc=0 :: == s2_lifecycle: 82 pass, 0 fail, 86 requests, 0 5xx, max latency 0.010s, p99 0.009s
+s2 s2_funds runr3 rc=0 :: == s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.012s, p99 0.010s
+s2 s2_errors runr3 rc=0 :: == s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.011s, p99 0.009s
+s2 s2_idem runr3 rc=0 :: == s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx, max latency 0.044s, p99 0.042s
+s2 s2_list runr3 rc=0 :: == s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.011s, p99 0.009s
+s2 s2_fixture runr3 rc=0 :: == s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.012s, p99 0.011s
+s2 s2_expiry runr3 rc=0 :: == s2_expiry: 30 pass, 0 fail, 95 requests, 0 5xx, max latency 0.011s, p99 0.011s
+s2 s2_race runr3 rc=0 :: == s2_race: 54 pass, 0 fail, 10336 requests, 0 5xx, max latency 0.062s, p99 0.018s

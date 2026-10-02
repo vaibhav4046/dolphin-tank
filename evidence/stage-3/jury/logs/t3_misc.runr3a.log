@@ -1,0 +1,8 @@
+PASS J47 authorize response: closed_at null
+PASS J47 void response carries closed_at (event time) and status voided
+PASS J47 second void: same closed_at
+PASS J47 capturing the whole remainder with final:false closes: captured, closed_at set, remaining 0
+PASS J47 closed_at not later than the last capture payment's created_at (event time)
+PASS J45 view at closed_at: hold released (held 0, total 9400... both captures counted if closed_at >= c2)
+== t3_misc: 6 pass, 0 fail, 11 requests, 0 5xx, max latency 0.012s, p99 0.011s
+rc=0

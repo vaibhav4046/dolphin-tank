@@ -1,0 +1,33 @@
+== F1 repro: PF1 accepted stage-2 image (pocketful-s2-jury) vs PF2 under test (pocketful-s3-r3)
+repro_expired_future.py r3a :: == repro_expired_future: 2 pass, 0 fail, 12 requests, 0 5xx, max latency 0.014s, p99 0.010s :: rc=0 :: FAILS=0
+stage-2 (accepted)     /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+stage-3 (under test)   /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+t3_holds.py r3a :: == t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+t3_holds.py r3b :: == t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+t3_holds.py r3c :: == t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.012s, p99 0.010s :: rc=0 :: FAILS=0
+t3_seedholds.py r3a :: == t3_seedholds: 26 pass, 0 fail, 118 requests, 0 5xx, max latency 0.012s, p99 0.010s :: rc=0 :: FAILS=0
+t3_time.py r3a :: == t3_time: 46 pass, 0 fail, 168 requests, 0 5xx, max latency 0.011s, p99 0.009s :: rc=0 :: FAILS=0
+t3_time.py r3b :: == t3_time: 46 pass, 0 fail, 168 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+t3_corr.py r3a :: == t3_corr: 97 pass, 0 fail, 318 requests, 0 5xx, max latency 0.012s, p99 0.010s :: rc=0 :: FAILS=0
+t3_corr.py r3b :: == t3_corr: 97 pass, 0 fail, 318 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+t3_fixture.py r3a :: == t3_fixture: 67 pass, 0 fail, 146 requests, 0 5xx, max latency 0.018s, p99 0.010s :: rc=0 :: FAILS=0
+t3_misc.py r3a :: == t3_misc: 6 pass, 0 fail, 11 requests, 0 5xx, max latency 0.012s, p99 0.011s :: rc=0 :: FAILS=0
+t3_settle.py r3a :: == t3_settle: 27 pass, 0 fail, 58 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+t3_statement.py r3seed7 :: == t3_statement: 72 pass, 0 fail, 542 requests, 0 5xx, max latency 0.012s, p99 0.001s :: rc=0 :: FAILS=0
+t3_statement.py r3seed21 :: == t3_statement: 71 pass, 1 fail, 554 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=1 :: FAILS=2
+FAIL J13 at least one effective-time tie exercised :: 
+FAILED: ['J13 at least one effective-time tie exercised']
+t3_statement.py r3seed45 :: == t3_statement: 72 pass, 0 fail, 552 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+t3_known.py r3seed11 :: == t3_known: 13 pass, 0 fail, 1048 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+t3_known.py r3seed21 :: == t3_known: 13 pass, 0 fail, 1048 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+t3_known.py r3seed45 :: == t3_known: 13 pass, 0 fail, 1052 requests, 0 5xx, max latency 0.011s, p99 0.001s :: rc=0 :: FAILS=0
+t3_snap.py r3a :: == t3_snap: 52 pass, 0 fail, 10164 requests, 0 5xx, max latency 0.019s, p99 0.011s :: rc=0 :: FAILS=0
+t3_import.py r3a :: == t3_import: 57 pass, 0 fail, 216 requests, 0 5xx, max latency 0.013s, p99 0.010s :: rc=0 :: FAILS=0
+t3_scale.py r3a :: == t3_scale: 20 pass, 0 fail, 286 requests, 0 5xx, max latency 0.170s, p99 0.164s :: rc=0 :: FAILS=0
+t3_race.py r3a :: == t3_race: 48 pass, 0 fail, 11199 requests, 0 5xx, max latency 0.060s, p99 0.015s :: rc=0 :: FAILS=0
+t3_race.py r3b :: == t3_race: 48 pass, 0 fail, 11775 requests, 0 5xx, max latency 0.022s, p99 0.013s :: rc=0 :: FAILS=0
+t3_race.py r3c :: == t3_race: 48 pass, 0 fail, 11875 requests, 0 5xx, max latency 0.027s, p99 0.013s :: rc=0 :: FAILS=0
+s2_fixture r3a :: == s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.012s, p99 0.010s :: rc=0 :: FAILS=0
+s2_export r3a :: == s2_export: 30 pass, 0 fail, 3239 requests, 0 5xx, max latency 0.016s, p99 0.011s :: rc=0 :: FAILS=0
+s2_export_expiry r3a :: == s2_export_expiry: 18 pass, 0 fail, 54 requests, 0 5xx, max latency 0.011s, p99 0.010s :: rc=0 :: FAILS=0
+== ALL DONE

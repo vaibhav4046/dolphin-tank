@@ -1,0 +1,27 @@
+== RUN.md verbatim (tag pocketful-s3-r3-runmd): docker build -t pocketful-s3-r3-runmd . ; docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s3-r3-runmd ; curl /health
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+sha256:428e11dd1fd8a2914383f849c64ee672feb5fc09c378fb6c59f4ff537544a13f
+{"status":"ok"}
+== internal network, sibling container
+outbound blocked to 1.1.1.1 -> OSError
+outbound blocked to 8.8.8.8 -> OSError
+health (200, 'application/json; charset=utf-8')
+/ 200 text/html; charset=utf-8 1626
+/requests 200 text/html; charset=utf-8 1626
+/split 200 text/html; charset=utf-8 1626
+/signup 200 text/html; charset=utf-8 1626
+/login 200 text/html; charset=utf-8 1626
+/authorizations 200 text/html; charset=utf-8 1626
+asset /assets/css/base.css 200 text/css; charset=utf-8 3241
+asset /assets/css/components.css 200 text/css; charset=utf-8 7188
+asset /assets/css/tokens.css 200 text/css; charset=utf-8 1412
+  css url /assets/fonts/dm-sans.woff2 (200, 'font/woff2')
+  css url /assets/fonts/inter.woff2 (200, 'font/woff2')
+asset /assets/js/main.js 200 text/javascript; charset=utf-8 1438
+EXTERNAL REFERENCES: none
+reset 204
+pay 201
+statement 200 me 200

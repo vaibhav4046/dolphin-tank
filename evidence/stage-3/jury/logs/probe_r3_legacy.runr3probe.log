@@ -1,0 +1,37 @@
+payment {'payment_id': 'p_1', 'from_user_id': 'u_ada', 'from_handle': 'ada', 'to_user_id': 'u_bob', 'to_handle': 'bob', 'amount': 5000, 'currency': 'EUR', 'note': '', 'visibility': 'public', 'request_id': None, 'settlement_id': None, 'authorization_id': None, 'created_at': '2026-10-02T22:16:47.729214+00:00'}
+authorization {'authorization_id': 'a_1', 'from_user_id': 'u_bob', 'from_handle': 'bob', 'to_user_id': 'u_cy', 'to_handle': 'cy', 'amount': 4000, 'captured_amount': 0, 'remaining_amount': 4000, 'currency': 'EUR', 'note': '', 'visibility': 'public', 'status': 'open', 'expires_at': '2026-10-02T22:26:47+00:00', 'payment_id': None, 'payment_ids': [], 'created_at': '2026-10-02T22:16:47+00:00', 'closed_at': None}
+state keys ['currency', 'minor_units', 'users', 'payments', 'requests', 'splits', 'authorizations', 'authorization_ttl_seconds', 'tokens', 'seq', 'sys', 'revisions', 'history_version']
+authorizations [
+ {
+  "authorization_id": "a_1",
+  "from_user_id": "u_bob",
+  "to_user_id": "u_cy",
+  "amount": 4000,
+  "captured_amount": 0,
+  "note": "",
+  "visibility": "public",
+  "status": "open",
+  "expires_at": "2026-10-02T22:26:47+00:00",
+  "payment_ids": [],
+  "created_at": "2026-10-02T22:16:47+00:00",
+  "closed_at": null,
+  "created_exact": "2026-10-02T22:16:47.729852+00:00"
+ }
+]
+payments[0] {
+ "payment_id": "p_1",
+ "from_user_id": "u_ada",
+ "from_handle": "ada",
+ "to_user_id": "u_bob",
+ "to_handle": "bob",
+ "amount": 5000,
+ "currency": "EUR",
+ "note": "",
+ "visibility": "public",
+ "request_id": null,
+ "settlement_id": null,
+ "authorization_id": null,
+ "created_at": "2026-10-02T22:16:47.729214+00:00"
+}
+legacy view at auth.created_at: {'user_id': 'u_bob', 'display_name': 'Bob', 'handle': 'bob', 'balance': 0, 'total': 0, 'available': -4000, 'held': 4000, 'currency': 'EUR', 'minor_units': 2, 'as_of': '2026-10-02T22:16:47+00:00'}
+rc=0

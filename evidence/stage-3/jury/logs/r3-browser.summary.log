@@ -1,0 +1,6 @@
+b1_quality rc=0 :: == b1_quality: 146 pass, 0 fail
+b2_wallet rc=0 :: == b2_wallet: 84 pass, 0 fail
+b3_flows rc=0 :: == b3_flows: 82 pass, 0 fail
+b5_visual rc=0 :: == b5_visual: 18 pass, 0 fail
+b6_states rc=0 :: == b6_states: 26 pass, 0 fail
+b4_upgrade rc=0 :: == b4_upgrade: 19 pass, 0 fail

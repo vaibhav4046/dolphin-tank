@@ -1,0 +1,48 @@
+PASS J01 POST /payments: created_at RFC3339 with offset
+PASS J01 request pay: created_at RFC3339 with offset
+PASS J01 settlement members: created_at RFC3339 with offset, equal to committed_at
+PASS J01 /activity payments all carry created_at
+PASS J01 statement entry payments carry created_at
+PASS J02 /activity ordered newest first by created_at
+PASS J07 current /me unchanged shape and fields (no corrections)
+PASS J07 balance == total == available, held 0 without holds
+PASS J29-base current balances sum to seeded total
+PASS J08/J09 as_of at/around 26 instants (each payment -1us, exact, +1us, far past/future): oracle balance/total/available/held and exact echo for 4 users
+PASS J29 sum of balances == seeded total at every historical instant
+PASS J09 as_of before earliest payment returns the opening balance (10000)
+PASS J09 as_of at latest payment == current balance
+PASS J09 new/empty-history wallet opens at its seeded balance (cy 0)
+PASS J08 payment made at exactly as_of counts as happened (before 10000, at 9000)
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00Z
+PASS J09 echo as_of exactly as given: 2030-01-01T05:30:00+05:30
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00-08:00
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00.123456Z
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00.5+00:00
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00+00:00
+PASS J08 offset-shifted spelling of the same instant gives the same balance
+PASS J06 as_of='' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00' -> 422 validation_failed
+PASS J06 as_of='2026-09-24' -> 422 validation_failed
+PASS J06 as_of='13:20:00Z' -> 422 validation_failed
+PASS J06 as_of='garbage' -> 422 validation_failed
+PASS J06 as_of='1700000000' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00+0000' -> 422 validation_failed
+PASS J06 as_of='2026-13-45T00:00:00Z' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T25:00:00Z' -> 422 validation_failed
+PASS J06 as_of='2026-02-30T00:00:00Z' -> 422 validation_failed
+PASS J06 as_of=' ' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00+25:00' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20Z' -> 422 validation_failed
+PASS J06 as_of='null' -> 422 validation_failed
+PASS J32 known_at='' -> 422 validation_failed
+PASS J32 known_at='2026-09-24T13:20:00' -> 422 validation_failed
+PASS J32 known_at='2026-09-24' -> 422 validation_failed
+PASS J32 known_at='13:20:00Z' -> 422 validation_failed
+PASS J32 known_at='garbage' -> 422 validation_failed
+PASS J32 known_at='1700000000' -> 422 validation_failed
+PASS J06 empty as_of (raw ?as_of=) 422
+PASS J06 bare as_of key 422
+PASS J06 unauthenticated /me?as_of=bad is 401
+PASS J06 unknown query parameter ignored
+== t3_time: 46 pass, 0 fail, 168 requests, 0 5xx, max latency 0.011s, p99 0.010s
+rc=0

@@ -1,0 +1,24 @@
+PASS A 60 rapid corrections: all 201, each recorded strictly after the previous, /me and /statement reflect each at once; bad=[]
+PASS A GET revisions: recorded_at strictly increasing over 61 revisions; revision 1 recorded_at == created_at
+PASS A known_at == recorded_at selects that revision (inclusive), 1 us earlier the previous one (none before revision 1)
+PASS B seeded payment (created_at omitted=reset instant) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:38:38.788256+00:00', '2026-10-02T22:38:38.818593+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at omitted=reset instant) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:38:38.824986+00:00', '2026-10-02T22:38:38.855296+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at supplied) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:38:37.860042+00:00', '2026-10-02T22:38:38.890237+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS B seeded payment (created_at supplied) corrected immediately: 201, recorded strictly after revision 1 ['2026-10-02T22:38:37.895326+00:00', '2026-10-02T22:38:38.924495+00:00']
+PASS B /me reflects the correction at once (ada 9000 -> 9600)
+PASS C import with revision 1 recorded 0.03 s ahead: correction 201 and recorded strictly after it ['2026-10-02T22:38:38.987813+00:00', '2026-10-02T22:38:38.987814+00:00']
+PASS C ... and the correction is visible to the very next read (/me ada 9200, statement shows revision 2)
+PASS C sum of totals unchanged
+FAIL C import with revision 1 recorded 0.60 s ahead: correction 201 and recorded strictly after it ['2026-10-02T22:38:39.612708+00:00', '2026-10-02T22:38:39.033050+00:00'] :: (R(201 b'{"payment_id":"p_1","revision":2,"amount":800,"effective_at":"2026-10-02T22:38:36.032560+00:00","recorded_at":"2026-10-02T22:38:39.033050+00:00","reason":"after ahead-import"}'), [datetime.datetime(2026, 10, 2, 22, 38, 39, 612708, tzinfo=datetime.timezone.utc), datetime.datetime(2026, 10, 2, 22, 38, 39, 33050, tzinfo=datetime.timezone.utc)])
+PASS C ... and the correction is visible to the very next read (/me ada 9200, statement shows revision 2)
+PASS C sum of totals unchanged
+FAIL D 70 s loop: 220 payments, 305 corrections, 44 import round trips: every correction 201, strictly after the previous revision, visible to the next read; first bad [('not strictly after', 'p_213', '2026-10-02T22:39:06.277758+00:00', '2026-10-02T22:39:05.995946+00:00'), ('not strictly after', 'p_214', '2026-10-02T22:39:06.277760+00:00', '2026-10-02T22:39:05.997194+00:00')] :: [('not strictly after', 'p_213', '2026-10-02T22:39:06.277758+00:00', '2026-10-02T22:39:05.995946+00:00'), ('not strictly after', 'p_214', '2026-10-02T22:39:06.277760+00:00', '2026-10-02T22:39:05.997194+00:00'), ('not strictly after', 'p_215', '2026-10-02T22:39:06.277761+00:00', '2026-10-02T22:39:05.998210+00:00'), ('import', 422)]
+FAIL D every payment's recorded_at strictly increasing in GET revisions at the end (220 payments) :: 
+PASS D sum of totals == 1000000
+INFO host wall-clock steps seen during this run: [('22:39:05.326859', -954.1)]
+== r3_corr_order: 17 pass, 3 fail, 1621 requests, 0 5xx, max latency 0.013s, p99 0.010s
+FAILED: ["C import with revision 1 recorded 0.60 s ahead: correction 201 and recorded strictly after it ['2026-10-02T22:38:39.612708+00:00', '2026-10-02T22:38:39.033050+00:00']", "D 70 s loop: 220 payments, 305 corrections, 44 import round trips: every correction 201, strictly after the previous revision, visible to the next read; first bad [('not strictly after', 'p_213', '2026-10-02T22:39:06.277758+00:00', '2026-10-02T22:39:05.995946+00:00'), ('not strictly after', 'p_214', '2026-10-02T22:39:06.277760+00:00', '2026-10-02T22:39:05.997194+00:00')]", "D every payment's recorded_at strictly increasing in GET revisions at the end (220 payments)"]
+rc=1

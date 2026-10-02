@@ -1,0 +1,44 @@
+---- distinct computed colours (role: rgb: count)
+    text rgb(244, 240, 255) 228
+    text rgb(168, 166, 183) 222
+    border rgba(244, 240, 255, 0.14) 134
+    bg rgb(16, 9, 58) 74
+    bg rgb(6, 3, 23) 38
+    border rgb(147, 130, 255) 34
+    text rgb(3, 0, 20) 26
+    bg rgb(147, 130, 255) 26
+    bg rgb(3, 0, 20) 14
+    text rgb(147, 130, 255) 12
+    border rgb(244, 240, 255) 2
+    outline rgb(147, 130, 255) 2
+INFO fonts used (family weight heading-or-other): [('Inter 400 other', 348), ('Inter 500 other', 68), ('DM Sans 500 other', 44), ('DM Sans 500 H2', 18), ('DM Sans 500 H1', 10)]
+INFO font faces loaded in document.fonts: ['DM Sans 400 500 loaded', 'Inter 400 500 loaded']
+INFO radii used: {'5px': 104, '16px': 46, '32px': 46}
+INFO weights used: {'400': 348, '500': 140}
+INFO shadows: ['rgba(244, 240, 255, 0.08) 0px 1px 0px 0px inset']
+INFO css vars sample: {'--color-canvas': '#030014', '--color-surface': '#060317'}
+INFO body styles per page: [('/login', 375, 'rgb(3, 0, 20)', 'rgb(244, 240, 255)', 'Inter, system-ui, -a', '400'), ('/signup', 375, 'rgb(3, 0, 20)', 'rgb(244, 240, 255)', 'Inter, system-ui, -a', '400'), ('/', 375, 'rgb(3, 0, 20)', 'rgb(244, 240, 255)', 'Inter, system-ui, -a', '400')]
+PASS S66 canvas: body background is #030014 on every route
+PASS S66 palette value in use: canvas #030014
+PASS S66 palette value in use: surface #060317
+PASS S66 palette value in use: raised #10093a
+PASS S66 palette value in use: text #f4f0ff
+PASS S66 palette value in use: secondary #a8a6b7
+PASS S66 palette value in use: accent #9382ff
+PASS S66 primary text colour is #f4f0ff
+INFO colours outside the 6-colour palette (alpha overlays/tints included): {}
+PASS S66 no red/green (or orange/yellow) status colours anywhere
+INFO saturated light colours (hue,sat): {'bg rgb(147, 130, 255)': (248, 0.49), 'text rgb(147, 130, 255)': (248, 0.49), 'border rgb(147, 130, 255)': (248, 0.49), 'outline rgb(147, 130, 255)': (248, 0.49)}
+PASS S66 single accent: every saturated light colour is within the accent hue band (240-260 deg)
+PASS S66 headings use DM Sans at weight 500 (28 headings)
+PASS S66 body/other text uses Inter at weight 400 or 500 (or DM Sans for display numerals): families ['DM Sans', 'Inter']
+PASS S66 no font-weight above 500 anywhere
+PASS S66 Inter and DM Sans font faces both loaded from the page (status loaded)
+INFO radius values in px: [5.0, 16.0, 32.0] ; non-px: []
+PASS S66 radii restricted to the 5 / 16 / 32 scale (pill radii counted separately)
+PASS S66 no drop shadows: every box-shadow is inset
+PASS S66 no stock imagery / mascots: no img/picture/video/canvas elements
+INFO elements with background-image: [{'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 309, 'h': 44, 'page': '/', 'w_': 375}, {'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 309, 'h': 44, 'page': '/', 'w_': 375}, {'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 220, 'h': 44, 'page': '/requests', 'w_': 375}, {'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 309, 'h': 44, 'page': '/authorizations', 'w_': 375}, {'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 169, 'h': 44, 'page': '/', 'w_': 1280}, {'tag': 'SELECT', 'cls': '', 'bi': 'linear-gradient(45deg, rgba(0, 0, 0, 0) 50%, rgb(168, 166, 183) 50%), linear-gradient(135deg, rgb(168, 166, 183) 50%, rg', 'w': 169, 'h': 44, 'page': '/', 'w_': 1280}]
+PASS S66 no large gradients (no gradient covering > 40 percent of the viewport)
+== b5_visual: 18 pass, 0 fail
+rc=0

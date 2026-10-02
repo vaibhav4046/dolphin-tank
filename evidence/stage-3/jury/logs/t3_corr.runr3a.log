@@ -1,0 +1,108 @@
+PASS J20 no token -> 401
+PASS J20 missing Idempotency-Key -> 400 missing_idempotency_key
+PASS J20 empty Idempotency-Key -> 400
+PASS J20 Idempotency-Key 256 chars -> 422 validation_failed
+PASS J20 receiver correcting -> 403 forbidden
+PASS J20 stranger correcting -> 403 forbidden
+PASS J20 unknown payment -> 404 not_found
+PASS J20 unknown payment as other user -> 404
+PASS J20 failed auth/permission attempts changed nothing
+PASS J21 missing expected_revision -> 422 validation_failed
+PASS J21 missing amount -> 422 validation_failed
+PASS J21 missing effective_at -> 422 validation_failed
+PASS J21 missing reason -> 422 validation_failed
+PASS J21 expected_revision 0 -> 422 validation_failed
+PASS J21 expected_revision -1 -> 422 validation_failed
+PASS J21 expected_revision 1.5 -> 422 validation_failed
+PASS J21 amount -1 -> 422 validation_failed
+PASS J21 amount 1e9+1 -> 422 validation_failed
+PASS J21 amount 1.5 -> 422 validation_failed
+PASS J21 amount '900' -> 422 validation_failed
+PASS J21 amount true -> 422 validation_failed
+PASS J21 amount null -> 422 validation_failed
+PASS J21 reason '' -> 422 validation_failed
+PASS J21 reason 201 chars -> 422 validation_failed
+PASS J21 effective_at future +1h -> 422 validation_failed
+PASS J21 effective_at future +30s -> 422 validation_failed
+PASS J21 effective_at naive -> 422 validation_failed
+PASS J21 effective_at date only -> 422 validation_failed
+PASS J21 effective_at garbage -> 422 validation_failed
+PASS J21 effective_at '' -> 422 validation_failed
+PASS J21 expected_revision '1' -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision '1' answered 422
+PASS J21 expected_revision true -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision true answered 422
+PASS J21 expected_revision null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision null answered 422
+PASS J21 reason 5 -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed reason 5 answered 422
+PASS J21 reason null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed reason null answered 422
+PASS J21 effective_at 5 -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed effective_at 5 answered 422
+PASS J21 effective_at null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed effective_at null answered 422
+PASS J21 not json -> 400 malformed_request
+PASS J21 array body -> 400 malformed_request
+PASS J21 empty body -> 400 malformed_request
+PASS J21 all invalid attempts changed nothing
+PASS J28 key that failed 422 is reusable: first valid use is 201 (not 200/409)
+PASS J21 integral amount 9e2 accepted, unknown field ignored
+PASS J22 correction 201 with exactly payment_id/revision/amount/effective_at/recorded_at/reason
+PASS J18 revisions in order, rev1 = original (amount 1000, reason '', effective_at=recorded_at=created_at)
+PASS J22 revisions entries carry payment_id, revision, amount, effective_at, recorded_at, reason
+PASS J30 parties/visibility unchanged: replay of ORIGINAL payment request returns 200 with the original body
+PASS J30 /activity still shows the ORIGINAL payment (amount 1000, same parties/visibility/note/created_at), one item, no correction records
+PASS J30 stranger's /activity does not show private payment, still none for corrections
+PASS J26 decrease debited original receiver: ada 5000-600=4400, bob 1000+600=1600, others untouched; sum constant
+PASS J23 recorded_at strictly increases over 27 revisions (25 back-to-back corrections)
+PASS J22 earlier revisions immutable after later ones (rev1 unchanged)
+PASS J21/J26 amount 0 reverses the entire payment (ada back to 5000, bob 1000)
+PASS J26 increase from 0 debits sender 700 (ada 4300, bob 1700)
+PASS J29 sum constant
+PASS J24 stale expected_revision=1 (current 29) -> 409 stale_revision
+PASS J24 stale expected_revision=28 (current 29) -> 409 stale_revision
+INFO expected_revision ahead of current answered 409 stale_revision
+PASS J24 expected_revision ahead of current is not accepted as success
+PASS J24 stale attempts left history unchanged
+PASS setup: ada 1500 bob 0 cy 400
+PASS J27 historically unaffordable increase (+1200 affordable now: ada 1500; ada would be 1500-1800-400<0 at q2) -> 409 historical_overdraft
+PASS J28 historical_overdraft preserved balances, revisions, statements, activity
+PASS J27 currently unaffordable increase (+1600 > ada 1500) -> 409 insufficient_funds (precedence over historical)
+PASS J27 currently unaffordable decrease (bob holds 0, owes back 300) -> 409 insufficient_funds
+PASS J28 failures left everything unchanged
+PASS J28 key that failed 409 insufficient_funds is reusable with a different body: 201 (first use), not 409 idempotency_key_reuse
+PASS J26 increase 600->700 at original instant debits sender 100, credits receiver 100 (ada 1400, bob 100, cy 400); sum constant
+PASS J28 key that failed 409 stale_revision is reusable (different body): 201
+PASS J27 decrease affordable now (bob 600 >= 500) but bob would be -500 at his 1000 payment instant -> 409 historical_overdraft (receiver side)
+PASS J28 receiver-side failure left everything unchanged
+PASS J27 move outflow a2 (id lower) to a3's exact instant: bob never negative (a1 inflow earlier): 201
+PASS J27 boundary includes COMBINED effect of all movements at that instant: bob 0 before X, -100 (a2) and +100 (a3) at X => net 0 => accepted (sequential-by-id would be -100)
+PASS J27 resulting views: bob 0 just before X, 0 at X; cy 100 at X; ada 1000-100(a3)=900
+PASS J29 sum constant at X-1us, X, now
+PASS J27 removing the instant's inflow: current bob balance 0 cannot give back 100 => 409 insufficient_funds
+PASS J27 effective_at moved before any funding: currently affordable (net 0 change) but bob -500 at that instant -> 409 historical_overdraft
+PASS J28 unchanged after historical overdraft by effective_at move
+PASS J27 effective_at just after the funding payment: accepted
+PASS J25 first use 201
+PASS J25 replay (reordered, whitespace, 800.0) after newer revisions -> 200 and the ORIGINAL revision-2 body
+PASS J25 replay moved no money and appended nothing
+PASS J25 same key different amount -> 409 idempotency_key_reuse
+PASS J25 same key different effective_at -> 409 idempotency_key_reuse
+PASS J25 same key different reason -> 409 idempotency_key_reuse
+PASS J25 same key different expected_revision -> 409 idempotency_key_reuse
+PASS J25 claimed key beats validation: invalid body with a claimed key -> 409 idempotency_key_reuse
+INFO same key+body on another payment path answered 201 None
+PASS J25 same key + same body on a DIFFERENT path is not a replay (not 200/409 reuse of the first)
+PASS J25 key scope is per user: bob using the same key string -> 201
+PASS J30 original payment still shows original amount in activity after 4 revisions
+PASS J31 sender 200 {'revisions':[...]}
+PASS J31 receiver 200
+PASS J31 third party -> 404 not_found even though the payment is public (and visible in their feed)
+PASS J31 no token -> 401
+PASS J31 unknown payment -> 404
+PASS J20 unknown payment correction as stranger of existing: 403 not 404? (stranger on existing payment)
+PASS J22 request-paid payment may be corrected (sender is payer): 201
+PASS J30 request record unchanged by correction (status paid, amount 300, payment_id kept)
+== t3_corr: 97 pass, 0 fail, 318 requests, 0 5xx, max latency 0.012s, p99 0.010s
+rc=0

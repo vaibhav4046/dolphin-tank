@@ -1,0 +1,52 @@
+seed 267
+PASS J39 round 0: 24 concurrent corrections with the same expected_revision=1 -> exactly one 201, others 409 stale_revision
+PASS J39 round 0: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 1: 24 concurrent corrections with the same expected_revision=2 -> exactly one 201, others 409 stale_revision
+PASS J39 round 1: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 2: 24 concurrent corrections with the same expected_revision=3 -> exactly one 201, others 409 stale_revision
+PASS J39 round 2: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 3: 24 concurrent corrections with the same expected_revision=4 -> exactly one 201, others 409 stale_revision
+PASS J39 round 3: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 4: 24 concurrent corrections with the same expected_revision=5 -> exactly one 201, others 409 stale_revision
+PASS J39 round 4: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 5: 24 concurrent corrections with the same expected_revision=6 -> exactly one 201, others 409 stale_revision
+PASS J39 round 5: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 6: 24 concurrent corrections with the same expected_revision=7 -> exactly one 201, others 409 stale_revision
+PASS J39 round 6: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J39 round 7: 24 concurrent corrections with the same expected_revision=8 -> exactly one 201, others 409 stale_revision
+PASS J39 round 7: history grew by exactly one revision and the winner is the latest one; balance equals winner's amount
+PASS J29 sum constant after R1
+PASS J23 recorded_at strictly increasing across raced revisions
+PASS J25/J52 30 concurrent identical corrections (same key) -> exactly one 201, rest 200 with the same body
+PASS J25/J52 exactly one revision added, money moved once
+PASS J52 round 0: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 0: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+PASS J52 round 1: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 1: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+PASS J52 round 2: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 2: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+PASS J52 round 3: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 3: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+PASS J52 round 4: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 4: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+PASS J52 round 5: correction(+500) vs payment(500) with 600 available: not both succeed; balance never negative (100)
+PASS J52 round 5: exactly one wins, other 409 insufficient_funds/historical_overdraft
+PASS J29 sum constant
+storm stats {'pay': 400, 'corr_ok': 2481, 'corr_fail': {'stale_revision': 38, 'insufficient_funds': 41, 'historical_overdraft': 290}, 'pay_fail': 16} reads [595, 1093, 1093] payments 400
+PASS J52 storm: no status other than 201/409 from writers
+PASS J52 storm: every immutable (known_at fixed) historical view summed to the seeded total while writers ran (595 reads)
+PASS J52 storm: current /me never negative, balance==total==available, held 0 (1093 reads)
+PASS J15/J52 storm: every complete statement read is self-consistent (balance_after chain, opening+deltas==closing, never negative) (1093 reads)
+PASS J52 storm exercised both corrections accepted (2481) and rejected {'stale_revision': 38, 'insufficient_funds': 41, 'historical_overdraft': 290}
+PASS J52 final: /me current == oracle for each user
+PASS J29 final: sum == seeded
+PASS J27/J52 final history: no user negative at ANY effective-time boundary (341 boundaries) after 2481 accepted corrections
+PASS J52 final: /me?as_of at ~40 instants == oracle for every user
+PASS J52 final: statements == oracle after the storm
+== t3_race: 48 pass, 0 fail, 11199 requests, 0 5xx, max latency 0.060s, p99 0.015s
+rc=0

@@ -1,0 +1,23 @@
+PASS precondition: stage-1 service /me has no available/held
+PASS I15 signed in on the stage-1 backend through the UI
+INFO pre-upgrade wallet-balance as the UI shows it against the stage-1 /me:  | available present: True
+PASS I15 pre-upgrade: lost response -> pay-uncertain (not pay-error)
+PASS I15 the stage-1 service committed the payment (balance 8500)
+PASS I15 session still valid after the upgrade (no redirect to /login, current-user still shown)
+PASS I15 imported balance shown after refresh: wallet-balance 85.00 EUR
+PASS I15 wallet-available present and equal to 85.00 EUR (stage-2 /me shape), wallet-held absent
+PASS I15 pay form kept its values through the upgrade
+PASS I15 pay-uncertain still visible (outcome not yet resolved)
+PASS I15 retry after upgrade sent the SAME Idempotency-Key and byte-identical body
+PASS I15 retry recovered the original payment: pay-uncertain and pay-error gone, balance still 85.00 EUR (money once)
+PASS I15 stage-2 server: ada total 8500 (debited once), available 8500, held 0
+PASS I15 feed shows the lost payment exactly once
+PASS I15 retried POST /payments reached the STAGE-2 backend and was a replay (200)
+PASS I15 imported pending requests listed: seeded and 'pending after'
+PASS I15 pending incoming requests have a pay button
+PASS I15 pending request paid through the UI after the upgrade: status paid, no request-error
+PASS I15 request payment moved money once: ada total 7300
+PASS A01 conservation: totals sum to 15500
+INFO proxy traffic (method path backend status) sample: [('GET', '/assets/js/wallet.js', 'S2', 200), ('GET', '/assets/js/activity.js', 'S2', 200), ('GET', '/assets/js/requestForm.js', 'S2', 200), ('GET', '/assets/js/attempt.js', 'S2', 200), ('GET', '/assets/js/latest.js', 'S2', 200), ('GET', '/requests', 'S2', 200), ('GET', '/requests', 'S2', 200), ('GET', '/me', 'S2', 200), ('POST', '/requests/rq_seed/pay', 'S2', 201), ('GET', '/me', 'S2', 200), ('GET', '/requests', 'S2', 200), ('GET', '/requests', 'S2', 200)]
+== b4_upgrade: 19 pass, 0 fail
+rc=0
