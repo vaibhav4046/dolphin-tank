@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"slices"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -13,6 +14,17 @@ import (
 var azT0 = time.Date(2026, 9, 24, 13, 10, 0, 0, time.UTC)
 
 func azI64(v int64) *int64 { return &v }
+
+// azEmpty drains a wallet while keeping Balance == OpeningBalance + payments (here the 500 it paid out).
+func azEmpty(u *User) { u.Balance, u.OpeningBalance = 0, 500 }
+
+// azRelease gives a hand-built authorization with a closed stored status the closed_at Reindex requires.
+func azRelease(a *Authorization) {
+	if a.Status != authOpen {
+		closed := FormatTime(azT0)
+		a.ClosedAt = &closed
+	}
+}
 
 func azStore(us ...fgU) (*Store, *State) {
 	s := fgStore(us...)
@@ -114,8 +126,10 @@ func TestAuthzEffectiveExpiry(t *testing.T) {
 	_, st := azStore(fgU{"ada", 10000}, fgU{"bob", 0})
 	exp := azT0.Add(time.Hour)
 	mk := func(id, status string, expires time.Time, amount, captured int64) *Authorization {
-		return &Authorization{AuthorizationID: id, FromUserID: "u_ada", ToUserID: "u_bob", Amount: amount,
+		a := &Authorization{AuthorizationID: id, FromUserID: "u_ada", ToUserID: "u_bob", Amount: amount,
 			CapturedAmount: captured, Status: status, ExpiresAt: FormatTime(expires)}
+		azRelease(a)
+		return a
 	}
 	st.Authorizations = []*Authorization{
 		mk("a_future", "open", exp, 2000, 0),
@@ -186,18 +200,20 @@ func TestAuthzTTLBoundary(t *testing.T) {
 	}
 	created := azT0.Add(400 * time.Millisecond)
 	b := azAuthorize(t, st, "ada", "bob", 100, created)
+	b2 := azAuthorize(t, st, "ada", "bob", 100, created)
 	if b.CreatedAt != FormatTime(azT0) || b.ExpiresAt != FormatTime(azT0.Add(2*time.Second)) {
 		t.Fatalf("expires_at must be created_at + ttl: %+v", b)
 	}
 	deadline := azT0.Add(2 * time.Second)
 	held := func(now time.Time) int64 { return st.Held("u_ada", now) }
-	if held(deadline.Add(-time.Nanosecond)) != 200 || held(deadline) != 100 { // the 600 s one stays
+	if held(deadline.Add(-time.Nanosecond)) != 300 || held(deadline) != 100 { // the 600 s one stays
 		t.Fatalf("held around the deadline: %d / %d", held(deadline.Add(-time.Nanosecond)), held(deadline))
 	}
+	// writes never run backwards in time, so the last instant before the deadline is used first
+	azMustCapture(t, st, "bob", b2.AuthorizationID, nil, true, deadline.Add(-time.Microsecond))
 	if _, e := azCapture(st, "bob", b.AuthorizationID, nil, true, deadline); e == nil || e.Code != "authorization_expired" {
 		t.Fatal(e)
 	}
-	azMustCapture(t, st, "bob", b.AuthorizationID, nil, true, deadline.Add(-time.Nanosecond))
 }
 
 func TestAuthzAuthorize(t *testing.T) {
@@ -227,7 +243,7 @@ func TestAuthzAuthorize(t *testing.T) {
 		"authorization_id": "a_1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob",
 		"amount": 2000.0, "captured_amount": 0.0, "remaining_amount": 2000.0, "currency": "EUR", "note": "deposit",
 		"visibility": "private", "status": "open", "expires_at": "2026-09-24T13:20:00+00:00", "payment_id": nil,
-		"payment_ids": []any{}, "created_at": "2026-09-24T13:10:00+00:00",
+		"payment_ids": []any{}, "created_at": "2026-09-24T13:10:00+00:00", "closed_at": nil,
 	}
 	if len(m) != len(want) {
 		t.Fatalf("field set: %v", m)
@@ -279,8 +295,11 @@ func TestAuthzCaptureRules(t *testing.T) {
 	m := azJSON(t, p)
 	if m["authorization_id"] != id || m["request_id"] != nil || m["settlement_id"] != nil || m["amount"] != 1500.0 ||
 		m["note"] != "deposit" || m["visibility"] != "private" || m["from_handle"] != "ada" || m["to_handle"] != "bob" ||
-		m["currency"] != "EUR" || m["created_at"] != FormatTime(now) {
+		m["currency"] != "EUR" || !strings.HasPrefix(m["created_at"].(string), "2026-09-24T13:11:00.0000") {
 		t.Fatalf("%v", m)
+	}
+	if body := azJSON(t, st.authBody(st.Authorizations[0], now)); body["closed_at"] != p.CreatedAt {
+		t.Fatalf("a final capture closes the hold at the capture's created_at: %v", body)
 	}
 	if azBal(st, "ada") != 8500 || azBal(st, "bob") != 1500 {
 		t.Fatal("balances")
@@ -321,6 +340,9 @@ func TestAuthzCapturePrecedence(t *testing.T) {
 		{AuthorizationID: "a_capd_old", FromUserID: "u_ada", ToUserID: "u_bob", Amount: 100, CapturedAmount: 40, Status: "captured", ExpiresAt: FormatTime(azT0.Add(-time.Hour))},
 		{AuthorizationID: "a_open_old", FromUserID: "u_ada", ToUserID: "u_bob", Amount: 100, Status: "open", ExpiresAt: FormatTime(azT0.Add(-time.Hour))},
 		{AuthorizationID: "a_open", FromUserID: "u_ada", ToUserID: "u_bob", Amount: 100, Status: "open", ExpiresAt: FormatTime(exp)},
+	}
+	for _, a := range st.Authorizations {
+		azRelease(a)
 	}
 	if err := st.ReindexAt(azT0); err != nil {
 		t.Fatal(err)
@@ -414,7 +436,7 @@ func TestAuthzVoid(t *testing.T) {
 	if e != nil || b.Status != "voided" || b.RemainingAmount != 0 || b.CapturedAmount != 0 || st.Held("u_ada", now) != 0 {
 		t.Fatalf("%+v %v", b, e)
 	}
-	if b2, e := st.Void("u_ada", id, now.Add(time.Hour)); e != nil || b2.Status != "voided" {
+	if b2, e := st.Void("u_ada", id, now); e != nil || b2.Status != "voided" || b2.ClosedAt == nil || *b2.ClosedAt != *b.ClosedAt {
 		t.Fatalf("void twice must be 200 with the current state: %+v %v", b2, e)
 	}
 	_, e = azCapture(st, "bob", id, nil, true, now)
@@ -636,7 +658,7 @@ func TestAuthzReindex(t *testing.T) {
 	}
 	// a stage-1 export has no authorizations and no ttl
 	var old State
-	if err := json.Unmarshal([]byte(`{"currency":"EUR","minor_units":2,"users":[{"id":"u_1","handle":"ada","balance":5}]}`), &old); err != nil {
+	if err := json.Unmarshal([]byte(`{"currency":"EUR","minor_units":2,"users":[{"id":"u_1","handle":"ada","balance":5,"opening_balance":5}]}`), &old); err != nil {
 		t.Fatal(err)
 	}
 	if err := old.Reindex(); err != nil || old.Authorizations == nil || old.TTL() != 600 {
@@ -685,9 +707,17 @@ func TestAuthzReindex(t *testing.T) {
 	}
 	// holds that no longer hold funds do not count: expired, voided, captured
 	for name, mut := range map[string]func(st *State){
-		"expired by the clock": func(st *State) { st.Users[0].Balance = 0 },
-		"voided":               func(st *State) { st.Users[0].Balance = 0; st.Authorizations[0].Status = "voided" },
-		"captured":             func(st *State) { st.Users[0].Balance = 0; st.Authorizations[0].Status = "captured" },
+		"expired by the clock": func(st *State) { azEmpty(st.Users[0]) },
+		"voided": func(st *State) {
+			azEmpty(st.Users[0])
+			st.Authorizations[0].Status = "voided"
+			azRelease(st.Authorizations[0])
+		},
+		"captured": func(st *State) {
+			azEmpty(st.Users[0])
+			st.Authorizations[0].Status = "captured"
+			azRelease(st.Authorizations[0])
+		},
 	} {
 		var c State
 		_ = json.Unmarshal(raw, &c)
@@ -702,7 +732,7 @@ func TestAuthzReindex(t *testing.T) {
 	}
 	// defaults for seeded rows
 	var d State
-	_ = json.Unmarshal([]byte(`{"currency":"EUR","minor_units":2,"users":[{"id":"u_1","handle":"ada","balance":500},{"id":"u_2","handle":"bob"}],
+	_ = json.Unmarshal([]byte(`{"currency":"EUR","minor_units":2,"users":[{"id":"u_1","handle":"ada","balance":500,"opening_balance":500},{"id":"u_2","handle":"bob"}],
 		"authorizations":[{"authorization_id":"a_1","from_user_id":"u_1","to_user_id":"u_2","amount":200,"expires_at":"2026-09-24T14:20:00+00:00"}]}`), &d)
 	if err := d.ReindexAt(azT0); err != nil {
 		t.Fatal(err)
