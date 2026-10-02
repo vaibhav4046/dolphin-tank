@@ -9,6 +9,9 @@ import (
 const (
 	trTrack         = "pocketful"
 	trFormatVersion = 1
+	// trHistoryVersion marks a state carrying revisions and opening balances. A
+	// stage-1 or stage-2 export has no such key (or 0) and is migrated on import.
+	trHistoryVersion = 3
 )
 
 type trEnvelope struct {
@@ -79,6 +82,10 @@ func trParseExport(raw []byte) (*State, *AppError) {
 	if _, supplied := keys["authorization_ttl_seconds"]; supplied && st.AuthTTLSeconds < 1 {
 		return nil, trBad("authorization_ttl_seconds must be an integer from 1 to %d", trMaxTTL)
 	}
+	migrate, e := trHistoryMode(keys)
+	if e != nil {
+		return nil, e
+	}
 	trNormalize(&st)
 	if e := trValidateState(&st); e != nil {
 		return nil, e
@@ -86,6 +93,11 @@ func trParseExport(raw []byte) (*State, *AppError) {
 	// Holds only ever shrink as time passes, so a state valid now is still valid
 	// when Import swaps it in a moment later.
 	now := time.Now()
+	if migrate {
+		if e := trMigrateHistory(&st, now); e != nil {
+			return nil, e
+		}
+	}
 	if e := trCheckHolds(&st, now); e != nil {
 		return nil, e
 	}
@@ -132,6 +144,83 @@ func trNormalize(st *State) {
 	}
 	if st.Sys.Idem == nil {
 		st.Sys.Idem = map[string]*IdemRecord{}
+	}
+	if st.Revisions == nil {
+		st.Revisions = []*Revision{}
+	}
+	st.HistoryVersion = trHistoryVersion
+}
+
+// trHistoryMode reads history_version: absent or 0 means a stage-1/2 export to
+// migrate; 3 means it already carries history (and must carry revisions); anything
+// else is invalid.
+func trHistoryMode(keys map[string]json.RawMessage) (migrate bool, e *AppError) {
+	raw, present := keys["history_version"]
+	if !present {
+		return true, nil
+	}
+	var v any
+	dec := json.NewDecoder(bytes.NewReader(raw))
+	dec.UseNumber()
+	n, isNum := json.Number(""), false
+	if dec.Decode(&v) == nil {
+		n, isNum = v.(json.Number)
+	}
+	i, ok := trIntFromNumber(n)
+	if !isNum || !ok || (i != 0 && i != trHistoryVersion) {
+		return false, trBad("history_version must be 0 or %d", trHistoryVersion)
+	}
+	if i == 0 {
+		return true, nil
+	}
+	if b := bytes.TrimSpace(keys["revisions"]); len(b) == 0 || b[0] != '[' {
+		return false, trBad("a history_version %d state must carry revisions", trHistoryVersion)
+	}
+	return false, nil
+}
+
+// trMigrateHistory gives a stage-1/2 state its history: revision 1 per payment
+// (created_at kept verbatim), opening balances, and closed_at for closed holds.
+func trMigrateHistory(st *State, now time.Time) *AppError {
+	pays := make(map[string]*Payment, len(st.Payments))
+	for _, p := range st.Payments {
+		if p.CreatedAt == "" {
+			p.CreatedAt = FormatTime(now)
+		} else if _, ok := ParseInstant(p.CreatedAt); !ok {
+			return trBad("payment %q: created_at must be an RFC 3339 instant with an offset", p.PaymentID)
+		}
+		pays[p.PaymentID] = p
+	}
+	st.Revisions = trOriginalRevisions(st.Payments)
+	trSetOpeningBalances(st.Users, st.Payments)
+	trFillClosedAt(st, pays, now)
+	return nil
+}
+
+// trFillClosedAt derives closed_at for closed holds that lack it. The real close
+// instant of a stage-1/2 hold was never recorded, so use the best stored evidence:
+// the last capture, else creation; an expired one closed at its deadline.
+func trFillClosedAt(st *State, pays map[string]*Payment, now time.Time) {
+	for _, a := range st.Authorizations {
+		if a.CreatedAt == "" {
+			a.CreatedAt = FormatTime(now)
+		}
+		if a.ClosedAt != nil {
+			continue
+		}
+		closed := a.CreatedAt
+		switch a.Status {
+		case authExpired:
+			closed = a.ExpiresAt
+		case authCaptured:
+			if n := len(a.PaymentIDs); n > 0 && pays[a.PaymentIDs[n-1]] != nil {
+				closed = pays[a.PaymentIDs[n-1]].CreatedAt
+			}
+		case authVoided:
+		default:
+			continue
+		}
+		a.ClosedAt = &closed
 	}
 }
 

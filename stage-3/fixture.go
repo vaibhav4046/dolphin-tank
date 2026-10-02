@@ -72,8 +72,10 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 	for _, u := range users {
 		byID[u.ID] = u
 	}
+	st := &State{}
+	resetAt := st.Stamp(now)
 	created := FormatTime(now)
-	pays, e := trFxPayments(root, ids, byID, cur, created)
+	pays, e := trFxPayments(root, ids, byID, cur, resetAt)
 	if e != nil {
 		return nil, e
 	}
@@ -89,7 +91,7 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 	if e != nil {
 		return nil, e
 	}
-	auths, e := trFxAuthorizations(root, ids, byID, created)
+	auths, e := trFxAuthorizations(root, ids, byID, created, resetAt)
 	if e != nil {
 		return nil, e
 	}
@@ -108,13 +110,13 @@ func trBuildFixture(raw []byte, now time.Time) (*State, *AppError) {
 			a.AuthorizationID = ids.gen("a")
 		}
 	}
-	st := &State{
-		Currency: cur, MinorUnits: minor,
-		Users: users, Payments: pays, Requests: reqs, Splits: []*Split{},
-		Authorizations: auths, AuthTTLSeconds: ttl,
-		Tokens: map[string]string{}, Seq: ids.seq,
-		Sys: SysState{Operators: ops, Idem: map[string]*IdemRecord{}},
-	}
+	st.Currency, st.MinorUnits = cur, minor
+	st.Users, st.Payments, st.Requests, st.Splits = users, pays, reqs, []*Split{}
+	st.Authorizations, st.AuthTTLSeconds = auths, ttl
+	st.Tokens, st.Seq = map[string]string{}, ids.seq
+	st.Sys = SysState{Operators: ops, Idem: map[string]*IdemRecord{}}
+	st.Revisions, st.HistoryVersion = trOriginalRevisions(pays), trHistoryVersion
+	trSetOpeningBalances(users, pays)
 	if e := trLinkCaptures(st); e != nil {
 		return nil, e
 	}
@@ -152,7 +154,7 @@ func trFxTTL(root map[string]any) (int64, *AppError) {
 
 // trFxAuthorizations reads the seeded holds. The stored status is taken as
 // given; the clock never rewrites it. expires_at is kept exactly as written.
-func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, created string) ([]*Authorization, *AppError) {
+func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, created string, resetAt time.Time) ([]*Authorization, *AppError) {
 	list, e := trList(root, "authorizations")
 	if e != nil {
 		return nil, e
@@ -234,13 +236,31 @@ func trFxAuthorizations(root map[string]any, ids *trIDs, byID map[string]*User, 
 		if e != nil {
 			return nil, e
 		}
+		createdAt, e := trFxCreatedAt(o, resetAt, created)
+		if e != nil {
+			return nil, e
+		}
 		out = append(out, &Authorization{
 			AuthorizationID: id, FromUserID: from.ID, ToUserID: to.ID,
 			Amount: amount, CapturedAmount: captured, Note: note, Visibility: vis,
-			Status: status, ExpiresAt: exp, PaymentIDs: payIDs, CreatedAt: created,
+			Status: status, ExpiresAt: exp, PaymentIDs: payIDs, CreatedAt: createdAt,
+			ClosedAt: trSeededClosedAt(status, createdAt, exp),
 		})
 	}
 	return out, nil
+}
+
+// trSeededClosedAt is the closed_at of a seeded hold. A seeded closed hold has no
+// lifecycle to reconstruct: it closed when it was created, or at its deadline if
+// stored as expired. An open one has no closed_at.
+func trSeededClosedAt(status, createdAt, expiresAt string) *string {
+	switch status {
+	case authExpired:
+		return &expiresAt
+	case authCaptured, authVoided:
+		return &createdAt
+	}
+	return nil
 }
 
 func trFxStrings(o map[string]any, k string) ([]string, *AppError) {
@@ -536,12 +556,53 @@ func trFxUser(o map[string]any, k string, byID map[string]*User) (*User, *AppErr
 	return u, nil
 }
 
-func trFxPayments(root map[string]any, ids *trIDs, byID map[string]*User, cur, created string) ([]*Payment, *AppError) {
+// trFxCreatedAt reads an optional created_at: an RFC 3339 instant not after the
+// reset instant, kept exactly as written. Absent (or null) is def.
+func trFxCreatedAt(o map[string]any, resetAt time.Time, def string) (string, *AppError) {
+	s, present, e := trOptString(o, "created_at")
+	if e != nil || !present {
+		return def, e
+	}
+	t, ok := ParseInstant(s)
+	if !ok {
+		return "", trBad("created_at must be an RFC 3339 instant with an offset")
+	}
+	if t.After(resetAt) {
+		return "", trBad("created_at must not be in the future")
+	}
+	return s, nil
+}
+
+// trOriginalRevisions is revision 1 of every payment: as paid, effective and recorded at created_at.
+func trOriginalRevisions(pays []*Payment) []*Revision {
+	revs := make([]*Revision, 0, len(pays))
+	for _, p := range pays {
+		revs = append(revs, &Revision{PaymentID: p.PaymentID, Revision: 1, Amount: p.Amount,
+			EffectiveAt: p.CreatedAt, RecordedAt: p.CreatedAt})
+	}
+	return revs
+}
+
+// trSetOpeningBalances sets each user's opening balance to the balance minus the
+// net effect of the original payments, so loading payments never changes a balance.
+func trSetOpeningBalances(users []*User, pays []*Payment) {
+	net := make(map[string]int64, len(users))
+	for _, p := range pays {
+		net[p.FromUserID] -= p.Amount
+		net[p.ToUserID] += p.Amount
+	}
+	for _, u := range users {
+		u.OpeningBalance = u.Balance - net[u.ID]
+	}
+}
+
+func trFxPayments(root map[string]any, ids *trIDs, byID map[string]*User, cur string, resetAt time.Time) ([]*Payment, *AppError) {
 	list, e := trList(root, "payments")
 	if e != nil {
 		return nil, e
 	}
 	out := make([]*Payment, 0, len(list))
+	defCreated := FormatMicro(resetAt)
 	for _, v := range list {
 		o, ok := v.(map[string]any)
 		if !ok {
@@ -583,10 +644,14 @@ func trFxPayments(root map[string]any, ids *trIDs, byID map[string]*User, cur, c
 		} else if present {
 			reqID = &r
 		}
+		createdAt, e := trFxCreatedAt(o, resetAt, defCreated)
+		if e != nil {
+			return nil, e
+		}
 		out = append(out, &Payment{
 			PaymentID: id, FromUserID: from.ID, FromHandle: from.Handle,
 			ToUserID: to.ID, ToHandle: to.Handle, Amount: amount, Currency: cur,
-			Note: note, Visibility: vis, RequestID: reqID, CreatedAt: created,
+			Note: note, Visibility: vis, RequestID: reqID, CreatedAt: createdAt,
 		})
 	}
 	return out, nil

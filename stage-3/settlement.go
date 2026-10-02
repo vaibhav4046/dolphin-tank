@@ -31,6 +31,7 @@ func (s *Store) Settle(userID, key string, body map[string]any) (int, []byte, *A
 // trSettle validates the whole batch, then checks collective affordability,
 // and only then moves money. Nothing is mutated before the last check passes.
 func trSettle(st *State, body map[string]any, now time.Time) (any, *AppError) {
+	now = st.Stamp(now) // one instant for the whole batch: committed_at, every member's created_at, effective and recorded time
 	raw, ok := body["transfers"].([]any)
 	if !ok || len(raw) < 1 || len(raw) > trMaxTransfers {
 		return nil, NewErr(422, "validation_failed", "transfers must be an array of 1 to 32 objects")
@@ -64,7 +65,7 @@ func trSettle(st *State, body map[string]any, now time.Time) (any, *AppError) {
 
 	out := trSettlementOut{
 		SettlementID: st.NewID("st"),
-		CommittedAt:  FormatTime(now),
+		CommittedAt:  FormatMicro(now),
 		Payments:     make([]*Payment, 0, len(legs)),
 	}
 	for _, l := range legs {
