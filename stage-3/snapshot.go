@@ -35,8 +35,10 @@ func (s *Store) Export() ([]byte, *AppError) {
 }
 
 // Import replaces everything with the exported state, or changes nothing.
-func (s *Store) Import(raw []byte) *AppError {
-	st, e := trParseExport(raw)
+func (s *Store) Import(raw []byte) *AppError { return s.importAt(raw, time.Now()) }
+
+func (s *Store) importAt(raw []byte, now time.Time) *AppError {
+	st, e := trParseExportAt(raw, now)
 	if e != nil {
 		return e
 	}
@@ -46,7 +48,9 @@ func (s *Store) Import(raw []byte) *AppError {
 	return nil
 }
 
-func trParseExport(raw []byte) (*State, *AppError) {
+func trParseExport(raw []byte) (*State, *AppError) { return trParseExportAt(raw, time.Now()) }
+
+func trParseExportAt(raw []byte, now time.Time) (*State, *AppError) {
 	if !json.Valid(raw) {
 		return nil, NewErr(400, "malformed_request", "body is not valid JSON")
 	}
@@ -92,7 +96,6 @@ func trParseExport(raw []byte) (*State, *AppError) {
 	}
 	// Holds only ever shrink as time passes, so a state valid now is still valid
 	// when Import swaps it in a moment later.
-	now := time.Now()
 	if migrate {
 		if e := trMigrateHistory(&st, now); e != nil {
 			return nil, e
