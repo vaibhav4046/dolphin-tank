@@ -31,7 +31,8 @@ type Authorization struct {
 	ClosedAt *string `json:"closed_at"`
 	// CreatedExact is vestigial: an earlier build put a microsecond instant here beside a whole-second
 	// created_at. created_at now carries the microsecond itself and is the only instant a hold is placed
-	// at; this field is still written (equal to created_at) and accepted on import, never read by a view.
+	// at; this field is still written (equal to created_at). On import a different created_exact (an
+	// export of that earlier build) replaces created_at; no view reads it.
 	CreatedExact *string `json:"created_exact,omitempty"`
 
 	expiry       time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values

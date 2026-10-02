@@ -274,13 +274,14 @@ func TestCorrectSameSecondPaymentThenHold(t *testing.T) {
 	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(700*time.Millisecond)) {
 		t.Fatal(err)
 	}
-	// a stage-3 export from before this change: whole-second created_at plus created_exact. The hold stays
-	// where created_at puts it (the one instant); the field is accepted and ignored.
+	// an export of the rejected 3c7c411 build: whole-second created_at plus created_exact. Import places the
+	// hold at created_exact, the microsecond it was placed, and rewrites created_at to match.
 	back.Authorizations[0].CreatedAt = FormatTime(hsAt(0))
 	exact := FormatMicro(hsAt(700 * time.Millisecond))
 	back.Authorizations[0].CreatedExact = &exact
-	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(0)) {
-		t.Fatalf("legacy created_exact export: %v", err)
+	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(700*time.Millisecond)) ||
+		back.Authorizations[0].CreatedAt != exact {
+		t.Fatalf("legacy created_exact export: %v placed at %s created_at %s", err, back.Authorizations[0].placedAt(), back.Authorizations[0].CreatedAt)
 	}
 }
 

@@ -320,6 +320,7 @@ func indexAuthorizations(auths []*Authorization, users map[string]*User, pays ma
 		if err := checkCreatedExact(a); err != nil {
 			return nil, err
 		}
+		placeAtCreatedExact(a)
 		if err := checkClosedAt(a); err != nil {
 			return nil, err
 		}
@@ -359,6 +360,20 @@ func checkCreatedExact(a *Authorization) error {
 	}
 	a.createdExact = exact
 	return nil
+}
+
+// placeAtCreatedExact makes a validated created_exact the hold's created_at. An export of the rejected
+// 3c7c411 build names the whole second in created_at and the microsecond the hold was placed in
+// created_exact; money received earlier in that second must precede the hold it funds, so the
+// microsecond is the one instant. Equal instants (every current export) are left as they are.
+func placeAtCreatedExact(a *Authorization) {
+	if a.CreatedExact == nil || a.createdExact.Equal(a.created) {
+		return
+	}
+	a.created = a.createdExact.Truncate(time.Microsecond)
+	a.CreatedAt = FormatMicro(a.created)
+	exact := a.CreatedAt
+	a.CreatedExact, a.createdExact = &exact, a.created
 }
 
 // checkClosedAt: an authorization is released (closed_at set) exactly when its stored status is not open.

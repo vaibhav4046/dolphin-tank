@@ -1,0 +1,15 @@
+$ gofmt -l .
+$ go vet ./...
+VET_OK
+$ go build ./...
+BUILD_OK
+$ go test ./... -count=1 -v | (counts)
+exit=0
+--- PASS lines: 185  --- FAIL lines: 0  --- SKIP lines: 0
+PASS
+ok  	pocketful	44.333s
+$ node --test jstest
+ℹ tests 16
+ℹ pass 16
+ℹ fail 0
+$ go test -race: unavailable on this host (go: -race requires cgo; no gcc on PATH; CC=clang link fails LNK1143)

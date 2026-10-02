@@ -1,0 +1,63 @@
+# forge R-L1: legacy 3c7c411 import. Server under test = go build of the working tree (stage-3 at the R-L1 fix), copied to $F2BIN/s3-ac96360.exe (file name is trace's slot name only).
+# F2BIN=C:/Users/lalwa/AppData/Local/Temp/f2bin-forge
+$ uv run python -u evidence/stage-3/trace/f2_attack.py legacy
+#### legacy
+   LEGACY source payment 2026-10-02T17:48:07.031260+00:00  authorization created_at 2026-10-02T17:48:07+00:00
+PASS LEGACY source flow made (pay 5000 then hold 12000)
+   LEGACY export authorization: {"created_at": "2026-10-02T17:48:07+00:00", "created_exact": "2026-10-02T17:48:07.031766+00:00", "expires_at": "2026-10-02T17:58:07+00:00", "status": "open"}
+PASS LEGACY precondition: payment lies between created_at (whole second) and created_exact
+PASS LEGACY export imports into HEAD: 204
+   LEGACY ada as_of created_at(whole second)   total/held/available/balance = (10000, 0, 10000, 10000)
+   LEGACY ada as_of payment-1us                total/held/available/balance = (10000, 0, 10000, 10000)
+   LEGACY ada as_of payment                    total/held/available/balance = (15000, 0, 15000, 15000)
+   LEGACY ada as_of created_exact-1us          total/held/available/balance = (15000, 0, 15000, 15000)
+   LEGACY ada as_of created_exact              total/held/available/balance = (15000, 12000, 3000, 15000)
+PASS LEGACY imported hold: every historical view of ada has available >= 0 (the funding payment is not later than the hold)
+   LEGACY HEAD authorizations: [('2026-10-02T17:48:07.031766+00:00', 'open')]
+#### legacy done in 0.8s
+== f2_attack legacy: 4 pass, 0 fail, 19 requests
+exit=0
+$ uv run python -u evidence/stage-3/trace/f2_attack.py imp1
+#### imp1
+PASS IMP1 stage-1 export imports into stage 3: 204
+PASS IMP1(stage-1): imported state: Σ balances == 15500
+PASS IMP1(stage-1): imported state: 24 views at every instant of the import -1us/0/+1us satisfy the invariants and equal the oracle
+PASS IMP1(stage-1): authorize after import 201
+PASS IMP1(stage-1): new authorization created_at tracks the real clock (|created_at - now| < 2 s), microsecond format
+PASS IMP1(stage-1): expires_at - created_at == 600 s exactly
+PASS IMP1(stage-1): held appears exactly at created_at (-1us none, 0 and +1us 700)
+PASS IMP1(stage-1): nonfinal capture 201
+PASS IMP1(stage-1): capture payment later than the hold, microsecond instant
+PASS IMP1(stage-1): at the capture instant total drops 200 and held drops 200 together (available unchanged, never negative)
+PASS IMP1(stage-1): final capture 201 closes it
+PASS IMP1(stage-1): closed_at == final capture created_at
+PASS IMP1(stage-1): void closes at its own instant
+PASS IMP1(stage-1): views around every new event equal the oracle (60 views)
+#### imp1 done in 0.6s
+== f2_attack imp1: 14 pass, 0 fail, 119 requests
+exit=0
+$ uv run python -u evidence/stage-3/trace/f2_attack.py imp2
+#### imp2
+   IMP2 stage-2 export authorizations (created_at / expires_at / status): [('2026-10-02T17:48:10+00:00', '2026-10-02T17:48:13+00:00', 'open'), ('2026-10-02T17:48:14+00:00', '2026-10-02T17:48:17+00:00', 'open'), ('2026-10-02T17:48:14+00:00', '2026-10-02T17:48:17+00:00', 'open'), ('2026-10-02T17:48:14+00:00', '2026-10-02T17:48:17+00:00', 'captured'), ('2026-10-02T17:48:14+00:00', '2026-10-02T17:48:17+00:00', 'voided')]
+PASS IMP2 stage-2 export imports into stage 3: 204
+PASS IMP2 imported holds: statuses open (never touched), open (partly captured), expired (deadline passed before export), captured, voided
+PASS IMP2 closed_at: null for both open holds, set for every closed one, expires_at for the expired one
+PASS IMP2(stage-2): imported state: Σ balances == 15500
+PASS IMP2(stage-2): imported state: 48 views at every instant of the import -1us/0/+1us satisfy the invariants and equal the oracle
+PASS IMP2(stage-2): authorize after import 201
+PASS IMP2(stage-2): new authorization created_at tracks the real clock (|created_at - now| < 2 s), microsecond format
+PASS IMP2(stage-2): expires_at - created_at == 3 s exactly
+PASS IMP2(stage-2): held appears exactly at created_at (-1us none, 0 and +1us 700)
+PASS IMP2(stage-2): nonfinal capture 201
+PASS IMP2(stage-2): capture payment later than the hold, microsecond instant
+PASS IMP2(stage-2): at the capture instant total drops 200 and held drops 200 together (available unchanged, never negative)
+PASS IMP2(stage-2): final capture 201 closes it
+PASS IMP2(stage-2): closed_at == final capture created_at
+PASS IMP2(stage-2): void closes at its own instant
+PASS IMP2(stage-2): views around every new event equal the oracle (60 views)
+PASS IMP2 imported open hold expires at its (whole-second) deadline on the real clock: expired, closed_at == expires_at
+PASS IMP2 after the imported hold expired /me releases it (available == total)
+PASS IMP2 final: 132 views at every instant (incl. imported whole-second ones) equal the oracle
+#### imp2 done in 6.7s
+== f2_attack imp2: 19 pass, 0 fail, 276 requests
+exit=0
