@@ -192,16 +192,21 @@ func guardedReads(s *Store) (panicked any) {
 	return nil
 }
 
-func TestImportMutationSweepNeverPanicsAndNeverHalfApplies(t *testing.T) {
-	s, good := tyRichState(t)
-	var top map[string]any
-	if err := json.Unmarshal(good, &top); err != nil {
-		t.Fatal(err)
-	}
+type sweepTarget struct {
+	attempt  func(body []byte) (*AppError, any) // the guarded import or reset; any is a recovered panic
+	state    func() []byte                      // the exported state, for "nothing half applied"
+	restore  func()                             // back to the good state after an accepted mutation
+	accepted func(label string, report func(format string, a ...any))
+}
+
+// sweepMutations changes one node of a good document at a time (deleted, nulled, retyped, zeroed, made
+// huge, shifted) and requires: no panic, a refusal is 400/422 and leaves the state byte for byte, and an
+// accepted document behaves.
+func sweepMutations(t *testing.T, top map[string]any, tg sweepTarget) {
+	t.Helper()
 	var nodes []nodeRef
 	var paths []string
 	collectNodes(top, "", &nodes, &paths)
-
 	stride := 1
 	if testing.Short() {
 		stride = 4
@@ -213,43 +218,27 @@ func TestImportMutationSweepNeverPanicsAndNeverHalfApplies(t *testing.T) {
 			t.Errorf(format, a...)
 		}
 	}
-	now := time.Now()
+	good := tg.state()
+	type mutation struct {
+		name string
+		v    any
+		del  bool
+	}
 	imports, refused, accepted := 0, 0, 0
 	for i := 0; i < len(nodes); i += stride {
 		ref, path := nodes[i], paths[i]
 		orig := ref.get()
-		mutations := []struct {
-			name string
-			v    any
-			del  bool
-		}{
-			{name: "delete", del: true},
-			{name: "null", v: nil},
-			{name: "empty string", v: ""},
-			{name: "zero", v: float64(0)},
-			{name: "minus one", v: float64(-1)},
-			{name: "one", v: float64(1)},
-			{name: "huge", v: 1e300},
-			{name: "text", v: "x"},
-			{name: "true", v: true},
-			{name: "empty array", v: []any{}},
-			{name: "empty object", v: map[string]any{}},
-			{name: "valid instant", v: "2026-09-24T13:10:00+00:00"},
-			{name: "future instant", v: "2999-01-01T00:00:00+00:00"},
+		mutations := []mutation{
+			{name: "delete", del: true}, {name: "null"}, {name: "empty string", v: ""}, {name: "zero", v: float64(0)},
+			{name: "minus one", v: float64(-1)}, {name: "one", v: float64(1)}, {name: "huge", v: 1e300}, {name: "text", v: "x"},
+			{name: "true", v: true}, {name: "empty array", v: []any{}}, {name: "empty object", v: map[string]any{}},
+			{name: "valid instant", v: "2026-09-24T13:10:00+00:00"}, {name: "future instant", v: "2999-01-01T00:00:00+00:00"},
 		}
 		if f, ok := orig.(float64); ok {
-			mutations = append(mutations, struct {
-				name string
-				v    any
-				del  bool
-			}{name: "plus one", v: f + 1}, struct {
-				name string
-				v    any
-				del  bool
-			}{name: "minus one from value", v: f - 1})
+			mutations = append(mutations, mutation{name: "plus one", v: f + 1}, mutation{name: "value minus one", v: f - 1})
 		}
 		for _, m := range mutations {
-			var removed bool
+			removed := false
 			switch p := ref.parent.(type) {
 			case map[string]any:
 				if m.del {
@@ -274,46 +263,102 @@ func TestImportMutationSweepNeverPanicsAndNeverHalfApplies(t *testing.T) {
 				t.Fatal(err)
 			}
 			imports++
-			e, pan := guardedImport(s, body, now)
 			label := path + " <- " + m.name
+			e, pan := tg.attempt(body)
 			switch {
 			case pan != nil:
-				report("%s: import PANICKED: %v", label, pan)
-				s.Import(good)
-				continue
+				report("%s: PANICKED: %v", label, pan)
+				tg.restore()
 			case e != nil:
 				refused++
 				if e.Status != 400 && e.Status != 422 {
 					report("%s: refused with %d %s", label, e.Status, e.Code)
 				}
-				if after, ae := s.Export(); ae != nil || !bytes.Equal(after, good) {
-					report("%s: a refused import changed the state", label)
-					s.Import(good)
+				if !bytes.Equal(tg.state(), good) {
+					report("%s: a refused request changed the state", label)
+					tg.restore()
 				}
-				continue
-			}
-			accepted++
-			e1, ae := s.Export()
-			if ae != nil {
-				report("%s: export after an accepted import: %v", label, ae.Message)
-			} else {
-				s2 := NewStore()
-				if e := s2.importAt(e1, now); e != nil {
-					report("%s: the export of an accepted import does not re-import: %v", label, e.Message)
-				} else if e2, _ := s2.Export(); !bytes.Equal(e1, e2) {
-					report("%s: export -> import -> export differs after an accepted import", label)
-				}
-			}
-			if pan := guardedReads(s); pan != nil {
-				report("%s: an accepted import makes a read or write PANIC: %v", label, pan)
-			}
-			if e := s.Import(good); e != nil {
-				t.Fatalf("restoring the good export failed: %v", e.Message)
+			default:
+				accepted++
+				tg.accepted(label, report)
+				tg.restore()
 			}
 		}
 	}
-	t.Logf("%d mutated imports over %d nodes: %d refused cleanly, %d accepted", imports, len(nodes)/stride, refused, accepted)
+	t.Logf("%d mutated documents over %d nodes: %d refused cleanly, %d accepted", imports, len(nodes)/stride, refused, accepted)
 	if failures > 0 {
 		t.Fatalf("%d failures", failures)
 	}
+}
+
+// acceptedBehaves: the export of an accepted state re-imports byte for byte and every read and write
+// family answers cleanly on it.
+func acceptedBehaves(s *Store, now time.Time) func(label string, report func(format string, a ...any)) {
+	return func(label string, report func(format string, a ...any)) {
+		e1, ae := s.Export()
+		if ae != nil {
+			report("%s: export after an accepted document: %v", label, ae.Message)
+		} else {
+			s2 := NewStore()
+			if e := s2.importAt(e1, now); e != nil {
+				report("%s: the export of an accepted document does not re-import: %v", label, e.Message)
+			} else if e2, _ := s2.Export(); !bytes.Equal(e1, e2) {
+				report("%s: export -> import -> export differs after an accepted document", label)
+			}
+		}
+		if pan := guardedReads(s); pan != nil {
+			report("%s: an accepted document makes a read or write PANIC: %v", label, pan)
+		}
+	}
+}
+
+func TestImportMutationSweepNeverPanicsAndNeverHalfApplies(t *testing.T) {
+	s, good := tyRichState(t)
+	var top map[string]any
+	if err := json.Unmarshal(good, &top); err != nil {
+		t.Fatal(err)
+	}
+	now := time.Now()
+	sweepMutations(t, top, sweepTarget{
+		attempt: func(body []byte) (*AppError, any) { return guardedImport(s, body, now) },
+		state:   func() []byte { return ttExport(t, s) },
+		restore: func() {
+			if e := s.Import(good); e != nil {
+				t.Fatalf("restoring the good export failed: %v", e.Message)
+			}
+		},
+		accepted: acceptedBehaves(s, now),
+	})
+}
+
+// A fixture with seeded history and holds in every stored status, then the same sweep over Reset.
+func TestResetMutationSweepNeverPanicsAndNeverHalfApplies(t *testing.T) {
+	const past = "2026-09-20T09:00:00+00:00"
+	fixture := txFx(tsHistory, txAuths(
+		txA("a_open", "open", 100, txFuture, `"created_at":"`+past+`"`),
+		txA("a_open_now", "open", 50, txFuture, ""),
+		txA("a_exp", "expired", 10, txPast, `"created_at":"`+past+`"`),
+		txA("a_void", "voided", 10, txFuture, `"created_at":"`+past+`"`),
+		txA("a_cap", "captured", 30, txFuture, `"created_at":"`+past+`","payment_ids":["p_1"]`),
+	))
+	s := txReset(t, fixture)
+	good := ttExport(t, s)
+	var top map[string]any
+	if err := json.Unmarshal([]byte(fixture), &top); err != nil {
+		t.Fatal(err)
+	}
+	guardedReset := func(body []byte) (e *AppError, panicked any) {
+		defer func() { panicked = recover() }()
+		return s.Reset(body), nil
+	}
+	sweepMutations(t, top, sweepTarget{
+		attempt: guardedReset,
+		state:   func() []byte { return ttExport(t, s) },
+		restore: func() {
+			if e := s.Import(good); e != nil {
+				t.Fatalf("restoring the good state failed: %v", e.Message)
+			}
+		},
+		accepted: acceptedBehaves(s, time.Now()),
+	})
 }

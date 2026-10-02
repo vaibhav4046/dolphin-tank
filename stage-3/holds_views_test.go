@@ -101,3 +101,29 @@ func TestHistoricalViewsNeverNegativeWhenHoldsAreExactlyPlaced(t *testing.T) {
 		})
 	}
 }
+
+// The smallest case, no correction involved: bob is paid at :00.5 and places a hold at :00.7. The hold's
+// created_at is the whole second :00, so as_of=:00.0 sees the hold but not the payment.
+func TestWholeSecondHoldCanLookUnaffordableBeforeTheMoneyThatPaidForIt(t *testing.T) {
+	_, st := azStore(fgU{"ada", 1000}, fgU{"bob", 0})
+	hsPay(t, st, "ada", "bob", 500, hsAt(500*time.Millisecond))
+	a, e := st.Authorize("u_bob", AuthorizeIn{ToHandle: "ada", Amount: 500, Visibility: visPublic}, hsAt(700*time.Millisecond))
+	if e != nil {
+		t.Fatalf("authorize: %v", e)
+	}
+	if a.CreatedAt != FormatTime(hsAt(0)) {
+		t.Fatalf("created_at %s is not the whole second", a.CreatedAt)
+	}
+	now := hsAt(5 * time.Second)
+	me := hsMe(t, st, "bob", hsP(FormatMicro(hsAt(0))), nil, now)
+	t.Logf("bob as_of=%s: total %v held %v available %v", FormatMicro(hsAt(0)), me["total"], me["held"], me["available"])
+	if me["total"] != float64(0) || me["held"] != float64(500) || me["available"] != float64(-500) {
+		t.Fatalf("view %v: this pins the whole-second reading of rule H", me)
+	}
+	if got := st.AvailableAt("u_bob", hsAt(0), hsAt(5*time.Second)); got != -500 {
+		t.Fatalf("AvailableAt %d", got)
+	}
+	if exact := st.TotalAt("u_bob", hsAt(0), hsAt(time.Second)) - st.heldAt("u_bob", hsAt(0), hsAt(time.Second), true); exact != 0 {
+		t.Fatalf("with the hold placed at :00.7 nothing is held at :00.0: %d", exact)
+	}
+}
