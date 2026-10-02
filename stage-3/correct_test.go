@@ -225,21 +225,23 @@ func TestCorrectCombinedInstantAndHoldBoundary(t *testing.T) {
 	}
 }
 
-// A hold is created_at the whole second, but placed at a microsecond: money received later in that
-// second must not be counted as missing when the hold was placed.
+// A hold's created_at is the microsecond it was placed: money received earlier in the same second is
+// there when the hold exists, and a correction is judged against that one instant.
 func TestCorrectSameSecondPaymentThenHold(t *testing.T) {
 	setup := func() (*State, *Payment, *AuthorizationBody) {
 		_, st := azStore(fgU{"ada", 10000}, fgU{"bob", 0}, fgU{"cy", 0})
 		p := hsPay(t, st, "ada", "bob", 3000, hsAt(500*time.Millisecond))
 		a := azAuthorize(t, st, "bob", "cy", 3000, hsAt(700*time.Millisecond))
-		if a.CreatedAt != "2026-09-24T13:10:00+00:00" || p.CreatedAt != "2026-09-24T13:10:00.500000+00:00" {
+		if a.CreatedAt != "2026-09-24T13:10:00.700000+00:00" || p.CreatedAt != "2026-09-24T13:10:00.500000+00:00" {
 			t.Fatal(a.CreatedAt, p.CreatedAt)
 		}
 		return st, p, a
 	}
 	st, p, a := setup()
-	// the view keeps the literal rule: a hold exists from its created_at second
-	if got := st.HeldAt("u_bob", hsAt(0), hsAt(time.Hour)); got != 3000 {
+	if got := st.HeldAt("u_bob", hsAt(0), hsAt(time.Hour)); got != 0 {
+		t.Fatalf("the hold does not exist at :00.0: %d", got)
+	}
+	if got := st.HeldAt("u_bob", hsAt(700*time.Millisecond), hsAt(time.Hour)); got != 3000 {
 		t.Fatalf("as_of = created_at counts the hold: %d", got)
 	}
 	if _, e := crCorrect(st, "ada", p, crIn(1, 3500, p.CreatedAt, "up"), hsAt(time.Minute)); e != nil {
@@ -259,7 +261,7 @@ func TestCorrectSameSecondPaymentThenHold(t *testing.T) {
 	if _, e := crCorrect(st, "ada", p, crIn(1, 0, p.CreatedAt, "reverse"), hsAt(time.Minute)); e == nil || e.Code != "historical_overdraft" {
 		t.Fatalf("the hold was placed at +0.7 s when bob would hold nothing: %v", e)
 	}
-	// the exact instant survives an export, and a hold without it (imported) falls back to created_at
+	// the instant survives an export; created_exact (vestigial) is neither needed nor consulted
 	raw, _ := json.Marshal(st)
 	var back State
 	if err := json.Unmarshal(raw, &back); err != nil || back.ReindexAt(hsAt(time.Hour)) != nil {
@@ -269,8 +271,16 @@ func TestCorrectSameSecondPaymentThenHold(t *testing.T) {
 		t.Fatal(got)
 	}
 	back.Authorizations[0].CreatedExact = nil
-	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(0)) {
+	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(700*time.Millisecond)) {
 		t.Fatal(err)
+	}
+	// a stage-3 export from before this change: whole-second created_at plus created_exact. The hold stays
+	// where created_at puts it (the one instant); the field is accepted and ignored.
+	back.Authorizations[0].CreatedAt = FormatTime(hsAt(0))
+	exact := FormatMicro(hsAt(700 * time.Millisecond))
+	back.Authorizations[0].CreatedExact = &exact
+	if err := back.ReindexAt(hsAt(time.Hour)); err != nil || !back.Authorizations[0].placedAt().Equal(hsAt(0)) {
+		t.Fatalf("legacy created_exact export: %v", err)
 	}
 }
 

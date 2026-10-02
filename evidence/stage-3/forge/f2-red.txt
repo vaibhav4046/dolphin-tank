@@ -1,0 +1,77 @@
+# F2 RED: new/updated tests on the UNFIXED code (authz.go unchanged, base ce30bcdad67abc917ebc4c1a79a460e376eec20b)
+# cmd: go test -run 'TestHoldIsAffordableAtItsCreatedAtOverHTTP|TestHoldInstantsAcrossBackToBackLifecycle|TestAuthorizeStampsMicrosecondsWithExactTTL|TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt|TestHistoricalViewsNeverNegative|TestViewsNeverNegativeUnderCorrections' -count=1 -v .
+    holds_one_clock_test.go:167: "2026-10-02T11:57:30+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:167: "2026-10-02T12:07:30+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:182: round 1: bob as_of=created_at 2026-10-02T11:57:30+00:00: map[as_of:2026-10-02T11:57:30.000000+00:00 available:-4000 balance:0 currency:EUR display_name:Bob handle:bob held:4000 minor_units:2 total:0 user_id:u_bob], want total 5000 held 4000 available 1000
+--- FAIL: TestHoldIsAffordableAtItsCreatedAtOverHTTP (0.03s)
+    holds_one_clock_test.go:226: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T13:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T14:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T14:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:249: created_at u_bob as_of=2026-09-24T14:10:00.000000+00:00: inconsistent view balance 3500 total 3500 held 4000 available -500
+    holds_one_clock_test.go:226: "2026-09-24T15:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T15:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T16:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T16:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T17:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T17:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T18:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T18:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T19:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T19:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T20:10:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T20:20:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T21:10:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T21:20:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T22:10:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T22:20:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T23:10:03+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:226: "2026-09-24T23:20:03+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:258: sweep u_bob as_of=2026-09-24T14:10:00.000000+00:00: inconsistent view balance 3500 total 3500 held 4000 available -500
+    holds_one_clock_test.go:258: sweep u_bob as_of=2026-09-24T14:10:00.000000+00:00: inconsistent view balance 3500 total 3500 held 4000 available -500
+    holds_one_clock_test.go:262: 11 lifecycles, 594 views at event instants +-1us
+--- FAIL: TestHoldInstantsAcrossBackToBackLifecycle (0.00s)
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T13:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 0: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T13:20:00+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T13:10:01+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 1: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T13:10:01+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T13:10:02+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 2: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T13:10:02+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T13:10:59+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 59: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T13:10:59+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T13:20:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 600: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T13:20:00+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-24T14:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 3600: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-24T14:10:00+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2026-09-25T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 86400: created_at 2026-09-24T13:10:00+00:00 expires_at 2026-09-25T13:10:00+00:00
+    holds_one_clock_test.go:277: "2026-09-24T13:10:00+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:277: "2058-06-02T14:56:40+00:00" is not a microsecond UTC instant
+    holds_one_clock_test.go:279: ttl 1000000000: created_at 2026-09-24T13:10:00+00:00 expires_at 2058-06-02T14:56:40+00:00
+--- FAIL: TestAuthorizeStampsMicrosecondsWithExactTTL (0.00s)
+    holds_views_test.go:85: seed 4 step 130: bob available -2522 at T=2026-09-24 13:11:27.000001 +0000 +0000 K=2026-09-24 13:20:05 +0000 +0000
+    holds_views_test.go:85: seed 4 step 200: bob available -2522 at T=2026-09-24 13:11:27.000001 +0000 +0000 K=2026-09-24 13:20:52.999999 +0000 +0000
+    holds_views_test.go:85: seed 4 step 260: bob available -2522 at T=2026-09-24 13:11:59.597999 +0000 UTC K=2026-09-24 13:11:27.286999 +0000 UTC
+    holds_views_test.go:93: of 180000 views: 0 negative totals, 90 negative available
+    holds_views_test.go:85: seed 1 step 75: ada available -5693 at T=2026-09-24 13:10:37.000001 +0000 +0000 K=2026-09-24 13:20:36.999999 +0000 +0000
+    holds_views_test.go:85: seed 1 step 95: ada available -5693 at T=2026-09-24 13:10:37.000001 +0000 +0000 K=2026-09-24 13:10:37.389 +0000 UTC
+    holds_views_test.go:85: seed 1 step 110: ada available -5693 at T=2026-09-24 13:11:01.000001 +0000 +0000 K=2026-09-24 13:10:37 +0000 +0000
+    holds_views_test.go:93: of 180000 views: 0 negative totals, 85 negative available
+--- FAIL: TestHistoricalViewsNeverNegative (0.44s)
+    --- FAIL: TestHistoricalViewsNeverNegative/no_corrections (0.20s)
+    --- FAIL: TestHistoricalViewsNeverNegative/with_corrections (0.23s)
+    holds_views_test.go:110: created_at 2026-09-24T13:10:00+00:00 is not the microsecond the hold was placed
+--- FAIL: TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt (0.00s)
+    views_invariant_test.go:84: views 180000, corrections accepted 492, rejected historical_overdraft 560
+    views_invariant_test.go:86: negative views: total 0, available 102 of 180000
+--- FAIL: TestViewsNeverNegativeUnderCorrections (0.16s)
+FAIL
+FAIL	pocketful	0.664s
+FAIL

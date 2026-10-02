@@ -492,7 +492,7 @@ func TestShortTTLWithInjectedClock(t *testing.T) {
 	if e != nil || st != 201 {
 		t.Fatalf("authorize: %d %v", st, e)
 	}
-	if a := txJSON(t, b); a["expires_at"] != "2030-01-01T00:00:02+00:00" || a["status"] != "open" {
+	if a := txJSON(t, b); a["expires_at"] != "2030-01-01T00:00:02.000000+00:00" || a["created_at"] != "2030-01-01T00:00:00.000000+00:00" || a["status"] != "open" {
 		t.Fatalf("authorization: %v", a)
 	}
 	if me := txMeS(t, s, "u_ada", at(time.Second)); txNum(me, "held") != 400 || txNum(me, "available") != 600 {
@@ -588,14 +588,14 @@ func TestConcurrentAuthorizeAndPayExactlyTenWin(t *testing.T) {
 	}
 }
 
-// The handlers read the real clock. With a one second lifetime the deadline is at
-// most one second away (expires_at is created_at truncated to the second, plus 1),
-// so after one second the hold is gone although no request touched it at the deadline.
+// The handlers read the real clock. With a one second lifetime expires_at is exactly one second after
+// created_at, so once the wall clock has moved past it (the margin covers the coarse Windows wall
+// clock) the hold is gone although no request touched it at the deadline.
 func TestRealClockExpiryNeedsNoRequestAtTheDeadline(t *testing.T) {
 	h, tok := txServerFx(t, txFx(`"authorization_ttl_seconds":1`))
 	b := txWant(t, "authorize", txDo(h, "POST", "/authorizations", tok["ada"], "rc", `{"to_handle":"bob","amount":400}`), 201)
 	id := txJSON(t, b)["authorization_id"].(string)
-	time.Sleep(time.Second)
+	time.Sleep(1100 * time.Millisecond)
 
 	if me := txMe(t, h, tok["ada"]); txNum(me, "held") != 0 || txNum(me, "available") != 1000 || txNum(me, "total") != 1000 {
 		t.Fatalf("/me after the deadline: %v", me)

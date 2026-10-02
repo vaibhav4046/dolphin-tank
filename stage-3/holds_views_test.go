@@ -6,20 +6,18 @@ import (
 	"time"
 )
 
-// A hold's created_at is a whole second while payments carry microseconds. Read literally (rule H on
-// created_at), a view taken between the second's start and a payment of the same second can show a
-// hold that was only affordable thanks to that payment: negative available with no correction at all.
-// Placing the hold at its exact microsecond (what Correct's overdraft check does) never goes negative.
-// This test pins both facts over random payment/hold/capture/void/correction histories.
+// A hold's created_at has the same microsecond precision as payments, so no (as_of, known_at) view
+// shows a hold without the money that paid for it. This test checks that over random
+// payment/hold/capture/void/correction histories.
 
-func TestHistoricalViewsNeverNegativeWhenHoldsAreExactlyPlaced(t *testing.T) {
+func TestHistoricalViewsNeverNegative(t *testing.T) {
 	for _, corrections := range []bool{false, true} {
 		name := "no corrections"
 		if corrections {
 			name = "with corrections"
 		}
 		t.Run(name, func(t *testing.T) {
-			literal, exact, negTotal, views := 0, 0, 0, 0
+			negAvail, negTotal, views := 0, 0, 0
 			for seed := int64(1); seed <= 40; seed++ {
 				rng := rand.New(rand.NewSource(seed))
 				bal := [3]int64{9000, 6000, 4000}
@@ -81,49 +79,52 @@ func TestHistoricalViewsNeverNegativeWhenHoldsAreExactlyPlaced(t *testing.T) {
 							if total < 0 {
 								negTotal++
 							}
-							if total-st.HeldAt(u.ID, T, K) < 0 {
-								literal++
-							}
-							if total-st.heldAt(u.ID, T, K, true) < 0 {
-								exact++
-								if exact < 4 {
-									t.Errorf("seed %d step %d: %s available %d at T=%v K=%v with holds placed exactly", seed, step, u.Handle, total-st.heldAt(u.ID, T, K, true), T, K)
+							if avail := total - st.HeldAt(u.ID, T, K); avail < 0 {
+								negAvail++
+								if negAvail < 4 {
+									t.Errorf("seed %d step %d: %s available %d at T=%v K=%v", seed, step, u.Handle, avail, T, K)
 								}
 							}
 						}
 					}
 				}
 			}
-			if negTotal != 0 || exact != 0 {
-				t.Fatalf("of %d views: %d negative totals, %d negative available (exact placement)", views, negTotal, exact)
+			if negTotal != 0 || negAvail != 0 {
+				t.Fatalf("of %d views: %d negative totals, %d negative available", views, negTotal, negAvail)
 			}
-			t.Logf("%d views: 0 negative totals, 0 negative available with exact hold placement; %d negative available under whole-second created_at", views, literal)
+			t.Logf("%d views: 0 negative totals, 0 negative available", views)
 		})
 	}
 }
 
 // The smallest case, no correction involved: bob is paid at :00.5 and places a hold at :00.7. The hold's
-// created_at is the whole second :00, so as_of=:00.0 sees the hold but not the payment.
-func TestWholeSecondHoldCanLookUnaffordableBeforeTheMoneyThatPaidForIt(t *testing.T) {
+// created_at is that microsecond, so no view shows the hold without the payment that funded it.
+func TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt(t *testing.T) {
 	_, st := azStore(fgU{"ada", 1000}, fgU{"bob", 0})
 	hsPay(t, st, "ada", "bob", 500, hsAt(500*time.Millisecond))
 	a, e := st.Authorize("u_bob", AuthorizeIn{ToHandle: "ada", Amount: 500, Visibility: visPublic}, hsAt(700*time.Millisecond))
 	if e != nil {
 		t.Fatalf("authorize: %v", e)
 	}
-	if a.CreatedAt != FormatTime(hsAt(0)) {
-		t.Fatalf("created_at %s is not the whole second", a.CreatedAt)
+	if a.CreatedAt != FormatMicro(hsAt(700*time.Millisecond)) {
+		t.Fatalf("created_at %s is not the microsecond the hold was placed", a.CreatedAt)
 	}
 	now := hsAt(5 * time.Second)
-	me := hsMe(t, st, "bob", hsP(FormatMicro(hsAt(0))), nil, now)
-	t.Logf("bob as_of=%s: total %v held %v available %v", FormatMicro(hsAt(0)), me["total"], me["held"], me["available"])
-	if me["total"] != float64(0) || me["held"] != float64(500) || me["available"] != float64(-500) {
-		t.Fatalf("view %v: this pins the whole-second reading of rule H", me)
+	for _, c := range []struct {
+		at                  string
+		total, held, avails float64
+	}{
+		{FormatMicro(hsAt(0)), 0, 0, 0},
+		{FormatMicro(hsAt(500 * time.Millisecond)), 500, 0, 500},
+		{FormatMicro(hsAt(699999 * time.Microsecond)), 500, 0, 500},
+		{a.CreatedAt, 500, 500, 0},
+	} {
+		me := hsMe(t, st, "bob", hsP(c.at), nil, now)
+		if me["total"] != c.total || me["held"] != c.held || me["available"] != c.avails {
+			t.Errorf("bob as_of=%s: %v, want total %v held %v available %v", c.at, me, c.total, c.held, c.avails)
+		}
 	}
-	if got := st.AvailableAt("u_bob", hsAt(0), hsAt(5*time.Second)); got != -500 {
-		t.Fatalf("AvailableAt %d", got)
-	}
-	if exact := st.TotalAt("u_bob", hsAt(0), hsAt(time.Second)) - st.heldAt("u_bob", hsAt(0), hsAt(time.Second), true); exact != 0 {
-		t.Fatalf("with the hold placed at :00.7 nothing is held at :00.0: %d", exact)
+	if got := st.AvailableAt("u_bob", hsAt(0), hsAt(5*time.Second)); got != 0 {
+		t.Fatalf("AvailableAt at :00.0 = %d", got)
 	}
 }

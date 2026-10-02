@@ -134,7 +134,7 @@ func TestAPICreatedAuthorizationUsesFixtureTTL(t *testing.T) {
 		t.Fatal(e.Message)
 	}
 	a := txJSON(t, b)
-	if a["created_at"] != "2030-05-06T07:08:09+00:00" || a["expires_at"] != "2030-05-06T07:08:11+00:00" {
+	if a["created_at"] != "2030-05-06T07:08:09.000000+00:00" || a["expires_at"] != "2030-05-06T07:08:11.000000+00:00" {
 		t.Fatalf("created_at/expires_at: %v / %v", a["created_at"], a["expires_at"])
 	}
 }

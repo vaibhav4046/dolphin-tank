@@ -191,7 +191,7 @@ func TestAuthzTTLBoundary(t *testing.T) {
 		t.Fatal("unset ttl must read as 600")
 	}
 	d := azAuthorize(t, st, "ada", "bob", 100, azT0)
-	if d.CreatedAt != "2026-09-24T13:10:00+00:00" || d.ExpiresAt != "2026-09-24T13:20:00+00:00" {
+	if d.CreatedAt != "2026-09-24T13:10:00.000000+00:00" || d.ExpiresAt != "2026-09-24T13:20:00.000000+00:00" {
 		t.Fatalf("%+v", d)
 	}
 	st.AuthTTLSeconds = 2
@@ -200,14 +200,17 @@ func TestAuthzTTLBoundary(t *testing.T) {
 	}
 	created := azT0.Add(400 * time.Millisecond)
 	b := azAuthorize(t, st, "ada", "bob", 100, created)
-	b2 := azAuthorize(t, st, "ada", "bob", 100, created)
-	if b.CreatedAt != FormatTime(azT0) || b.ExpiresAt != FormatTime(azT0.Add(2*time.Second)) {
-		t.Fatalf("expires_at must be created_at + ttl: %+v", b)
+	b2 := azAuthorize(t, st, "ada", "bob", 100, created) // stamped one microsecond later
+	if b.CreatedAt != FormatMicro(created) || b.ExpiresAt != FormatMicro(created.Add(2*time.Second)) {
+		t.Fatalf("expires_at must be created_at + ttl exactly: %+v", b)
 	}
-	deadline := azT0.Add(2 * time.Second)
+	if b2.CreatedAt != FormatMicro(created.Add(time.Microsecond)) || b2.ExpiresAt != FormatMicro(created.Add(2*time.Second+time.Microsecond)) {
+		t.Fatalf("second authorization: %+v", b2)
+	}
+	deadline := created.Add(2 * time.Second)
 	held := func(now time.Time) int64 { return st.Held("u_ada", now) }
-	if held(deadline.Add(-time.Nanosecond)) != 300 || held(deadline) != 100 { // the 600 s one stays
-		t.Fatalf("held around the deadline: %d / %d", held(deadline.Add(-time.Nanosecond)), held(deadline))
+	if held(deadline.Add(-time.Nanosecond)) != 300 || held(deadline) != 200 || held(deadline.Add(time.Microsecond)) != 100 { // the 600 s one stays
+		t.Fatalf("held around the deadlines: %d / %d / %d", held(deadline.Add(-time.Nanosecond)), held(deadline), held(deadline.Add(time.Microsecond)))
 	}
 	// writes never run backwards in time, so the last instant before the deadline is used first
 	azMustCapture(t, st, "bob", b2.AuthorizationID, nil, true, deadline.Add(-time.Microsecond))
@@ -239,11 +242,15 @@ func TestAuthzAuthorize(t *testing.T) {
 	}
 	b := azAuthorize(t, st, "ada", "bob", 2000, azT0)
 	m := azJSON(t, b)
+	// every refused attempt above took a stamp, so the hold is placed a few microseconds after azT0
+	if created := hsInstant(t, b.CreatedAt); created.Before(azT0) || created.Sub(azT0) > 10*time.Microsecond {
+		t.Fatalf("created_at %s", b.CreatedAt)
+	}
 	want := map[string]any{
 		"authorization_id": "a_1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob",
 		"amount": 2000.0, "captured_amount": 0.0, "remaining_amount": 2000.0, "currency": "EUR", "note": "deposit",
-		"visibility": "private", "status": "open", "expires_at": "2026-09-24T13:20:00+00:00", "payment_id": nil,
-		"payment_ids": []any{}, "created_at": "2026-09-24T13:10:00+00:00", "closed_at": nil,
+		"visibility": "private", "status": "open", "expires_at": FormatMicro(hsInstant(t, b.CreatedAt).Add(600 * time.Second)), "payment_id": nil,
+		"payment_ids": []any{}, "created_at": b.CreatedAt, "closed_at": nil,
 	}
 	if len(m) != len(want) {
 		t.Fatalf("field set: %v", m)

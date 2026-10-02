@@ -1,0 +1,7 @@
+    f2_probe_a4_test.go:36: seeded payment created_at 2026-10-02T12:06:33.424410+00:00, seeded hold created_at 2026-10-02T12:06:33+00:00 (bob balance 1000 = opening 200 + 800 seeded, hold 500)
+    f2_probe_a4_test.go:39: as_of=2026-10-02T12:06:33+00:00 [hold created_at (floor of the reset second)]: total 200 held 500 available -300
+    f2_probe_a4_test.go:39: as_of=2026-10-02T12:06:33.424410+00:00 [payment created_at (reset instant)]: total 1000 held 500 available 500
+    f2_probe_a4_test.go:46: VERDICT: YES - a view inside [floor(reset second), reset instant) shows available < 0
+--- PASS: TestProbeA4SeededHoldDefaultsToTruncatedResetSecond (0.01s)
+PASS
+ok  	pocketful	0.039s

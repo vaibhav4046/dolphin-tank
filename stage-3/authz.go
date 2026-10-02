@@ -29,10 +29,9 @@ type Authorization struct {
 	// ClosedAt is the instant the hold was released: null while the stored status is open.
 	// Clock expiry never writes it (the stored status stays open); the body derives it.
 	ClosedAt *string `json:"closed_at"`
-	// CreatedExact is the microsecond instant the hold was placed (created_at is its whole second).
-	// Only the overdraft check of a correction reads it, so a payment received later in the same
-	// second is not mistaken for money that was missing when the hold was placed. Absent for seeded
-	// and imported holds, where created_at is all there is.
+	// CreatedExact is vestigial: an earlier build put a microsecond instant here beside a whole-second
+	// created_at. created_at now carries the microsecond itself and is the only instant a hold is placed
+	// at; this field is still written (equal to created_at) and accepted on import, never read by a view.
 	CreatedExact *string `json:"created_exact,omitempty"`
 
 	expiry       time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values
@@ -100,13 +99,8 @@ func (a *Authorization) createdTime() time.Time {
 	return t
 }
 
-// placedAt is the instant the hold was placed as precisely as it is known.
-func (a *Authorization) placedAt() time.Time {
-	if !a.createdExact.IsZero() {
-		return a.createdExact
-	}
-	return a.createdTime()
-}
+// placedAt is the instant the hold was placed: created_at, the same instant every view uses.
+func (a *Authorization) placedAt() time.Time { return a.createdTime() }
 
 // closedTime is the parsed ClosedAt; ok is false while the hold has not been released by an event.
 func (a *Authorization) closedTime() (t time.Time, ok bool) {
@@ -230,14 +224,14 @@ func (st *State) Authorize(caller string, in AuthorizeIn, now time.Time) (*Autho
 		Note:            in.Note,
 		Visibility:      in.Visibility,
 		Status:          authOpen,
-		ExpiresAt:       FormatTime(now.Add(time.Duration(st.TTL()) * time.Second)),
+		ExpiresAt:       FormatMicro(now.Add(time.Duration(st.TTL()) * time.Second)),
 		PaymentIDs:      []string{},
-		CreatedAt:       FormatTime(now),
+		CreatedAt:       FormatMicro(now),
 	}
 	a.expiry, _ = time.Parse(time.RFC3339, a.ExpiresAt)
 	a.created, _ = time.Parse(time.RFC3339, a.CreatedAt)
-	exact := FormatMicro(now)
-	a.CreatedExact, a.createdExact = &exact, now
+	exact := a.CreatedAt
+	a.CreatedExact, a.createdExact = &exact, a.created
 	st.addAuthorization(a)
 	return st.authBody(a, now), nil
 }

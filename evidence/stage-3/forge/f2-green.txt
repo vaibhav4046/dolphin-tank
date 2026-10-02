@@ -1,0 +1,37 @@
+# F2 GREEN: isolated copy = git HEAD ce30bcd stage-3 + forge's changed files only (trace edits fixture.go/snapshot.go/store.go concurrently in the shared tree)
+$ gofmt -l .
+(no files)
+$ go vet ./...
+(clean)
+$ go build ./...
+(clean)
+$ go test -run 'TestHoldIsAffordableAtItsCreatedAtOverHTTP|TestHoldInstantsAcrossBackToBackLifecycle|TestAuthorizeStampsMicrosecondsWithExactTTL|TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt|TestHistoricalViewsNeverNegative|TestViewsNeverNegativeUnderCorrections' -count=1 -v .
+    holds_one_clock_test.go:210: 30 rounds, 1350 views at event instants +-1us, all consistent with the public timestamps
+--- PASS: TestHoldIsAffordableAtItsCreatedAtOverHTTP (0.06s)
+    holds_one_clock_test.go:262: 11 lifecycles, 594 views at event instants +-1us
+--- PASS: TestHoldInstantsAcrossBackToBackLifecycle (0.01s)
+--- PASS: TestAuthorizeStampsMicrosecondsWithExactTTL (0.00s)
+    holds_views_test.go:95: 180000 views: 0 negative totals, 0 negative available
+    holds_views_test.go:95: 180000 views: 0 negative totals, 0 negative available
+--- PASS: TestHistoricalViewsNeverNegative (0.51s)
+    --- PASS: TestHistoricalViewsNeverNegative/no_corrections (0.21s)
+    --- PASS: TestHistoricalViewsNeverNegative/with_corrections (0.30s)
+--- PASS: TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt (0.00s)
+    views_invariant_test.go:84: views 180000, corrections accepted 492, rejected historical_overdraft 560
+--- PASS: TestViewsNeverNegativeUnderCorrections (0.21s)
+PASS
+ok  	pocketful	0.819s
+$ go test ./... -count=1 -v   (summary)
+PASS
+ok  	pocketful	48.380s
+top-level PASS: 168  FAIL: 0  SKIP: 0  subtests PASS: 2  FAIL: 0
+$ node --test jstest
+✔ parseHandles (0.2472ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 159.4188
