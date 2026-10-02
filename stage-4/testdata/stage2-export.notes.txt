@@ -1,0 +1,97 @@
+stage2-export.json: export of the accepted stage-2 server (commit 17aa87e sources, built to stage2.exe).
+Regenerate: PORT=<p> stage2.exe; go run testdata/gen_stage2_export.go http://127.0.0.1:<p> testdata
+
+FIXTURE
+{
+ "currency":"EUR","minor_units":2,
+ "users":[
+  {"id":"u_ada","email":"ada@example.com","password":"correct horse","display_name":"Ada","handle":"ada","balance":10000},
+  {"id":"u_bob","email":"bob@example.com","password":"correct horse","display_name":"Bob","handle":"bob","balance":2500},
+  {"id":"u_cy","email":"cy@example.com","password":"correct horse","display_name":"Cy","handle":"cy","balance":1500}],
+ "payments":[
+  {"id":"p_1","from_user_id":"u_ada","to_user_id":"u_bob","amount":500,"note":"coffee","visibility":"public"},
+  {"id":"p_seedcap","from_user_id":"u_ada","to_user_id":"u_cy","amount":100,"note":"seeded capture","visibility":"public"}],
+ "requests":[{"id":"rq_1","requester_id":"u_bob","payer_id":"u_ada","amount":1200,"note":"taxi","status":"pending"}],
+ "authorizations":[
+  {"id":"a_seed_open","from_user_id":"u_ada","to_user_id":"u_cy","amount":200,"status":"open","expires_at":"2099-01-01T00:00:00+00:00"},
+  {"id":"a_seed_exp","from_user_id":"u_ada","to_user_id":"u_bob","amount":100,"status":"expired","expires_at":"2026-01-01T00:00:00+00:00"},
+  {"id":"a_seed_void","from_user_id":"u_bob","to_user_id":"u_cy","amount":50,"status":"voided","expires_at":"2099-01-01T00:00:00+00:00"},
+  {"id":"a_seed_cap","from_user_id":"u_ada","to_user_id":"u_cy","amount":100,"status":"captured","payment_ids":["p_seedcap"],"expires_at":"2099-01-01T00:00:00+00:00"}],
+ "settlement_operator_ids":["u_cy"]}
+
+PASSWORD (all users): correct horse
+TOKEN ada=f04d259e4c6ce3bafceb003d9df155d2540af8fb6d0decae11ae926b27f3aff0
+TOKEN bob=2389eb79b3330f2f82ff8d41a3b9f6c09a491bf01f860d237030c6b159c69711
+TOKEN cy=574809ccb54d212743bd353ff820f265efd46dc240a848bc574208dd6fa7ac56
+
+K1 completed idempotent payment
+  caller=ada POST /payments key="k1"
+  body={"to_handle":"bob","amount":700,"note":"lunch"}
+  response(201)={"payment_id":"p_2","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":700,"currency":"EUR","note":"lunch","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":null,"created_at":"2026-10-02T01:49:42+00:00"}
+
+K2 response treated as LOST; retry later with SAME key and body
+  caller=ada POST /payments key="k2"
+  body={"to_handle":"cy","amount":300,"note":"lost response","visibility":"public"}
+  response(201)={"payment_id":"p_3","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":300,"currency":"EUR","note":"lost response","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":null,"created_at":"2026-10-02T01:49:42+00:00"}
+
+PRIVATE payment ada->bob
+  caller=ada POST /payments key="kp1"
+  body={"to_handle":"bob","amount":150,"note":"secret","visibility":"private"}
+  response(201)={"payment_id":"p_4","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":150,"currency":"EUR","note":"secret","visibility":"private","request_id":null,"settlement_id":null,"authorization_id":null,"created_at":"2026-10-02T01:49:42+00:00"}
+
+AUTH A1 ada->bob (partial then final capture)
+  caller=ada POST /authorizations key="auth-1"
+  body={"to_handle":"bob","amount":2000,"note":"deposit"}
+  response(201)={"authorization_id":"a_1","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":2000,"captured_amount":0,"remaining_amount":2000,"currency":"EUR","note":"deposit","visibility":"public","status":"open","expires_at":"2026-10-02T01:59:42+00:00","payment_id":null,"payment_ids":[],"created_at":"2026-10-02T01:49:42+00:00"}
+
+PARTIAL capture of A1 by bob (final=false)
+  caller=bob POST /authorizations/a_1/capture key="cap-1"
+  body={"amount":500,"final":false}
+  response(201)={"payment_id":"p_5","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":500,"currency":"EUR","note":"deposit","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":"a_1","created_at":"2026-10-02T01:49:42+00:00"}
+
+FINAL capture of A1 by bob (releases the remaining 900)
+  caller=bob POST /authorizations/a_1/capture key="cap-2"
+  body={"amount":600,"final":true}
+  response(201)={"payment_id":"p_6","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":600,"currency":"EUR","note":"deposit","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":"a_1","created_at":"2026-10-02T01:49:42+00:00"}
+
+AUTH A2 ada->cy (voided)
+  caller=ada POST /authorizations key="auth-2"
+  body={"to_handle":"cy","amount":800,"note":"later","visibility":"private"}
+  response(201)={"authorization_id":"a_2","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":800,"captured_amount":0,"remaining_amount":800,"currency":"EUR","note":"later","visibility":"private","status":"open","expires_at":"2026-10-02T01:59:42+00:00","payment_id":null,"payment_ids":[],"created_at":"2026-10-02T01:49:42+00:00"}
+
+VOID A2 by ada
+  response(200)={"authorization_id":"a_2","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":800,"captured_amount":0,"remaining_amount":0,"currency":"EUR","note":"later","visibility":"private","status":"voided","expires_at":"2026-10-02T01:59:42+00:00","payment_id":null,"payment_ids":[],"created_at":"2026-10-02T01:49:42+00:00"}
+
+AUTH A3 ada->bob (captured in one go)
+  caller=ada POST /authorizations key="auth-3"
+  body={"to_handle":"bob","amount":300,"note":"one go"}
+  response(201)={"authorization_id":"a_3","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":300,"captured_amount":0,"remaining_amount":300,"currency":"EUR","note":"one go","visibility":"public","status":"open","expires_at":"2026-10-02T01:59:42+00:00","payment_id":null,"payment_ids":[],"created_at":"2026-10-02T01:49:42+00:00"}
+
+WHOLE-REMAINDER capture of A3 by bob
+  caller=bob POST /authorizations/a_3/capture key="cap-3"
+  body={}
+  response(201)={"payment_id":"p_7","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":300,"currency":"EUR","note":"one go","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":"a_3","created_at":"2026-10-02T01:49:42+00:00"}
+
+AUTH A4 ada->cy (left open)
+  caller=ada POST /authorizations key="auth-4"
+  body={"to_handle":"cy","amount":400,"note":"still open"}
+  response(201)={"authorization_id":"a_4","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":400,"captured_amount":0,"remaining_amount":400,"currency":"EUR","note":"still open","visibility":"public","status":"open","expires_at":"2026-10-02T01:59:42+00:00","payment_id":null,"payment_ids":[],"created_at":"2026-10-02T01:49:42+00:00"}
+
+API request cy->bob
+  caller=cy POST /requests key="kr1"
+  body={"payer_handle":"bob","amount":400,"note":"api request"}
+  response(201)={"request_id":"rq_2","requester_id":"u_cy","requester_handle":"cy","payer_id":"u_bob","payer_handle":"bob","amount":400,"currency":"EUR","note":"api request","status":"pending","payment_id":null,"created_at":"2026-10-02T01:49:42+00:00"}
+
+SPLIT by ada
+  caller=ada POST /splits key="ksp1"
+  body={"amount":900,"participant_handles":["ada","bob","cy"],"note":"dinner"}
+  response(201)={"split_id":"sp_1","amount":900,"currency":"EUR","note":"dinner","shares":[{"handle":"ada","amount":300},{"handle":"bob","amount":300},{"handle":"cy","amount":300}],"requests":[{"request_id":"rq_3","requester_id":"u_ada","requester_handle":"ada","payer_id":"u_bob","payer_handle":"bob","amount":300,"currency":"EUR","note":"dinner","status":"pending","payment_id":null,"created_at":"2026-10-02T01:49:42+00:00"},{"request_id":"rq_4","requester_id":"u_ada","requester_handle":"ada","payer_id":"u_cy","payer_handle":"cy","amount":300,"currency":"EUR","note":"dinner","status":"pending","payment_id":null,"created_at":"2026-10-02T01:49:42+00:00"}],"created_at":"2026-10-02T01:49:42+00:00"}
+
+SETTLEMENT by operator cy
+  caller=cy POST /settlements key="kst1"
+  body={"transfers":[{"from_handle":"ada","to_handle":"bob","amount":100,"note":"net a"},{"from_handle":"bob","to_handle":"cy","amount":50,"visibility":"private"}]}
+  response(201)={"settlement_id":"st_1","committed_at":"2026-10-02T01:49:42+00:00","payments":[{"payment_id":"p_8","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_bob","to_handle":"bob","amount":100,"currency":"EUR","note":"net a","visibility":"public","request_id":null,"settlement_id":"st_1","authorization_id":null,"created_at":"2026-10-02T01:49:42+00:00"},{"payment_id":"p_9","from_user_id":"u_bob","from_handle":"bob","to_user_id":"u_cy","to_handle":"cy","amount":50,"currency":"EUR","note":"","visibility":"private","request_id":null,"settlement_id":"st_1","authorization_id":null,"created_at":"2026-10-02T01:49:42+00:00"}]}
+
+EXPECTED /me ada = {"user_id":"u_ada","display_name":"Ada","handle":"ada","balance":7350,"total":7350,"available":6750,"held":600,"currency":"EUR","minor_units":2}
+EXPECTED /me bob = {"user_id":"u_bob","display_name":"Bob","handle":"bob","balance":4800,"total":4800,"available":4800,"held":0,"currency":"EUR","minor_units":2}
+EXPECTED /me cy = {"user_id":"u_cy","display_name":"Cy","handle":"cy","balance":1850,"total":1850,"available":1850,"held":0,"currency":"EUR","minor_units":2}

@@ -1,0 +1,5 @@
+jstest/
+testdata/
+*_test.go
+*.exe
+.git
