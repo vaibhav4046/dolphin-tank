@@ -196,19 +196,18 @@ func TestCorrectionInsufficientFundsKeepsKeyUsable(t *testing.T) {
 	e := newHistoryEnv(t)
 	p := e.pay(t, e.ada, "pay-1", "bob", 1000)
 	id, created := p["payment_id"].(string), p["created_at"].(string)
-	e.pay(t, e.bob, "pay-2", "cy", 3500) // bob spends everything he holds
-	body := correction(1, 0, created, "reverse")
-	wantErr(t, "receiver cannot fund a decrease", e.correct(e.ada, "reverse-1", id, body), 409, "insufficient_funds")
+	e.pay(t, e.bob, "pay-2", "cy", 3000) // bob keeps 500 of the 3500 he held
+	wantErr(t, "receiver cannot fund a decrease", e.correct(e.ada, "reverse-1", id, correction(1, 0, created, "reverse")), 409, "insufficient_funds")
 	wantErr(t, "sender cannot fund an increase", e.correct(e.ada, "raise-1", id, correction(1, 20000, created, "raise")), 409, "insufficient_funds")
-	if e.balance(t, e.ada) != 9000 || e.balance(t, e.bob) != 0 || len(e.revisions(t, e.ada, id)) != 1 {
+	if e.balance(t, e.ada) != 9000 || e.balance(t, e.bob) != 500 || len(e.revisions(t, e.ada, id)) != 1 {
 		t.Fatalf("a refused correction must change nothing")
 	}
-	e.pay(t, e.cy, "pay-3", "bob", 1000)
-	if rec := e.correct(e.ada, "reverse-1", id, body); rec.Code != 201 {
+	// A refused correction leaves no idempotency record: the same key now carries a different, affordable body.
+	if rec := e.correct(e.ada, "reverse-1", id, correction(1, 600, created, "smaller")); rec.Code != 201 {
 		t.Errorf("the key of a refused correction must stay usable: %d %s", rec.Code, rec.Body)
 	}
-	if a, b := e.balance(t, e.ada), e.balance(t, e.bob); a != 10000 || b != 0 {
-		t.Errorf("after the full reversal: ada %v bob %v, want 10000 and 0", a, b)
+	if a, b := e.balance(t, e.ada), e.balance(t, e.bob); a != 9400 || b != 100 {
+		t.Errorf("after correcting 1000 to 600: ada %v bob %v, want 9400 and 100", a, b)
 	}
 }
 
