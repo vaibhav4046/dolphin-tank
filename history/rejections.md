@@ -30,3 +30,33 @@ Everything else passed in jury's runs: shipped harness 147/147, 35/35, 6/6 sampl
   Authorization created_at is whole-second while payments are stamped to the microsecond; views place the hold at the truncated created_at, so GET /me?as_of=<authorization.created_at> shows total 0, held 4000, available -4000 when the funding payment and the authorization share a clock second.
   Root cause: decisions.md D-HOLD-TIME (route/forge) chose public whole-second created_at for views; it was a KNOWN_RISK, jury rules it a violation of "available = total - held, never negative" at every read.
   Author seat: forge (authz.go/history.go). Repair: 11e76f9 (forge). Authorization created_at/expires_at/closed_at share the payment clock and microsecond precision; D-HOLD-TIME revoked (decisions.md, eac8c61). Lesson for later stages: every timestamp that orders money and holds uses one clock and one precision.
+
+### Cross-attack finding L-F2-1 (operator-recorded from the room log; evidence/stage-3/trace/, commit 849b017)
+
+Not a jury rejection. `@trace` was asked to attack `11e76f9` at `ac96360` precisely because it did
+not write either repair. Its attack found that the F2 fix did not cover state produced by the
+rejected build.
+
+- Symptom: an export written by `3c7c411` carries `created_exact`. On import that field was
+  ignored, so a legacy authorization kept its whole-second `created_at` and the hold was placed
+  at the truncated second — the F2 failure mode again, reachable through import. Observed as
+  `available -2000` on the imported state.
+- Root cause: `placeAtCreatedExact` did not exist; `created_exact` was vestigial on import.
+- Repair: `5e6f83f` (forge). `store.go` gains `placeAtCreatedExact`, called in
+  `indexAuthorizations` after `checkCreatedExact` passes and before the clock is derived. A valid
+  `created_exact` that differs from `created_at` becomes `created_at` (microsecond) and
+  `created_exact` is rewritten to the same string; `expires_at`, `closed_at`, `payment_ids` and
+  `status` are untouched; absent or equal `created_exact` is left alone; a bad `created_exact`
+  is still 422.
+- Verification: reproduction `evidence/stage-3/trace/f2_attack.py` cases `legacy`, `imp1`,
+  `imp2` return rc=0 against a build of `5e6f83f`; the reviewer's own `t3_holds.py` scores
+  59 pass / 0 fail at `5e6f83f` (`evidence/stage-3/trace/rl1-jury-checks.txt`).
+- Transferable rule: **a repair is only as good as the states it is reachable from.** When fixing
+  a class of defect, enumerate every path that can produce the bad state — here, import of an
+  older build's own export — not only the path that produced it in the failing test.
+
+### Declined, on the record (not defects)
+
+`D-IMPORT-FUTURE` (import does not reject a hand-crafted future-dated payment) was raised,
+considered against the written specification and **declined**; see `evidence/stage-3/decisions.md`
+and commit `71d08d4`. Recorded here so it is not silently re-opened later.
