@@ -18,7 +18,7 @@ func fgStore(us ...fgU) *Store {
 	st := &State{Currency: "EUR", MinorUnits: 2}
 	for _, u := range us {
 		st.Users = append(st.Users, &User{ID: "u_" + u.h, Email: u.h + "@example.com", DisplayName: u.h,
-			Handle: u.h, PassHash: "x", Balance: u.bal})
+			Handle: u.h, PassHash: "x", Balance: u.bal, OpeningBalance: u.bal})
 	}
 	if err := st.Reindex(); err != nil {
 		panic(err)
@@ -128,8 +128,12 @@ func TestForgePay(t *testing.T) {
 
 func TestForgeNewIDSkipsSeeded(t *testing.T) {
 	st := &State{Currency: "EUR", MinorUnits: 2,
-		Users:    []*User{{ID: "u_1", Handle: "ada", Balance: 5}, {ID: "u_2", Handle: "bob"}},
-		Payments: []*Payment{{PaymentID: "p_1", FromUserID: "u_1", ToUserID: "u_2", Amount: 1}, {PaymentID: "p_2", FromUserID: "u_1", ToUserID: "u_2", Amount: 1}},
+		Users: []*User{{ID: "u_1", Handle: "ada", Balance: 5, OpeningBalance: 7}, {ID: "u_2", Handle: "bob", Balance: 2}},
+		Payments: []*Payment{{PaymentID: "p_1", FromUserID: "u_1", ToUserID: "u_2", Amount: 1, CreatedAt: "2026-09-24T13:10:00+00:00"},
+			{PaymentID: "p_2", FromUserID: "u_1", ToUserID: "u_2", Amount: 1, CreatedAt: "2026-09-24T13:10:00+00:00"}},
+		Revisions: []*Revision{
+			{PaymentID: "p_1", Revision: 1, Amount: 1, EffectiveAt: "2026-09-24T13:10:00+00:00", RecordedAt: "2026-09-24T13:10:00+00:00"},
+			{PaymentID: "p_2", Revision: 1, Amount: 1, EffectiveAt: "2026-09-24T13:10:00+00:00", RecordedAt: "2026-09-24T13:10:00+00:00"}},
 		Requests: []*Request{{RequestID: "rq_1", RequesterID: "u_2", PayerID: "u_1", Amount: 3}}}
 	if err := st.Reindex(); err != nil {
 		t.Fatal(err)

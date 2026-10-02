@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
+	"time"
 )
 
 func lowerEmail(e string) string { return strings.ToLower(e) }
@@ -35,12 +36,34 @@ type State struct {
 	Seq    map[string]int64  `json:"seq"`    // id counters per prefix
 	Sys    SysState          `json:"sys"`
 
+	// Revisions is flat and append-only; every payment has revisions 1..n. HistoryVersion is
+	// historyVersion once normalised; absent or 0 in an older export means "migrate me".
+	Revisions      []*Revision `json:"revisions"`
+	HistoryVersion int         `json:"history_version"`
+
 	usersByID     map[string]*User
 	usersByHandle map[string]*User
 	usersByEmail  map[string]*User // key: lower-cased email
 	reqByID       map[string]*Request
 	authByID      map[string]*Authorization
 	ids           map[string]struct{} // every id of any kind
+	payByID       map[string]*Payment
+	revByPay      map[string][]*Revision
+	payOrdered    bool                     // Payments is already in non-decreasing created_at order
+	lastStamp     time.Time                // newest instant any write has used; see Stamp
+	snaps         map[string]*stmtSnapshot // statement snapshots; never serialised, dropped by reset/import
+}
+
+// Revision is one immutable version of a payment's amount. Revision 1 is the payment as paid.
+type Revision struct {
+	PaymentID   string `json:"payment_id"`
+	Revision    int64  `json:"revision"`
+	Amount      int64  `json:"amount"`
+	EffectiveAt string `json:"effective_at"`
+	RecordedAt  string `json:"recorded_at"`
+	Reason      string `json:"reason"`
+
+	eff, rec time.Time // parsed EffectiveAt / RecordedAt, set by ReindexAt and on creation
 }
 
 type User struct {
@@ -50,6 +73,9 @@ type User struct {
 	Handle      string `json:"handle"`
 	PassHash    string `json:"pass_hash"`
 	Balance     int64  `json:"balance"`
+	// OpeningBalance is what the wallet held before any payment moved. Balance always equals
+	// OpeningBalance plus the net effect of the latest revision of each of the user's payments.
+	OpeningBalance int64 `json:"opening_balance"`
 }
 
 type Payment struct {
@@ -66,6 +92,8 @@ type Payment struct {
 	SettlementID    *string `json:"settlement_id"`
 	AuthorizationID *string `json:"authorization_id"`
 	CreatedAt       string  `json:"created_at"`
+
+	created time.Time // parsed CreatedAt, set by ReindexAt and TransferFor
 }
 
 type Request struct {

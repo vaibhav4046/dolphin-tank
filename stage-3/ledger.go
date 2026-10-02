@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"slices"
+	"time"
+)
 
 type PaymentIn struct {
 	ToHandle   string
@@ -46,6 +49,8 @@ func (st *State) Transfer(from, to *User, amount int64, note, visibility string,
 }
 
 // TransferFor is Transfer plus the authorization a capture belongs to (nil otherwise).
+// It uses the instant it is given: callers Stamp once per operation and pass that instant,
+// so every timestamp of one operation agrees. It also records the payment's revision 1.
 func (st *State) TransferFor(from, to *User, amount int64, note, visibility string, requestID, settlementID, authorizationID *string, now time.Time) *Payment {
 	from.Balance -= amount
 	to.Balance += amount
@@ -62,13 +67,21 @@ func (st *State) TransferFor(from, to *User, amount int64, note, visibility stri
 		RequestID:       requestID,
 		SettlementID:    settlementID,
 		AuthorizationID: authorizationID,
-		CreatedAt:       FormatTime(now),
+		CreatedAt:       FormatMicro(now),
+		created:         now.UTC().Truncate(time.Microsecond),
+	}
+	if n := len(st.Payments); n > 0 && p.created.Before(st.Payments[n-1].created) {
+		st.payOrdered = false
 	}
 	st.Payments = append(st.Payments, p)
+	st.indexPayment(p)
+	st.appendRevision(&Revision{PaymentID: p.PaymentID, Revision: 1, Amount: amount,
+		EffectiveAt: p.CreatedAt, RecordedAt: p.CreatedAt, eff: p.created, rec: p.created})
 	return p
 }
 
 func (st *State) Pay(caller string, in PaymentIn, now time.Time) (*Payment, *AppError) {
+	now = st.Stamp(now)
 	from, e := st.caller(caller)
 	if e != nil {
 		return nil, e
@@ -120,6 +133,7 @@ func (st *State) newRequest(requester, payer *User, amount int64, note string, n
 }
 
 func (st *State) PayRequest(caller, requestID string, in PayIn, now time.Time) (*Payment, *AppError) {
+	now = st.Stamp(now)
 	payer, e := st.caller(caller)
 	if e != nil {
 		return nil, e
@@ -225,12 +239,18 @@ func (st *State) ListRequests(caller, direction, status string, limit, offset in
 	return requestPage{Requests: page, HasMore: more}, nil
 }
 
-// Activity is payments only: public ones, plus any the caller sent or received.
+// Activity is payments only: public ones, plus any the caller sent or received, newest first by
+// created_at (ties: the later insertion first). The original payment is shown, never a correction.
 func (st *State) Activity(caller string, limit, offset int) any {
 	keep := func(p *Payment) bool {
 		return p.Visibility == visPublic || p.FromUserID == caller || p.ToUserID == caller
 	}
-	page, more := pageNewestFirst(st.Payments, keep, limit, offset)
+	pays := st.Payments
+	if !st.payOrdered {
+		pays = slices.Clone(pays)
+		slices.SortStableFunc(pays, func(a, b *Payment) int { return a.created.Compare(b.created) })
+	}
+	page, more := pageNewestFirst(pays, keep, limit, offset)
 	return paymentPage{Payments: page, HasMore: more}
 }
 

@@ -26,8 +26,13 @@ type Authorization struct {
 	ExpiresAt       string   `json:"expires_at"`
 	PaymentIDs      []string `json:"payment_ids"`
 	CreatedAt       string   `json:"created_at"`
+	// ClosedAt is the instant the hold was released: null while the stored status is open.
+	// Clock expiry never writes it (the stored status stays open); the body derives it.
+	ClosedAt *string `json:"closed_at"`
 
-	expiry time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values
+	expiry  time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values
+	created time.Time // parsed CreatedAt
+	closed  time.Time // parsed ClosedAt
 }
 
 // AuthorizationBody is the API view of an Authorization at one instant.
@@ -48,6 +53,7 @@ type AuthorizationBody struct {
 	PaymentID       *string  `json:"payment_id"`
 	PaymentIDs      []string `json:"payment_ids"`
 	CreatedAt       string   `json:"created_at"`
+	ClosedAt        *string  `json:"closed_at"`
 }
 
 type AuthorizeIn struct {
@@ -78,6 +84,40 @@ func (a *Authorization) expiresTime() time.Time {
 	}
 	t, _ := time.Parse(time.RFC3339, a.ExpiresAt)
 	return t
+}
+
+func (a *Authorization) createdTime() time.Time {
+	if !a.created.IsZero() {
+		return a.created
+	}
+	t, _ := time.Parse(time.RFC3339, a.CreatedAt)
+	return t
+}
+
+// closedTime is the parsed ClosedAt; ok is false while the hold has not been released by an event.
+func (a *Authorization) closedTime() (t time.Time, ok bool) {
+	if a.ClosedAt == nil {
+		return time.Time{}, false
+	}
+	if !a.closed.IsZero() {
+		return a.closed, true
+	}
+	t, _ = ParseInstant(*a.ClosedAt)
+	return t, true
+}
+
+// closedAtAt is the closed_at a reader sees at now: the stored event instant, or expires_at once the
+// clock has passed the deadline of a stored-open authorization, otherwise null.
+func (a *Authorization) closedAtAt(now time.Time) *string {
+	switch {
+	case a.ClosedAt != nil:
+		c := *a.ClosedAt
+		return &c
+	case a.Status == authOpen && a.StatusAt(now) == authExpired:
+		c := a.ExpiresAt
+		return &c
+	}
+	return nil
 }
 
 // StatusAt is the effective status: a stored open authorization at or past its deadline is expired.
@@ -136,6 +176,7 @@ func (st *State) authBody(a *Authorization, now time.Time) *AuthorizationBody {
 		ExpiresAt:       a.ExpiresAt,
 		PaymentIDs:      append([]string{}, a.PaymentIDs...),
 		CreatedAt:       a.CreatedAt,
+		ClosedAt:        a.closedAtAt(now),
 	}
 	if from := st.userByID(a.FromUserID); from != nil {
 		b.FromHandle = from.Handle
@@ -152,6 +193,7 @@ func (st *State) authBody(a *Authorization, now time.Time) *AuthorizationBody {
 
 // Authorize places a hold. No money moves and the hold is not a feed item.
 func (st *State) Authorize(caller string, in AuthorizeIn, now time.Time) (*AuthorizationBody, *AppError) {
+	now = st.Stamp(now)
 	from, e := st.caller(caller)
 	if e != nil {
 		return nil, e
@@ -179,6 +221,7 @@ func (st *State) Authorize(caller string, in AuthorizeIn, now time.Time) (*Autho
 		CreatedAt:       FormatTime(now),
 	}
 	a.expiry, _ = time.Parse(time.RFC3339, a.ExpiresAt)
+	a.created, _ = time.Parse(time.RFC3339, a.CreatedAt)
 	st.addAuthorization(a)
 	return st.authBody(a, now), nil
 }
@@ -186,6 +229,7 @@ func (st *State) Authorize(caller string, in AuthorizeIn, now time.Time) (*Autho
 // Capture moves money out of the hold, receiver only. It never checks funds: Held <= Balance guarantees them.
 // A final capture (or one that takes the whole remainder) closes the authorization and releases the rest.
 func (st *State) Capture(caller, authID string, in CaptureIn, now time.Time) (*Payment, *AppError) {
+	now = st.Stamp(now)
 	rcv, e := st.caller(caller)
 	if e != nil {
 		return nil, e
@@ -224,13 +268,15 @@ func (st *State) Capture(caller, authID string, in CaptureIn, now time.Time) (*P
 	a.CapturedAmount += amount
 	a.PaymentIDs = append(a.PaymentIDs, p.PaymentID)
 	if in.Final || a.CapturedAmount == a.Amount {
-		a.Status = authCaptured
+		closed := p.CreatedAt
+		a.Status, a.ClosedAt, a.closed = authCaptured, &closed, p.created
 	}
 	return p, nil
 }
 
 // Void releases the remaining hold, payer only. Captures already made stay. Voiding twice is a 200 no-op.
 func (st *State) Void(caller, authID string, now time.Time) (*AuthorizationBody, *AppError) {
+	now = st.Stamp(now)
 	u, e := st.caller(caller)
 	if e != nil {
 		return nil, e
@@ -248,7 +294,8 @@ func (st *State) Void(caller, authID string, now time.Time) (*AuthorizationBody,
 	if a.StatusAt(now) != authOpen {
 		return nil, NewErr(409, "authorization_not_open", "authorization is not open")
 	}
-	a.Status = authVoided
+	closed := FormatMicro(now)
+	a.Status, a.ClosedAt, a.closed = authVoided, &closed, now
 	return st.authBody(a, now), nil
 }
 

@@ -17,7 +17,7 @@ type Store struct {
 }
 
 func NewStore() *Store {
-	st := &State{Currency: "EUR", MinorUnits: 2}
+	st := &State{Currency: "EUR", MinorUnits: 2, HistoryVersion: historyVersion}
 	if err := st.Reindex(); err != nil {
 		panic(err) // an empty EUR state is always valid
 	}
@@ -74,6 +74,8 @@ func validVisibility(v string) bool { return v == visPublic || v == visPrivate }
 // Reindex rebuilds every lookup index from the persisted slices and verifies the state.
 // It also derives denormalised fields (handles, currency) and applies fixture defaults
 // (payment visibility public, request status pending, missing created_at = now).
+// History is verified, never derived: whoever builds the state supplies each payment's revisions,
+// every wallet's opening balance and every released hold's closed_at.
 // On error the State must be discarded.
 func (st *State) Reindex() error { return st.ReindexAt(time.Now()) }
 
@@ -99,6 +101,12 @@ func (st *State) ReindexAt(now time.Time) error {
 	}
 	if st.Authorizations == nil {
 		st.Authorizations = []*Authorization{}
+	}
+	if st.Revisions == nil {
+		st.Revisions = []*Revision{}
+	}
+	if st.HistoryVersion != 0 && st.HistoryVersion != historyVersion {
+		return fmt.Errorf("history_version must be %d, got %d", historyVersion, st.HistoryVersion)
 	}
 	if st.AuthTTLSeconds < 0 || st.AuthTTLSeconds > maxAuthTTLSeconds {
 		return fmt.Errorf("authorization_ttl_seconds must be 0 (unset) or 1 to %d, got %d", maxAuthTTLSeconds, st.AuthTTLSeconds)
@@ -162,11 +170,20 @@ func (st *State) ReindexAt(now time.Time) error {
 			return fmt.Errorf("payment %q: negative amount", p.PaymentID)
 		}
 		p.FromHandle, p.ToHandle, p.Currency = from.Handle, to.Handle, st.Currency
-		if p.CreatedAt == "" {
-			p.CreatedAt = nowStr
+		created, ok := ParseInstant(p.CreatedAt)
+		if !ok {
+			return fmt.Errorf("payment %q: created_at must be an RFC 3339 instant with an offset", p.PaymentID)
 		}
+		p.created = created
 		payByID[p.PaymentID] = p
 		ids[p.PaymentID] = struct{}{}
+	}
+	revByPay, err := indexRevisions(st.Revisions, payByID)
+	if err != nil {
+		return err
+	}
+	if err := checkOpenings(st.Users, st.Payments, revByPay); err != nil {
+		return err
 	}
 	reqByID := map[string]*Request{}
 	for _, r := range st.Requests {
@@ -238,6 +255,10 @@ func (st *State) ReindexAt(now time.Time) error {
 	}
 	st.usersByID, st.usersByHandle, st.usersByEmail = byID, byHandle, byEmail
 	st.reqByID, st.authByID, st.ids = reqByID, authByID, ids
+	st.payByID, st.revByPay = payByID, revByPay
+	st.payOrdered = paymentsOrdered(st.Payments)
+	st.lastStamp = newestInstant(st)
+	st.HistoryVersion = historyVersion
 	return nil
 }
 
@@ -291,6 +312,14 @@ func indexAuthorizations(auths []*Authorization, users map[string]*User, pays ma
 		if a.CreatedAt == "" {
 			a.CreatedAt = nowStr
 		}
+		created, ok := ParseInstant(a.CreatedAt)
+		if !ok {
+			return nil, fmt.Errorf("authorization %q: created_at must be an RFC 3339 instant with an offset", a.AuthorizationID)
+		}
+		a.created = created
+		if err := checkClosedAt(a); err != nil {
+			return nil, err
+		}
 		byID[a.AuthorizationID] = a
 		ids[a.AuthorizationID] = struct{}{}
 	}
@@ -313,4 +342,113 @@ func checkHolds(auths []*Authorization, users map[string]*User, now time.Time) e
 		}
 	}
 	return nil
+}
+
+// checkClosedAt: an authorization is released (closed_at set) exactly when its stored status is not open.
+func checkClosedAt(a *Authorization) error {
+	a.closed = time.Time{}
+	if a.Status == authOpen {
+		if a.ClosedAt != nil {
+			return fmt.Errorf("authorization %q: closed_at must be null while open", a.AuthorizationID)
+		}
+		return nil
+	}
+	if a.ClosedAt == nil {
+		return fmt.Errorf("authorization %q: closed_at is required once %s", a.AuthorizationID, a.Status)
+	}
+	closed, ok := ParseInstant(*a.ClosedAt)
+	if !ok {
+		return fmt.Errorf("authorization %q: closed_at must be an RFC 3339 instant with an offset", a.AuthorizationID)
+	}
+	a.closed = closed
+	return nil
+}
+
+// indexRevisions verifies every payment's history and groups it: revisions are numbered 1..n in order,
+// recorded strictly later each time, and revision 1 is the payment as paid.
+func indexRevisions(revs []*Revision, pays map[string]*Payment) (map[string][]*Revision, error) {
+	byPay := make(map[string][]*Revision, len(pays))
+	for _, r := range revs {
+		if r == nil {
+			return nil, errors.New("state contains a null revision")
+		}
+		p := pays[r.PaymentID]
+		if p == nil {
+			return nil, fmt.Errorf("revision references unknown payment %q", r.PaymentID)
+		}
+		prev := byPay[r.PaymentID]
+		if r.Revision != int64(len(prev))+1 {
+			return nil, fmt.Errorf("payment %q: revisions must be numbered 1..n in order, got %d", r.PaymentID, r.Revision)
+		}
+		if r.Amount < 0 || (r.Revision > 1 && r.Amount > maxAmount) {
+			return nil, fmt.Errorf("payment %q revision %d: amount out of range", r.PaymentID, r.Revision)
+		}
+		var ok1, ok2 bool
+		r.eff, ok1 = ParseInstant(r.EffectiveAt)
+		r.rec, ok2 = ParseInstant(r.RecordedAt)
+		if !ok1 || !ok2 {
+			return nil, fmt.Errorf("payment %q revision %d: effective_at and recorded_at must be RFC 3339 instants with an offset", r.PaymentID, r.Revision)
+		}
+		if len(prev) == 0 && r.Amount != p.Amount {
+			return nil, fmt.Errorf("payment %q: revision 1 must carry the amount as paid", r.PaymentID)
+		}
+		if len(prev) > 0 && !r.rec.After(prev[len(prev)-1].rec) {
+			return nil, fmt.Errorf("payment %q: recorded_at must strictly increase", r.PaymentID)
+		}
+		byPay[r.PaymentID] = append(prev, r)
+	}
+	for id := range pays {
+		if len(byPay[id]) == 0 {
+			return nil, fmt.Errorf("payment %q has no revision 1", id)
+		}
+	}
+	return byPay, nil
+}
+
+// checkOpenings verifies Balance == OpeningBalance + net effect of each payment's latest revision.
+func checkOpenings(users []*User, pays []*Payment, revs map[string][]*Revision) error {
+	net := make(map[string]int64, len(users))
+	for _, p := range pays {
+		h := revs[p.PaymentID]
+		amount := h[len(h)-1].Amount
+		net[p.FromUserID] -= amount
+		net[p.ToUserID] += amount
+	}
+	for _, u := range users {
+		if u.Balance != u.OpeningBalance+net[u.ID] {
+			return fmt.Errorf("user %q: balance %d is not the opening balance %d plus the payments' net %d",
+				u.ID, u.Balance, u.OpeningBalance, net[u.ID])
+		}
+	}
+	return nil
+}
+
+func paymentsOrdered(pays []*Payment) bool {
+	for i := 1; i < len(pays); i++ {
+		if pays[i].created.Before(pays[i-1].created) {
+			return false
+		}
+	}
+	return true
+}
+
+// newestInstant is the latest moment any write has used, so Stamp resumes strictly after it.
+func newestInstant(st *State) time.Time {
+	newest := st.lastStamp
+	later := func(t time.Time) {
+		if t = t.Truncate(time.Microsecond); t.After(newest) {
+			newest = t
+		}
+	}
+	for _, p := range st.Payments {
+		later(p.created)
+	}
+	for _, r := range st.Revisions {
+		later(r.rec)
+	}
+	for _, a := range st.Authorizations {
+		later(a.created)
+		later(a.closed)
+	}
+	return newest
 }
