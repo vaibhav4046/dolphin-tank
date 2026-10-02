@@ -1,0 +1,47 @@
+﻿exported 3c7c41160655da780df7567ec93ee7ad8f1c8f79 -> /tmp/clean-3c7c411 (67 stage-3 entries)
+=== docker build --no-cache --network none stage-3 ===
+ ---> Removed intermediate container 1bd57877b9c6
+ ---> 04dbc5ca97f2
+Step 11/12 : EXPOSE 8080
+ ---> Running in fa2c129d3c81
+ ---> Removed intermediate container fa2c129d3c81
+ ---> 01e193c1c211
+Step 12/12 : ENTRYPOINT ["/pocketful"]
+ ---> Running in 5c48963b3ecf
+ ---> Removed intermediate container 5c48963b3ecf
+ ---> ee39b6f487cc
+Successfully built ee39b6f487cc
+Successfully tagged pocketful-s3-3c7c411:latest
+build stage-3 rc=0
+=== docker build --no-cache --network none stage-2 ===
+ ---> Removed intermediate container 2213d1adda66
+ ---> cb7c4356ab0f
+Step 11/12 : EXPOSE 8080
+ ---> Running in 977db0c567e6
+ ---> Removed intermediate container 977db0c567e6
+ ---> e30e98ed64f0
+Step 12/12 : ENTRYPOINT ["/pocketful"]
+ ---> Running in 34f366d782cd
+ ---> Removed intermediate container 34f366d782cd
+ ---> 2fdefebe8891
+Successfully built 2fdefebe8891
+Successfully tagged pocketful-s2-3c7c411:latest
+build stage-2 rc=0
+=== docker build --no-cache --network none stage-1 ===
+ ---> Removed intermediate container 33cdd355e70d
+ ---> 18796f1f7d71
+Step 10/11 : EXPOSE 8080
+ ---> Running in ebff2822492f
+ ---> Removed intermediate container ebff2822492f
+ ---> d138ec3e8374
+Step 11/11 : ENTRYPOINT ["/pocketful"]
+ ---> Running in 74e1d9f0830e
+ ---> Removed intermediate container 74e1d9f0830e
+ ---> 5e66f082e3a0
+Successfully built 5e66f082e3a0
+Successfully tagged pocketful-s1-3c7c411:latest
+build stage-1 rc=0
+pocketful-s1-3c7c411:latest 5e66f082e3a0 8.88MB
+pocketful-s2-3c7c411:latest 2fdefebe8891 9.23MB
+pocketful-s3-3c7c411:latest ee39b6f487cc 9.39MB
+

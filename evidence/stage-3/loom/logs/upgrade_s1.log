@@ -1,0 +1,14 @@
+﻿PASS stage-1 server reset
+PASS stage-1 payment created
+PASS stage-1 export
+PASS stage-3 imports the real stage-1 export
+PASS stage-1 token still valid on stage-3
+PASS stage-1 idempotency key replays after import (200, same payment)
+PASS as_of before every payment is the derived opening balance (9300 + 500 + 700)
+PASS imported payment has revision 1 (effective = recorded = created_at)
+PASS statement over the imported history: opening + deltas == closing == balance
+PASS browser holding a stage-1 token stays signed in
+PASS imported balance and feed shown
+PASS imported pending request payable via the UI
+PASS no page errors
+

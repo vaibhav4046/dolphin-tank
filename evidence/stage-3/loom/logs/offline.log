@@ -1,0 +1,9 @@
+﻿container ip 172.20.0.2
+/health 200 application/json; charset=utf-8 15
+/ 200 text/html; charset=utf-8 1626
+/assets/js/main.js 200 text/javascript; charset=utf-8 1438
+/assets/css/tokens.css 200 text/css; charset=utf-8 1412
+/assets/fonts/dm-sans.woff2 200 font/woff2 36932
+/assets/fonts/inter.woff2 200 font/woff2 48256
+outbound blocked: URLError
+

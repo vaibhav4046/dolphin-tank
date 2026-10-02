@@ -1,0 +1,9 @@
+﻿commit=3c7c41160655da780df7567ec93ee7ad8f1c8f79
+docker client 29.1.3 server 29.1.3
+pocketful-s1-3c7c411:latest 5e66f082e3a0 8.88MB
+pocketful-s2-3c7c411:latest 2fdefebe8891 9.23MB
+pocketful-s3-3c7c411:latest ee39b6f487cc 9.39MB
+df-harness-runner:latest 13527f2d6005 1.92GB
+golang:1.24 d2d2bc1c84f7 1.32GB
+golang:1.24-alpine 8bee1901f1e5 395MB
+

@@ -1,0 +1,24 @@
+﻿PASS stage-2 server reset
+PASS stage-2 payment created
+PASS stage-2 authorization created
+PASS stage-2 partial capture
+PASS stage-2 voided authorization
+PASS stage-2 export
+PASS stage-3 imports the real stage-2 export
+PASS stage-2 token valid; balance/total/available/held unchanged by the import
+PASS stage-2 idempotency key replays after import (200, same payment)
+PASS stage-2 capture key replays after import
+PASS imported authorizations expose closed_at: open null, voided non-null
+PASS imported capture has revision 1
+PASS correcting an imported capture is 422 linked_payment_immutable
+PASS statement shows the capture exactly once and no authorization/void rows
+PASS statement arithmetic: opening + deltas == closing == balance
+PASS a correction of an imported payment works (201, revision 2)
+PASS correction moved 400 back to the sender
+PASS feed still shows the original amount
+PASS browser holding a stage-2 token stays signed in
+PASS wallet balance equals the API balance (which equals total)
+PASS feed shows the original payments
+PASS imported pending request payable via the UI
+PASS no page errors / console errors
+
