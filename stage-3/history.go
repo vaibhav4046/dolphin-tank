@@ -154,21 +154,31 @@ func (st *State) TotalAt(userID string, t, k time.Time) int64 {
 // (closed_at <= min(t,k)). Otherwise it holds the amount less the captures made by min(t,k).
 // A stored-expired hold (seeded without a lifecycle) holds nothing once created.
 func (st *State) HeldAt(userID string, t, k time.Time) int64 {
+	return st.heldAt(userID, t, k, false)
+}
+
+// heldAt is HeldAt; exact places each hold at the microsecond it was made instead of its whole-second
+// created_at, which is what a correction's overdraft check needs (see Authorization.CreatedExact).
+func (st *State) heldAt(userID string, t, k time.Time, exact bool) int64 {
 	var held int64
 	for _, a := range st.Authorizations {
 		if a.FromUserID == userID {
-			held += st.holdRemainingAt(a, t, k)
+			held += st.holdRemainingAt(a, t, k, exact)
 		}
 	}
 	return held
 }
 
-func (st *State) holdRemainingAt(a *Authorization, t, k time.Time) int64 {
+func (st *State) holdRemainingAt(a *Authorization, t, k time.Time, exact bool) int64 {
 	known := t
 	if k.Before(known) {
 		known = k
 	}
-	if a.createdTime().After(known) {
+	created := a.createdTime()
+	if exact {
+		created = a.placedAt()
+	}
+	if created.After(known) {
 		return 0
 	}
 	if !t.Before(a.expiresTime()) || a.Status == authExpired {

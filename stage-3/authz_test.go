@@ -57,7 +57,7 @@ func azAvail(st *State, h string, now time.Time) int64 { return st.Available(st.
 
 func azBal(st *State, h string) int64 { return st.UserByHandle(h).Balance }
 
-func azJSON(t *testing.T, v any) map[string]any {
+func azJSON(t testing.TB, v any) map[string]any {
 	t.Helper()
 	var m map[string]any
 	if err := json.Unmarshal(mustJSON(v), &m); err != nil {

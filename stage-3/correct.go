@@ -113,7 +113,7 @@ func (st *State) overdrawnInThePast(userID string, now time.Time) bool {
 		if a.FromUserID != userID {
 			continue
 		}
-		bounds = append(bounds, a.createdTime(), a.expiresTime())
+		bounds = append(bounds, a.placedAt(), a.expiresTime())
 		if closed, ok := a.closedTime(); ok {
 			bounds = append(bounds, closed)
 		}
@@ -135,7 +135,7 @@ func (st *State) overdrawnInThePast(userID string, now time.Time) bool {
 		}
 		applied := sort.Search(len(moves), func(j int) bool { return moves[j].Rev.eff.After(t) })
 		total := cumulative[applied]
-		if total < 0 || total-st.HeldAt(userID, t, histInf) < 0 {
+		if total < 0 || total-st.heldAt(userID, t, histInf, true) < 0 {
 			return true
 		}
 	}

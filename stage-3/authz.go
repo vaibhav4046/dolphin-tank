@@ -29,10 +29,16 @@ type Authorization struct {
 	// ClosedAt is the instant the hold was released: null while the stored status is open.
 	// Clock expiry never writes it (the stored status stays open); the body derives it.
 	ClosedAt *string `json:"closed_at"`
+	// CreatedExact is the microsecond instant the hold was placed (created_at is its whole second).
+	// Only the overdraft check of a correction reads it, so a payment received later in the same
+	// second is not mistaken for money that was missing when the hold was placed. Absent for seeded
+	// and imported holds, where created_at is all there is.
+	CreatedExact *string `json:"created_exact,omitempty"`
 
-	expiry  time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values
-	created time.Time // parsed CreatedAt
-	closed  time.Time // parsed ClosedAt
+	expiry       time.Time // parsed ExpiresAt, set by ReindexAt; zero in hand-built values
+	created      time.Time // parsed CreatedAt
+	closed       time.Time // parsed ClosedAt
+	createdExact time.Time // parsed CreatedExact; zero when absent
 }
 
 // AuthorizationBody is the API view of an Authorization at one instant.
@@ -92,6 +98,14 @@ func (a *Authorization) createdTime() time.Time {
 	}
 	t, _ := time.Parse(time.RFC3339, a.CreatedAt)
 	return t
+}
+
+// placedAt is the instant the hold was placed as precisely as it is known.
+func (a *Authorization) placedAt() time.Time {
+	if !a.createdExact.IsZero() {
+		return a.createdExact
+	}
+	return a.createdTime()
 }
 
 // closedTime is the parsed ClosedAt; ok is false while the hold has not been released by an event.
@@ -222,6 +236,8 @@ func (st *State) Authorize(caller string, in AuthorizeIn, now time.Time) (*Autho
 	}
 	a.expiry, _ = time.Parse(time.RFC3339, a.ExpiresAt)
 	a.created, _ = time.Parse(time.RFC3339, a.CreatedAt)
+	exact := FormatMicro(now)
+	a.CreatedExact, a.createdExact = &exact, now
 	st.addAuthorization(a)
 	return st.authBody(a, now), nil
 }

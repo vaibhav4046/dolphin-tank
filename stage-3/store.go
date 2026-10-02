@@ -317,6 +317,9 @@ func indexAuthorizations(auths []*Authorization, users map[string]*User, pays ma
 			return nil, fmt.Errorf("authorization %q: created_at must be an RFC 3339 instant with an offset", a.AuthorizationID)
 		}
 		a.created = created
+		if err := checkCreatedExact(a); err != nil {
+			return nil, err
+		}
 		if err := checkClosedAt(a); err != nil {
 			return nil, err
 		}
@@ -341,6 +344,20 @@ func checkHolds(auths []*Authorization, users map[string]*User, now time.Time) e
 			return fmt.Errorf("user %q: open holds exceed balance", uid)
 		}
 	}
+	return nil
+}
+
+// checkCreatedExact: created_exact, when present, is an instant inside the whole second created_at names.
+func checkCreatedExact(a *Authorization) error {
+	a.createdExact = time.Time{}
+	if a.CreatedExact == nil {
+		return nil
+	}
+	exact, ok := ParseInstant(*a.CreatedExact)
+	if !ok || FormatTime(exact) != FormatTime(a.created) {
+		return fmt.Errorf("authorization %q: created_exact must be an instant within created_at's second", a.AuthorizationID)
+	}
+	a.createdExact = exact
 	return nil
 }
 
