@@ -1,0 +1,24 @@
+#### imp2
+   IMP2 stage-2 export authorizations (created_at / expires_at / status): [('2026-10-02T16:56:03+00:00', '2026-10-02T16:56:06+00:00', 'open'), ('2026-10-02T16:56:06+00:00', '2026-10-02T16:56:09+00:00', 'open'), ('2026-10-02T16:56:06+00:00', '2026-10-02T16:56:09+00:00', 'open'), ('2026-10-02T16:56:06+00:00', '2026-10-02T16:56:09+00:00', 'captured'), ('2026-10-02T16:56:06+00:00', '2026-10-02T16:56:09+00:00', 'voided')]
+PASS IMP2 stage-2 export imports into stage 3: 204
+FAIL IMP2 imported holds: statuses open/expired/captured/captured/voided :: [('voided', '2026-10-02T16:56:06+00:00'), ('captured', '2026-10-02T16:56:06+00:00'), ('open', None), ('open', None), ('expired', '2026-10-02T16:56:06+00:00')]
+FAIL IMP2 closed_at: null for the open hold, set for every closed one, expires_at for the expired one :: [('voided', '2026-10-02T16:56:06+00:00'), ('captured', '2026-10-02T16:56:06+00:00'), ('open', None), ('open', None), ('expired', '2026-10-02T16:56:06+00:00')]
+PASS IMP2(stage-2): imported state: Σ balances == 15500
+PASS IMP2(stage-2): imported state: 36 views at every instant of the import -1us/0/+1us satisfy the invariants and equal the oracle
+PASS IMP2(stage-2): authorize after import 201
+PASS IMP2(stage-2): new authorization created_at tracks the real clock (|created_at - now| < 2 s), microsecond format
+PASS IMP2(stage-2): expires_at - created_at == 3 s exactly
+PASS IMP2(stage-2): held appears exactly at created_at (-1us none, 0 and +1us 700)
+PASS IMP2(stage-2): nonfinal capture 201
+PASS IMP2(stage-2): capture payment later than the hold, microsecond instant
+PASS IMP2(stage-2): at the capture instant total drops 200 and held drops 200 together (available unchanged, never negative)
+PASS IMP2(stage-2): final capture 201 closes it
+PASS IMP2(stage-2): closed_at == final capture created_at
+PASS IMP2(stage-2): void closes at its own instant
+PASS IMP2(stage-2): views around every new event equal the oracle (60 views)
+PASS IMP2 imported open hold expires at its (whole-second) deadline on the real clock: expired, closed_at == expires_at
+PASS IMP2 after the imported hold expired /me releases it (available == total)
+PASS IMP2 final: 120 views at every instant (incl. imported whole-second ones) equal the oracle
+#### imp2 done in 6.4s
+== f2_attack imp2: 17 pass, 2 fail, 252 requests
+FAILED: ['IMP2 imported holds: statuses open/expired/captured/captured/voided', 'IMP2 closed_at: null for the open hold, set for every closed one, expires_at for the expired one']

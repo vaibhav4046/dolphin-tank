@@ -1,0 +1,17 @@
+#### imp1
+PASS IMP1 stage-1 export imports into stage 3: 204
+PASS IMP1(stage-1): imported state: Σ balances == 15500
+PASS IMP1(stage-1): imported state: 12 views at every instant of the import -1us/0/+1us satisfy the invariants and equal the oracle
+PASS IMP1(stage-1): authorize after import 201
+PASS IMP1(stage-1): new authorization created_at tracks the real clock (|created_at - now| < 2 s), microsecond format
+PASS IMP1(stage-1): expires_at - created_at == 600 s exactly
+PASS IMP1(stage-1): held appears exactly at created_at (-1us none, 0 and +1us 700)
+PASS IMP1(stage-1): nonfinal capture 201
+PASS IMP1(stage-1): capture payment later than the hold, microsecond instant
+PASS IMP1(stage-1): at the capture instant total drops 200 and held drops 200 together (available unchanged, never negative)
+PASS IMP1(stage-1): final capture 201 closes it
+PASS IMP1(stage-1): closed_at == final capture created_at
+PASS IMP1(stage-1): void closes at its own instant
+PASS IMP1(stage-1): views around every new event equal the oracle (60 views)
+#### imp1 done in 0.6s
+== f2_attack imp1: 14 pass, 0 fail, 107 requests

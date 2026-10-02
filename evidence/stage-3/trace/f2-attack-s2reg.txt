@@ -1,0 +1,548 @@
+=== s2reg/s2_lifecycle.py vs HEAD ac96360
+PASS A04 /me keys with no holds
+PASS A04 no holds: balance==total==available, held 0
+PASS D01 authorize 201
+PASS D01 field present: authorization_id
+PASS D01 field present: from_user_id
+PASS D01 field present: from_handle
+PASS D01 field present: to_user_id
+PASS D01 field present: to_handle
+PASS D01 field present: amount
+PASS D01 field present: captured_amount
+PASS D01 field present: currency
+PASS D01 field present: note
+PASS D01 field present: visibility
+PASS D01 field present: status
+PASS D01 field present: expires_at
+PASS D01 field present: payment_id
+PASS D01 field present: created_at
+PASS D01 field present: remaining_amount
+PASS D01 values
+PASS C04 expires_at = created_at + 600s
+PASS C04 timestamps RFC3339 with offset
+PASS D01 payment_ids empty or absent at creation
+PASS D05 ada: total 10000 available 8000 held 2000 balance 10000
+PASS A01 bob untouched by hold
+PASS A01 conservation after authorize
+PASS D04 open authorization not in activity for ada
+PASS D04 open authorization not in activity for bob
+PASS D04 open authorization not in activity for cy
+PASS D04 GET /authorizations lists it for payer and receiver, not stranger
+PASS E03 capture 201
+PASS E03 payment field present: payment_id
+PASS E03 payment field present: from_user_id
+PASS E03 payment field present: from_handle
+PASS E03 payment field present: to_user_id
+PASS E03 payment field present: to_handle
+PASS E03 payment field present: amount
+PASS E03 payment field present: currency
+PASS E03 payment field present: note
+PASS E03 payment field present: visibility
+PASS E03 payment field present: request_id
+PASS E03 payment field present: created_at
+PASS E03 payment field present: authorization_id
+PASS E03 payment shape values
+PASS E04 remainder released in same step: ada total 8500 available 8500 held 0
+PASS E04 bob received 1500
+PASS E04 authorization captured, captured_amount 1500, payment_id
+PASS E07 payment_ids lists capture
+PASS A01 conservation after capture
+PASS E03 private capture visible to payer and receiver, hidden from stranger
+PASS E03 feed copy of payment has authorization_id
+PASS E05 second capture after final: 409 authorization_not_open
+PASS E05 second capture default amount: 409 authorization_not_open
+PASS F01 void captured: 409 authorization_not_open
+PASS D02 defaults note '' and visibility public
+PASS E04 default amount captures remaining
+PASS E03 public capture visible to stranger
+PASS A01 conservation
+PASS E06 capture 700 final:false 201
+PASS E06 stays open, captured 700, remaining 2300
+PASS E06 ada total -700, held 2300, available = total - held
+PASS E06 second extended capture
+PASS E07 captured_amount cumulative, payment_id latest, payment_ids ordered
+PASS E07 exceeds REMAINING (1300) -> 422 capture_exceeds_authorization
+PASS E07 refused capture changed nothing
+PASS E06 omitted amount with final:false = whole remainder; closes
+PASS E06 whole remainder closes even with final:false
+PASS E06 hold gone: held 0
+PASS E05 closed hold cannot be captured
+PASS E06 amount == whole remainder, final:false closes
+PASS E06 final capture closes and releases remainder
+PASS E07 final capture shows payment_ids length 2
+PASS E06 explicit final:true releases
+PASS F01 void 200 voided
+PASS E08 void releases only remainder, preserves captures
+PASS E08 ada: held 0; total unchanged by void (500 already moved)
+PASS F01 void twice: 200 current state
+PASS E05 capture after void: 409 authorization_not_open
+PASS A01 conservation
+PASS D05 held 1500
+PASS F01 void plain: released, captured_amount 0, payment_id null
+PASS E03 plain payment authorization_id null, request_id null, no hold
+PASS E03 request-pay payment authorization_id null, request_id set
+== s2_lifecycle: 82 pass, 0 fail, 86 requests, 0 5xx, max latency 0.036s, p99 0.034s
+rc=0
+=== s2reg/s2_funds.py vs HEAD ac96360
+PASS A02 setup hold 9000
+PASS A06 payment above available refused 409 insufficient_funds
+PASS A06 refused payment changed nothing
+PASS A02 payment of exactly available allowed
+PASS A05 payment moved money immediately and created no hold
+PASS A02 available 0 -> payment of 1 refused
+PASS A05 payment is not an authorization
+PASS A06 authorize above available refused 409 insufficient_funds
+PASS A06 refused authorize created nothing
+PASS A02 capture of reserved funds succeeds with available 0
+PASS A02 after capture ada total 0 available 0 held 0, bob +9000
+PASS A01 conservation
+PASS A06 request pay above available 409 insufficient_funds
+PASS A06 refused request pay: still pending, nothing moved
+PASS A06 void releases; request now payable
+PASS A06 request payable after release
+PASS A02 request pay of exactly available (1500) allowed
+PASS A06 settlement net debit above available 409 insufficient_funds
+PASS A06 refused settlement changed nothing
+PASS A06 net debit 999 (<= available 1000) allowed though gross 1500 > 1000
+PASS A06 after settlement
+PASS A02 settlement exactly one above available refused
+PASS A02 settlement of exactly available allowed
+PASS A06 settlement members authorization_id null
+PASS A06 net-zero cycle with available 0 allowed
+PASS A01 conservation after settlements
+PASS A02 captures still spend reserved after settlement drains available
+PASS A07 split works with available 0, shares 334/333/333
+PASS A07 split no balance check
+PASS A04 /me while held==total: available 0
+PASS A02 hold of exactly total allowed
+PASS A02 further hold refused at available 0
+== s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.040s, p99 0.035s
+rc=0
+=== s2reg/s2_errors.py vs HEAD ac96360
+PASS D03 authorize amount 0 -> 422 validation_failed
+PASS D03 authorize amount -1 -> 422 validation_failed
+PASS D03 authorize amount 1.5 -> 422 validation_failed
+PASS D03 authorize amount string -> 422 validation_failed
+PASS D03 authorize amount true -> 422 validation_failed
+PASS D03 authorize amount null -> 422 validation_failed
+PASS D03 authorize amount missing -> 422 validation_failed
+PASS D03 authorize amount 1e9+1 -> 422 validation_failed
+PASS D03 authorize self payment -> 422 self_payment
+PASS D03 authorize unknown handle -> 404 not_found
+PASS D03 authorize note 201 chars -> 422 validation_failed
+PASS D03 authorize note null -> 422 validation_failed
+PASS D03 authorize note number -> 422 validation_failed
+PASS D03 authorize visibility bad -> 422 validation_failed
+PASS D03 authorize visibility null -> 422 validation_failed
+PASS D03 authorize to_handle missing -> 422 validation_failed
+PASS D03 authorize to_handle number -> 400 malformed_request
+PASS D03 no hold created by any refusal
+PASS D03 unparseable body 400 malformed_request
+PASS D03 array body 400 malformed_request
+PASS D03 authorize without key 400 missing_idempotency_key
+PASS D03 authorize empty key 400 missing_idempotency_key
+PASS D03 authorize 256-char key 422 validation_failed
+PASS D03 authorize 255-char key accepted
+PASS D03 authorize integral amount 1000.0 accepted
+PASS D03 authorize integral amount 1e3 accepted
+PASS D03 authorize integral amount 1 accepted
+PASS D03 amount exactly 1e9 accepted
+PASS D03 note exactly 200 chars accepted
+PASS D03 unicode note verbatim
+PASS F06 authorize token none -> 401 unauthenticated
+PASS F06 authorize token garbage -> 401 unauthenticated
+PASS D03 authorize above available 409 insufficient_funds
+PASS D03 authorize exactly available allowed
+PASS E01 capture without key 400 missing_idempotency_key
+PASS E01 capture empty key 400
+PASS E01 capture 256-char key 422
+PASS E01 payer cannot capture 403 forbidden
+PASS F02 stranger capture 403 forbidden (not 404)
+PASS F02 receiver void 403 forbidden
+PASS F02 stranger void 403 forbidden
+PASS E09 unknown authorization capture 404 not_found
+PASS E09 unknown authorization void 404 not_found
+PASS F02 refused calls changed nothing
+PASS E09 capture amount 0 -> 422 validation_failed
+PASS E09 capture amount -3 -> 422 validation_failed
+PASS E09 capture amount 1.5 -> 422 validation_failed
+PASS E09 capture amount string -> 422 validation_failed
+PASS E09 capture amount true -> 422 validation_failed
+PASS E09 capture above remaining 422 capture_exceeds_authorization
+PASS E11 capture final=string false rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=zero rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=null rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=string true rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=one rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 refused finals captured nothing
+PASS E09 capture unparseable body 400 malformed_request
+PASS E09 capture array body 400 malformed_request
+INFO capture with no body at all -> 201 None
+PASS F06 capture no token -> 401
+PASS F06 void no token -> 401
+PASS F06 GET /authorizations no token -> 401 JSON envelope
+PASS F06 capture bad token -> 401
+PASS F06 void bad token -> 401
+PASS F06 GET /authorizations bad token -> 401 JSON envelope
+INFO capture amount:null -> 422 validation_failed
+PASS E09 amount:null does not 5xx
+PASS E09 capture voided -> 409 authorization_not_open
+PASS F02 stranger capture on closed hold still 403 (permission before state)
+PASS F02 payer capture on closed hold 403
+PASS E09 odd id '' does not 5xx (got 404)
+PASS E09 odd id 'xxxxxxxxxxxx' does not 5xx (got 404)
+PASS E09 odd id 'a%20b' does not 5xx (got 404)
+PASS E09 odd id '../me' does not 5xx (got 404)
+INFO GET /authorizations/{id} -> 404
+PASS E09 method not allowed paths are JSON 4xx not 5xx
+== s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.045s, p99 0.025s
+rc=0
+=== s2reg/s2_idem.py vs HEAD ac96360
+PASS G01 first use 201
+PASS G01 replay (reordered keys, whitespace, 2000.0) 200 identical JSON value
+PASS G01 one hold only
+PASS G02 same key different amount 409 idempotency_key_reuse
+PASS G02 same key different handle 409
+PASS G02 same key different visibility 409
+PASS G03 claimed key beats validation (amount 0) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (amount string) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (unknown handle) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (self) -> 409 idempotency_key_reuse
+PASS G03 claimed key beats validation (huge) -> 409 idempotency_key_reuse
+PASS G03 nothing else created
+PASS G07 setup capture
+PASS G07 replay after capture returns ORIGINAL body (status open, captured 0), 200, no new hold
+PASS G04 first attempt fails 409 insufficient_funds
+PASS G04 failed key reusable as first use with other body: 201
+PASS G04 validation-failed key reusable: 201
+PASS G05 same key different users: both 201, distinct ids
+PASS G05 same key on a different path (POST /payments) is not a replay: 201
+PASS G05 same key by other user on /requests is fresh: 201
+PASS E02 capture {} first use 201 captures full remainder 2000
+PASS E02 replay {} -> 200 identical payment
+PASS E02 {} then {"amount":2000} same key -> 409 idempotency_key_reuse
+PASS E02 {} then {"final":true} same key -> 409 idempotency_key_reuse
+PASS E02 {} then amount 5 same key -> 409
+PASS G03 claimed capture key beats validation (amount 0) -> 409 idempotency_key_reuse
+PASS G01 capture moved money once
+PASS G05 capture key is per user: payer using receiver's key gets 403, not the cached 200
+PASS G07 capture replay after void returns original 200 payment, no extra money
+PASS G04 capture exceeding remaining 422
+PASS G04 failed capture key reusable with another body: 201
+PASS G05 same key on a different authorization path is a fresh capture
+PASS E10 replay after response fields grew still matches body equality
+PASS G06 authorize r0: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r0: one hold only (held 4000)
+PASS G06 capture r0: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r0: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r0 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS G06 authorize r1: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r1: one hold only (held 4000)
+PASS G06 capture r1: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r1: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r1 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS G06 authorize r2: exactly one 201 of 24, the rest 200 with identical body
+PASS G06 authorize r2: one hold only (held 4000)
+PASS G06 capture r2: exactly one 201 of 24, the rest 200 identical
+PASS G06 capture r2: money moved once (captured 1500, bob 4000, ada 98500)
+PASS G06 authorize r2 same key two bodies: one 201; losers 200(same body)/409 reuse; one hold
+PASS A03 20 distinct-key default captures: exactly one 201, others 409 authorization_not_open
+PASS A03 moved 3000 once
+== s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx, max latency 0.036s, p99 0.033s
+rc=0
+=== s2reg/s2_list.py vs HEAD ac96360
+PASS F03 200 + keys authorizations/has_more
+PASS F03 ada sees exactly those involving her (0,1,2,3,5), newest first
+PASS F03 stranger dee sees none
+PASS F03 cy sees 2,3,4,6 only
+PASS F03 direction=outgoing (caller is payer)
+PASS F03 direction=incoming (caller is receiver)
+PASS F03 status=open
+PASS F03 status=captured
+PASS F03 status=voided
+PASS F03 status=expired
+PASS F03 direction+status combined
+PASS F04 limit=2 page1 has_more
+PASS F04 page2 has_more
+PASS F04 page3 last, has_more false
+PASS F04 limit exactly equals count: has_more false
+PASS F04 limit < count: has_more true
+PASS F04 offset past end: empty, has_more false
+PASS F04 limit 200 accepted, limit 1 accepted
+PASS F04 invalid limit=0 -> 422 validation_failed
+PASS F04 invalid limit=201 -> 422 validation_failed
+PASS F04 invalid limit=-1 -> 422 validation_failed
+PASS F04 invalid limit=abc -> 422 validation_failed
+PASS F04 invalid limit=1e2 -> 422 validation_failed
+PASS F04 invalid limit=%2B4 -> 422 validation_failed
+PASS F04 invalid limit=4.0 -> 422 validation_failed
+PASS F04 invalid limit= -> 422 validation_failed
+PASS F04 invalid offset=-1 -> 422 validation_failed
+PASS F04 invalid offset=1e1 -> 422 validation_failed
+PASS F04 invalid offset=x -> 422 validation_failed
+PASS F04 invalid offset=%2B1 -> 422 validation_failed
+PASS F04 invalid offset=1.0 -> 422 validation_failed
+PASS F04 invalid direction=sideways -> 422 validation_failed
+PASS F04 invalid direction= -> 422 validation_failed
+PASS F04 invalid status=bogus -> 422 validation_failed
+PASS F04 invalid status=OPEN -> 422 validation_failed
+PASS F04 invalid status= -> 422 validation_failed
+PASS F05 unknown query params ignored
+PASS E07 list element a_6: remaining consistent
+PASS E07 list element a_4: remaining consistent
+PASS E07 list element a_3: remaining consistent
+PASS E07 list element a_2: remaining consistent
+PASS E07 list element a_1: remaining consistent
+PASS E07 partially captured open (5): remaining 100+5-50=55, captured 50
+PASS I02 GET /requests Accept text/html... -> 200 HTML without a token
+PASS I02 GET /requests Accept text/html,applicatio... -> 200 HTML without a token
+PASS I02 GET /requests Accept None no token -> 401 JSON envelope
+PASS I02 GET /requests Accept None with token -> 200 JSON
+PASS I02 GET /requests Accept 'application/json' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept 'application/json' with token -> 200 JSON
+PASS I02 GET /requests Accept '*/*' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept '*/*' with token -> 200 JSON
+PASS I02 GET /requests Accept 'application/json, text/plain, */*' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept 'application/json, text/plain, */*' with token -> 200 JSON
+PASS I02 GET /authorizations Accept text/html... -> 200 HTML without a token
+PASS I02 GET /authorizations Accept text/html,applicatio... -> 200 HTML without a token
+PASS I02 GET /authorizations Accept None no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept None with token -> 200 JSON
+PASS I02 GET /authorizations Accept 'application/json' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept 'application/json' with token -> 200 JSON
+PASS I02 GET /authorizations Accept '*/*' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept '*/*' with token -> 200 JSON
+PASS I02 GET /authorizations Accept 'application/json, text/plain, */*' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept 'application/json, text/plain, */*' with token -> 200 JSON
+PASS I02 POST /authorizations with Accept text/html is still the API (201 JSON)
+PASS I02 POST /requests with Accept text/html is still the API (201 JSON)
+PASS I01 GET / serves the UI
+PASS I01 GET /split serves the UI
+PASS I01 GET /login serves the UI
+PASS I01 GET /signup serves the UI
+PASS I01 unknown path 404 not 5xx
+== s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.022s, p99 0.019s
+rc=0
+=== s2reg/s2_fixture.py vs HEAD ac96360
+PASS B05 omitted authorizations => empty list
+PASS B01 omitted ttl => 600 s
+PASS B01 ttl 1 accepted (204)
+PASS B01 ttl 1 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 ttl 3600 accepted (204)
+PASS B01 ttl 3600 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 ttl 86400 accepted (204)
+PASS B01 ttl 86400 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 ttl 1e9 accepted (204)
+PASS B01 ttl 1e9 -> expires_at = created_at + ttl (RFC3339)
+PASS B01 huge ttl 1000000001: no 5xx on reset (got 422)
+PASS B01 huge ttl 2147483648: no 5xx on reset (got 422)
+PASS B01 huge ttl 1000000000000: no 5xx on reset (got 422)
+PASS B01 huge ttl 9007199254740992: no 5xx on reset (got 422)
+PASS B01 huge ttl 1000000000000000000: no 5xx on reset (got 422)
+PASS B01 huge ttl 9223372036854775807: no 5xx on reset (got 422)
+PASS B01 huge ttl 18446744073709551616: no 5xx on reset (got 422)
+PASS B01 ttl 0 -> 422 validation_failed
+PASS B01 ttl 0: state unchanged (old token, balance, holds)
+PASS B01 ttl -1 -> 422 validation_failed
+PASS B01 ttl -1: state unchanged (old token, balance, holds)
+PASS B01 ttl 'x' -> 422 validation_failed
+PASS B01 ttl 'x': state unchanged (old token, balance, holds)
+PASS B01 ttl '600' -> 422 validation_failed
+PASS B01 ttl '600': state unchanged (old token, balance, holds)
+PASS B01 ttl 1.5 -> 422 validation_failed
+PASS B01 ttl 1.5: state unchanged (old token, balance, holds)
+PASS B01 ttl true -> 422 validation_failed
+PASS B01 ttl true: state unchanged (old token, balance, holds)
+PASS B01 ttl false -> 422 validation_failed
+PASS B01 ttl false: state unchanged (old token, balance, holds)
+PASS B01 ttl null -> 422 validation_failed
+PASS B01 ttl null: state unchanged (old token, balance, holds)
+PASS B01 ttl [] -> 422 validation_failed
+PASS B01 ttl []: state unchanged (old token, balance, holds)
+PASS B01 ttl {} -> 422 validation_failed
+PASS B01 ttl {}: state unchanged (old token, balance, holds)
+PASS B01 ttl 0.0 -> 422 validation_failed
+PASS B01 ttl 0.0: state unchanged (old token, balance, holds)
+PASS B01 ttl -600 -> 422 validation_failed
+PASS B01 ttl -600: state unchanged (old token, balance, holds)
+PASS B02 seeded available/held in users ignored; derived: total 10000 held 2000 available 8000
+PASS B04 bob (payer of a6) held 500
+PASS B04 ids preserved, 6 listed for ada
+PASS B04 statuses read back: open/captured/voided/expired
+PASS B06 seeded open with past expires_at reads expired, remaining 0
+PASS B04 open seeded remaining == amount
+PASS B04 closed seeded remaining 0
+INFO seeded captured a2 captured_amount=3000 payment_id=None payment_ids=[]
+PASS B06 seeded fields echoed (amount, note, visibility, from/to, currency)
+PASS B06 expires_at is RFC3339 with offset
+PASS B04 status filters on seeded
+PASS B04 captured seeded hold cannot be captured again: 409 authorization_not_open
+PASS B04 expired-by-seed hold capture 409 authorization_expired
+PASS D04 seeded open holds are not in activity
+PASS E03 capture of seeded hold: 201, payment authorization_id a1
+PASS E06 seeded hold remainder 1200
+PASS F01 void seeded hold
+PASS A06 payment above available (seeded hold 2000 of 10000) refused
+PASS A02 payment of exactly available (8000) allowed
+PASS B03 sum == balance accepted -> 204
+PASS B03 sum == balance accepted: /me invariants hold, held <= total
+PASS B03 sum == balance + 1 rejected -> 422
+PASS B03 sum == balance + 1 rejected: state unchanged (old token, holds)
+PASS B03 single hold above balance rejected -> 422
+PASS B03 single hold above balance rejected: state unchanged (old token, holds)
+PASS B03 expired-by-clock open hold above balance accepted (holds nothing) -> 204
+PASS B03 expired-by-clock open hold above balance accepted (holds nothing): /me invariants hold, held <= total
+PASS B03 voided/captured/expired above balance accepted -> 204
+PASS B03 voided/captured/expired above balance accepted: /me invariants hold, held <= total
+PASS B03 unexpired holds sum above balance but one expired: only unexpired count -> 204
+PASS B03 unexpired holds sum above balance but one expired: only unexpired count: /me invariants hold, held <= total
+PASS B03 balance 0, hold 1 rejected -> 422
+PASS B03 balance 0, hold 1 rejected: state unchanged (old token, holds)
+PASS B03 holds of different payers do not pool
+INFO seeded unknown payer -> 422 validation_failed
+PASS B07 seeded unknown payer: no 5xx; if rejected state is unchanged
+INFO seeded unknown receiver -> 422 validation_failed
+PASS B07 seeded unknown receiver: no 5xx; if rejected state is unchanged
+INFO seeded bad status -> 422 validation_failed
+PASS B07 seeded bad status: no 5xx; if rejected state is unchanged
+INFO seeded negative amount -> 422 validation_failed
+PASS B07 seeded negative amount: no 5xx; if rejected state is unchanged
+INFO seeded string amount -> 422 validation_failed
+PASS B07 seeded string amount: no 5xx; if rejected state is unchanged
+INFO seeded bad expires_at -> 422 validation_failed
+PASS B07 seeded bad expires_at: no 5xx; if rejected state is unchanged
+INFO seeded payer == receiver -> 422 validation_failed
+PASS B07 seeded payer == receiver: no 5xx; if rejected state is unchanged
+INFO seeded duplicate ids -> 422 validation_failed
+PASS B07 seeded duplicate ids: no 5xx; if rejected state is unchanged
+PASS B07 reset clears authorizations
+PASS B07 reset clears idempotency keys (same key is first use again: 201)
+== s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.043s, p99 0.037s
+rc=0
+=== s2reg/s2_expiry.py vs HEAD ac96360
+PASS C01 before deadline: held 3000 available 7000
+PASS C01 before deadline: status open
+PASS C01 (a) first read after deadline is /me: held 0, available == total == 10000, balance 10000
+PASS C02 (b) list shows status expired
+PASS C02 expired holds nothing: remaining_amount 0
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\s2_expiry.py", line 33, in <module>
+    ok("C02 status=expired matches", authz(t["bob"], aid, status="expired") is not None)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 183, in authz
+    r = call("GET", "/authorizations" + ("?" + qs if qs else ""), token=tok)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+rc=1
+=== s2reg/s2_race.py vs HEAD ac96360
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\s2_race.py", line 44, in <module>
+    t = setup(f); ob = Obs(t); ob.start()
+        ^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 111, in setup
+    reset(f)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 98, in reset
+    r = call("POST", "/_test/reset", f if f is not None else fx())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+rc=1
+=== s2reg/s2_export.py vs HEAD ac96360
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\s2_export.py", line 8, in <module>
+    t = setup(f)
+        ^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 112, in setup
+    return {u["handle"]: login(u["email"], u["password"]) for u in f["users"]}
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 104, in login
+    r = call("POST", "/auth/login", {"email": email, "password": pw})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+rc=1
+=== s2reg/s2_export_expiry.py vs HEAD ac96360
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\s2_export_expiry.py", line 9, in <module>
+    reset(f2); ta = login("ada@example.com"); tb = login("bob@example.com")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 104, in login
+    r = call("POST", "/auth/login", {"email": email, "password": pw})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s2reg\lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+rc=1
+ALLDONE

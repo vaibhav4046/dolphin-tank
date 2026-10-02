@@ -1,0 +1,19 @@
+#### race
+PASS RACE1 captures attempted around the deadline: 1004 (201: 539)
+PASS RACE1 every 201 capture has created_at strictly before expires_at
+PASS RACE1 every response is 201 or 409 authorization_expired
+PASS RACE1 no 201 began after expires_at+20ms and no 409 finished before expires_at-20ms
+PASS RACE1 created_at of the 201s are strictly increasing in completion order
+PASS RACE1 after the deadline: expired, captured_amount == 539, remaining 0, closed_at == expires_at
+PASS RACE1 money: ada total 10000-539, held 0; bob total 2500+539
+PASS RACE1 ada's as_of views at sampled capture instants +-1us, E-1, E, E+1 follow the capture count (available constant 7000 before E)
+PASS RACE2 captures attempted around the deadline: 1052 (201: 580)
+PASS RACE2 every 201 capture has created_at strictly before expires_at
+PASS RACE2 every response is 201 or 409 authorization_expired
+PASS RACE2 no 201 began after expires_at+20ms and no 409 finished before expires_at-20ms
+PASS RACE2 created_at of the 201s are strictly increasing in completion order
+PASS RACE2 after the deadline: expired, captured_amount == 580, remaining 0, closed_at == expires_at
+PASS RACE2 money: ada total 10000-580, held 0; bob total 2500+580
+PASS RACE2 ada's as_of views at sampled capture instants +-1us, E-1, E, E+1 follow the capture count (available constant 7000 before E)
+#### race done in 3.5s
+== f2_attack race: 16 pass, 0 fail, 2476 requests

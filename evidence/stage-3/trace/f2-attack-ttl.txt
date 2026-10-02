@@ -1,0 +1,99 @@
+#### ttl
+PASS TTL1/me-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL1/me-first expires_at - created_at == 1 s exactly (microsecond arithmetic)
+PASS TTL1/me-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL1/me-first as_of expires_at released (10000,0,10000)
+PASS TTL1/me-first as_of expires_at+1us released
+PASS TTL1/me-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL1/me-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL1/me-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL1/me-first first read after the deadline is /me: held 0 available == total == 10000
+PASS TTL1/me-first then GET /authorizations: expired, remaining 0, closed_at == expires_at
+PASS TTL1/me-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL1/me-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL1/list-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL1/list-first expires_at - created_at == 1 s exactly (microsecond arithmetic)
+PASS TTL1/list-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL1/list-first as_of expires_at released (10000,0,10000)
+PASS TTL1/list-first as_of expires_at+1us released
+PASS TTL1/list-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL1/list-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL1/list-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL1/list-first first read after the deadline is GET /authorizations (payee): expired, closed_at == expires_at
+PASS TTL1/list-first then /me: released
+PASS TTL1/list-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL1/list-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL1/capture-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL1/capture-first expires_at - created_at == 1 s exactly (microsecond arithmetic)
+PASS TTL1/capture-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL1/capture-first as_of expires_at released (10000,0,10000)
+PASS TTL1/capture-first as_of expires_at+1us released
+PASS TTL1/capture-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL1/capture-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL1/capture-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL1/capture-first first request after the deadline is a capture: 409 authorization_expired
+PASS TTL1/capture-first no money moved by the refused capture
+PASS TTL1/capture-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL1/capture-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL1/void-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL1/void-first expires_at - created_at == 1 s exactly (microsecond arithmetic)
+PASS TTL1/void-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL1/void-first as_of expires_at released (10000,0,10000)
+PASS TTL1/void-first as_of expires_at+1us released
+PASS TTL1/void-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL1/void-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL1/void-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL1/void-first first request after the deadline is a void: 409
+PASS TTL1/void-first the refused void leaves it expired with closed_at == expires_at
+PASS TTL1/void-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL1/void-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL2/me-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL2/me-first expires_at - created_at == 2 s exactly (microsecond arithmetic)
+PASS TTL2/me-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL2/me-first as_of expires_at released (10000,0,10000)
+PASS TTL2/me-first as_of expires_at+1us released
+PASS TTL2/me-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL2/me-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL2/me-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL2/me-first first read after the deadline is /me: held 0 available == total == 10000
+PASS TTL2/me-first then GET /authorizations: expired, remaining 0, closed_at == expires_at
+PASS TTL2/me-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL2/me-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL2/list-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL2/list-first expires_at - created_at == 2 s exactly (microsecond arithmetic)
+PASS TTL2/list-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL2/list-first as_of expires_at released (10000,0,10000)
+PASS TTL2/list-first as_of expires_at+1us released
+PASS TTL2/list-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL2/list-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL2/list-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL2/list-first first read after the deadline is GET /authorizations (payee): expired, closed_at == expires_at
+PASS TTL2/list-first then /me: released
+PASS TTL2/list-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL2/list-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL2/capture-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL2/capture-first expires_at - created_at == 2 s exactly (microsecond arithmetic)
+PASS TTL2/capture-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL2/capture-first as_of expires_at released (10000,0,10000)
+PASS TTL2/capture-first as_of expires_at+1us released
+PASS TTL2/capture-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL2/capture-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL2/capture-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL2/capture-first first request after the deadline is a capture: 409 authorization_expired
+PASS TTL2/capture-first no money moved by the refused capture
+PASS TTL2/capture-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL2/capture-first agreement: closed_at as_of -> released, closed_at-1us -> held
+PASS TTL2/void-first created_at/expires_at are microsecond instants (6 fraction digits)
+PASS TTL2/void-first expires_at - created_at == 2 s exactly (microsecond arithmetic)
+PASS TTL2/void-first as_of expires_at-1us still held (10000,3000,7000)
+PASS TTL2/void-first as_of expires_at released (10000,0,10000)
+PASS TTL2/void-first as_of expires_at+1us released
+PASS TTL2/void-first as_of created_at-1us no hold; at created_at and +1us held
+PASS TTL2/void-first known_at before creation: hold unknown (as_of mid-life)
+PASS TTL2/void-first deadline is known with creation: as_of E+1 known_at E-1 -> released
+PASS TTL2/void-first first request after the deadline is a void: 409
+PASS TTL2/void-first the refused void leaves it expired with closed_at == expires_at
+PASS TTL2/void-first history is stable: the three as_of views are unchanged after the clock passed the deadline
+PASS TTL2/void-first agreement: closed_at as_of -> released, closed_at-1us -> held
+#### ttl done in 12.6s
+== f2_attack ttl: 96 pass, 0 fail, 171 requests

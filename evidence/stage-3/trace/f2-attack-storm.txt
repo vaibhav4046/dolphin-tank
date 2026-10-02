@@ -1,0 +1,12 @@
+#### storm
+   STORM(ttl=600) writers+observers finished in 1.8s: {('pay', 201): 178, ('auth', 201): 118, ('capfinal', 201): 47, ('cap', 201): 43, 'views': 3678, ('void', 200): 27, 'conservation': 826, ('auth', 409): 482, ('pay', 409): 422, ('capfinal', 409): 1}
+PASS STORM(ttl=600): 6 writers x 100 rounds, 3678 concurrent as_of views and 826 conservation sums: no view with available<0, held>total, total<0, balance!=total or available!=total-held; books always balance
+PASS STORM(ttl=600): no request failed with 5xx
+PASS STORM(ttl=600): Σ balances == seeded total after the storm
+PASS STORM(ttl=600): post-run oracle: 6372 views (every payment/authorization/closed/expires instant -1us,0,+1us x 4 users) equal the spec rules computed from the export
+PASS STORM(ttl=600): export -> import 204
+PASS STORM(ttl=600): export -> import -> export byte-identical
+PASS STORM(ttl=600): after the round trip 6372 sampled views still equal the oracle
+PASS STORM(ttl=600): authorize after the round trip: created_at later than every recorded instant, exact ttl
+#### storm done in 4.8s
+== f2_attack storm: 8 pass, 0 fail, 21058 requests

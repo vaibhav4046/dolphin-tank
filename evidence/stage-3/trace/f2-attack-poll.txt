@@ -1,0 +1,15 @@
+#### poll
+PASS POLL1 no torn state across 718 reads straddling the deadline
+PASS POLL1 the deadline was observed
+PASS POLL1 no regression: after the first released read no read shows held (me, list, status filter)
+PASS POLL1 every read that finished 20 ms before expires_at shows held
+PASS POLL1 every read that began 20 ms after expires_at shows released
+   POLL1 first released read began -2268 us / finished +170 us relative to expires_at; 718 reads
+PASS POLL2 no torn state across 805 reads straddling the deadline
+PASS POLL2 the deadline was observed
+PASS POLL2 no regression: after the first released read no read shows held (me, list, status filter)
+PASS POLL2 every read that finished 20 ms before expires_at shows held
+PASS POLL2 every read that began 20 ms after expires_at shows released
+   POLL2 first released read began -218 us / finished +361 us relative to expires_at; 805 reads
+#### poll done in 3.3s
+== f2_attack poll: 519 pass, 0 fail, 1532 requests

@@ -1,0 +1,33 @@
+trace cross-attack on forge's F2 (11e76f9), run against ac96360 (git archive -> go build -> /tmp/f2bin/s3-ac96360.exe). Host: Windows 11, go1.26.2, uv python 3.12.
+legacy source build: git archive 3c7c411 stage-3 -> s3-legacy-3c7c411.exe; stage-1/stage-2 binaries: git archive ac96360 stage-1 / stage-2.
+Servers are started and killed by PID (subprocess.Popen.kill); no taskkill /IM; runs sequential; persistent connections in my own script.
+
+COMMANDS
+  bash evidence/stage-3/trace/f2_run.sh <port> <jury-script>      # fresh server per script, PF=PFD=127.0.0.1:<port>, uv run python
+  jury: t3_holds.py x3 (18210), t3_seedholds, t3_time, t3_corr (18211); s2reg: 10 scripts (18212/18213)
+  F2BIN=$(cygpath -m /tmp/f2bin) uv run python -u evidence/stage-3/trace/f2_attack.py <ttl|poll|race|storm|storm1|imp1|imp2|legacy>
+
+RESULTS (real counts, files alongside)
+  f2-attack-jury-checks.txt   t3_holds 59/0 x3 (J45/J46, J44 stage-2 invariant 0 of 25 views violated); t3_seedholds 26/0; t3_time 46/0; t3_corr 97/0
+  f2-attack-s2reg.txt + -rerun.txt   s2_lifecycle 82/0, s2_funds 32/0, s2_errors 73/0, s2_idem 50/0, s2_list 70/0, s2_fixture 84/0;
+        s2_expiry, s2_race, s2_export, s2_export_expiry hit WinError 10048 (host ephemeral-port exhaustion, other seats share the host) in the first
+        pass, re-run after the pause: s2_expiry 30/0, s2_race 54/0 (9794 requests), s2_export 30/0, s2_export_expiry 18/0
+  f2-attack-ttl.txt     96/0   ttl 1 s and 2 s, 4 variants each (first read /me, /authorizations, capture, void), as_of expires_at -1us/0/+1us, created_at -1us/0/+1us, known_at
+  f2-attack-poll.txt    519/0  1532 reads straddling the deadline (+-120 ms), /me + /authorizations + status filter: no torn state, no regression
+  f2-attack-race.txt    16/0   4 threads capturing 1 unit around the deadline; every 201 created_at < expires_at; views follow the capture count
+  f2-attack-storm.txt   8/0    6 writers x 100 rounds (pay/authorize/partial+final capture/void), ttl 600; 21058 requests
+  f2-attack-storm1.txt  8/0    same with ttl 1 (expiries land in the history)
+        each: ~3700 concurrent observer views (as_of every created/closed/payment instant -1us/0/+1us, payer and payee) satisfy available>=0, held<=total,
+        balance==total, available==total-held; 800+ conservation sums (4 users at T and T-1us) == seed; post-run oracle from the export (spec rules,
+        independent of server code): 6372 / 6708 views equal; export->import->export byte-identical; 6372 / 6708 views still equal after the round trip
+  f2-attack-imp1.txt    14/0   real stage-1 export -> HEAD -> authorize/capture/void
+  f2-attack-imp2.txt    19/0   real stage-2 export (open, partly captured, clock-expired, captured, voided) -> HEAD -> authorize/capture/void, imported hold expires on the real clock
+        f2-attack-imp2-run1-test-expectation-error.txt: my first run had 2 FAILs = my own wrong expectation (a partly captured hold is still open); script corrected, rerun 19/0
+  f2-attack-legacy.txt  3 pass, 1 FAIL  DEFECT (see below)
+
+DEFECT L-F2-1 (legacy import): an export from the rejected 3c7c411 build carries authorization created_at = whole second and created_exact = microsecond.
+  HEAD imports it, F2 made created_exact "never read", so the hold sits at the floor second while the funding payment lies later in that second:
+  ada as_of created_at(whole second) and payment-1us: total 10000 held 12000 available -2000 balance 10000  -> violates "available = total - held must never be negative".
+  Repro: F2BIN=$(cygpath -m /tmp/f2bin) uv run python -u evidence/stage-3/trace/f2_attack.py legacy   (exit 1, FAIL line + the five views)
+  Scope: only exports of 3c7c411 (rejected, never accepted) or hand-built imports with created_exact != created_at; HEAD's own exports write created_exact == created_at and round-trip clean (storm rows).
+  Remedy (not applied; import path is snapshot.go/store.go): on import, when created_exact is present and passes checkCreatedExact, set created_at = created_exact (microsecond) before the instants are parsed.

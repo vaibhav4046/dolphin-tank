@@ -1,0 +1,373 @@
+=== t3_holds.py run 1 (HEAD ac96360 built from git archive)
+PASS J47 open authorization exposes closed_at: null
+PASS J01 capture payment created_at RFC3339; authorization_id set
+PASS J47 closed_at still null after a non-final capture
+PASS J47 final capture closes: status captured, remaining 0, closed_at not null
+PASS J47 closed_at is the event time of the final capture (within 1 s of the capture payment, not after it)
+PASS J45 ada before authorization: total/held/available = (10000, 0, 10000)
+PASS J45/J46 ada at authorization creation instant (created_at): hold present: total/held/available = (10000, 3000, 7000)
+PASS J45 ada just before 1st capture: hold 3000 total 10000: total/held/available = (10000, 3000, 7000)
+PASS J45 ada at 1st (non-final) capture: total 9000, hold reduced to 2000 at capture time: total/held/available = (9000, 2000, 7000)
+PASS J45 ada between captures: total/held/available = (9000, 2000, 7000)
+PASS J45 ada just before final capture: total/held/available = (9000, 2000, 7000)
+PASS J45 ada at final capture: total 8500, remainder 1500 released at the event time: total/held/available = (8500, 0, 8500)
+PASS J45 ada far future: total/held/available = (8500, 0, 8500)
+PASS J47 ada at closed_at: hold released: total/held/available = (8500, 0, 8500)
+PASS J44 bob (receiver) never sees ada's hold: at Ca: total/held/available = (0, 0, 0)
+PASS J44 bob at Pb: total/held/available = (1000, 0, 1000)
+PASS J44 bob at Pc: total/held/available = (1500, 0, 1500)
+PASS J44 current ada: total/held/available = (8500, 0, 8500)
+PASS J29 sum of totals constant at Ca, Pb, Pc, closed_at
+PASS J46 known_at before the authorization was known: no hold (as_of far future, known_at=Ca-1s): total/held/available = (10000, 0, 10000)
+PASS J46 known_at = creation: hold known, as_of=Ca: total/held/available = (10000, 3000, 7000)
+PASS J46 known_at just before 1st capture, as_of = after it: capture unknown -> payment absent, hold 3000 then expires at deadline (as_of = Pb+1s): total/held/available = (10000, 3000, 7000)
+PASS J46 once creation is known the deadline is known: as_of far future with known_at before 1st capture -> hold expired: total/held/available = (10000, 0, 10000)
+PASS J46 known_at between captures, as_of now: 1st capture known, 2nd not: total/held/available = (9000, 2000, 7000)
+PASS J46 known_at = final capture event: everything known: total/held/available = (8500, 0, 8500)
+PASS J50 statement lists the two capture payments exactly once each, nothing for authorize/release/expiry
+PASS J50 statement balance_after follows total (not available): 9000 then 8500; closing 8500 == /me.total
+PASS J50 authorization is not an activity item
+PASS J18 capture payment revision 1: effective_at == recorded_at == created_at
+PASS J43 payer/sender correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 receiver/capturer correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 attempt left everything unchanged
+PASS J47 void closes: status voided, closed_at set, payment_ids kept, captured_amount 1500, remaining 0
+PASS J45 before void: hold = remainder 2500 (after non-final capture): total/held/available = (8500, 2500, 6000)
+PASS J45 at closed_at (void time): remainder released: total/held/available = (8500, 0, 8500)
+PASS J45 hold during window between capture and void: total/held/available = (8500, 2500, 6000)
+PASS J47 void twice is 200 and closed_at is stable
+PASS J45 void without capture: held 700 just before, 0 at closed_at: total/held/available = (8500, 700, 7800)
+PASS J45 void without capture: released at closed_at: total/held/available = (8500, 0, 8500)
+PASS J47 expires_at = created_at + ttl(3s)
+PASS J46 while still open: as_of = expires_at - 1us (future or now) holds: total/held/available = (10000, 2500, 7500)
+PASS J46 queries beyond now: an open hold expires at its deadline (as_of = expires_at): total/held/available = (10000, 0, 10000)
+PASS J46 as_of far future: open hold already released: total/held/available = (10000, 0, 10000)
+PASS J47 closed_at is null while the hold is still open (clock has not reached expires_at)
+PASS J47 after expires_at (no request at the deadline): status expired, remaining 0, closed_at set
+PASS J47 closed_at of an expired authorization is its expires_at (event time of the expiry)
+PASS J45 after expiry current view: released: total/held/available = (10000, 0, 10000)
+PASS J45 history after expiry: hold present just before expires_at: total/held/available = (10000, 2500, 7500)
+PASS J45 history after expiry: released at expires_at: total/held/available = (10000, 0, 10000)
+PASS J47 partial capture then expiry: expired, payment_ids kept, captured 800, closed_at == expires_at
+PASS J45 expiry releases only the remainder: total 9200, held 0 after; just before expiry held 1200: total/held/available = (9200, 1200, 8000)
+PASS J45 after expiry: total/held/available = (9200, 0, 9200)
+PASS setup H4: ada total 1900 held 800 available 1100
+PASS J48 correction making AVAILABLE negative at a past boundary (total 750 >= 0 but hold 800) -> 409 historical_overdraft, currently affordable
+PASS J48 failure changed nothing
+PASS J48 correction leaving available exactly 0 at the boundary -> 201
+PASS J48 hold already voided before the payment instant: correction to 900 is fine (total 100 >= 0, no hold)
+PASS J48 correction making total exactly 0 at a past boundary -> accepted
+PASS J44/stage-2-invariant: /me?as_of=<authorization.created_at> never shows available < 0 or held > total (hold funded by a payment made just before it) - 0 of 25 views violated
+== t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.041s, p99 0.031s
+rc=0
+=== t3_holds.py run 2 (HEAD ac96360 built from git archive)
+PASS J47 open authorization exposes closed_at: null
+PASS J01 capture payment created_at RFC3339; authorization_id set
+PASS J47 closed_at still null after a non-final capture
+PASS J47 final capture closes: status captured, remaining 0, closed_at not null
+PASS J47 closed_at is the event time of the final capture (within 1 s of the capture payment, not after it)
+PASS J45 ada before authorization: total/held/available = (10000, 0, 10000)
+PASS J45/J46 ada at authorization creation instant (created_at): hold present: total/held/available = (10000, 3000, 7000)
+PASS J45 ada just before 1st capture: hold 3000 total 10000: total/held/available = (10000, 3000, 7000)
+PASS J45 ada at 1st (non-final) capture: total 9000, hold reduced to 2000 at capture time: total/held/available = (9000, 2000, 7000)
+PASS J45 ada between captures: total/held/available = (9000, 2000, 7000)
+PASS J45 ada just before final capture: total/held/available = (9000, 2000, 7000)
+PASS J45 ada at final capture: total 8500, remainder 1500 released at the event time: total/held/available = (8500, 0, 8500)
+PASS J45 ada far future: total/held/available = (8500, 0, 8500)
+PASS J47 ada at closed_at: hold released: total/held/available = (8500, 0, 8500)
+PASS J44 bob (receiver) never sees ada's hold: at Ca: total/held/available = (0, 0, 0)
+PASS J44 bob at Pb: total/held/available = (1000, 0, 1000)
+PASS J44 bob at Pc: total/held/available = (1500, 0, 1500)
+PASS J44 current ada: total/held/available = (8500, 0, 8500)
+PASS J29 sum of totals constant at Ca, Pb, Pc, closed_at
+PASS J46 known_at before the authorization was known: no hold (as_of far future, known_at=Ca-1s): total/held/available = (10000, 0, 10000)
+PASS J46 known_at = creation: hold known, as_of=Ca: total/held/available = (10000, 3000, 7000)
+PASS J46 known_at just before 1st capture, as_of = after it: capture unknown -> payment absent, hold 3000 then expires at deadline (as_of = Pb+1s): total/held/available = (10000, 3000, 7000)
+PASS J46 once creation is known the deadline is known: as_of far future with known_at before 1st capture -> hold expired: total/held/available = (10000, 0, 10000)
+PASS J46 known_at between captures, as_of now: 1st capture known, 2nd not: total/held/available = (9000, 2000, 7000)
+PASS J46 known_at = final capture event: everything known: total/held/available = (8500, 0, 8500)
+PASS J50 statement lists the two capture payments exactly once each, nothing for authorize/release/expiry
+PASS J50 statement balance_after follows total (not available): 9000 then 8500; closing 8500 == /me.total
+PASS J50 authorization is not an activity item
+PASS J18 capture payment revision 1: effective_at == recorded_at == created_at
+PASS J43 payer/sender correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 receiver/capturer correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 attempt left everything unchanged
+PASS J47 void closes: status voided, closed_at set, payment_ids kept, captured_amount 1500, remaining 0
+PASS J45 before void: hold = remainder 2500 (after non-final capture): total/held/available = (8500, 2500, 6000)
+PASS J45 at closed_at (void time): remainder released: total/held/available = (8500, 0, 8500)
+PASS J45 hold during window between capture and void: total/held/available = (8500, 2500, 6000)
+PASS J47 void twice is 200 and closed_at is stable
+PASS J45 void without capture: held 700 just before, 0 at closed_at: total/held/available = (8500, 700, 7800)
+PASS J45 void without capture: released at closed_at: total/held/available = (8500, 0, 8500)
+PASS J47 expires_at = created_at + ttl(3s)
+PASS J46 while still open: as_of = expires_at - 1us (future or now) holds: total/held/available = (10000, 2500, 7500)
+PASS J46 queries beyond now: an open hold expires at its deadline (as_of = expires_at): total/held/available = (10000, 0, 10000)
+PASS J46 as_of far future: open hold already released: total/held/available = (10000, 0, 10000)
+PASS J47 closed_at is null while the hold is still open (clock has not reached expires_at)
+PASS J47 after expires_at (no request at the deadline): status expired, remaining 0, closed_at set
+PASS J47 closed_at of an expired authorization is its expires_at (event time of the expiry)
+PASS J45 after expiry current view: released: total/held/available = (10000, 0, 10000)
+PASS J45 history after expiry: hold present just before expires_at: total/held/available = (10000, 2500, 7500)
+PASS J45 history after expiry: released at expires_at: total/held/available = (10000, 0, 10000)
+PASS J47 partial capture then expiry: expired, payment_ids kept, captured 800, closed_at == expires_at
+PASS J45 expiry releases only the remainder: total 9200, held 0 after; just before expiry held 1200: total/held/available = (9200, 1200, 8000)
+PASS J45 after expiry: total/held/available = (9200, 0, 9200)
+PASS setup H4: ada total 1900 held 800 available 1100
+PASS J48 correction making AVAILABLE negative at a past boundary (total 750 >= 0 but hold 800) -> 409 historical_overdraft, currently affordable
+PASS J48 failure changed nothing
+PASS J48 correction leaving available exactly 0 at the boundary -> 201
+PASS J48 hold already voided before the payment instant: correction to 900 is fine (total 100 >= 0, no hold)
+PASS J48 correction making total exactly 0 at a past boundary -> accepted
+PASS J44/stage-2-invariant: /me?as_of=<authorization.created_at> never shows available < 0 or held > total (hold funded by a payment made just before it) - 0 of 25 views violated
+== t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.034s, p99 0.032s
+rc=0
+=== t3_holds.py run 3 (HEAD ac96360 built from git archive)
+PASS J47 open authorization exposes closed_at: null
+PASS J01 capture payment created_at RFC3339; authorization_id set
+PASS J47 closed_at still null after a non-final capture
+PASS J47 final capture closes: status captured, remaining 0, closed_at not null
+PASS J47 closed_at is the event time of the final capture (within 1 s of the capture payment, not after it)
+PASS J45 ada before authorization: total/held/available = (10000, 0, 10000)
+PASS J45/J46 ada at authorization creation instant (created_at): hold present: total/held/available = (10000, 3000, 7000)
+PASS J45 ada just before 1st capture: hold 3000 total 10000: total/held/available = (10000, 3000, 7000)
+PASS J45 ada at 1st (non-final) capture: total 9000, hold reduced to 2000 at capture time: total/held/available = (9000, 2000, 7000)
+PASS J45 ada between captures: total/held/available = (9000, 2000, 7000)
+PASS J45 ada just before final capture: total/held/available = (9000, 2000, 7000)
+PASS J45 ada at final capture: total 8500, remainder 1500 released at the event time: total/held/available = (8500, 0, 8500)
+PASS J45 ada far future: total/held/available = (8500, 0, 8500)
+PASS J47 ada at closed_at: hold released: total/held/available = (8500, 0, 8500)
+PASS J44 bob (receiver) never sees ada's hold: at Ca: total/held/available = (0, 0, 0)
+PASS J44 bob at Pb: total/held/available = (1000, 0, 1000)
+PASS J44 bob at Pc: total/held/available = (1500, 0, 1500)
+PASS J44 current ada: total/held/available = (8500, 0, 8500)
+PASS J29 sum of totals constant at Ca, Pb, Pc, closed_at
+PASS J46 known_at before the authorization was known: no hold (as_of far future, known_at=Ca-1s): total/held/available = (10000, 0, 10000)
+PASS J46 known_at = creation: hold known, as_of=Ca: total/held/available = (10000, 3000, 7000)
+PASS J46 known_at just before 1st capture, as_of = after it: capture unknown -> payment absent, hold 3000 then expires at deadline (as_of = Pb+1s): total/held/available = (10000, 3000, 7000)
+PASS J46 once creation is known the deadline is known: as_of far future with known_at before 1st capture -> hold expired: total/held/available = (10000, 0, 10000)
+PASS J46 known_at between captures, as_of now: 1st capture known, 2nd not: total/held/available = (9000, 2000, 7000)
+PASS J46 known_at = final capture event: everything known: total/held/available = (8500, 0, 8500)
+PASS J50 statement lists the two capture payments exactly once each, nothing for authorize/release/expiry
+PASS J50 statement balance_after follows total (not available): 9000 then 8500; closing 8500 == /me.total
+PASS J50 authorization is not an activity item
+PASS J18 capture payment revision 1: effective_at == recorded_at == created_at
+PASS J43 payer/sender correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 receiver/capturer correcting a capture -> 422 linked_payment_immutable (sender) or 403 forbidden (non-sender); never 201
+PASS J43 attempt left everything unchanged
+PASS J47 void closes: status voided, closed_at set, payment_ids kept, captured_amount 1500, remaining 0
+PASS J45 before void: hold = remainder 2500 (after non-final capture): total/held/available = (8500, 2500, 6000)
+PASS J45 at closed_at (void time): remainder released: total/held/available = (8500, 0, 8500)
+PASS J45 hold during window between capture and void: total/held/available = (8500, 2500, 6000)
+PASS J47 void twice is 200 and closed_at is stable
+PASS J45 void without capture: held 700 just before, 0 at closed_at: total/held/available = (8500, 700, 7800)
+PASS J45 void without capture: released at closed_at: total/held/available = (8500, 0, 8500)
+PASS J47 expires_at = created_at + ttl(3s)
+PASS J46 while still open: as_of = expires_at - 1us (future or now) holds: total/held/available = (10000, 2500, 7500)
+PASS J46 queries beyond now: an open hold expires at its deadline (as_of = expires_at): total/held/available = (10000, 0, 10000)
+PASS J46 as_of far future: open hold already released: total/held/available = (10000, 0, 10000)
+PASS J47 closed_at is null while the hold is still open (clock has not reached expires_at)
+PASS J47 after expires_at (no request at the deadline): status expired, remaining 0, closed_at set
+PASS J47 closed_at of an expired authorization is its expires_at (event time of the expiry)
+PASS J45 after expiry current view: released: total/held/available = (10000, 0, 10000)
+PASS J45 history after expiry: hold present just before expires_at: total/held/available = (10000, 2500, 7500)
+PASS J45 history after expiry: released at expires_at: total/held/available = (10000, 0, 10000)
+PASS J47 partial capture then expiry: expired, payment_ids kept, captured 800, closed_at == expires_at
+PASS J45 expiry releases only the remainder: total 9200, held 0 after; just before expiry held 1200: total/held/available = (9200, 1200, 8000)
+PASS J45 after expiry: total/held/available = (9200, 0, 9200)
+PASS setup H4: ada total 1900 held 800 available 1100
+PASS J48 correction making AVAILABLE negative at a past boundary (total 750 >= 0 but hold 800) -> 409 historical_overdraft, currently affordable
+PASS J48 failure changed nothing
+PASS J48 correction leaving available exactly 0 at the boundary -> 201
+PASS J48 hold already voided before the payment instant: correction to 900 is fine (total 100 >= 0, no hold)
+PASS J48 correction making total exactly 0 at a past boundary -> accepted
+PASS J44/stage-2-invariant: /me?as_of=<authorization.created_at> never shows available < 0 or held > total (hold funded by a payment made just before it) - 0 of 25 views violated
+== t3_holds: 59 pass, 0 fail, 220 requests, 0 5xx, max latency 0.053s, p99 0.033s
+rc=0
+=== t3_seedholds.py (HEAD ac96360)
+PASS J49 current: ada held 4000 (two seeded open holds), available 6000, total 10000; closed seeded ones hold nothing
+PASS J49 as_of far past (before reset): neither seeded hold exists yet (noct hold assumed created at reset; ct hold created 2h ago)
+PASS J49 as_of 3h ago: no holds
+PASS J49 as_of 1h ago: only the created_at-supplied hold (1000)
+PASS J49 as_of exactly its supplied created_at: hold present
+PASS J49 as_of just before its supplied created_at: absent
+PASS J49 as_of now: both holds (4000)
+PASS J46 as_of 2h30m ahead: ct hold expired at its deadline (2h), noct still open
+PASS J46 as_of 4h ahead: both expired by deadline
+PASS J44 receivers unaffected (bob)
+PASS J47 seeded open: closed_at null; seeded closed ones: key present (value unspecified)
+PASS J47 seeded created_at echoed for the supplied one
+PASS J29 sum of totals constant for seeded views
+PASS J50 statement contains no entries for seeded authorizations (no payments)
+PASS J52 round 0: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 1: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 2: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+PASS J52 round 3: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 4: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 5: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+== t3_seedholds: 26 pass, 0 fail, 118 requests, 0 5xx, max latency 0.035s, p99 0.032s
+rc=0
+=== t3_time.py (HEAD ac96360)
+PASS J01 POST /payments: created_at RFC3339 with offset
+PASS J01 request pay: created_at RFC3339 with offset
+PASS J01 settlement members: created_at RFC3339 with offset, equal to committed_at
+PASS J01 /activity payments all carry created_at
+PASS J01 statement entry payments carry created_at
+PASS J02 /activity ordered newest first by created_at
+PASS J07 current /me unchanged shape and fields (no corrections)
+PASS J07 balance == total == available, held 0 without holds
+PASS J29-base current balances sum to seeded total
+PASS J08/J09 as_of at/around 26 instants (each payment -1us, exact, +1us, far past/future): oracle balance/total/available/held and exact echo for 4 users
+PASS J29 sum of balances == seeded total at every historical instant
+PASS J09 as_of before earliest payment returns the opening balance (10000)
+PASS J09 as_of at latest payment == current balance
+PASS J09 new/empty-history wallet opens at its seeded balance (cy 0)
+PASS J08 payment made at exactly as_of counts as happened (before 10000, at 9000)
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00Z
+PASS J09 echo as_of exactly as given: 2030-01-01T05:30:00+05:30
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00-08:00
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00.123456Z
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00.5+00:00
+PASS J09 echo as_of exactly as given: 2030-01-01T00:00:00+00:00
+PASS J08 offset-shifted spelling of the same instant gives the same balance
+PASS J06 as_of='' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00' -> 422 validation_failed
+PASS J06 as_of='2026-09-24' -> 422 validation_failed
+PASS J06 as_of='13:20:00Z' -> 422 validation_failed
+PASS J06 as_of='garbage' -> 422 validation_failed
+PASS J06 as_of='1700000000' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00+0000' -> 422 validation_failed
+PASS J06 as_of='2026-13-45T00:00:00Z' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T25:00:00Z' -> 422 validation_failed
+PASS J06 as_of='2026-02-30T00:00:00Z' -> 422 validation_failed
+PASS J06 as_of=' ' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20:00+25:00' -> 422 validation_failed
+PASS J06 as_of='2026-09-24T13:20Z' -> 422 validation_failed
+PASS J06 as_of='null' -> 422 validation_failed
+PASS J32 known_at='' -> 422 validation_failed
+PASS J32 known_at='2026-09-24T13:20:00' -> 422 validation_failed
+PASS J32 known_at='2026-09-24' -> 422 validation_failed
+PASS J32 known_at='13:20:00Z' -> 422 validation_failed
+PASS J32 known_at='garbage' -> 422 validation_failed
+PASS J32 known_at='1700000000' -> 422 validation_failed
+PASS J06 empty as_of (raw ?as_of=) 422
+PASS J06 bare as_of key 422
+PASS J06 unauthenticated /me?as_of=bad is 401
+PASS J06 unknown query parameter ignored
+== t3_time: 46 pass, 0 fail, 168 requests, 0 5xx, max latency 0.043s, p99 0.029s
+rc=0
+=== t3_corr.py (HEAD ac96360)
+PASS J20 no token -> 401
+PASS J20 missing Idempotency-Key -> 400 missing_idempotency_key
+PASS J20 empty Idempotency-Key -> 400
+PASS J20 Idempotency-Key 256 chars -> 422 validation_failed
+PASS J20 receiver correcting -> 403 forbidden
+PASS J20 stranger correcting -> 403 forbidden
+PASS J20 unknown payment -> 404 not_found
+PASS J20 unknown payment as other user -> 404
+PASS J20 failed auth/permission attempts changed nothing
+PASS J21 missing expected_revision -> 422 validation_failed
+PASS J21 missing amount -> 422 validation_failed
+PASS J21 missing effective_at -> 422 validation_failed
+PASS J21 missing reason -> 422 validation_failed
+PASS J21 expected_revision 0 -> 422 validation_failed
+PASS J21 expected_revision -1 -> 422 validation_failed
+PASS J21 expected_revision 1.5 -> 422 validation_failed
+PASS J21 amount -1 -> 422 validation_failed
+PASS J21 amount 1e9+1 -> 422 validation_failed
+PASS J21 amount 1.5 -> 422 validation_failed
+PASS J21 amount '900' -> 422 validation_failed
+PASS J21 amount true -> 422 validation_failed
+PASS J21 amount null -> 422 validation_failed
+PASS J21 reason '' -> 422 validation_failed
+PASS J21 reason 201 chars -> 422 validation_failed
+PASS J21 effective_at future +1h -> 422 validation_failed
+PASS J21 effective_at future +30s -> 422 validation_failed
+PASS J21 effective_at naive -> 422 validation_failed
+PASS J21 effective_at date only -> 422 validation_failed
+PASS J21 effective_at garbage -> 422 validation_failed
+PASS J21 effective_at '' -> 422 validation_failed
+PASS J21 expected_revision '1' -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision '1' answered 422
+PASS J21 expected_revision true -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision true answered 422
+PASS J21 expected_revision null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed expected_revision null answered 422
+PASS J21 reason 5 -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed reason 5 answered 422
+PASS J21 reason null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed reason null answered 422
+PASS J21 effective_at 5 -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed effective_at 5 answered 422
+PASS J21 effective_at null -> 400 malformed_request or 422 validation_failed (no change)
+INFO wrong-typed effective_at null answered 422
+PASS J21 not json -> 400 malformed_request
+PASS J21 array body -> 400 malformed_request
+PASS J21 empty body -> 400 malformed_request
+PASS J21 all invalid attempts changed nothing
+PASS J28 key that failed 422 is reusable: first valid use is 201 (not 200/409)
+PASS J21 integral amount 9e2 accepted, unknown field ignored
+PASS J22 correction 201 with exactly payment_id/revision/amount/effective_at/recorded_at/reason
+PASS J18 revisions in order, rev1 = original (amount 1000, reason '', effective_at=recorded_at=created_at)
+PASS J22 revisions entries carry payment_id, revision, amount, effective_at, recorded_at, reason
+PASS J30 parties/visibility unchanged: replay of ORIGINAL payment request returns 200 with the original body
+PASS J30 /activity still shows the ORIGINAL payment (amount 1000, same parties/visibility/note/created_at), one item, no correction records
+PASS J30 stranger's /activity does not show private payment, still none for corrections
+PASS J26 decrease debited original receiver: ada 5000-600=4400, bob 1000+600=1600, others untouched; sum constant
+PASS J23 recorded_at strictly increases over 27 revisions (25 back-to-back corrections)
+PASS J22 earlier revisions immutable after later ones (rev1 unchanged)
+PASS J21/J26 amount 0 reverses the entire payment (ada back to 5000, bob 1000)
+PASS J26 increase from 0 debits sender 700 (ada 4300, bob 1700)
+PASS J29 sum constant
+PASS J24 stale expected_revision=1 (current 29) -> 409 stale_revision
+PASS J24 stale expected_revision=28 (current 29) -> 409 stale_revision
+INFO expected_revision ahead of current answered 409 stale_revision
+PASS J24 expected_revision ahead of current is not accepted as success
+PASS J24 stale attempts left history unchanged
+PASS setup: ada 1500 bob 0 cy 400
+PASS J27 historically unaffordable increase (+1200 affordable now: ada 1500; ada would be 1500-1800-400<0 at q2) -> 409 historical_overdraft
+PASS J28 historical_overdraft preserved balances, revisions, statements, activity
+PASS J27 currently unaffordable increase (+1600 > ada 1500) -> 409 insufficient_funds (precedence over historical)
+PASS J27 currently unaffordable decrease (bob holds 0, owes back 300) -> 409 insufficient_funds
+PASS J28 failures left everything unchanged
+PASS J28 key that failed 409 insufficient_funds is reusable with a different body: 201 (first use), not 409 idempotency_key_reuse
+PASS J26 increase 600->700 at original instant debits sender 100, credits receiver 100 (ada 1400, bob 100, cy 400); sum constant
+PASS J28 key that failed 409 stale_revision is reusable (different body): 201
+PASS J27 decrease affordable now (bob 600 >= 500) but bob would be -500 at his 1000 payment instant -> 409 historical_overdraft (receiver side)
+PASS J28 receiver-side failure left everything unchanged
+PASS J27 move outflow a2 (id lower) to a3's exact instant: bob never negative (a1 inflow earlier): 201
+PASS J27 boundary includes COMBINED effect of all movements at that instant: bob 0 before X, -100 (a2) and +100 (a3) at X => net 0 => accepted (sequential-by-id would be -100)
+PASS J27 resulting views: bob 0 just before X, 0 at X; cy 100 at X; ada 1000-100(a3)=900
+PASS J29 sum constant at X-1us, X, now
+PASS J27 removing the instant's inflow: current bob balance 0 cannot give back 100 => 409 insufficient_funds
+PASS J27 effective_at moved before any funding: currently affordable (net 0 change) but bob -500 at that instant -> 409 historical_overdraft
+PASS J28 unchanged after historical overdraft by effective_at move
+PASS J27 effective_at just after the funding payment: accepted
+PASS J25 first use 201
+PASS J25 replay (reordered, whitespace, 800.0) after newer revisions -> 200 and the ORIGINAL revision-2 body
+PASS J25 replay moved no money and appended nothing
+PASS J25 same key different amount -> 409 idempotency_key_reuse
+PASS J25 same key different effective_at -> 409 idempotency_key_reuse
+PASS J25 same key different reason -> 409 idempotency_key_reuse
+PASS J25 same key different expected_revision -> 409 idempotency_key_reuse
+PASS J25 claimed key beats validation: invalid body with a claimed key -> 409 idempotency_key_reuse
+INFO same key+body on another payment path answered 201 None
+PASS J25 same key + same body on a DIFFERENT path is not a replay (not 200/409 reuse of the first)
+PASS J25 key scope is per user: bob using the same key string -> 201
+PASS J30 original payment still shows original amount in activity after 4 revisions
+PASS J31 sender 200 {'revisions':[...]}
+PASS J31 receiver 200
+PASS J31 third party -> 404 not_found even though the payment is public (and visible in their feed)
+PASS J31 no token -> 401
+PASS J31 unknown payment -> 404
+PASS J20 unknown payment correction as stranger of existing: 403 not 404? (stranger on existing payment)
+PASS J22 request-paid payment may be corrected (sender is payer): 201
+PASS J30 request record unchanged by correction (status paid, amount 300, payment_id kept)
+== t3_corr: 97 pass, 0 fail, 318 requests, 0 5xx, max latency 0.032s, p99 0.030s
+rc=0

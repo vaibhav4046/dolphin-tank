@@ -1,0 +1,16 @@
+#### legacy
+   LEGACY source payment 2026-10-02T16:56:11.075621+00:00  authorization created_at 2026-10-02T16:56:11+00:00
+PASS LEGACY source flow made (pay 5000 then hold 12000)
+   LEGACY export authorization: {"created_at": "2026-10-02T16:56:11+00:00", "created_exact": "2026-10-02T16:56:11.076428+00:00", "expires_at": "2026-10-02T17:06:11+00:00", "status": "open"}
+PASS LEGACY precondition: payment lies between created_at (whole second) and created_exact
+PASS LEGACY export imports into HEAD: 204
+   LEGACY ada as_of created_at(whole second)   total/held/available/balance = (10000, 12000, -2000, 10000)
+   LEGACY ada as_of payment-1us                total/held/available/balance = (10000, 12000, -2000, 10000)
+   LEGACY ada as_of payment                    total/held/available/balance = (15000, 12000, 3000, 15000)
+   LEGACY ada as_of created_exact-1us          total/held/available/balance = (15000, 12000, 3000, 15000)
+   LEGACY ada as_of created_exact              total/held/available/balance = (15000, 12000, 3000, 15000)
+FAIL LEGACY imported hold: every historical view of ada has available >= 0 (the funding payment is not later than the hold) :: {'created_at(whole second)': (10000, 12000, -2000, 10000), 'payment-1us': (10000, 12000, -2000, 10000), 'payment': (15000, 12000, 3000, 15000), 'created_exact-1us': (15000, 12000, 3000, 15000), 'created_exact': (15000, 12000, 3000, 15000)}
+   LEGACY HEAD authorizations: [('2026-10-02T16:56:11+00:00', 'open')]
+#### legacy done in 0.6s
+== f2_attack legacy: 3 pass, 1 fail, 19 requests
+FAILED: ['LEGACY imported hold: every historical view of ada has available >= 0 (the funding payment is not later than the hold)']
