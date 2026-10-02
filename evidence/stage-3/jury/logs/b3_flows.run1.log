@@ -1,0 +1,86 @@
+PASS I08 incoming-list and outgoing-list present, empty-requests absent
+PASS I08 rq_in1 data-status=pending
+PASS I08 rq_in1 listed in the incoming list
+PASS I08 rq_in2 data-status=pending
+PASS I08 rq_in2 listed in the incoming list
+PASS I08 rq_in3 data-status=paid
+PASS I08 rq_in3 listed in the incoming list
+PASS I08 rq_in4 data-status=declined
+PASS I08 rq_in4 listed in the incoming list
+PASS I08 rq_out1 data-status=pending
+PASS I08 rq_out1 listed in the outgoing list
+PASS I08 rq_out2 data-status=cancelled
+PASS I08 rq_out2 listed in the outgoing list
+PASS I08 request-amount exact formatted
+PASS I08 pay/decline only on PENDING incoming
+PASS I08 cancel only on PENDING outgoing
+PASS I10 pay: request becomes paid without reload, buttons removed
+PASS I08 pay moved money once: ada 88.00, bob 37.00
+PASS I08 pay sent POST /requests/{id}/pay with an Idempotency-Key
+PASS I10 decline: request declined, buttons removed
+PASS I10 cancel: request cancelled, button removed
+PASS I08 pay refused (insufficient funds): request-error shown, request stays pending, pay button still there
+PASS I13 precondition: pay button visible
+PASS I13 request cancelled elsewhere: payment refused -> request-error shown
+PASS I13 request list refreshed: item now cancelled and the stale pay button is gone
+PASS I13 no money moved
+PASS I13 request declined elsewhere: pay refused, request-error, list refreshed (pay button gone)
+PASS I13 request paid elsewhere: decline refused, request-error, list shows paid
+PASS I08 empty-requests shown (visible) when both lists empty
+PASS I05 request form: 15.005 rejected locally, request-error shown, nothing sent
+PASS I08 request to unknown handle -> request-error (server refusal)
+PASS I08 request to self -> request-error
+PASS I08 valid request: request-error cleared; server has the pending request of 1500
+PASS I10 new request listed in outgoing-list with cancel button
+PASS I09 preview 10.00 / 3: 3.34, 3.33, 3.33 EUR in order
+PASS I09 reordered handles move the extra unit to the first participant
+PASS I09 preview 0.01 / 3: 0.01, 0.00, 0.00
+PASS I09 preview 0.10 / 3 = 0.04, 0.03, 0.03; 9.99 / 3 = 3.33 x3
+PASS I09 handles with spaces/commas tolerated: 5 participants of 0.05 -> 0.01 each
+PASS I09 typing the preview posted nothing to the server
+PASS I09 submit sends POST /splits (1000 minor units, handles in typed order) with an Idempotency-Key
+PASS I09 server requests equal the previewed shares (bob 3.34, cy 3.33; caller creates none for herself)
+PASS I09 split-error absent after success
+PASS I09 duplicate handle -> split-error
+PASS I09 unknown handle -> split-error
+PASS I09 amount 10.005 rejected locally: split-error, nothing sent
+PASS I09 nonnumeric amount: split-error, nothing sent
+PASS I09 empty handles: split-error, nothing sent
+PASS I09 JPY preview 1000 / 3 = 334, 333, 333 JPY
+PASS I17 authorization-list present, empty-authorizations absent, authorization-error absent
+PASS I17 children are authorization items, DOM order equals API order (newest first)
+PASS I17 a_out data-status=open
+PASS I17 a_in data-status=open
+PASS I17 a_cap data-status=captured
+PASS I17 a_void data-status=voided
+PASS I17 a_exp data-status=expired
+PASS I17 authorization-amount exact formatted
+PASS I17 authorization-captured present ONLY when captured (a_cap = 3.00 EUR)
+PASS I17 authorization-expires text is the RFC 3339 expires_at
+PASS I17 capture input + button ONLY on incoming OPEN (a_in)
+PASS I17 capture input pre-filled with the remaining amount (7.00)
+PASS I17 void button ONLY on outgoing OPEN (a_out)
+PASS I17 capture amount 15.005 rejected locally (authorization-error, no request)
+PASS I18 capture above remaining (9.00 > 7.00): authorization-error shown, nothing moved
+INFO capture 3.00 of 7.00 via UI: request body {"amount":300} ; server now status=captured captured=300 remaining=0
+PASS I18 partial capture: ada (receiver) credited 3.00 exactly once; authorization-error cleared
+PASS I18 UI list matches server after capture (status captured)
+INFO UI capture is final: partial capture closed the hold and released the remainder (spec default); 'rest' cannot be captured after
+PASS I18 final partial capture closed hold: status captured, captured 3.00 shown, controls gone
+PASS I18 void: item voided, void button removed, no error
+PASS I18 void released the hold: server held 0
+PASS I18 hold voided elsewhere: capture refused -> authorization-error, list refreshed (voided, stale controls gone)
+PASS I18 hold captured elsewhere: void refused -> authorization-error, list shows captured, void button gone
+PASS I17 empty-authorizations shown (and no list) when there are none
+PASS I17 authorize form reachable (found on /)
+PASS I17 authorize 15.005 rejected locally: authorize-error, no request
+PASS I17 authorize nonnumeric rejected locally
+PASS I17 authorize above available -> authorize-error (insufficient funds)
+PASS I17 authorize to self -> authorize-error
+PASS I17 authorize unknown handle -> authorize-error
+PASS I17 authorize ok: authorize-error cleared; body 3000 minor units, key present; server holds 3000
+PASS I16 wallet-available (headline) 70.00 EUR, wallet-held 30.00 EUR, wallet-balance 100.00 EUR after the hold, without reload
+PASS I17 unchanged authorize resubmit does not create a second hold (same key replay)
+PASS I17 new hold listed on /authorizations as open, outgoing (void button), amount 30.00 EUR
+== b3_flows: 82 pass, 0 fail
+rc=0

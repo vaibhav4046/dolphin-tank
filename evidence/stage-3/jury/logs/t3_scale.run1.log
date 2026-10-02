@@ -1,0 +1,30 @@
+PASS reset with 20000 seeded payments returns 204 within the 10 s limit (took 0.17 s)
+PASS as_of over 20000 seeded payments == direct computation (150 views); max latency 0.006 s
+PASS default statement over 20000-payment history: 200, opening/closing right, latency 0.01 s
+PASS deep offset page matches the seeded order (latency 0.00 s)
+PASS 40 sequential corrections over a 20000-payment history: all 201/409, max latency 0.01 s (limit 5 s)
+PASS 50 simultaneous corrections: no errors, statuses 201/409 only, max latency 0.26 s (limit 5 s)
+PASS J29 sum of balances constant after the burst
+INFO instant 0001-01-01T00:00:00Z                     /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '0001-01-01T00:00:00Z'
+INFO instant 1969-12-31T23:59:59-00:00                /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '1969-12-31T23:59:59-00:00'
+INFO instant 2016-12-31T23:59:60Z                     /me 422  statement 422  known_at 422
+PASS no 5xx for instant spelling '2016-12-31T23:59:60Z'
+INFO instant 2026-10-02T07:00:00.123456789Z           /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '2026-10-02T07:00:00.123456789Z'
+INFO instant 2026-10-02t07:00:00z                     /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '2026-10-02t07:00:00z'
+INFO instant 2026-10-02 07:00:00Z                     /me 422  statement 422  known_at 422
+PASS no 5xx for instant spelling '2026-10-02 07:00:00Z'
+INFO instant 2026-10-02T07:00:00.1234567890123Z       /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '2026-10-02T07:00:00.1234567890123Z'
+INFO instant 9999-12-31T23:59:59.999999999+23:59      /me 200  statement 200  known_at 200
+PASS no 5xx for instant spelling '9999-12-31T23:59:59.999999999+23:59'
+PASS huge offset offset=9223372036854775807: no 5xx, 200 empty or 422
+PASS huge offset offset=99999999999999999999: no 5xx, 200 empty or 422
+PASS huge offset limit=200&offset=4294967296: no 5xx, 200 empty or 422
+PASS statement `from` in another offset spelling == same instant in UTC
+PASS statement `to` in another offset spelling == same instant in UTC
+== t3_scale: 20 pass, 0 fail, 286 requests, 0 5xx, max latency 0.258s, p99 0.243s
+rc=0

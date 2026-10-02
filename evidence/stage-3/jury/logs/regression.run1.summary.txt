@@ -1,0 +1,26 @@
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-602-24391 (4789b946618da0b730befae6621b4c44ab6d56b055f60c765386e8ac93621b6a): failed to bind host port 127.0.0.1:36928/tcp: address already in use
+
+Run 'docker run --help' for more information
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf1d-602-4563 (25e684fe8123a28bf11aae0acd22963a6ab8ce28930e2c8c6929b34c10c52133): failed to bind host port 127.0.0.1:39860/tcp: address already in use
+
+Run 'docker run --help' for more information
+splits run1 rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+s1 c08_export_import run1 rc=1 :: 
+s1 c09_no5xx_envelope run1 rc=0 :: == c09_no5xx_envelope: 10 pass, 0 fail, 8910 requests, 0 5xx
+s1 c11_settlements run1 rc=0 :: == c11_settlements: 69 pass, 0 fail, 629 requests, 0 5xx
+s1 c12_retries_edges run1 rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+s1 c13_reset_vs_me run1 rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 23778 requests, 0 5xx
+s2 s2_lifecycle run1 rc=1 :: 
+s2 s2_funds run1 rc=0 :: == s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.017s, p99 0.017s
+s2 s2_errors run1 rc=0 :: == s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.015s, p99 0.013s
+s2 s2_idem run1 rc=0 :: == s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx, max latency 0.042s, p99 0.037s
+s2 s2_list run1 rc=0 :: == s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.014s, p99 0.013s
+s2 s2_fixture run1 rc=1 :: == s2_fixture: 79 pass, 5 fail, 258 requests, 0 5xx, max latency 0.020s, p99 0.016s
+FAIL E03 capture of seeded hold: 201, payment authorization_id a1 :: R(409 b'{"error":{"code":"authorization_expired","message":"authorization has expired"}}')
+FAIL E06 seeded hold remainder 1200 :: 
+FAIL F01 void seeded hold :: 
+FAIL A06 payment above available (seeded hold 2000 of 10000) refused :: R(201 b'{"payment_id":"p_1","from_user_id":"u_ada","from_handle":"ada","to_user_id":"u_cy","to_handle":"cy","amount":8001,"currency":"EUR","note":"","visibility":"public","request_id":null,"settlement_id":null,"authorization_id":null,"created_at":"2026-10-02T09:34:31.000001+00:00"}')
+FAIL A02 payment of exactly available (8000) allowed :: 
+FAILED: ['E03 capture of seeded hold: 201, payment authorization_id a1', 'E06 seeded hold remainder 1200', 'F01 void seeded hold', 'A06 payment above available (seeded hold 2000 of 10000) refused', 'A02 payment of exactly available (8000) allowed']
+s2 s2_expiry run1 rc=0 :: == s2_expiry: 30 pass, 0 fail, 95 requests, 0 5xx, max latency 0.014s, p99 0.012s
+s2 s2_race run1 rc=0 :: == s2_race: 54 pass, 0 fail, 10280 requests, 0 5xx, max latency 0.057s, p99 0.022s

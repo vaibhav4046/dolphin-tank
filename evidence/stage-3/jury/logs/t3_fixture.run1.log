@@ -1,0 +1,70 @@
+PASS J05 /me balance == fixture balance for every user (seeded payments not replayed against balances)
+PASS J05 total/available == balance, held 0
+PASS J03 activity returns seeded payments newest first by supplied created_at (not array order)
+PASS J03 seeded p_s3 created_at equals supplied instant
+PASS J03 seeded p_s1 created_at equals supplied instant
+PASS J03 seeded p_s2 created_at equals supplied instant
+PASS J18 seeded p_s1 revision 1: amount 500, effective_at == recorded_at == created_at (supplied), reason ''
+PASS J19 as_of before earliest seeded payment returns derived opening for ada (10000)
+PASS J19 statement opening_balance for ada == derived opening 10000; closing == current
+PASS J19 statement opening + deltas == closing for ada
+PASS J19 as_of before earliest seeded payment returns derived opening for bob (2500)
+PASS J19 statement opening_balance for bob == derived opening 2500; closing == current
+PASS J19 statement opening + deltas == closing for bob
+PASS J19 as_of before earliest seeded payment returns derived opening for cy (0)
+PASS J19 statement opening_balance for cy == derived opening 0; closing == current
+PASS J19 statement opening + deltas == closing for cy
+PASS J19 as_of before earliest seeded payment returns derived opening for dee (5000)
+PASS J19 statement opening_balance for dee == derived opening 5000; closing == current
+PASS J19 statement opening + deltas == closing for dee
+PASS J08 seeded as_of exactly at p_s1 for ada = 9500
+PASS J08 seeded as_of exactly at p_s1 for bob = 3000
+PASS J08 seeded as_of exactly at p_s1 for cy = 0
+PASS J08 seeded as_of exactly at p_s1 for dee = 5000
+PASS J29 sum constant at p_s1
+PASS J08 seeded as_of exactly at p_s2 for ada = 9500
+PASS J08 seeded as_of exactly at p_s2 for bob = 2800
+PASS J08 seeded as_of exactly at p_s2 for cy = 200
+PASS J08 seeded as_of exactly at p_s2 for dee = 5000
+PASS J29 sum constant at p_s2
+PASS J08 seeded as_of exactly at p_s3 for ada = 9400
+PASS J08 seeded as_of exactly at p_s3 for bob = 2800
+PASS J08 seeded as_of exactly at p_s3 for cy = 300
+PASS J08 seeded as_of exactly at p_s3 for dee = 5000
+PASS J29 sum constant at p_s3
+PASS J17 private seeded payment appears in sender's and receiver's statement
+PASS J17 third party's statement has none of them (dee untouched)
+PASS J17 statement oldest first
+PASS J19 correct seeded payment 500 -> 800 at its original instant: 201
+PASS J19 corrections do not change the opening balance (statement + far-past as_of)
+PASS J19 current balance moved by the 300 difference only
+PASS J29 current sum constant after correction
+PASS J19 new account opens at zero: statement opening 0, far-past as_of 0
+PASS J19 new account after receiving: current 50, as_of before payment 0
+PASS J03 omitted created_at: seeded payments carry a created_at <= first API payment
+PASS J03 omitted created_at is the reset instant (within 5 s of the API payment)
+PASS J03 both omitted seeded payments share the reset time
+PASS J18 omitted: revision 1 effective_at == recorded_at == created_at == reset time
+PASS J03 API payment strictly after seeded in statement order and activity newest-first
+PASS J05 balances after omit-ts seeded + 1 API payment: fixture 10000 - 10 API = 9990
+PASS J03 seeded created_at with -05:00 offset accepted
+PASS J03 offset created_at preserved as the same instant
+PASS J04 future seeded created_at (+1h) -> 422 validation_failed
+PASS J04 +1h: state unchanged (old users, tokens, balance, feed, statement)
+PASS J04 future seeded created_at (+1day) -> 422 validation_failed
+PASS J04 +1day: state unchanged (old users, tokens, balance, feed, statement)
+PASS J04 future seeded created_at (+1y) -> 422 validation_failed
+PASS J04 +1y: state unchanged (old users, tokens, balance, feed, statement)
+PASS J04 future seeded created_at (9999) -> 422 validation_failed
+PASS J04 9999: state unchanged (old users, tokens, balance, feed, statement)
+PASS J04 future seeded created_at (+30s) -> 422 validation_failed
+PASS J04 +30s: state unchanged (old users, tokens, balance, feed, statement)
+PASS J04 mixed valid+future seeded -> 422 and nothing applied
+PASS J04 recent past (now-2s) accepted
+PASS J04 malformed created_at garbage: 4xx validation, state unchanged
+PASS J04 malformed created_at naive: 4xx validation, state unchanged
+PASS J04 malformed created_at number: 4xx validation, state unchanged
+PASS J04 malformed created_at empty: 4xx validation, state unchanged
+INFO malformed created_at null ACCEPTED (204) - spec only names future
+== t3_fixture: 67 pass, 0 fail, 146 requests, 0 5xx, max latency 0.017s, p99 0.010s
+rc=0

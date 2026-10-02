@@ -1,0 +1,28 @@
+PASS J49 current: ada held 4000 (two seeded open holds), available 6000, total 10000; closed seeded ones hold nothing
+PASS J49 as_of far past (before reset): neither seeded hold exists yet (noct hold assumed created at reset; ct hold created 2h ago)
+PASS J49 as_of 3h ago: no holds
+PASS J49 as_of 1h ago: only the created_at-supplied hold (1000)
+PASS J49 as_of exactly its supplied created_at: hold present
+PASS J49 as_of just before its supplied created_at: absent
+PASS J49 as_of now: both holds (4000)
+PASS J46 as_of 2h30m ahead: ct hold expired at its deadline (2h), noct still open
+PASS J46 as_of 4h ahead: both expired by deadline
+PASS J44 receivers unaffected (bob)
+PASS J47 seeded open: closed_at null; seeded closed ones: key present (value unspecified)
+PASS J47 seeded created_at echoed for the supplied one
+PASS J29 sum of totals constant for seeded views
+PASS J50 statement contains no entries for seeded authorizations (no payments)
+PASS J52 round 0: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+PASS J52 round 1: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 2: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+PASS J52 round 3: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+PASS J52 round 4: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (600, 500, 100)
+PASS J29 sum constant
+PASS J52 round 5: correction(+500) vs authorize(500) with 600 available: not both; ada total/available never negative (100, 0, 100)
+PASS J29 sum constant
+== t3_seedholds: 26 pass, 0 fail, 118 requests, 0 5xx, max latency 0.013s, p99 0.010s
+rc=0

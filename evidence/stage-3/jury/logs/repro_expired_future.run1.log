@@ -1,0 +1,7 @@
+stage-2 (accepted)     /me held=2000 available=8000 | capture seeded open hold -> 201 None | pay 8001 (> available 8000) -> 409 | payment.created_at - now = None s
+stage-3 (under test)   /me held=2000 available=8000 | capture seeded open hold -> 409 authorization_expired | pay 8001 (> available 8000) -> 201 | payment.created_at - now = 7199 s
+PASS REGRESSION: accepted stage 2 captures the seeded open hold and refuses a payment above available
+FAIL stage 3: seeded expired-status hold with future expires_at must not move the server clock: capture 201, over-available payment 409, created_at ~ now :: (409, 201, 7199.224792)
+== repro_expired_future: 1 pass, 1 fail, 12 requests, 0 5xx, max latency 0.440s, p99 0.014s
+FAILED: ['stage 3: seeded expired-status hold with future expires_at must not move the server clock: capture 201, over-available payment 409, created_at ~ now']
+rc=1

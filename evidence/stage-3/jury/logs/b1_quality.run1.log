@@ -1,0 +1,149 @@
+PASS I19 /login@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /login@375 every input has a visible label (2 inputs)
+PASS I19 /login@375 measured text contrast >= 4.5 on 15 text nodes (min 6.66)
+PASS I19 /login@375 keyboard Tab walk reaches interactive controls (12 stops) and each shows a visible focus indication
+PASS I19 /signup@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /signup@375 every input has a visible label (3 inputs)
+PASS I19 /signup@375 measured text contrast >= 4.5 on 16 text nodes (min 6.66)
+PASS I19 /signup@375 keyboard Tab walk reaches interactive controls (13 stops) and each shows a visible focus indication
+PASS I19 /login@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /login@768 every input has a visible label (2 inputs)
+PASS I19 /login@768 measured text contrast >= 4.5 on 15 text nodes (min 6.66)
+PASS I19 /login@768 keyboard Tab walk reaches interactive controls (12 stops) and each shows a visible focus indication
+PASS I19 /signup@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /signup@768 every input has a visible label (3 inputs)
+PASS I19 /signup@768 measured text contrast >= 4.5 on 16 text nodes (min 6.66)
+PASS I19 /signup@768 keyboard Tab walk reaches interactive controls (13 stops) and each shows a visible focus indication
+PASS I19 /login@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /login@1280 every input has a visible label (2 inputs)
+PASS I19 /login@1280 measured text contrast >= 4.5 on 15 text nodes (min 6.66)
+PASS I19 /login@1280 keyboard Tab walk reaches interactive controls (12 stops) and each shows a visible focus indication
+PASS I19 /signup@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /signup@1280 every input has a visible label (3 inputs)
+PASS I19 /signup@1280 measured text contrast >= 4.5 on 16 text nodes (min 6.66)
+PASS I19 /signup@1280 keyboard Tab walk reaches interactive controls (13 stops) and each shows a visible focus indication
+PASS I19 /@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /@375 every input has a visible label (11 inputs)
+PASS I19 /@375 measured text contrast >= 4.5 on 51 text nodes (min 6.78)
+PASS I19 /@375 keyboard Tab walk reaches interactive controls (22 stops) and each shows a visible focus indication
+PASS I03 /@375 current-user visible
+PASS I03 /@375 current-handle visible
+PASS I03 /@375 logout-button visible
+PASS I03 /@375 current-handle exactly 'ada'
+PASS I03 /@375 current-user contains display name 'Ada'
+PASS I19 /requests@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /requests@375 every input has a visible label (1 inputs)
+PASS I19 /requests@375 measured text contrast >= 4.5 on 35 text nodes (min 6.78)
+PASS I19 /requests@375 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /requests@375 current-user visible
+PASS I03 /requests@375 current-handle visible
+PASS I03 /requests@375 logout-button visible
+PASS I03 /requests@375 current-handle exactly 'ada'
+PASS I03 /requests@375 current-user contains display name 'Ada'
+PASS I19 /split@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /split@375 every input has a visible label (3 inputs)
+PASS I19 /split@375 measured text contrast >= 4.5 on 24 text nodes (min 6.78)
+PASS I19 /split@375 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /split@375 current-user visible
+PASS I03 /split@375 current-handle visible
+PASS I03 /split@375 logout-button visible
+PASS I03 /split@375 current-handle exactly 'ada'
+PASS I03 /split@375 current-user contains display name 'Ada'
+PASS I19 /authorizations@375 no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS I19 /authorizations@375 every input has a visible label (6 inputs)
+PASS I19 /authorizations@375 measured text contrast >= 4.5 on 47 text nodes (min 6.78)
+PASS I19 /authorizations@375 keyboard Tab walk reaches interactive controls (16 stops) and each shows a visible focus indication
+PASS I03 /authorizations@375 current-user visible
+PASS I03 /authorizations@375 current-handle visible
+PASS I03 /authorizations@375 logout-button visible
+PASS I03 /authorizations@375 current-handle exactly 'ada'
+PASS I03 /authorizations@375 current-user contains display name 'Ada'
+PASS I19 /@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /@768 every input has a visible label (11 inputs)
+PASS I19 /@768 measured text contrast >= 4.5 on 51 text nodes (min 6.78)
+PASS I19 /@768 keyboard Tab walk reaches interactive controls (22 stops) and each shows a visible focus indication
+PASS I03 /@768 current-user visible
+PASS I03 /@768 current-handle visible
+PASS I03 /@768 logout-button visible
+PASS I03 /@768 current-handle exactly 'ada'
+PASS I03 /@768 current-user contains display name 'Ada'
+PASS I19 /requests@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /requests@768 every input has a visible label (1 inputs)
+PASS I19 /requests@768 measured text contrast >= 4.5 on 35 text nodes (min 6.78)
+PASS I19 /requests@768 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /requests@768 current-user visible
+PASS I03 /requests@768 current-handle visible
+PASS I03 /requests@768 logout-button visible
+PASS I03 /requests@768 current-handle exactly 'ada'
+PASS I03 /requests@768 current-user contains display name 'Ada'
+PASS I19 /split@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /split@768 every input has a visible label (3 inputs)
+PASS I19 /split@768 measured text contrast >= 4.5 on 24 text nodes (min 6.78)
+PASS I19 /split@768 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /split@768 current-user visible
+PASS I03 /split@768 current-handle visible
+PASS I03 /split@768 logout-button visible
+PASS I03 /split@768 current-handle exactly 'ada'
+PASS I03 /split@768 current-user contains display name 'Ada'
+PASS I19 /authorizations@768 no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS I19 /authorizations@768 every input has a visible label (6 inputs)
+PASS I19 /authorizations@768 measured text contrast >= 4.5 on 47 text nodes (min 6.78)
+PASS I19 /authorizations@768 keyboard Tab walk reaches interactive controls (16 stops) and each shows a visible focus indication
+PASS I03 /authorizations@768 current-user visible
+PASS I03 /authorizations@768 current-handle visible
+PASS I03 /authorizations@768 logout-button visible
+PASS I03 /authorizations@768 current-handle exactly 'ada'
+PASS I03 /authorizations@768 current-user contains display name 'Ada'
+PASS I19 /@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /@1280 every input has a visible label (11 inputs)
+PASS I19 /@1280 measured text contrast >= 4.5 on 51 text nodes (min 6.78)
+PASS I19 /@1280 keyboard Tab walk reaches interactive controls (22 stops) and each shows a visible focus indication
+PASS I03 /@1280 current-user visible
+PASS I03 /@1280 current-handle visible
+PASS I03 /@1280 logout-button visible
+PASS I03 /@1280 current-handle exactly 'ada'
+PASS I03 /@1280 current-user contains display name 'Ada'
+PASS I19 /requests@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /requests@1280 every input has a visible label (1 inputs)
+PASS I19 /requests@1280 measured text contrast >= 4.5 on 35 text nodes (min 6.78)
+PASS I19 /requests@1280 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /requests@1280 current-user visible
+PASS I03 /requests@1280 current-handle visible
+PASS I03 /requests@1280 logout-button visible
+PASS I03 /requests@1280 current-handle exactly 'ada'
+PASS I03 /requests@1280 current-user contains display name 'Ada'
+PASS I19 /split@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /split@1280 every input has a visible label (3 inputs)
+PASS I19 /split@1280 measured text contrast >= 4.5 on 24 text nodes (min 6.78)
+PASS I19 /split@1280 keyboard Tab walk reaches interactive controls (11 stops) and each shows a visible focus indication
+PASS I03 /split@1280 current-user visible
+PASS I03 /split@1280 current-handle visible
+PASS I03 /split@1280 logout-button visible
+PASS I03 /split@1280 current-handle exactly 'ada'
+PASS I03 /split@1280 current-user contains display name 'Ada'
+PASS I19 /authorizations@1280 no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS I19 /authorizations@1280 every input has a visible label (6 inputs)
+PASS I19 /authorizations@1280 measured text contrast >= 4.5 on 47 text nodes (min 6.78)
+PASS I19 /authorizations@1280 keyboard Tab walk reaches interactive controls (16 stops) and each shows a visible focus indication
+PASS I03 /authorizations@1280 current-user visible
+PASS I03 /authorizations@1280 current-handle visible
+PASS I03 /authorizations@1280 logout-button visible
+PASS I03 /authorizations@1280 current-handle exactly 'ada'
+PASS I03 /authorizations@1280 current-user contains display name 'Ada'
+PASS I19 navigation consistent across routes (same links on every signed-in screen)
+INFO nav links: [('/', '/requests', '/split', '/authorizations')]
+PASS I03 signup with short password shows auth-error and stays on /signup
+PASS I03 successful signup lands signed in: current-user 'Neo', current-handle 'neo_test'
+PASS I03 auth-error absent when no error
+PASS I04 new user wallet-balance 0.00 EUR, wallet-available shown, wallet-held absent
+PASS I07 new user feed: public payments of others listed; empty-activity only if nothing visible (API shows 1 visible)
+PASS I03 logout returns to /login and signed-in chrome is gone
+PASS I03 after logout, / redirects to /login
+PASS I03 wrong password: auth-error visible, still signed out
+PASS I03 login works; auth-error gone
+PASS I03 duplicate email shows auth-error
+PASS I01 signed-out /requests -> /login (no broken screen)
+PASS I01 signed-out /split -> /login (no broken screen)
+PASS I01 signed-out /authorizations -> /login (no broken screen)
+== b1_quality: 146 pass, 0 fail
+rc=0

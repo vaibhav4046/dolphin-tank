@@ -1,0 +1,59 @@
+PASS setup stage-1 state: 201s
+PASS J42 stage-1 export is 200 with track/format_version
+PASS J42 stage-3 imports the REAL stage-1 export: 204
+PASS J42 sessions survive: every stage-1 token (incl. a signed-up user's) works on stage 3; /me balances/total/available/held right
+PASS J42 activity feeds identical (ids, order, every stage-1 field incl. created_at preserved, not regenerated)
+PASS J42 requests identical (statuses, payment links, timestamps)
+PASS J42 every completed idempotent write replays on stage 3 as 200 with the ORIGINAL response (JSON-equal), no money moved
+PASS J42 balances unchanged after the replays (no replay against an already-net balance)
+PASS J42 key that failed 409 before export is reusable after import (first use -> 201)
+PASS setup: 7 distinct stage-1 payments
+PASS J18/J42 every imported payment has revision 1: original amount, effective_at == recorded_at == original created_at (incl. settlement members at committed_at)
+PASS J40/J42 imported settlement member p_5: effective_at == recorded_at == committed_at
+PASS J40/J42 imported settlement member p_6: effective_at == recorded_at == committed_at
+PASS J19/J42 ada opening == 10000 and invariants
+PASS J42 ada statement has exactly its 6 imported payments (+2 new ones for ada/bob)
+PASS J19/J42 bob opening == 2500 and invariants
+PASS J42 bob statement has exactly its 2 imported payments (+2 new ones for ada/bob)
+PASS J19/J42 cy opening == 4000 and invariants
+PASS J42 cy statement has exactly its 4 imported payments (+2 new ones for ada/bob)
+PASS J19/J42 op opening == 3000 and invariants
+PASS J42 op statement has exactly its 1 imported payments (+2 new ones for ada/bob)
+PASS J19/J42 zoe opening == 0 and invariants
+PASS J42 zoe statement has exactly its 1 imported payments (+2 new ones for ada/bob)
+PASS J08/J42 /me?as_of over the imported ledger == oracle at every payment instant and just before
+PASS J42 the pending request survived (rq1 pending for ada)
+PASS J42 pending request payable after import: 201, ada -1200
+PASS J42/J22 correcting an IMPORTED payment works (201 revision 2); ada -150, bob +150
+PASS J42 old payment key replay still returns the stage-1 ORIGINAL body after the correction
+PASS J29/J42 sum of all balances == seeded total after import + new activity
+PASS J41/J42 correcting imported settlement member p_5 -> 422 linked_payment_immutable
+PASS J41/J42 correcting imported settlement member p_6 -> 422 linked_payment_immutable
+PASS J42 re-importing the same stage-1 export replaces state (204) and restores it exactly (no duplicate payments)
+PASS J42 stage-3 imports the REAL stage-2 export (holds, captures, expired, voided, seeded): 204
+PASS J42 /me total/available/held identical to the stage-2 service for every user (holds accounted)
+PASS J42 authorizations list: same ids/order, every stage-2 field equal (status, captured_amount, payment_ids, remaining_amount, expires_at, created_at)
+PASS J47/J42 imported API-closed authorization a_2 (expired): closed_at filled in (RFC3339), remaining 0
+PASS J47/J42 imported API-closed authorization a_3 (captured): closed_at filled in (RFC3339), remaining 0
+PASS J47/J42 imported API-closed authorization a_4 (voided): closed_at filled in (RFC3339), remaining 0
+PASS J47/J42 imported API-closed authorization a_5 (expired): closed_at filled in (RFC3339), remaining 0
+PASS J47/J42 imported open authorization a_6: closed_at null (or already expired w/ closed_at)
+PASS J47/J42 imported open authorization a_seed_open: closed_at null (or already expired w/ closed_at)
+PASS J42 every stage-2 write (authorize, partial capture, final capture, payment) replays as 200 with the original response
+PASS J43/J42 correcting an IMPORTED capture payment -> 422 linked_payment_immutable
+PASS J18/J42 imported capture revision 1: original amount, effective_at == recorded_at == created_at
+PASS J19/J42 ada statement: opening == 20000 (pre-history), captures appear once each with authorization_id, no authorization entries, opening+deltas==closing==total
+PASS J45/J42 imported ledger replays holds: ada at a1.created_at has a1 held (>= 3000) and available = total - held, total/available consistent
+PASS J42 ada one day before everything: opening total, no holds (except seeded-at-reset)
+PASS J29/J42 sum of totals == seeded total (29000) after importing stage-2 state
+PASS J42 an imported OPEN hold can still be captured after import (final capture of 400 releases the rest)
+PASS setup: correction on stage-3 B
+PASS J51 stage-3 export imports into a fresh stage-3 service: 204
+PASS J51 round trip: /me, authorizations (incl. closed_at), statements (revisions, opening/closing) identical on the new instance
+PASS J51 revisions history preserved (rev1 + correction with recorded_at)
+PASS J51 correction idempotency survives export/import: replay -> 200 original revision
+PASS J51 same key different body after import -> 409 idempotency_key_reuse
+PASS J51 stale revision still detected after import (expected 1 vs 2) -> 409 stale_revision
+PASS J51 snapshot tokens: a pre-import-export snapshot is not required to survive (no assertion), but new ones work
+== t3_import: 57 pass, 0 fail, 216 requests, 0 5xx, max latency 0.014s, p99 0.010s
+rc=0

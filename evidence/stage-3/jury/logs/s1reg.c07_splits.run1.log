@@ -1,0 +1,99 @@
+PASS split 1000 among ada,bob,cy -> [334, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1 among ada,bob,cy -> [1, 0, 0]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 10 among ada,bob,cy -> [4, 3, 3]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 999 among ada,bob,cy -> [333, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 5 among ada,bob,cy,dee,eve -> [1, 1, 1, 1, 1]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000 among cy,ada,bob -> [334, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000 among bob,cy,ada -> [334, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000 among bob,cy,dee -> [334, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000 among cy,bob,ada -> [334, 333, 333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000 among ada -> [1000]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1 among bob,ada,cy -> [1, 0, 0]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 2 among bob,cy,ada -> [1, 1, 0]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1003 among ada,bob,cy,dee,eve,fay,gus,hal,ida,jon -> [101, 101, 101, 100, 100, 100, 100, 100, 100, 100]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 7 among ada,bob,cy,dee,eve,fay,gus,hal,ida,jon -> [1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000000000 among ada,bob,cy -> [333333334, 333333333, 333333333]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split 1000000000 among ada,bob,cy,dee,eve,fay,gus,hal,ida,jon -> [100000000, 100000000, 100000000, 100000000, 100000000, 100000000, 100000000, 100000000, 100000000, 100000000]
+PASS   requests = every participant except caller, same order, each for own share (0 included), caller is requester, pending
+PASS   shape: split_id,amount,currency,note,shares,requests,created_at
+PASS   shares differ by at most 1 and extra units go first
+PASS split creates no money movement (ada balance unchanged)
+PASS caller absent from participants: requests for all participants
+PASS only participant is caller: valid, one share, zero requests
+PASS default note is ''
+PASS split by zero-balance caller succeeds (no balance check)
+PASS split amount 0 -> 422 validation_failed and creates no request
+PASS split amount 1e9+1 -> 422 validation_failed and creates no request
+PASS split amount string -> 422 validation_failed and creates no request
+PASS split empty list -> 422 validation_failed and creates no request
+PASS split duplicate -> 422 validation_failed and creates no request
+PASS split caller duplicate -> 422 validation_failed and creates no request
+PASS split note 201 -> 422 validation_failed and creates no request
+PASS split unknown handle -> 404 not_found and creates no request
+PASS split unknown handle only -> 404 not_found and creates no request
+PASS bob sees only his split request, cy only hers, dee none
+PASS split is not a feed item; nothing in anyone's activity
+PASS bob cannot cancel/decline/pay-as-other: bob pays cy's request -> 403
+PASS pay split request rq_1 (bob 333)
+PASS pay split request rq_2 (cy 333)
+PASS pay split request rq_3 (cy 2)
+PASS pay split request rq_4 (bob 2)
+PASS pay split request rq_5 (dee 1)
+PASS pay split request rq_6 (bob 1)
+PASS pay split request rq_7 (cy 0)
+PASS pay split request rq_8 (dee 0)
+PASS pay split request rq_9 (dee 333)
+PASS pay split request rq_10 (eve 333)
+PASS pay split request rq_11 (bob 333)
+PASS pay split request rq_12 (bob 1)
+PASS pay split request rq_13 (cy 1)
+PASS pay split request rq_14 (dee 1)
+PASS pay split request rq_15 (eve 1)
+PASS after every split request paid in full, balances sum to seeded total
+PASS ada received exactly the sum of the other shares
+== c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx

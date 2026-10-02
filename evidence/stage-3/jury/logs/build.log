@@ -1,0 +1,47 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  355.8kB
+Step 1/12 : FROM golang:1.24-alpine AS build
+ ---> 8bee1901f1e5
+Step 2/12 : WORKDIR /src
+ ---> Running in 85c524e5b674
+ ---> Removed intermediate container 85c524e5b674
+ ---> e7cc40e68560
+Step 3/12 : COPY go.mod ./
+ ---> b88f3d31d642
+Step 4/12 : COPY *.go ./
+ ---> e415e7705ef7
+Step 5/12 : COPY web ./web
+ ---> 92b1e0cd7119
+Step 6/12 : RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/pocketful .
+ ---> Running in 8953613bc073
+ ---> Removed intermediate container 8953613bc073
+ ---> 2073c7ce7c4d
+Step 7/12 : FROM scratch
+ ---> 
+Step 8/12 : COPY --from=build /out/pocketful /pocketful
+ ---> 07a0ba57a7e9
+Step 9/12 : USER 65532:65532
+ ---> Running in 2df87bf0ec97
+ ---> Removed intermediate container 2df87bf0ec97
+ ---> 4ba5f2a41480
+Step 10/12 : ENV PORT=8080
+ ---> Running in 3c801e736ef1
+ ---> Removed intermediate container 3c801e736ef1
+ ---> 59af2c15afa7
+Step 11/12 : EXPOSE 8080
+ ---> Running in 505e0e8b101f
+ ---> Removed intermediate container 505e0e8b101f
+ ---> 6564d894e3ba
+Step 12/12 : ENTRYPOINT ["/pocketful"]
+ ---> Running in f062779db92e
+ ---> Removed intermediate container f062779db92e
+ ---> c6ea619eb091
+Successfully built c6ea619eb091
+Successfully tagged pocketful-s3-jury:latest
+
+real	0m17.869s
+user	0m0.019s
+sys	0m0.051s

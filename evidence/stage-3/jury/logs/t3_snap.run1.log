@@ -1,0 +1,49 @@
+ada payments 19
+PASS J34 first statement returns a non-empty opaque string snapshot token
+PASS J34 two reads return distinct tokens
+PASS setup: world changed (fresh statement differs from baseline)
+PASS J34 snapshot pages reproduce the frozen entries exactly (amounts, deltas, balance_after, revision, times) after new payments and corrections
+PASS J34 snapshot opening/closing frozen on every page
+PASS J35 snapshot limit=200 offset omitted returns frozen first 200 entries; has_more false
+PASS J34 the live statement did move on (new entries visible live)
+PASS J38 correction after the read does not change the snapshot: payment p_5 keeps frozen amount 197 (live now 0)
+PASS J37 snapshot offset=0 limit=19 of 19 -> has_more=False, 19 entries
+PASS J37 snapshot offset=0 limit=18 of 19 -> has_more=True, 18 entries
+PASS J37 snapshot offset=18 limit=1 of 19 -> has_more=False, 1 entries
+PASS J37 snapshot offset=19 limit=5 of 19 -> has_more=False, 0 entries
+PASS J37 snapshot offset=119 limit=5 of 19 -> has_more=False, 0 entries
+PASS J37 snapshot offset=17 limit=5 of 19 -> has_more=False, 2 entries
+PASS J37 snapshot offset=16 limit=2 of 19 -> has_more=True, 2 entries
+PASS J37 snapshot offset=16 limit=3 of 19 -> has_more=False, 3 entries
+PASS J37 snapshot offset=0 limit=1 of 19 -> has_more=True, 1 entries
+PASS J35 snapshot with no limit/offset: default limit 50 from 0
+PASS J35 snapshot + from=2020-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + to=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + known_at=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + from= -> 422 validation_failed
+PASS J35 snapshot + to= -> 422 validation_failed
+PASS J35 snapshot + known_at= -> 422 validation_failed
+PASS J35 snapshot + from=garbage -> 422 validation_failed
+PASS J35 snapshot + from=2020-01-01T00:00:00Z&to=2030-01-01T00:00:00Z&known_at=2030-01-01T00:00:00Z -> 422 validation_failed
+PASS J35 snapshot + unrecognised parameter ignored
+PASS J35 snapshot + limit=0 -> 422
+PASS J35 snapshot + limit=201 -> 422
+PASS J35 snapshot + limit=x -> 422
+PASS J35 snapshot + offset=-1 -> 422
+PASS J35 snapshot + offset=1.5 -> 422
+PASS J35 a 422 for params did not destroy the snapshot
+PASS J36 unknown token -> 404 not_found
+PASS J36 garbage token -> 404 not_found
+PASS J36 other user's token (bob presents ada's) -> 404 not_found
+PASS J36 stranger presents it -> 404 not_found
+PASS J36 empty snapshot value: refused without 5xx (404/422)
+PASS J36 snapshot requires auth: 401
+PASS J36 token still valid after >1s and other activity
+PASS J36 each user's own token works for them
+PASS J36 ada cannot use bob's token
+Traceback (most recent call last):
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/checks/t3_snap.py", line 98, in <module>
+    win = stmt(A, limit=3, **{"from": iso(x[5]), "to": iso(x[20]), "known_at": iso(dt.datetime.now(UTC))})
+                                                           ~^^^^
+IndexError: list index out of range
+rc=1

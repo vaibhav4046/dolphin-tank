@@ -1,0 +1,67 @@
+# Jury ledger - pocketful stage 3 (commit 3c7c41160655da780df7567ec93ee7ad8f1c8f79)
+
+Written from `stage-3.md` (sha256 2255d3f2181c22dc6eac6919bf7712197d812248bd9de8a7e59260ede6056e54, 177 lines, 10288 bytes - verified on disk)
+and `stage-1.md` before any source was read. One row per normative statement. `Check` names my own script in `checks/`
+(t3_*.py) or `browser/`; "shipped" = the harness report. Verdicts are filled at the end (see bottom: `VERDICT` column).
+
+| id | Requirement (spec) | Property I test | Check | Verdict |
+|---|---|---|---|---|
+| J01 | Every payment has `created_at`, RFC 3339 with offset; every endpoint returning a payment includes it | pay, request-pay, capture, settlement members, /activity, statement entry payment, revisions | t3_time | PASS t3_time (+capture/settlement/request-pay/activity/statement) |
+| J02 | `/activity` keeps ordering by `created_at` (newest first) | order after corrections and seeded created_at | t3_time | PASS t3_time |
+| J03 | Seeded payment may supply `created_at`; omission = reset time, before later API payments | seeded without ts <= first API payment ts; supplied echoed | t3_fixture | PASS t3_fixture |
+| J04 | Seeded `created_at` in the future -> 422 `validation_failed` from reset, no state change | future ts (+1s, +1d, far), state unchanged, prior state still served | t3_fixture | PASS t3_fixture (5 future values, mixed fixture, state unchanged) |
+| J05 | Fixture `balance` is balance after all seeded payments; loading them must not change it | /me balance == fixture balance, with seeded payments in both directions | t3_fixture | PASS t3_fixture |
+| J06 | `as_of` optional RFC 3339 with offset; naive/bare date/empty -> 422 | table of bad values, good values (Z, +hh:mm, -hh:mm, fractional) | t3_time | PASS t3_time (14 bad values, echo, offsets) |
+| J07 | No temporal params: existing money fields, current corrected values | /me unchanged shape, equals corrected current balance | t3_time | PASS t3_time |
+| J08 | `balance` as of T = after every payment with created_at <= T; inclusive at exactly T | as_of == created_at exactly, 1 us before, 1 us after | t3_time | PASS t3_time/t3_fixture (-1us/exact/+1us) |
+| J09 | as_of >= latest -> current; before earliest -> opening balance; `as_of` echoed exactly as given | far past/future; echoed string preserved incl. offset form | t3_time | PASS t3_time |
+| J10 | `/statement` `from`,`to` optional (defaults opening / now); limit/offset as `/requests` (1..200, 0+, 422 otherwise, plain digits) | defaults; limit 0/201/1e1/+4/4.0, offset -1 | t3_statement | PASS t3_statement |
+| J11 | Statement = caller's sent/received payments in `[from,to)` half-open, oldest first, each `delta` and `balance_after` | boundary at from, at to, exact instants | t3_statement | PASS t3_statement (random windows vs oracle, half-open at exact instants) |
+| J12 | Shape: `opening_balance`, `entries[{payment,delta,balance_after,revision,effective_at,recorded_at}]`, `closing_balance`, `has_more`, `snapshot` | key sets | t3_statement | PASS t3_statement |
+| J13 | Order by selected `effective_at` then payment id (bytewise ascending) | ties on equal effective_at; corrected payment reorders | t3_statement | PASS t3_statement/t3_corr (ties) |
+| J14 | `opening_balance` = balance immediately before `from`; `closing_balance` = immediately before `to` | equals /me?as_of at the instant just before; defaults | t3_statement | PASS t3_statement |
+| J15 | opening + sum(delta over full window) == closing; sent negative, received positive | invariant over many random windows | t3_statement, t3_prop | PASS t3_statement/t3_snap/t3_race |
+| J16 | Pagination never changes `balance_after`, opening, closing (full window) | pages concatenated == one big page, each page same opening/closing | t3_statement | PASS t3_statement |
+| J17 | Only caller's payments; visibility rules do not apply (private appear; others' public do not) | private payment both parties; third public absent | t3_statement | PASS t3_statement/t3_fixture |
+| J18 | Revision 1: amount as originally paid, effective_at = recorded_at = created_at; seeded supplied created_at is its recorded/effective time | revisions[0] fields | t3_corr | PASS t3_fixture/t3_corr/t3_import |
+| J19 | Opening balance = seeded ending minus net effect of seeded payments; corrections never change opening; new accounts open at 0; seeded history nonneg | statement opening with seeded payments; signup user opening 0 | t3_fixture | PASS t3_fixture/t3_import |
+| J20 | `POST /payments/{id}/corrections`: key required (400), original sender only (non-sender 403, receiver 403, stranger 403), unknown 404, no token 401 | table | t3_corr | PASS t3_corr |
+| J21 | Body: all fields required; expected_revision positive int; amount int 0..1e9; reason string 1..200; effective_at RFC3339 <= now; invalid -> 422 | field table incl. missing, null, wrong type (400 vs 422), future effective_at, 0, 201 chars, 1e9+1 | t3_corr | PASS t3_corr (wrong-typed non-amount fields answer 422; accepted either way) |
+| J22 | Correction changes neither parties nor visibility; appends immutable revision; 201 with payment_id, revision, amount, effective_at, recorded_at, reason | response shape; payment parties/visibility unchanged | t3_corr | PASS t3_corr |
+| J23 | Recorded times for one payment strictly increase | many fast corrections: recorded_at strictly increasing | t3_corr | PASS t3_corr/t3_race |
+| J24 | Stale expected revision -> 409 `stale_revision` | rev 1 after rev 2 | t3_corr | PASS t3_corr/t3_race |
+| J25 | Replay returns original revision with 200 even after newer revisions; different body same key -> 409 `idempotency_key_reuse` | replay after rev 2, 3 | t3_corr | PASS t3_corr/t3_race/t3_import |
+| J26 | Difference moves between the SAME two wallets atomically; increase debits sender, decrease debits receiver | balances sender/receiver, third wallet unchanged | t3_corr | PASS t3_corr |
+| J27 | Currently unaffordable debit -> 409 `insufficient_funds`; else any corrected balance negative at any effective-time boundary -> 409 `historical_overdraft`; boundary includes combined effect of all movements at that instant | constructed cases per rule incl. same-instant combined | t3_corr | PASS t3_corr (current vs historical, same-instant combined effect, receiver side) |
+| J28 | Either failure preserves balances, revision history, statements, idempotency state (key reusable) | snapshot of state before/after failure; retry same key after fixing | t3_corr | PASS t3_corr/t3_holds |
+| J29 | Sum of balances == seeded total in every historical view | sum over users for many (as_of,known_at) | t3_corr, t3_race | PASS every script |
+| J30 | Original payment and original idempotent responses unchanged; `/activity` shows ORIGINAL payment; corrections are not feed payments | activity item amount unchanged, count unchanged; original POST replay body equals original | t3_corr | PASS t3_corr |
+| J31 | `GET /payments/{id}/revisions` -> `{"revisions":[...]}` in order incl. rev 1 reason ""; only the two parties; third party 404 even for public; no token 401 | table | t3_corr | PASS t3_corr/t3_settle |
+| J32 | `known_at` on /me and /statement: latest revision recorded at-or-before; none recorded yet -> payment contributes nothing; omission = everything known when read begins; effective times applied; as_of inclusive; window half-open; future allowed; invalid/empty 422; echoed exactly | table + scenarios with sleeps | t3_known | PASS t3_known (note: /statement does not echo known_at; spec ambiguous) |
+| J33 | Statement: selected revision `amount` as `payment.amount`; zero-amount revisions appear with delta 0; no correction counted alongside the revision it replaces; with no corrections and no known_at behaviour unchanged | scenarios | t3_known, t3_statement | PASS t3_known/t3_statement |
+| J34 | First statement returns opaque `snapshot`; freezes revisions, window, balances, entries, default `to` | snapshot token present, page 2 after new payment/correction unchanged | t3_snap | PASS t3_snap |
+| J35 | `GET /statement?snapshot=&limit=&offset=` pages exact result; only limit/offset may accompany; from/to/known_at with snapshot -> 422 | combos | t3_snap | PASS t3_snap |
+| J36 | Unknown / another user's token / token from before reset -> 404; tokens last until reset; unrecognised params ignored | table incl. reset then reuse | t3_snap | PASS t3_snap (reset invalidates) |
+| J37 | Final partial page and offsets beyond the end report `has_more` correctly | offset == n, > n, partial | t3_snap | PASS t3_snap |
+| J38 | A correction may move a payment into/out of a window; snapshots unchanged during concurrent payments or corrections | storm with readers paging old snapshot | t3_snap, t3_race | PASS t3_snap (storm, 688 full reads) |
+| J39 | Concurrent corrections with the same expected revision cannot both succeed | N-way race, exactly one 201 per revision | t3_race | PASS t3_race x3 (+24-way x8 rounds) |
+| J40 | Settlement members keep original receipts/privacy; each member's revision 1 uses shared committed_at for effective_at and recorded_at | revisions of members | t3_settle | PASS t3_settle/t3_import |
+| J41 | Correcting a settlement member -> 422 `linked_payment_immutable` | member correction; state unchanged | t3_settle | PASS t3_settle/t3_import |
+| J42 | Accepts exports from stage-1 or stage-2 service; ledger imports and accounts for authorizations and captures | REAL stage-1 export and REAL stage-2 export (with holds, captures) imported into stage-3 | t3_import | PASS t3_import (REAL stage-1 and stage-2 exports) |
+| J43 | Capture payments immutable: correction -> 422 `linked_payment_immutable` | capture correction | t3_settle | PASS t3_holds/t3_import |
+| J44 | `/me?as_of=T&known_at=K`: balance=total, available=total-held, held; all four describe the same view | invariants over many views | t3_holds | FAIL F2: as_of=authorization.created_at shows available<0 / held>total (25/25) - t3_holds H5 |
+| J45 | Hold starts at authorization creation; nonfinal capture reduces it at capture time; final capture/void/expiry release remainder at that event's time; expiry at `expires_at` | timeline views at/around each event | t3_holds | PASS timeline probes with events >1 s apart; FAIL in same-second case (F2) |
+| J46 | Non-expiry events known at server event time; once creation known, expiry deadline known; queries beyond now: open hold expires at deadline; without as_of use instant request began | known_at before creation vs after; future as_of | t3_holds | PASS t3_holds/t3_seedholds |
+| J47 | Authorizations expose `closed_at` (null while open; event time when closed) | per terminal path | t3_holds | PASS t3_holds/t3_misc/t3_import |
+| J48 | Historical total follows effective/recorded rules; correction rejected 409 `historical_overdraft` if total OR available negative at any past boundary under latest known revisions; insufficient_funds takes precedence | hold-driven historical overdraft | t3_holds | PASS t3_holds H4 (available negative at a past boundary -> historical_overdraft) |
+| J49 | Seeded open holds created at reset unless `created_at` supplied; seeded closed holds need no lifecycle | seeded hold views | t3_holds | PASS t3_seedholds (but see J58 / F1) |
+| J50 | Statement contains money movements only (no authorize/release/expiry); captures appear exactly once with links; old snapshots unchanged after lifecycle action | statement contents with holds | t3_holds | PASS t3_holds/t3_seedholds |
+| J51 | Stage-3 export/import: revisions, opening balances, closed_at, snapshots? (not required), idempotent replay of corrections after import | round trip | t3_import | PASS t3_import part C (round trip, correction replay after import) |
+| J52 | Concurrent ops equal some serial order; sum constant, total never negative, opening+deltas==closing | storm with live observers (>= 3 runs) | t3_race | PASS t3_race x3, t3_snap storm (50-way burst t3_scale) |
+| J53 | Stage-1/2 requirements still hold (R01..R90, S01..S66) | re-run my stage-1 c01..c13 and stage-2 s2_* against stage-3 image | regression | FAIL F1: s2_fixture 79 pass/5 fail on stage-3 (stage-2 image passes); all other stage-1 (c01-c13) and stage-2 scripts pass |
+| J54 | stage-1\ and stage-2\ folders untouched vs accepted 0024598 / f33035a (T63) | git diff empty | git | PASS git diff empty (stage-1 vs 0024598, stage-2 vs f33035a) |
+| J55 | Image builds from clean checkout, no network at runtime (T62); starts from RUN.md as written | build --no-cache; --internal network | build | PASS docker build --no-cache 17.9 s; RUN.md verbatim; --internal network; fonts/CSS/JS from image |
+| J56 | Browser product still works (T64) | b1..b6 against stage-3 image | browser | PASS b1 146, b2 84, b3 82, b4 19, b5 18, b6 26 |
+| J57 | No 5xx anywhere | status sweep in every script | all | PASS 0 5xx in every run |
+
+| J58 | (stage-2 carry-over) Seeded fixture matrix: seeded `status` may be expired with ANY expires_at (stage-2: at least an hour from reset, in the past or future); open seeded holds hold funds; server clock unaffected | reset with expired-status hold, expires_at +2h: payment created_at ~ now, seeded open hold capturable, over-available payment 409 | repro_expired_future, s2_fixture | FAIL F1: payment.created_at +7199 s, seeded open hold 409 authorization_expired, over-available payment 201 |

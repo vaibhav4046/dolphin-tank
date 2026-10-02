@@ -1,0 +1,21 @@
+seed 45
+payments 14 revisions 29
+PASS J32 660 random (as_of, known_at) /me views (incl. recorded_at -1us/exact/+1us, before first record, future): total == oracle, echoes exact, balance=total=available, held 0
+PASS J29 sum of balances == seeded total in every sampled (as_of, known_at) view
+INFO statement echoes known_at: False
+INFO statement echoes known_at: False
+INFO statement echoes known_at: False
+INFO statement echoes known_at: False
+PASS J32/J33 120 statements with known_at (+ windows): selected revisions (latest recorded <= known_at), payments not yet recorded absent, ordering by selected effective_at, amount/delta/balance_after/opening/closing == oracle, entry.recorded_at <= known_at
+PASS J32 known_at before any record: ada statement empty, opening == closing == opening balance
+PASS J32 known_at before any record: /me total == opening for ada
+PASS J32 known_at before any record: bob statement empty, opening == closing == opening balance
+PASS J32 known_at before any record: /me total == opening for bob
+PASS J32 known_at before any record: cy statement empty, opening == closing == opening balance
+PASS J32 known_at before any record: /me total == opening for cy
+PASS J32 known_at far future == omitted known_at
+PASS J33 every payment appears exactly once in its sender's current statement
+PASS J32 known_at far-future for /me allowed
+PASS J32 known_at empty / naive -> 422 on statement and me
+== t3_known: 13 pass, 0 fail, 1052 requests, 0 5xx, max latency 0.013s, p99 0.002s
+rc=0

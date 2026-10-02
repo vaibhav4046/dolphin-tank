@@ -1,0 +1,19 @@
+expired-status +2h (future expires_at) payment.created_at - local now = +7199.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 0, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status": "expired", "expires_at": "2026-10-02T09:41:12+00:00", "payment_id": null, "payment_ids": [], "created_at": "2026-10-02T07:41:12+00:00", "closed_at": "2026-10-02T09:41:12+00:00"}
+expired-status -2h (past expires_at) payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 0, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status": "expired", "expires_at": "2026-10-02T05:41:12+00:00", "payment_id": null, "payment_ids": [], "created_at": "2026-10-02T07:41:12+00:00", "closed_at": "2026-10-02T05:41:12+00:00"}
+captured +48h                payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 2000, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status": "captured", "expires_at": "2026-10-04T07:41:13+00:00", "payment_id": null, "payment_ids": [], "created_at": "2026-10-02T07:41:13+00:00", "closed_at": "2026-10-02T07:41:13+00:00"}
+voided +48h                  payment.created_at - local now = -0.0 s ; /me held=0 available=9990
+   authorization: {"authorization_id": "a1", "from_user_id": "u_ada", "from_handle": "ada", "to_user_id": "u_bob", "to_handle": "bob", "amount": 2000, "captured_amount": 0, "remaining_amount": 0, "currency": "EUR", "note": "", "visibility": "public", "status": "voided", "expires_at": "2026-10-04T07:41:13+00:00", "payment_id": null, "payment_ids": [], "created_at": "2026-10-02T07:41:13+00:00", "closed_at": "2026-10-02T07:41:13+00:00"}
+Traceback (most recent call last):
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/checks/probe_clock_jump.py", line 16, in <module>
+    t = setup(f)
+        ^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/checks/lib.py", line 111, in setup
+    reset(f)
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/checks/lib.py", line 99, in reset
+    assert r.s == 204, r
+           ^^^^^^^^^^
+AssertionError: R(422 b'{"error":{"code":"validation_failed","message":"created_at must not be in the future"}}')
+rc=1

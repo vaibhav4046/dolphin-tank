@@ -1,0 +1,95 @@
+PASS I05 amount '15' submits 1500 minor units (1 request)
+PASS I05 amount '15': payment succeeded, pay-error absent, balance 85.00 EUR
+PASS I05 amount '15.00' submits 1500 minor units (1 request)
+PASS I05 amount '15.00': payment succeeded, pay-error absent, balance 85.00 EUR
+PASS I05 amount '15.5' submits 1550 minor units (1 request)
+PASS I05 amount '15.5': payment succeeded, pay-error absent, balance 84.50 EUR
+PASS I05 amount '15.005' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '15.005': balance unchanged
+PASS I05 amount 'abc' rejected: NO request sent, pay-error shown with text
+PASS I05 amount 'abc': balance unchanged
+PASS I05 amount '' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '': balance unchanged
+PASS I05 amount '-5' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '-5': balance unchanged
+PASS I05 amount '1,5' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '1,5': balance unchanged
+PASS I05 amount '15.123' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '15.123': balance unchanged
+PASS I05 amount '1e2' rejected: NO request sent, pay-error shown with text
+PASS I05 amount '1e2': balance unchanged
+INFO amount '0' -> requests 0 body None pay-error True
+PASS I05 amount '0': no 5xx / no crash (page still responsive)
+INFO amount '0.00' -> requests 0 body None pay-error True
+PASS I05 amount '0.00': no 5xx / no crash (page still responsive)
+INFO amount '.5' -> requests 0 body None pay-error True
+PASS I05 amount '.5': no 5xx / no crash (page still responsive)
+INFO amount '15.' -> requests 0 body None pay-error True
+PASS I05 amount '15.': no 5xx / no crash (page still responsive)
+INFO amount ' 15 ' -> requests 1 body {"to_handle":"bob","amount":1500,"note":"t","visibility":"public"} pay-error False
+PASS I05 amount ' 15 ': no 5xx / no crash (page still responsive)
+INFO amount '+15' -> requests 0 body None pay-error True
+PASS I05 amount '+15': no 5xx / no crash (page still responsive)
+INFO amount '15.50' -> requests 1 body {"to_handle":"bob","amount":1550,"note":"t","visibility":"public"} pay-error False
+PASS I05 amount '15.50': no 5xx / no crash (page still responsive)
+INFO amount '007' -> requests 1 body {"to_handle":"bob","amount":700,"note":"t","visibility":"public"} pay-error False
+PASS I05 amount '007': no 5xx / no crash (page still responsive)
+PASS I06 balance fell once (80.00 EUR)
+PASS I06 pay form keeps its values after success
+INFO unchanged resubmits: 3 POSTs, 1 distinct Idempotency-Key, 1 distinct body (same key+body = replay, not a second payment)
+PASS I06 resubmitting the unchanged form sends no SECOND payment: every POST carries the same key and identical body
+PASS I06 balance still 80.00 EUR, server balance 8000
+PASS I06 feed contains exactly one such payment; pay-error absent
+PASS I06 changed note => a NEW payment: 2 distinct keys in total; balance 60.00
+PASS I06 changed amount => another payment (3 distinct keys, balance 50.00)
+PASS I06 changed visibility => another payment (4 distinct keys, balance 40.00)
+PASS I06 changed handle => another payment (balance 30.00)
+PASS I07 activity-list children are activity items, newest first (API order equals DOM order)
+PASS I07 item carries data-visibility
+PASS I07 parties text contains both handles
+PASS I07 amount exactly formatted
+PASS I07 note element present (exact note)
+PASS I07 empty-note payment: activity-note present and empty; data-visibility private
+PASS I07 empty-activity shown instead of list when nothing visible
+PASS I04 JPY wallet-balance exactly '1200 JPY'
+PASS I04 JPY no decimal point issue: wallet-available equals total when no holds
+PASS I05 JPY amount '15.0' (too many decimals) rejected locally, no request
+PASS I05 JPY amount '15' submits 15 minor units
+PASS I07 JPY feed amount exactly formatted
+PASS I04 BHD wallet-balance exactly '100.000 BHD'
+PASS I04 BHD no decimal point issue: wallet-available equals total when no holds
+PASS I05 BHD amount '1.5555' (too many decimals) rejected locally, no request
+PASS I05 BHD amount '1.5' submits 1500 minor units
+PASS I07 BHD feed amount exactly formatted
+PASS I12 refused payment shows pay-error (insufficient funds)
+PASS I12 balance refreshed to 0.10 EUR
+PASS I12 feed refreshed: the payment made elsewhere is listed
+PASS I12 all pay inputs preserved
+PASS I12 no pay-uncertain on a confirmed refusal
+PASS I12 recovery: amended payment succeeds, pay-error gone, balance 0.05 EUR
+PASS I16 seeded hold: wallet-available is 10.00 EUR right after reset, held 90.00 EUR shown, total 100.00
+PASS I16 data-amount on all three
+PASS I16 available is the headline: font-size greater than total and held
+PASS I12 payment above AVAILABLE refused with pay-error although total is 100.00
+PASS I12 payment of exactly available succeeds; available 0.00, held stays 90.00
+PASS I16 wallet-held absent at zero; wallet-available present
+PASS I14 lost response (after commit) -> pay-uncertain shown with text
+PASS I14 pay-error NOT shown for an unknown outcome
+PASS I14 server committed exactly once so far (balance 88.00)
+PASS I14 form values kept
+PASS I14 unchanged retry sends the SAME Idempotency-Key and byte-identical body
+PASS I14 money moved exactly once (server balance 88.00; UI 88.00 EUR)
+PASS I14 pay-uncertain and pay-error both removed after the successful retry
+PASS I14 feed refreshed with exactly one such payment
+PASS I14 request lost before commit -> pay-uncertain, balance unchanged
+PASS I14 retry after never-committed request: same key/body, now moves money once
+PASS I14 network down -> pay-uncertain (not pay-error)
+PASS I14 back online: retry works once; money moved once
+PASS I11 later refresh shows 75.00 EUR first
+PASS I11 LATEST WINS: delayed earlier response (100.00) did not overwrite 75.00
+PASS I11 wallet-refresh did not clear the pay form
+PASS I11 feed latest wins too: newest payment listed after out-of-order responses
+PASS I11 three overlapping refreshes answered out of order: UI ends on the LAST requested read
+PASS I11 a final plain refresh converges to the server balance
+== b2_wallet: 84 pass, 0 fail
+rc=0

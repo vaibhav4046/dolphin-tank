@@ -1,0 +1,51 @@
+PASS request body exact shape, status pending, payment_id null, no visibility field
+PASS self_request 422
+PASS unknown payer 404
+PASS note>200 -> 422
+PASS request of 1e9 from a payer holding 5000 is created pending (no balance check)
+PASS third party cy sees neither bob->ada request
+PASS ada (payer) and bob (requester) both see it
+PASS requests never appear in any feed
+PASS incoming/outgoing split
+PASS GET /requests returns only caller's requests (cy: 1e9 outgoing only)
+PASS GET /requests newest first (deterministic even within one second)
+PASS created_at non-increasing
+PASS paging: 3+3+1 pages, has_more true,true,false, no overlap, union == all
+PASS paging: limit==total -> has_more false; limit=total-1 -> true; offset==total -> empty,false
+PASS status filter
+PASS requester pays -> 403 forbidden
+PASS stranger pays -> 403 forbidden
+PASS requester declines -> 403 forbidden
+PASS stranger declines -> 403 forbidden
+PASS payer cancels -> 403 forbidden
+PASS stranger cancels -> 403 forbidden
+PASS 403s changed nothing
+PASS unknown request pay -> 404 not_found
+PASS unknown request decline -> 404 not_found
+PASS unknown request cancel -> 404 not_found
+PASS decline -> 200 status declined, same shape
+PASS decline twice -> 200 current state
+PASS pay after decline -> 409 request_not_pending, no money
+PASS cancel declined -> 409 request_not_pending
+PASS cancel -> 200 status cancelled
+PASS cancel twice -> 200
+PASS pay cancelled -> 409; decline cancelled -> 409
+PASS pay -> 201 payment with request_id, private, amount, parties
+PASS balances moved once
+PASS request paid with payment_id
+PASS decline/cancel paid -> 409
+PASS private payment from request hidden from cy, visible to ada and bob, same body
+PASS pay already paid (new key) -> 409 request_not_pending
+PASS decline with empty body and no key -> 200
+PASS cancel with no body, junk key header -> 200
+PASS pay above balance -> 409 insufficient_funds, nothing changed
+PASS after funding the same request is payable (201), balance 3000
+PASS money conserved
+PASS cy (third party) sees public+default, not private
+PASS sender and receiver both see the private payment; identical body
+PASS feed newest first (reverse creation)
+PASS activity paging has_more
+PASS private payment between other two users hidden from third party dee
+PASS seeded payments: public visible to cy, private not; ids preserved; balances not replayed
+OBS pay 0-amount request -> 201 b'{"payment_id":"p_3","from_user_id":"u_bob","from_handle":"bob","to_user_id":"u_ada","to_handle":"ada","amount":0,"currency":"EUR","note":"","visibility":"public","request_id":"rq_1","settlement_id":nu'
+== c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
