@@ -1,0 +1,14 @@
+live (expired)         as_of created+1us (5000, 1000, 4000, 5000) | expires-1us (5000, 1000, 4000, 5000) | expires (5000, 0, 5000, 5000)
+export #1              status=open closed_at=None
+import #1 -> 204
+after import #1        as_of created+1us (5000, 1000, 4000, 5000) | expires-1us (5000, 1000, 4000, 5000) | expires (5000, 0, 5000, 5000)
+export #2              status=open closed_at=None
+export #2 == export #1: True
+import #2 -> 204
+after import #2        as_of created+1us (5000, 1000, 4000, 5000) | expires-1us (5000, 1000, 4000, 5000) | expires (5000, 0, 5000, 5000)
+export #3              status=open closed_at=None
+export #3 == export #2: True
+import #3 -> 204
+after import #3        as_of created+1us (5000, 1000, 4000, 5000) | expires-1us (5000, 1000, 4000, 5000) | expires (5000, 0, 5000, 5000)
+export #4              status=open closed_at=None
+export #4 == export #3: True

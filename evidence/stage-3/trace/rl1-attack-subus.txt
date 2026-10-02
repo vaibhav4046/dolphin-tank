@@ -1,0 +1,39 @@
+#### subus
+PASS SUBUS[7 digits .6096069]: import 204
+PASS SUBUS[7 digits .6096069]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS SUBUS[7 digits .6096069]: 36 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS SUBUS[7 digits .6096069]: Σ balances preserved by import
+PASS SUBUS[7 digits .6096069]: export -> import -> export byte-identical
+PASS SUBUS[7 digits .6096069] post-import: authorize after import 201
+PASS SUBUS[7 digits .6096069] post-import: new hold tracks the real clock and carries the exact ttl
+PASS SUBUS[7 digits .6096069] post-import: nonfinal + final capture 201, each later than its hold
+PASS SUBUS[7 digits .6096069] post-import: void 200 and pay 201 after import
+PASS SUBUS[7 digits .6096069] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS SUBUS[7 digits .6096069] post-import: void of the imported open hold 200
+PASS SUBUS[7 digits .6096069] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS SUBUS[9 digits .609606999]: import 204
+PASS SUBUS[9 digits .609606999]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS SUBUS[9 digits .609606999]: 36 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS SUBUS[9 digits .609606999]: Σ balances preserved by import
+PASS SUBUS[9 digits .609606999]: export -> import -> export byte-identical
+PASS SUBUS[9 digits .609606999] post-import: authorize after import 201
+PASS SUBUS[9 digits .609606999] post-import: new hold tracks the real clock and carries the exact ttl
+PASS SUBUS[9 digits .609606999] post-import: nonfinal + final capture 201, each later than its hold
+PASS SUBUS[9 digits .609606999] post-import: void 200 and pay 201 after import
+PASS SUBUS[9 digits .609606999] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS SUBUS[9 digits .609606999] post-import: void of the imported open hold 200
+PASS SUBUS[9 digits .609606999] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)]: import 204
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)]: 24 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)]: Σ balances preserved by import
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)]: export -> import -> export byte-identical
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: authorize after import 201
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: new hold tracks the real clock and carries the exact ttl
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: nonfinal + final capture 201, each later than its hold
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: void 200 and pay 201 after import
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: void of the imported open hold 200
+PASS SUBUS[sub-us only .000000400 (truncates to the whole second)] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+#### subus done in 0.3s
+== rl1_attack subus: 36 pass, 0 fail, 470 requests

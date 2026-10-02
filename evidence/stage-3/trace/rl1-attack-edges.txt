@@ -1,0 +1,64 @@
+#### edges
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: import 204
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: Σ balances preserved by import
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: export -> import -> export byte-identical
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: authorize after import 201
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: new hold tracks the real clock and carries the exact ttl
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: nonfinal + final capture 201, each later than its hold
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: void 200 and pay 201 after import
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: void of the imported open hold 200
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS EDGE[exact == created_at (:00.000000, equal -> untouched)]: GET /authorizations created_at is the microsecond instant
+PASS EDGE[created_exact :00.000001]: import 204
+PASS EDGE[created_exact :00.000001]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS EDGE[created_exact :00.000001]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS EDGE[created_exact :00.000001]: Σ balances preserved by import
+PASS EDGE[created_exact :00.000001]: export -> import -> export byte-identical
+PASS EDGE[created_exact :00.000001] post-import: authorize after import 201
+PASS EDGE[created_exact :00.000001] post-import: new hold tracks the real clock and carries the exact ttl
+PASS EDGE[created_exact :00.000001] post-import: nonfinal + final capture 201, each later than its hold
+PASS EDGE[created_exact :00.000001] post-import: void 200 and pay 201 after import
+PASS EDGE[created_exact :00.000001] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS EDGE[created_exact :00.000001] post-import: void of the imported open hold 200
+PASS EDGE[created_exact :00.000001] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS EDGE[created_exact :00.000001]: GET /authorizations created_at is the microsecond instant
+PASS EDGE[created_exact :59.999999]: import 204
+PASS EDGE[created_exact :59.999999]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS EDGE[created_exact :59.999999]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS EDGE[created_exact :59.999999]: Σ balances preserved by import
+PASS EDGE[created_exact :59.999999]: export -> import -> export byte-identical
+PASS EDGE[created_exact :59.999999] post-import: authorize after import 201
+PASS EDGE[created_exact :59.999999] post-import: new hold tracks the real clock and carries the exact ttl
+PASS EDGE[created_exact :59.999999] post-import: nonfinal + final capture 201, each later than its hold
+PASS EDGE[created_exact :59.999999] post-import: void 200 and pay 201 after import
+PASS EDGE[created_exact :59.999999] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS EDGE[created_exact :59.999999] post-import: void of the imported open hold 200
+PASS EDGE[created_exact :59.999999] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS EDGE[created_exact :59.999999]: GET /authorizations created_at is the microsecond instant
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: import 204
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: 36 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: Σ balances preserved by import
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: export -> import -> export byte-identical
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)] post-import: authorize after import 201
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)] post-import: new hold tracks the real clock and carries the exact ttl
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)] post-import: nonfinal + final capture 201, each later than its hold
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)] post-import: void 200 and pay 201 after import
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)] post-import: views around every new event (72) satisfy the invariants and equal the spec rules computed from the export
+PASS EDGE[created_exact :59.999999, ttl 1 s (hold lives 1 us)]: GET /authorizations created_at is the microsecond instant
+PASS EDGE[created_exact :00.000000, ttl 1 s]: import 204
+PASS EDGE[created_exact :00.000000, ttl 1 s]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS EDGE[created_exact :00.000000, ttl 1 s]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS EDGE[created_exact :00.000000, ttl 1 s]: Σ balances preserved by import
+PASS EDGE[created_exact :00.000000, ttl 1 s]: export -> import -> export byte-identical
+PASS EDGE[created_exact :00.000000, ttl 1 s] post-import: authorize after import 201
+PASS EDGE[created_exact :00.000000, ttl 1 s] post-import: new hold tracks the real clock and carries the exact ttl
+PASS EDGE[created_exact :00.000000, ttl 1 s] post-import: nonfinal + final capture 201, each later than its hold
+PASS EDGE[created_exact :00.000000, ttl 1 s] post-import: void 200 and pay 201 after import
+PASS EDGE[created_exact :00.000000, ttl 1 s] post-import: views around every new event (72) satisfy the invariants and equal the spec rules computed from the export
+PASS EDGE[created_exact :00.000000, ttl 1 s]: GET /authorizations created_at is the microsecond instant
+#### edges done in 0.5s
+== rl1_attack edges: 61 pass, 0 fail, 790 requests

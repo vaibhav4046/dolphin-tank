@@ -1,0 +1,15 @@
+#### bad
+PASS BAD[created_exact next second :00.000000]: import refused with 422
+PASS BAD[created_exact next second :00.000000]: refused import left the previous state byte-identical
+PASS BAD[created_exact 1 us before the second]: import refused with 422
+PASS BAD[created_exact 1 us before the second]: refused import left the previous state byte-identical
+PASS BAD[created_exact garbage]: import refused with 422
+PASS BAD[created_exact garbage]: refused import left the previous state byte-identical
+PASS BAD[created_exact empty string]: import refused with 422
+PASS BAD[created_exact empty string]: refused import left the previous state byte-identical
+PASS BAD[created_exact no offset]: import refused with 422
+PASS BAD[created_exact no offset]: refused import left the previous state byte-identical
+PASS BAD[created_exact space separator inside second but other day]: import refused with 422
+PASS BAD[created_exact space separator inside second but other day]: refused import left the previous state byte-identical
+#### bad done in 0.0s
+== rl1_attack bad: 12 pass, 0 fail, 26 requests

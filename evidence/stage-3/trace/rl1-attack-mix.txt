@@ -1,0 +1,15 @@
+#### mix
+PASS MIX[partly captured/voided/expired/open in one second]: import 204
+PASS MIX[partly captured/voided/expired/open in one second]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (4 holds)
+PASS MIX[partly captured/voided/expired/open in one second]: 108 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS MIX[partly captured/voided/expired/open in one second]: Σ balances preserved by import
+PASS MIX[partly captured/voided/expired/open in one second]: export -> import -> export byte-identical
+PASS MIX[partly captured/voided/expired/open in one second] post-import: authorize after import 201
+PASS MIX[partly captured/voided/expired/open in one second] post-import: new hold tracks the real clock and carries the exact ttl
+PASS MIX[partly captured/voided/expired/open in one second] post-import: nonfinal + final capture 201, each later than its hold
+PASS MIX[partly captured/voided/expired/open in one second] post-import: void 200 and pay 201 after import
+PASS MIX[partly captured/voided/expired/open in one second] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS MIX[partly captured/voided/expired/open in one second] post-import: void of the imported open hold 200
+PASS MIX[partly captured/voided/expired/open in one second] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+#### mix done in 0.1s
+== rl1_attack mix: 12 pass, 0 fail, 236 requests

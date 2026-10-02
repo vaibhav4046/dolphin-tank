@@ -1,0 +1,13 @@
+LEGACY {'authorization_id': 'a_1', 'status': 'voided', 'created_at': '2026-10-02T21:49:08+00:00', 'created_exact': '2026-10-02T21:49:08.143424+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': '2026-10-02T21:49:08.157778+00:00', 'captured_amount': 0}
+LEGACY {'authorization_id': 'a_2', 'status': 'captured', 'created_at': '2026-10-02T21:49:08+00:00', 'created_exact': '2026-10-02T21:49:08.156720+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': '2026-10-02T21:49:08.157779+00:00', 'captured_amount': 700}
+LEGACY {'authorization_id': 'a_3', 'status': 'open', 'created_at': '2026-10-02T21:49:08+00:00', 'created_exact': '2026-10-02T21:49:08.157248+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': None, 'captured_amount': 100}
+LEGACY {'authorization_id': 'a_4', 'status': 'open', 'created_at': '2026-10-02T21:49:08+00:00', 'created_exact': '2026-10-02T21:49:08.157249+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': None, 'captured_amount': 0}
+HEAD import: 204
+HEAD   {'authorization_id': 'a_1', 'status': 'voided', 'created_at': '2026-10-02T21:49:08.143424+00:00', 'created_exact': '2026-10-02T21:49:08.143424+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': '2026-10-02T21:49:08.157778+00:00', 'captured_amount': 0}
+HEAD   {'authorization_id': 'a_2', 'status': 'captured', 'created_at': '2026-10-02T21:49:08.156720+00:00', 'created_exact': '2026-10-02T21:49:08.156720+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': '2026-10-02T21:49:08.157779+00:00', 'captured_amount': 700}
+HEAD   {'authorization_id': 'a_3', 'status': 'open', 'created_at': '2026-10-02T21:49:08.157248+00:00', 'created_exact': '2026-10-02T21:49:08.157248+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': None, 'captured_amount': 100}
+HEAD   {'authorization_id': 'a_4', 'status': 'open', 'created_at': '2026-10-02T21:49:08.157249+00:00', 'created_exact': '2026-10-02T21:49:08.157249+00:00', 'expires_at': '2026-10-02T21:49:09+00:00', 'closed_at': None, 'captured_amount': 0}
+HEAD views ada for a_1 voided created+1us (9050, 1000, 8050, 9050) created+1ms (9050, 1000, 8050, 9050)
+HEAD views ada for a_2 captured created+1us (9050, 1700, 7350, 9050) created+1ms (9050, 2600, 6450, 9050)
+HEAD views ada for a_3 open created+1us (9050, 2600, 6450, 9050) created+1ms (8350, 900, 7450, 8350)
+HEAD views ada for a_4 open created+1us (9050, 2600, 6450, 9050) created+1ms (8350, 900, 7450, 8350)

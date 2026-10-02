@@ -1,0 +1,18 @@
+#### ttl1
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored open]: import 204
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored open]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored open]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored open]: Σ balances preserved by import
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored open]: export -> import -> export byte-identical
+PASS TTL1[open]: held at .899999 / .9 / .999999 / whole+1 s == 0 / 4000 / 3000 (capture 1000 at .95) / 0
+PASS TTL1[open]: GET /authorizations expires_at unchanged (whole+1 s), status expired, closed_at == expires_at
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored expired]: import 204
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored expired]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (1 holds)
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored expired]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored expired]: Σ balances preserved by import
+PASS TTL1[exact .9 s, expires_at = whole+1 s is 100 ms away, stored expired]: export -> import -> export byte-identical
+   OBSERVATION O-1 TTL1[stored expired]: held at .899999 / .9 / .999999 / whole+1 s = [0, 0, 0, 0] (documented HeldAt rule: a stored-expired hold holds nothing)
+PASS TTL1[expired]: stored-expired hold holds nothing at every instant (O-1, pre-existing HeldAt rule, not R-L1)
+PASS TTL1[expired]: GET /authorizations expires_at unchanged (whole+1 s), status expired, closed_at == expires_at
+#### ttl1 done in 0.1s
+== rl1_attack ttl1: 14 pass, 0 fail, 132 requests

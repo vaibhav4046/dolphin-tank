@@ -1,0 +1,15 @@
+#### allafter
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them]: import 204
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (2 holds)
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them]: 72 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them]: Σ balances preserved by import
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them]: export -> import -> export byte-identical
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: authorize after import 201
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: new hold tracks the real clock and carries the exact ttl
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: nonfinal + final capture 201, each later than its hold
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: void 200 and pay 201 after import
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: void of the imported open hold 200
+PASS ALLAFTER[all payments later than created_at (floor); exact before and after them] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+#### allafter done in 0.1s
+== rl1_attack allafter: 12 pass, 0 fail, 200 requests

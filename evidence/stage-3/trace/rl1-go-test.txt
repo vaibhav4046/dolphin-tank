@@ -1,0 +1,462 @@
+=== RUN   TestForgeDeriveHandle
+--- PASS: TestForgeDeriveHandle (0.00s)
+=== RUN   TestForgePasswordHash
+    auth_test.go:31: 2 hashes in 16.6469ms (pbkdf2-sha256$60000$b1a506304c)
+--- PASS: TestForgePasswordHash (0.03s)
+=== RUN   TestForgeSignupLogin
+--- PASS: TestForgeSignupLogin (0.09s)
+=== RUN   TestResetTTLMatrix
+--- PASS: TestResetTTLMatrix (0.31s)
+=== RUN   TestAPICreatedAuthorizationUsesFixtureTTL
+--- PASS: TestAPICreatedAuthorizationUsesFixtureTTL (0.01s)
+=== RUN   TestSeededAuthorizationStatusMatrix
+--- PASS: TestSeededAuthorizationStatusMatrix (0.01s)
+=== RUN   TestSeededHoldSumAgainstBalance
+--- PASS: TestSeededHoldSumAgainstBalance (0.13s)
+=== RUN   TestSeededAuthorizationRejections
+--- PASS: TestSeededAuthorizationRejections (0.72s)
+=== RUN   TestStage2ExportRoundTripAndImportRejections
+--- PASS: TestStage2ExportRoundTripAndImportRejections (0.02s)
+=== RUN   TestImportWithStaleCountersNeverReusesIDs
+--- PASS: TestImportWithStaleCountersNeverReusesIDs (0.02s)
+=== RUN   TestIdempotencyOnAuthorizePath
+--- PASS: TestIdempotencyOnAuthorizePath (0.04s)
+=== RUN   TestIdempotencyOnCapturePath
+--- PASS: TestIdempotencyOnCapturePath (0.04s)
+=== RUN   TestSettlementIsHeldAware
+--- PASS: TestSettlementIsHeldAware (0.01s)
+=== RUN   TestCaptureStormThroughIdempotent
+    authz_race_test.go:224: 70 of 100 captures succeeded, 1000 moved of 1000
+--- PASS: TestCaptureStormThroughIdempotent (0.01s)
+=== RUN   TestFinalCaptureRaceExactlyOne
+--- PASS: TestFinalCaptureRaceExactlyOne (0.01s)
+=== RUN   TestAuthorizePaySettleRaceAtAvailableBoundary
+--- PASS: TestAuthorizePaySettleRaceAtAvailableBoundary (0.01s)
+=== RUN   TestExportDuringAuthorizationWritersKeepsInvariants
+    authz_race_test.go:424: 35 exports, 2450 authorizations created, 535 captures under 50 writers
+--- PASS: TestExportDuringAuthorizationWritersKeepsInvariants (0.93s)
+=== RUN   TestImportAndResetDuringAuthorizationWritersNeverPanic
+    authz_race_test.go:455: 341 imports under 50 writers (created 29348, captured 10816)
+--- PASS: TestImportAndResetDuringAuthorizationWritersNeverPanic (0.91s)
+=== RUN   TestCaptureReplaySurvivesExportImport
+--- PASS: TestCaptureReplaySurvivesExportImport (0.02s)
+=== RUN   TestShortTTLWithInjectedClock
+--- PASS: TestShortTTLWithInjectedClock (0.01s)
+=== RUN   TestConcurrentAuthorizeAndPayExactlyTenWin
+--- PASS: TestConcurrentAuthorizeAndPayExactlyTenWin (0.01s)
+=== RUN   TestRealClockExpiryNeedsNoRequestAtTheDeadline
+--- PASS: TestRealClockExpiryNeedsNoRequestAtTheDeadline (1.15s)
+=== RUN   TestAuthzEffectiveExpiry
+--- PASS: TestAuthzEffectiveExpiry (0.00s)
+=== RUN   TestAuthzTTLBoundary
+--- PASS: TestAuthzTTLBoundary (0.00s)
+=== RUN   TestAuthzAuthorize
+--- PASS: TestAuthzAuthorize (0.00s)
+=== RUN   TestAuthzCaptureRules
+--- PASS: TestAuthzCaptureRules (0.00s)
+=== RUN   TestAuthzCapturePrecedence
+--- PASS: TestAuthzCapturePrecedence (0.00s)
+=== RUN   TestAuthzExtendedCapture
+--- PASS: TestAuthzExtendedCapture (0.00s)
+=== RUN   TestAuthzVoid
+--- PASS: TestAuthzVoid (0.00s)
+=== RUN   TestAuthzHeldFundsCannotFundNewPayments
+--- PASS: TestAuthzHeldFundsCannotFundNewPayments (0.00s)
+=== RUN   TestAuthzList
+--- PASS: TestAuthzList (0.00s)
+=== RUN   TestAuthzMe
+--- PASS: TestAuthzMe (0.00s)
+=== RUN   TestAuthzPaymentJSONHasAuthorizationID
+--- PASS: TestAuthzPaymentJSONHasAuthorizationID (0.00s)
+=== RUN   TestAuthzReindex
+--- PASS: TestAuthzReindex (0.00s)
+=== RUN   TestAuthzOptValidators
+--- PASS: TestAuthzOptValidators (0.00s)
+=== RUN   TestAuthzCaptureRace
+--- PASS: TestAuthzCaptureRace (0.00s)
+=== RUN   TestAuthzFinalCaptureRaceMixedAmounts
+--- PASS: TestAuthzFinalCaptureRaceMixedAmounts (0.00s)
+=== RUN   TestAuthzAuthorizePayRace
+--- PASS: TestAuthzAuthorizePayRace (0.00s)
+=== RUN   TestAuthzVoidCaptureRace
+    authz_test.go:1046: void won 299, capture won 1
+--- PASS: TestAuthzVoidCaptureRace (0.01s)
+=== RUN   TestAuthzRandomWalk
+    authz_test.go:1108: successful ops: map[authorize:706 capture:337 pay:356 void:315]
+--- PASS: TestAuthzRandomWalk (0.23s)
+=== RUN   TestCanonBody
+--- PASS: TestCanonBody (0.00s)
+=== RUN   TestIntFromNumber
+--- PASS: TestIntFromNumber (0.00s)
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future
+=== RUN   TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead
+--- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour (0.08s)
+    --- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/far_future (0.04s)
+    --- PASS: TestSeededExpiredHoldWithFutureDeadlineKeepsStage2Behaviour/two_hours_ahead (0.04s)
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds
+=== RUN   TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at
+--- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset (0.06s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_in_the_past (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_two_hours_ahead (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_just_over_an_hour_ahead (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/deadline_2099 (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_created_at_with_microseconds (0.01s)
+    --- PASS: TestSeededExpiredHoldClosedAtNeverAfterReset/explicit_past_created_at (0.01s)
+=== RUN   TestSeededExpiredHoldHoldsNothingInAnyView
+--- PASS: TestSeededExpiredHoldHoldsNothingInAnyView (0.02s)
+=== RUN   TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline
+--- PASS: TestStoredOpenHoldStillDerivesClosedAtFromItsDeadline (0.01s)
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future
+=== RUN   TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead
+--- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds (0.01s)
+    --- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/far_future (0.00s)
+    --- PASS: TestImportedExpiredHoldWithFutureDeadlineKeepsClockAndHolds/two_hours_ahead (0.00s)
+=== RUN   TestResetNeverMovesTheClockAhead
+    clock_ratchet_test.go:351: Reset: fixtures with a future value
+          rejected 422 (5): payment created_at +2h; payment created_at 2099; hold created_at +2h; hold created_at +2h, expired; hold created_at 2099, voided
+          accepted    (10): expired deadline +2h (skew 0s); expired deadline 2099 (skew 0s); expired deadline -2h (skew 0s); open deadline +2h (skew 0s); open deadline -2h (skew 0s); captured deadline +2h (skew 0s); captured deadline 2099 (skew 0s); voided deadline +2h (skew 0s); voided deadline 2099 (skew 0s); expired +2h with past created_at (skew 0s)
+--- PASS: TestResetNeverMovesTheClockAhead (0.16s)
+=== RUN   TestImportNeverMovesTheClockAheadStage3Export
+    clock_ratchet_test.go:440: Import of a stage-3 export, 74 positions set to +2h
+          rejected 422 (1): revisions[10].recorded_at
+          accepted    (73): payments[0].created_at (skew 0s); payments[1].created_at (skew 0s); payments[2].created_at (skew 0s); payments[3].created_at (skew 0s); payments[4].created_at (skew 0s); payments[5].created_at (skew 0s); payments[6].created_at (skew 0s); payments[7].created_at (skew 0s); payments[8].created_at (skew 0s); payments[9].created_at (skew 0s); payments[10].created_at (skew 0s); payments[11].created_at (skew 0s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); revisions[0].recorded_at (skew 0s); revisions[1].recorded_at (skew 0s); revisions[2].recorded_at (skew 0s); revisions[3].recorded_at (skew 0s); revisions[4].recorded_at (skew 0s); revisions[5].recorded_at (skew 0s); revisions[6].recorded_at (skew 0s); revisions[7].recorded_at (skew 0s); revisions[8].recorded_at (skew 0s); revisions[9].recorded_at (skew 0s); revisions[11].recorded_at (skew 0s); revisions[12].recorded_at (skew 0s); revisions[0].effective_at (skew 0s); revisions[1].effective_at (skew 0s); revisions[2].effective_at (skew 0s); revisions[3].effective_at (skew 0s); revisions[4].effective_at (skew 0s); revisions[5].effective_at (skew 0s); revisions[6].effective_at (skew 0s); revisions[7].effective_at (skew 0s); revisions[8].effective_at (skew 0s); revisions[9].effective_at (skew 0s); revisions[10].effective_at (skew 0s); revisions[11].effective_at (skew 0s); revisions[12].effective_at (skew 0s); authorizations[0].created_at (skew 0s); authorizations[1].created_at (skew 0s); authorizations[2].created_at (skew 0s); authorizations[3].created_at (skew 0s); authorizations[4].created_at (skew 0s); authorizations[5].created_at (skew 0s); authorizations[6].created_at (skew 0s); authorizations[7].created_at (skew 0s); authorizations[8].created_at (skew 0s); authorizations[9].created_at (skew 0s); authorizations[10].created_at (skew 0s); authorizations[1].closed_at (skew 0s); authorizations[2].closed_at (skew 0s); authorizations[3].closed_at (skew 0s); authorizations[4].closed_at (skew 0s); authorizations[5].closed_at (skew 0s); authorizations[6].closed_at (skew 0s); authorizations[9].closed_at (skew 0s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 0s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); authorizations[8].expires_at (skew 0s); authorizations[9].expires_at (skew 0s); authorizations[10].expires_at (skew 0s); authorizations[8].created_exact (skew 0s); authorizations[9].created_exact (skew 0s); authorizations[10].created_exact (skew 0s)
+--- PASS: TestImportNeverMovesTheClockAheadStage3Export (0.13s)
+=== RUN   TestImportNeverMovesTheClockAheadStage2Export
+    clock_ratchet_test.go:490: Import of a stage-2 export, 38 probes
+          rejected 422 (0): 
+          accepted    (38): payments[0].created_at (skew 0s); payments[1].created_at (skew 0s); payments[2].created_at (skew 0s); payments[3].created_at (skew 0s); payments[4].created_at (skew 0s); payments[5].created_at (skew 0s); payments[6].created_at (skew 0s); payments[7].created_at (skew 0s); payments[8].created_at (skew 0s); payments[9].created_at (skew 0s); requests[0].created_at (skew 0s); requests[1].created_at (skew 0s); requests[2].created_at (skew 0s); requests[3].created_at (skew 0s); authorizations[0].created_at (skew 0s); authorizations[1].created_at (skew 0s); authorizations[2].created_at (skew 0s); authorizations[3].created_at (skew 0s); authorizations[4].created_at (skew 0s); authorizations[5].created_at (skew 0s); authorizations[6].created_at (skew 0s); authorizations[7].created_at (skew 0s); authorizations[0].expires_at (skew 0s); authorizations[1].expires_at (skew 0s); authorizations[2].expires_at (skew 0s); authorizations[3].expires_at (skew 0s); authorizations[4].expires_at (skew 0s); authorizations[5].expires_at (skew 0s); authorizations[6].expires_at (skew 0s); authorizations[7].expires_at (skew 0s); new expired hold, deadline 2026 (skew 0s); new expired hold, deadline 2099 (skew 0s); new captured hold, deadline 2026 (skew 0s); new captured hold, deadline 2099 (skew 0s); new voided hold, deadline 2026 (skew 0s); new voided hold, deadline 2099 (skew 0s); new open hold, deadline 2026 (skew 0s); new open hold, deadline 2099 (skew 0s)
+--- PASS: TestImportNeverMovesTheClockAheadStage2Export (0.03s)
+=== RUN   TestReindexClockIgnoresInstantsAfterNow
+--- PASS: TestReindexClockIgnoresInstantsAfterNow (0.00s)
+=== RUN   TestProbeFutureRecordedRevisionThenCorrection
+    clock_ratchet_test.go:625: PROBE: VERDICT NO - the exported state re-imports
+--- PASS: TestProbeFutureRecordedRevisionThenCorrection (0.00s)
+=== RUN   TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing
+--- PASS: TestCorrectAfterFutureRecordedRevisionStaysStrictlyIncreasing (0.00s)
+=== RUN   TestRejectedCorrectionDoesNotMoveClockToFutureRevision
+--- PASS: TestRejectedCorrectionDoesNotMoveClockToFutureRevision (0.00s)
+=== RUN   TestCorrectPastRevisionRecordsAtTheStamp
+--- PASS: TestCorrectPastRevisionRecordsAtTheStamp (0.00s)
+=== RUN   TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater
+--- PASS: TestCorrectAfterNanosecondRecordedRevisionIsStrictlyLater (0.00s)
+=== RUN   TestCorrectDirectionsZeroAndOriginalUntouched
+--- PASS: TestCorrectDirectionsZeroAndOriginalUntouched (0.00s)
+=== RUN   TestCorrectErrorPrecedence
+--- PASS: TestCorrectErrorPrecedence (0.00s)
+=== RUN   TestCorrectHistoricalOverdraftAndFunds
+--- PASS: TestCorrectHistoricalOverdraftAndFunds (0.00s)
+=== RUN   TestCorrectCombinedInstantAndHoldBoundary
+--- PASS: TestCorrectCombinedInstantAndHoldBoundary (0.00s)
+=== RUN   TestCorrectSameSecondPaymentThenHold
+--- PASS: TestCorrectSameSecondPaymentThenHold (0.00s)
+=== RUN   TestCorrectBackToBackRecordedTimesRise
+--- PASS: TestCorrectBackToBackRecordedTimesRise (0.00s)
+=== RUN   TestCorrectBoundaryAmountsAndReasons
+--- PASS: TestCorrectBoundaryAmountsAndReasons (0.00s)
+=== RUN   TestCorrectRaceSameExpectedRevision
+--- PASS: TestCorrectRaceSameExpectedRevision (0.00s)
+=== RUN   TestCorrectConcurrentWithEverythingElse
+--- PASS: TestCorrectConcurrentWithEverythingElse (0.73s)
+=== RUN   TestParseCorrectionBodyAccepts
+--- PASS: TestParseCorrectionBodyAccepts (0.00s)
+=== RUN   TestParseCorrectionBodyRejects
+--- PASS: TestParseCorrectionBodyRejects (0.00s)
+=== RUN   TestAuthorizationRoutesRequireAuth
+--- PASS: TestAuthorizationRoutesRequireAuth (0.02s)
+=== RUN   TestAuthorizationHTTPLifecycle
+--- PASS: TestAuthorizationHTTPLifecycle (0.04s)
+=== RUN   TestMeInstantParsing
+--- PASS: TestMeInstantParsing (0.04s)
+=== RUN   TestMeAsOfBoundaries
+--- PASS: TestMeAsOfBoundaries (0.04s)
+=== RUN   TestStatementQueryValidation
+--- PASS: TestStatementQueryValidation (0.04s)
+=== RUN   TestStatementShapeAndSnapshotRules
+--- PASS: TestStatementShapeAndSnapshotRules (0.05s)
+=== RUN   TestHistoryRoutesAuthAndMethods
+--- PASS: TestHistoryRoutesAuthAndMethods (0.05s)
+=== RUN   TestCorrectionMatrix
+--- PASS: TestCorrectionMatrix (0.04s)
+=== RUN   TestRevisionsMatrix
+--- PASS: TestRevisionsMatrix (0.04s)
+=== RUN   TestCorrectionInsufficientFundsKeepsKeyUsable
+--- PASS: TestCorrectionInsufficientFundsKeepsKeyUsable (0.04s)
+=== RUN   TestCorrectionHistoricalOverdraft
+--- PASS: TestCorrectionHistoricalOverdraft (0.04s)
+=== RUN   TestCorrectionOfCaptureIsLinked
+--- PASS: TestCorrectionOfCaptureIsLinked (0.04s)
+=== RUN   TestConcurrentCorrectionsSameRevision
+--- PASS: TestConcurrentCorrectionsSameRevision (0.04s)
+=== RUN   TestResetCreatedAtIsKeptVerbatim
+--- PASS: TestResetCreatedAtIsKeptVerbatim (0.05s)
+=== RUN   TestResetOmittedCreatedAtIsResetTimeBeforeLaterPayments
+--- PASS: TestResetOmittedCreatedAtIsResetTimeBeforeLaterPayments (0.06s)
+=== RUN   TestResetRejectsBadOrFutureCreatedAtWithoutChange
+--- PASS: TestResetRejectsBadOrFutureCreatedAtWithoutChange (0.46s)
+=== RUN   TestResetBalancesAndOpeningBalances
+--- PASS: TestResetBalancesAndOpeningBalances (0.06s)
+=== RUN   TestResetOpeningBalanceToleratesNegativeDerivedOpening
+--- PASS: TestResetOpeningBalanceToleratesNegativeDerivedOpening (0.01s)
+=== RUN   TestResetSeededHoldsHaveCreatedAtAndClosedAt
+--- PASS: TestResetSeededHoldsHaveCreatedAtAndClosedAt (0.06s)
+=== RUN   TestResetSeededHoldsInHistoricalViews
+--- PASS: TestResetSeededHoldsInHistoricalViews (0.05s)
+=== RUN   TestResetSeedsEveryStoredFactAndRoundTripsByteForByte
+--- PASS: TestResetSeedsEveryStoredFactAndRoundTripsByteForByte (0.01s)
+=== RUN   TestHistoryInstants
+--- PASS: TestHistoryInstants (0.00s)
+=== RUN   TestHistoryStampAdvancesReadNowDoesNot
+--- PASS: TestHistoryStampAdvancesReadNowDoesNot (0.00s)
+=== RUN   TestHistoryMeAsOfMatrix
+--- PASS: TestHistoryMeAsOfMatrix (0.00s)
+=== RUN   TestHistoryKnownAtMatrix
+--- PASS: TestHistoryKnownAtMatrix (0.00s)
+=== RUN   TestHistoryHoldTimeline
+--- PASS: TestHistoryHoldTimeline (0.00s)
+=== RUN   TestHistorySeededHolds
+--- PASS: TestHistorySeededHolds (0.00s)
+=== RUN   TestHistoryActivityOrder
+--- PASS: TestHistoryActivityOrder (0.00s)
+=== RUN   TestHistoryReindexVerifiesHistory
+--- PASS: TestHistoryReindexVerifiesHistory (0.00s)
+=== RUN   TestHistoryRandomWalkInvariants
+--- PASS: TestHistoryRandomWalkInvariants (5.45s)
+=== RUN   TestHoldIsAffordableAtItsCreatedAtOverHTTP
+    holds_one_clock_test.go:210: 30 rounds, 1350 views at event instants +-1us, all consistent with the public timestamps
+--- PASS: TestHoldIsAffordableAtItsCreatedAtOverHTTP (0.07s)
+=== RUN   TestHoldInstantsAcrossBackToBackLifecycle
+    holds_one_clock_test.go:262: 11 lifecycles, 594 views at event instants +-1us
+--- PASS: TestHoldInstantsAcrossBackToBackLifecycle (0.01s)
+=== RUN   TestAuthorizeStampsMicrosecondsWithExactTTL
+--- PASS: TestAuthorizeStampsMicrosecondsWithExactTTL (0.00s)
+=== RUN   TestHistoricalViewsNeverNegative
+=== RUN   TestHistoricalViewsNeverNegative/no_corrections
+    holds_views_test.go:95: 180000 views: 0 negative totals, 0 negative available
+=== RUN   TestHistoricalViewsNeverNegative/with_corrections
+    holds_views_test.go:95: 180000 views: 0 negative totals, 0 negative available
+--- PASS: TestHistoricalViewsNeverNegative (0.55s)
+    --- PASS: TestHistoricalViewsNeverNegative/no_corrections (0.25s)
+    --- PASS: TestHistoricalViewsNeverNegative/with_corrections (0.30s)
+=== RUN   TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt
+--- PASS: TestHoldNeverAppearsBeforeTheMoneyThatPaidForIt (0.00s)
+=== RUN   TestIdemConcurrentIdentical
+--- PASS: TestIdemConcurrentIdentical (0.01s)
+=== RUN   TestIdemChangedBodyIs409BeforeValidation
+--- PASS: TestIdemChangedBodyIs409BeforeValidation (0.01s)
+=== RUN   TestIdemFailedKeyStaysReusable
+--- PASS: TestIdemFailedKeyStaysReusable (0.01s)
+=== RUN   TestIdemScopedPerUserAndPath
+--- PASS: TestIdemScopedPerUserAndPath (0.01s)
+=== RUN   TestIdemReplayIsByJSONValueAndSurvivesChange
+--- PASS: TestIdemReplayIsByJSONValueAndSurvivesChange (0.01s)
+=== RUN   TestExportWithExactHoldsRoundTripsByteForByte
+--- PASS: TestExportWithExactHoldsRoundTripsByteForByte (0.00s)
+=== RUN   TestImportRejectsBadCreatedExact
+--- PASS: TestImportRejectsBadCreatedExact (0.01s)
+=== RUN   TestImportMutationSweepNeverPanicsAndNeverHalfApplies
+    import_attack_test.go:322: 6885 mutated documents over 521 nodes: 5525 refused cleanly, 1360 accepted
+--- PASS: TestImportMutationSweepNeverPanicsAndNeverHalfApplies (7.53s)
+=== RUN   TestResetMutationSweepNeverPanicsAndNeverHalfApplies
+    import_attack_test.go:354: 1510 mutated documents over 115 nodes: 1264 refused cleanly, 246 accepted
+--- PASS: TestResetMutationSweepNeverPanicsAndNeverHalfApplies (12.06s)
+=== RUN   TestImportLegacyCreatedExactPlacesHoldAtTheMicrosecond
+--- PASS: TestImportLegacyCreatedExactPlacesHoldAtTheMicrosecond (0.00s)
+=== RUN   TestForgePay
+--- PASS: TestForgePay (0.00s)
+=== RUN   TestForgeNewIDSkipsSeeded
+--- PASS: TestForgeNewIDSkipsSeeded (0.00s)
+=== RUN   TestForgeRequestLifecycle
+--- PASS: TestForgeRequestLifecycle (0.00s)
+=== RUN   TestForgeFeedAndListing
+--- PASS: TestForgeFeedAndListing (0.00s)
+=== RUN   TestForgeOverdraftRace
+--- PASS: TestForgeOverdraftRace (0.00s)
+=== RUN   TestForgePayRequestRace
+--- PASS: TestForgePayRequestRace (0.00s)
+=== RUN   TestForgeSplitSharesTable
+--- PASS: TestForgeSplitSharesTable (0.00s)
+=== RUN   TestForgeSplit
+--- PASS: TestForgeSplit (0.00s)
+=== RUN   TestForgeSplitsPaidInFull
+--- PASS: TestForgeSplitsPaidInFull (0.00s)
+=== RUN   TestForgeExportRoundTripAndReindexRejects
+--- PASS: TestForgeExportRoundTripAndReindexRejects (0.01s)
+=== RUN   TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant
+--- PASS: TestSeededHoldWithoutCreatedAtIsPlacedAtTheResetInstant (0.04s)
+=== RUN   TestSeededViewsNeverNegativeAtAnySeededInstant
+--- PASS: TestSeededViewsNeverNegativeAtAnySeededInstant (0.04s)
+=== RUN   TestImportedHoldWithoutCreatedAtKeepsViewsSound
+--- PASS: TestImportedHoldWithoutCreatedAtKeepsViewsSound (0.03s)
+=== RUN   TestRoutingAndEnvelope
+--- PASS: TestRoutingAndEnvelope (0.02s)
+=== RUN   TestAuthRequired
+--- PASS: TestAuthRequired (0.02s)
+=== RUN   TestParseObject
+--- PASS: TestParseObject (0.00s)
+=== RUN   TestLimitOffsetRejected
+--- PASS: TestLimitOffsetRejected (0.02s)
+=== RUN   TestIdempotencyHeaderAndBody
+--- PASS: TestIdempotencyHeaderAndBody (0.02s)
+=== RUN   TestRecoverPanics
+2026/10/02 22:54:50 panic serving GET /x: boom
+goroutine 3931 [running]:
+runtime/debug.Stack()
+	C:/Program Files/Go/src/runtime/debug/stack.go:26 +0x5e
+pocketful.TestRecoverPanics.recoverPanics.func2.1()
+	C:/Users/lalwa/AppData/Local/Temp/rl1src/stage-3/server.go:82 +0x8d
+panic({0x7ff6ccdccda0?, 0x7ff6cce8d7d0?})
+	C:/Program Files/Go/src/runtime/panic.go:860 +0x13a
+pocketful.TestRecoverPanics.func1({0x28977573560?, 0x30?}, 0x3b0f375ab008?)
+	C:/Users/lalwa/AppData/Local/Temp/rl1src/stage-3/server_test.go:168 +0x25
+net/http.HandlerFunc.ServeHTTP(0x28977573560?, {0x7ff6cce910c0?, 0x3b0f37c7c1c0?}, 0x3b0f37c7c1c0?)
+	C:/Program Files/Go/src/net/http/server.go:2286 +0x29
+pocketful.TestRecoverPanics.recoverPanics.func2({0x7ff6cce910c0?, 0x3b0f37c7c1c0?}, 0x3b0f37bc8301?)
+	C:/Users/lalwa/AppData/Local/Temp/rl1src/stage-3/server.go:85 +0x6c
+net/http.HandlerFunc.ServeHTTP(0x7ff6cce91448?, {0x7ff6cce910c0?, 0x3b0f37c7c1c0?}, 0x7ff6ccef44d4?)
+	C:/Program Files/Go/src/net/http/server.go:2286 +0x29
+pocketful.do({0x7ff6cce8f840, 0x3b0f3753a2d0}, {0x7ff6cce351ce, 0x3}, {0x7ff6cce35044, 0x2}, {0x0, 0x0}, 0x0)
+	C:/Users/lalwa/AppData/Local/Temp/rl1src/stage-3/server_test.go:21 +0x2c2
+pocketful.TestRecoverPanics(0x3b0f37532000)
+	C:/Users/lalwa/AppData/Local/Temp/rl1src/stage-3/server_test.go:169 +0x72
+testing.tRunner(0x3b0f37532000, 0x7ff6cce89a98)
+	C:/Program Files/Go/src/testing/testing.go:2036 +0xc3
+created by testing.(*T).Run in goroutine 1
+	C:/Program Files/Go/src/testing/testing.go:2101 +0x4a9
+--- PASS: TestRecoverPanics (0.00s)
+=== RUN   TestResetRejectsBadFixture
+--- PASS: TestResetRejectsBadFixture (0.02s)
+=== RUN   TestSettleChainAffordableByNet
+--- PASS: TestSettleChainAffordableByNet (0.02s)
+=== RUN   TestSettleEntryErrorBeatsFundsAndLeavesNoTrace
+--- PASS: TestSettleEntryErrorBeatsFundsAndLeavesNoTrace (0.08s)
+=== RUN   TestSettleAllOrNone
+--- PASS: TestSettleAllOrNone (0.01s)
+=== RUN   TestSettleShapeAndPermission
+--- PASS: TestSettleShapeAndPermission (0.01s)
+=== RUN   TestExportImportRoundTrip
+--- PASS: TestExportImportRoundTrip (0.06s)
+=== RUN   TestImportGarbageLeavesStateIntact
+--- PASS: TestImportGarbageLeavesStateIntact (0.02s)
+=== RUN   TestResetRejectsAndKeepsState
+--- PASS: TestResetRejectsAndKeepsState (0.08s)
+=== RUN   TestResetManyUsersIsFast
+    snapshot_test.go:249: 500 users with 500 distinct passwords: 664.2745ms
+--- PASS: TestResetManyUsersIsFast (0.70s)
+=== RUN   TestExportDuringWritersKeepsSumInvariant
+    snapshot_test.go:321: 10 exports taken while 50 writers ran
+--- PASS: TestExportDuringWritersKeepsSumInvariant (0.89s)
+=== RUN   TestImportAndResetDuringWritersNeverPanic
+    snapshot_test.go:354: 240 imports under 50 writers
+--- PASS: TestImportAndResetDuringWritersNeverPanic (0.71s)
+=== RUN   TestSplitSharesTable
+--- PASS: TestSplitSharesTable (0.00s)
+=== RUN   TestStatementUnderCorrectionsOrdersByEffectiveAndSelectsTheLatest
+--- PASS: TestStatementUnderCorrectionsOrdersByEffectiveAndSelectsTheLatest (0.06s)
+=== RUN   TestStatementShowsZeroAmountRevisionsAndKeepsTheOriginalInTheFeed
+--- PASS: TestStatementShowsZeroAmountRevisionsAndKeepsTheOriginalInTheFeed (0.05s)
+=== RUN   TestAttackBackDatedCorrectionsAndHistoricalOverdraft
+--- PASS: TestAttackBackDatedCorrectionsAndHistoricalOverdraft (0.05s)
+=== RUN   TestAttackReversalCannotBypassTheHistoricalCheckByTheReceiverSide
+--- PASS: TestAttackReversalCannotBypassTheHistoricalCheckByTheReceiverSide (0.10s)
+=== RUN   TestAttackCombinedSameInstantMovementsAreJudgedTogether
+--- PASS: TestAttackCombinedSameInstantMovementsAreJudgedTogether (0.07s)
+=== RUN   TestAttackHoldUnderflowAtAPastBoundary
+--- PASS: TestAttackHoldUnderflowAtAPastBoundary (0.05s)
+=== RUN   TestAttackReplayAfterNewerRevisionsAndKeyReuse
+--- PASS: TestAttackReplayAfterNewerRevisionsAndKeyReuse (0.05s)
+=== RUN   TestAttackMicrosecondTiesAtEveryBoundary
+--- PASS: TestAttackMicrosecondTiesAtEveryBoundary (0.05s)
+=== RUN   TestAttackFutureAsOfPastAHoldDeadlineAndKnownAtBetweenEvents
+--- PASS: TestAttackFutureAsOfPastAHoldDeadlineAndKnownAtBetweenEvents (0.15s)
+=== RUN   TestAttackLaterEffectiveDecreaseMovesTheWholeMovement
+--- PASS: TestAttackLaterEffectiveDecreaseMovesTheWholeMovement (0.09s)
+=== RUN   TestStatementPropertyRandomSequences
+    statement_prop_test.go:807: seed 1: 45 payments, 19 corrections, 5 authorizations, 11 snapshots
+    statement_prop_test.go:807: seed 2: 39 payments, 23 corrections, 9 authorizations, 18 snapshots
+    statement_prop_test.go:807: seed 3: 44 payments, 12 corrections, 12 authorizations, 20 snapshots
+    statement_prop_test.go:807: seed 4: 39 payments, 15 corrections, 10 authorizations, 16 snapshots
+    statement_prop_test.go:807: seed 5: 56 payments, 18 corrections, 11 authorizations, 18 snapshots
+    statement_prop_test.go:807: seed 6: 46 payments, 23 corrections, 11 authorizations, 19 snapshots
+    statement_prop_test.go:807: seed 7: 43 payments, 14 corrections, 10 authorizations, 19 snapshots
+    statement_prop_test.go:807: seed 8: 34 payments, 19 corrections, 13 authorizations, 15 snapshots
+    statement_prop_test.go:807: seed 9: 43 payments, 11 corrections, 11 authorizations, 21 snapshots
+    statement_prop_test.go:807: seed 10: 49 payments, 18 corrections, 13 authorizations, 23 snapshots
+    statement_prop_test.go:807: seed 11: 60 payments, 18 corrections, 9 authorizations, 15 snapshots
+    statement_prop_test.go:807: seed 12: 44 payments, 14 corrections, 7 authorizations, 16 snapshots
+    statement_prop_test.go:807: seed 13: 32 payments, 31 corrections, 3 authorizations, 16 snapshots
+    statement_prop_test.go:807: seed 14: 36 payments, 26 corrections, 7 authorizations, 14 snapshots
+    statement_prop_test.go:809: oracle verdicts over every random correction attempt: map[:261 historical_overdraft:12 insufficient_funds:9 linked_payment_immutable:100 stale_revision:38]
+--- PASS: TestStatementPropertyRandomSequences (4.51s)
+=== RUN   TestStatementPropertyMarkerForEmptyHistory
+--- PASS: TestStatementPropertyMarkerForEmptyHistory (0.02s)
+=== RUN   TestStatementSnapshotStorm
+    statement_storm_test.go:282: storm: 343 payments, 251 corrections, 171 authorizations, 154 snapshots, 273 snapshot page checks
+--- PASS: TestStatementSnapshotStorm (0.62s)
+=== RUN   TestStatementShapeAndFullWindow
+--- PASS: TestStatementShapeAndFullWindow (0.05s)
+=== RUN   TestStatementOnlyOwnPaymentsPrivateIncluded
+--- PASS: TestStatementOnlyOwnPaymentsPrivateIncluded (0.05s)
+=== RUN   TestStatementWindowIsHalfOpen
+--- PASS: TestStatementWindowIsHalfOpen (0.05s)
+=== RUN   TestStatementEdgesMatchMeAsOf
+--- PASS: TestStatementEdgesMatchMeAsOf (0.05s)
+=== RUN   TestStatementPagingKeepsEveryValue
+--- PASS: TestStatementPagingKeepsEveryValue (0.05s)
+=== RUN   TestStatementValidation
+--- PASS: TestStatementValidation (0.05s)
+=== RUN   TestStatementKnownAtSelectsRecordedRevisions
+--- PASS: TestStatementKnownAtSelectsRecordedRevisions (0.05s)
+=== RUN   TestStatementSnapshotFreezesTheResult
+--- PASS: TestStatementSnapshotFreezesTheResult (0.05s)
+=== RUN   TestStatementSnapshotErrors
+--- PASS: TestStatementSnapshotErrors (0.05s)
+=== RUN   TestStatementSnapshotsDieWithResetAndImport
+--- PASS: TestStatementSnapshotsDieWithResetAndImport (0.07s)
+=== RUN   TestStatementRefusedResetKeepsSnapshots
+--- PASS: TestStatementRefusedResetKeepsSnapshots (0.01s)
+=== RUN   TestStatementEmptyWalletAndNewUser
+--- PASS: TestStatementEmptyWalletAndNewUser (0.06s)
+=== RUN   TestStatementSelfPaymentSeededNetsToZero
+--- PASS: TestStatementSelfPaymentSeededNetsToZero (0.05s)
+=== RUN   TestStatementTwoSnapshotsOfDifferentUsersAreIndependent
+--- PASS: TestStatementTwoSnapshotsOfDifferentUsersAreIndependent (0.05s)
+=== RUN   TestUIShellNegotiation
+--- PASS: TestUIShellNegotiation (0.02s)
+=== RUN   TestStaticAssets
+--- PASS: TestStaticAssets (0.02s)
+=== RUN   TestNoExternalURLsInServedFiles
+--- PASS: TestNoExternalURLsInServedFiles (0.03s)
+=== RUN   TestGarbageSweepNo5xx
+--- PASS: TestGarbageSweepNo5xx (0.03s)
+=== RUN   TestUpgradeFromStage2Export
+--- PASS: TestUpgradeFromStage2Export (0.00s)
+=== RUN   TestUpgradeFromStage2PendingRequestAndSettlementStillWork
+--- PASS: TestUpgradeFromStage2PendingRequestAndSettlementStillWork (0.00s)
+=== RUN   TestImportHistoryVersionRules
+--- PASS: TestImportHistoryVersionRules (0.03s)
+=== RUN   TestUpgradeFromStage1Export
+--- PASS: TestUpgradeFromStage1Export (0.04s)
+=== RUN   TestForgeReqAmount
+--- PASS: TestForgeReqAmount (0.00s)
+=== RUN   TestForgeReqString
+--- PASS: TestForgeReqString (0.00s)
+=== RUN   TestForgeOptNoteAndVisibility
+--- PASS: TestForgeOptNoteAndVisibility (0.00s)
+=== RUN   TestForgeReqHandles
+--- PASS: TestForgeReqHandles (0.00s)
+=== RUN   TestForgeCheckIdemKey
+--- PASS: TestForgeCheckIdemKey (0.00s)
+=== RUN   TestForgeParseLimitOffset
+--- PASS: TestForgeParseLimitOffset (0.00s)
+=== RUN   TestViewsNeverNegativeUnderCorrections
+    views_invariant_test.go:84: views 180000, corrections accepted 492, rejected historical_overdraft 560
+--- PASS: TestViewsNeverNegativeUnderCorrections (0.21s)
+PASS
+ok  	pocketful	42.850s

@@ -1,0 +1,23 @@
+#### ahead
+PASS AHEAD[created_exact = now + 10 ms, same second]: import 204
+   AHEAD[created_exact = now + 10 ms, same second]: X=2026-10-02T21:51:13.011514+00:00 import returned at +27 ms from X-10 ms; /me=(10000, 9000, 1000, 10000)  /me?as_of=now=(10000, 9000, 1000, 10000)
+PASS AHEAD[created_exact = now + 10 ms, same second]: /me never shows available < 0 and balance == total, available == total - held
+PASS AHEAD[created_exact = now + 10 ms, same second]: /me?as_of=now never shows available < 0
+PASS AHEAD[created_exact = now + 10 ms, same second]: a payment that would undercut the (future-placed) hold is refused 409
+PASS AHEAD[created_exact = now + 10 ms, same second]: capture 201
+   AHEAD[created_exact = now + 10 ms, same second]: capture recorded +29346 us relative to the hold's created_at
+PASS AHEAD[created_exact = now + 10 ms, same second]: (inside the 50 ms slack, the clock follows the hold) capture recorded after the imported hold
+PASS AHEAD[created_exact = now + 10 ms, same second]: 36 views (incl. after the hold started) satisfy the invariants and equal the spec rules; current /me included
+PASS AHEAD[created_exact = now + 10 ms, same second]: current /me of every user after the hold started: no available < 0
+PASS AHEAD[created_exact = now + 400 ms, same second]: import 204
+   AHEAD[created_exact = now + 400 ms, same second]: X=2026-10-02T21:51:13.484688+00:00 import returned at +-365 ms from X-400 ms; /me=(10000, 9000, 1000, 10000)  /me?as_of=now=(10000, 0, 10000, 10000)
+PASS AHEAD[created_exact = now + 400 ms, same second]: /me never shows available < 0 and balance == total, available == total - held
+PASS AHEAD[created_exact = now + 400 ms, same second]: /me?as_of=now never shows available < 0
+PASS AHEAD[created_exact = now + 400 ms, same second]: a payment that would undercut the (future-placed) hold is refused 409
+PASS AHEAD[created_exact = now + 400 ms, same second]: capture 201
+   AHEAD[created_exact = now + 400 ms, same second]: capture recorded -362435 us relative to the hold's created_at
+PASS AHEAD[created_exact = now + 400 ms, same second]: OBSERVATION beyond the slack: capture recorded before the imported hold's created_at (clock rule: imported instants past now+50 ms are ignored)
+PASS AHEAD[created_exact = now + 400 ms, same second]: 36 views (incl. after the hold started) satisfy the invariants and equal the spec rules; current /me included
+PASS AHEAD[created_exact = now + 400 ms, same second]: current /me of every user after the hold started: no available < 0
+#### ahead done in 0.8s
+== rl1_attack ahead: 16 pass, 0 fail, 110 requests

@@ -1,0 +1,16 @@
+#### stage2
+PASS STAGE2+exact: real stage-2 export with created_exact injected imports: 204
+PASS STAGE2+exact: every hold re-placed at its created_exact (microsecond), created_exact rewritten equal
+   OBSERVATION O-2 STAGE2+exact: a_3 captured closed_at 2026-10-02T21:50:55+00:00 precedes created_at 2026-10-02T21:50:55.400000+00:00 (injected created_exact moved created_at, closed_at kept)
+   OBSERVATION O-2 STAGE2+exact: a_4 voided closed_at 2026-10-02T21:50:55+00:00 precedes created_at 2026-10-02T21:50:55.400000+00:00 (injected created_exact moved created_at, closed_at kept)
+PASS STAGE2+exact: 36 views satisfy the invariants and equal the spec rules
+PASS STAGE2+exact post-import: authorize after import 201
+PASS STAGE2+exact post-import: new hold tracks the real clock and carries the exact ttl
+PASS STAGE2+exact post-import: nonfinal + final capture 201, each later than its hold
+PASS STAGE2+exact post-import: void 200 and pay 201 after import
+PASS STAGE2+exact post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS STAGE2+exact post-import: void of the imported open hold 200
+PASS STAGE2+exact post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+PASS STAGE2+exact: export -> import -> export byte-identical
+#### stage2 done in 0.8s
+== rl1_attack stage2: 11 pass, 0 fail, 177 requests

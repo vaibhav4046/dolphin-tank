@@ -1,0 +1,8 @@
+#### nullabs
+PASS NULLABS[absent / null / equal exact / micro created_at / differing micro]: import 204
+PASS NULLABS[absent / null / equal exact / micro created_at / differing micro]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (7 holds)
+PASS NULLABS[absent / null / equal exact / micro created_at / differing micro]: 48 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS NULLABS[absent / null / equal exact / micro created_at / differing micro]: Σ balances preserved by import
+PASS NULLABS[absent / null / equal exact / micro created_at / differing micro]: export -> import -> export byte-identical
+#### nullabs done in 0.0s
+== rl1_attack nullabs: 5 pass, 0 fail, 65 requests

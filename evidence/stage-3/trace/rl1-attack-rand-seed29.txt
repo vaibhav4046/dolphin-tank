@@ -1,0 +1,4 @@
+#### rand
+PASS RAND: 40 legacy bursts (real 3c7c411 exports), 199 holds (199 with created_exact != created_at, 199 sharing a second with a payment), 6708 views: all hold
+#### rand done in 63.3s
+== rl1_attack rand: 161 pass, 0 fail, 8091 requests

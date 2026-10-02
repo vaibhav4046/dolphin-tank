@@ -1,0 +1,15 @@
+#### offsets
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z]: import 204
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z]: created_at/created_exact rewritten exactly when they differ; expires_at, closed_at, payment_ids, status not rewritten (5 holds)
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z]: 132 views (every instant -1us/0/+1us x 4 users): balance == total, available == total - held >= 0, equal the spec rules
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z]: Σ balances preserved by import
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z]: export -> import -> export byte-identical
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: authorize after import 201
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: new hold tracks the real clock and carries the exact ttl
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: nonfinal + final capture 201, each later than its hold
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: void 200 and pay 201 after import
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: capture of the imported open hold 201, recorded after the hold's created_at
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: void of the imported open hold 200
+PASS OFFSETS[5 holds: non-UTC created_at/created_exact, Z] post-import: views around every new event (96) satisfy the invariants and equal the spec rules computed from the export
+#### offsets done in 0.1s
+== rl1_attack offsets: 12 pass, 0 fail, 260 requests

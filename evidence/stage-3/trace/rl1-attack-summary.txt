@@ -1,0 +1,45 @@
+trace S3-ATTACK-R-L1: focused attack on forge's R-L1 fix (placeAtCreatedExact), commit 5e6f83f0a2d9fe9e09615341dde23a376d273967 (parent 849b017).
+Spec stage-3.md sha256 2255d3f2181c22dc6eac6919bf7712197d812248bd9de8a7e59260ede6056e54 (verified). stage-3/ at repo HEAD c6af733 is byte-identical to 5e6f83f (git diff 5e6f83f HEAD -- stage-3 is empty).
+Host: Windows 11, go1.26.2, uv python 3.12. Binary under attack: git archive 5e6f83f stage-3 -> go build -> /tmp/rl1bin/s3-5e6f83f.exe, sha256 47808032d89cce8a1af2a58f5ead5bd08a10048dcfb0f517fbd431731eb0778f
+(rebuilt a second time from a fresh archive: identical sha256). Comparison binaries: /tmp/f2bin/s3-ac96360.exe (previous HEAD, control only), s3-legacy-3c7c411.exe (real legacy build), s2.exe, s1.exe.
+Servers started and killed by PID (subprocess.Popen.kill); no taskkill /IM; runs sequential; persistent connections.
+
+COMMON ENV   export F2BIN=$(cygpath -m /tmp/rl1bin) F2S3=s3-5e6f83f.exe
+(a) COMMANDS / RESULTS (expected 4/0, 14/0, 19/0)
+  uv run python -u evidence/stage-3/trace/f2_attack.py legacy   -> 4 pass, 0 fail   (rl1-attack-legacy.txt)  the old L-F2-1 repro now has every view available >= 0
+  uv run python -u evidence/stage-3/trace/f2_attack.py imp1     -> 14 pass, 0 fail  (rl1-attack-imp1.txt)
+  uv run python -u evidence/stage-3/trace/f2_attack.py imp2     -> 19 pass, 0 fail  (rl1-attack-imp2.txt)
+(c) jury scripts: bash evidence/stage-3/trace/rl1_jury_run.sh > evidence/stage-3/trace/rl1-jury-checks.txt   (one fresh server per script, f2_run.sh)
+  t3_holds x3 59/0 59/0 59/0; t3_seedholds 26/0; t3_time 46/0; t3_corr 97/0; s2_fixture 84/0; s2_export 30/0 (3762 requests); s2_export_expiry 18/0   (rl1-jury-checks.txt)
+(b) targeted attacks: evidence/stage-3/trace/rl1_attack.py <case>   (one command per case, same ENV; output rl1-attack-<case>.txt)
+  edges      61/0   created_exact :00.000000 (equal, untouched), :00.000001, :59.999999 (+capture in the next second), :59.999999 ttl 1 s, :00.000000 ttl 1 s; views at every instant -1us/0/+1us x 4 users each, then post-import pay/authorize/capture/void
+  mix        12/0   one second: partly captured open hold, voided hold, expired hold (closed_at == expires_at), open hold with deadline ahead
+  ttl1       14/0   ttl 1 s, created_exact .9 s (expires_at = whole+1 s is 100 ms away), stored open and stored expired; see O-1
+  offsets    12/0   created_at +02:00 / exact +00:00, created_at +00:00 / exact +05:30, -08:00 both, Z, 999999 us; all same second
+  subus      36/0   7-digit, 9-digit and sub-microsecond-only created_exact: import 204, truncated to the microsecond, views = spec rules
+  bad        12/0   created_exact in the next second, 1 us before the second, garbage, empty, no offset, other day: each 422, previous state byte-identical
+  dup        4/0    duplicate authorization id with different created_exact: 422; valid created_exact then captured_amount > amount: 422 atomic
+  nullabs    5/0    absent / JSON null / equal micro / equal whole-second / differing micro created_at: untouched exactly when equal
+  allafter   12/0   all payments of the second later than the floor second; created_exact before and after them
+  stage2     11/0   a REAL stage-2 export (open, partly captured, captured, voided) with created_exact injected into each hold (400 ms into its creation second); see O-2
+  corr       18/0   corrections on the imported state: 4499 -> 409 historical_overdraft (refused, state unchanged), 4500 -> 201 (available exactly 0), 5001 -> 201; 228 views after each
+  ahead      16/0   created_exact = now+10 ms and now+400 ms inside the current second; see O-3
+  rand       121/0  30 bursts of random pay/authorize/capture/void/expiry on the REAL 3c7c411 server, export -> HEAD import: 150 holds, all 150 with created_exact != created_at, all 150 in a second shared with a payment; 5544 views equal the spec rules (hold at created_exact), invariants hold, every re-placed hold has created_at == created_exact == the legacy microsecond, expires_at/closed_at/payment_ids unchanged, export -> import -> export byte-identical   (rl1-attack-rand.txt)
+  rand seed 29: RL1_BURSTS=40 RL1_SEED=29 ... rand  161/0   199 holds (199 re-placed), 6708 views   (rl1-attack-rand-seed29.txt)
+  CONTROL (attack has teeth): F2BIN=$(cygpath -m /tmp/f2bin) F2S3=s3-ac96360.exe RL1_BURSTS=10 uv run python -u evidence/stage-3/trace/rl1_attack.py rand edges -> 73 pass, 29 FAIL (rl1-control-ac96360.txt): the same rand bursts fail on the previous HEAD
+  probes: rl1_probe_expired.py (rl1-probe-expired.txt): a live-expired hold is exported as status open / closed_at null and keeps its history through 3 export->import rounds;
+          rl1_probe_legacy_closed.py (rl1-probe-legacy-closed.txt): real 3c7c411 export shapes (closed_at is a microsecond event time >= created_exact; clock-expired holds stay status open) and the HEAD import of them
+  go suite on git archive 5e6f83f stage-3: go test -count=1 -v ./...  -> 197 "--- PASS" lines (subtests included), 0 FAIL, 0 SKIP, "ok pocketful 42.850s" (rl1-go-test.txt)
+  go test -race: NOT run, no gcc and CGO_ENABLED=0 on this host ("go: -race requires cgo")
+
+OBSERVATIONS (none is a defect by the coordinator's criterion: no view with available < 0, no hold outliving its deadline)
+  O-1  pre-existing rule, not R-L1: a stored-expired hold (only hand-built / seeded states; jury t3_seedholds a_exp is one) holds nothing at any instant, per the HeldAt comment ("seeded without a lifecycle");
+       a stored-open hold with the same dates holds from created_at to expires_at. Repro: rl1_attack.py ttl1 (line "OBSERVATION O-1": held 0/0/0/0 for stored expired vs 0/4000/3000/0 for stored open).
+       Real exports do not carry it: a live-expired hold is exported as status open / closed_at null (rl1-probe-expired.txt), a real stage-2 export of a hold that expired by the clock is status open (rl1-attack-imp2.txt), real 3c7c411 exports likewise (rl1-probe-legacy-closed.txt). Reported only for completeness.
+  O-2  hand-built only: injecting created_exact into a stage-2 export (which has no closed_at; import derives closed_at at the whole second) moves created_at past closed_at (closed_at 21:50:55 < created_at 21:50:55.4). Money views unaffected (the hold never counts). Real 3c7c411 exports always have closed_at >= created_exact.
+       Repro: rl1_attack.py stage2 (lines "OBSERVATION O-2"). Same class as the no-expires_at-check leniency.
+  O-3  hand-built only (class D-IMPORT-FUTURE, declined): created_exact ahead of now by 400 ms: GET /me without as_of shows held 9000 (Held counts open remaining, ignores created_at > now), GET /me?as_of=<now> shows held 0; neither available < 0; capture is recorded 362 ms before the hold's created_at (clock not ratcheted, as ruled).
+       Within 10 ms the clock follows the hold and the capture lands after it. Repro: rl1_attack.py ahead.
+
+VERDICT: no defect found in 5e6f83f R-L1 (placeAtCreatedExact). Failures seen while building the attacks were my own wrong expectations (post_ops ttl, payload with negative balance, oracle missing opening_balance / stage-2 closed_at, wrong overdraft arithmetic, a payment GET route that does not exist); each corrected in rl1_attack.py before the committed runs.
+LIMITATIONS: no -race; go suite is a single run; legacy bursts are all on one host/clock; stage-1/2 imports exercised with real stage-1/stage-2 binaries only through f2_attack imp1/imp2 and the stage2 case; full s2reg not re-run (only s2_fixture, s2_export, s2_export_expiry, the three that reach import).

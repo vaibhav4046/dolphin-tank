@@ -1,0 +1,7 @@
+#### dup
+PASS DUP[same authorization id, different created_exact]: import refused with 422
+PASS DUP[same authorization id, different created_exact]: refused import left the previous state byte-identical
+PASS DUP[valid created_exact then captured_amount > amount: atomic refusal]: import refused with 422
+PASS DUP[valid created_exact then captured_amount > amount: atomic refusal]: refused import left the previous state byte-identical
+#### dup done in 0.0s
+== rl1_attack dup: 4 pass, 0 fail, 14 requests

@@ -7,6 +7,7 @@ UTC = dt.timezone.utc
 EPOCH = dt.datetime(1970, 1, 1, tzinfo=UTC)
 BIN = os.environ["F2BIN"]
 LOG = os.environ.get("F2LOG", BIN)
+S3EXE = os.environ.get("F2S3", "s3-ac96360.exe")  # HEAD binary under attack (R-L1 runs: s3-5e6f83f.exe)
 NPASS, FAILS, NREQ = [0], [], [0]
 _lk = threading.Lock()
 
@@ -609,7 +610,7 @@ def main():
     srv = {}
     try:
         port = 18230
-        S3 = Srv("s3-ac96360.exe", port)
+        S3 = Srv(S3EXE, port)
         srv["s3"] = S3
         for w in which:
             t0 = time.time()
