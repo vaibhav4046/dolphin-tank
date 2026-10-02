@@ -3,8 +3,8 @@
 Build the image (needs network once, for the Go base image) and start it:
 
 ```sh
-docker build -t pocketful-s2 .
-docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s2
+docker build -t pocketful-s3 .
+docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s3
 ```
 
 The running container needs no network and no setup. State is in memory. The browser UI, its
@@ -19,9 +19,14 @@ curl -s http://localhost:8080/health
 
 Test-control endpoints (no authentication):
 
-- `POST /_test/reset` — replace all state with the fixture in the body; `204`.
-- `GET /_test/export` — `200` with `{"track":"pocketful","format_version":1,"state":{...}}`.
-- `POST /_test/import` — replace all state with a previously exported object; `204`.
+- `POST /_test/reset` — replace all state with the fixture in the body; `204`. A seeded payment may
+  carry `created_at`; a future or malformed one is `422` and changes nothing. Dropping state also
+  drops every statement snapshot token.
+- `GET /_test/export` — `200` with `{"track":"pocketful","format_version":1,"state":{...}}`; the
+  state includes every revision, every opening balance and every authorization's `closed_at`.
+- `POST /_test/import` — replace all state with a previously exported object; `204`. Exports from
+  the stage-1 and stage-2 services are accepted and upgraded (revision 1 per payment, opening
+  balances derived, `closed_at` filled in).
 
 ## Routes
 
@@ -32,7 +37,22 @@ the JSON API: a request with `Accept: text/html` gets the UI, anything else gets
 
 JSON API: `GET /me`, `POST /payments`, `POST /requests`, `GET /requests`, `POST /requests/{id}/pay|decline|cancel`,
 `POST /splits`, `GET /activity`, `POST /settlements`, `POST /authorizations`, `GET /authorizations`,
-`POST /authorizations/{id}/capture|void`, `POST /auth/signup`, `POST /auth/login`, `GET /health`.
+`POST /authorizations/{id}/capture|void`, `POST /auth/signup`, `POST /auth/login`, `GET /health`,
+and the four stage-3 routes (all need a bearer token; unrecognized query parameters are ignored):
+
+- `GET /me?as_of=<instant>&known_at=<instant>` — the stage-2 wallet fields as of an instant, from
+  what was known at another. Both optional; each supplied one is echoed back verbatim. Without
+  either, the current corrected values.
+- `GET /statement?from=&to=&known_at=&limit=&offset=` — the caller's money movements in `[from, to)`,
+  oldest first by effective time, each with `delta` and running `balance_after`; the first read also
+  returns an opaque `snapshot` token, and `GET /statement?snapshot=<token>&limit=&offset=` pages that
+  exact result (only `limit` and `offset` may accompany it).
+- `POST /payments/{id}/corrections` — sender only, `Idempotency-Key` required; body
+  `{"expected_revision","amount","effective_at","reason"}`; `201` with the new revision, `200` on replay.
+- `GET /payments/{id}/revisions` — `{"revisions":[...]}`, sender and receiver only.
+
+Instants are RFC 3339 with an offset (`Z`, `z` or `+hh:mm`); a naive time, a bare date, an empty value,
+or an offset whose `+` was not percent-encoded (`%2B`) is `422 validation_failed`.
 Unknown paths and wrong methods return a JSON `404` envelope.
 
 ## Assets and fonts
