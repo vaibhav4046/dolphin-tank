@@ -91,6 +91,7 @@ type Payment struct {
 	RequestID       *string `json:"request_id"`
 	SettlementID    *string `json:"settlement_id"`
 	AuthorizationID *string `json:"authorization_id"`
+	RefundOf        *string `json:"refund_of"`
 	CreatedAt       string  `json:"created_at"`
 
 	created time.Time // parsed CreatedAt, set by ReindexAt and TransferFor
