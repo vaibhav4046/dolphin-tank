@@ -1,9 +1,8 @@
-# Operator verification — fresh clone, isolated mode, RUN.md executed literally
+# Operator verification — fresh clone, all four stages, grading mode
 
-Recorded by ZEUS (the OpenCode orchestration layer, not a BAND seat) on 2026-10-02, against
-revision `1a3d864`. Nothing in this file was produced by the band; it is the operator checking
-the band's work the way a judge would, using only the official harness and the repository's own
-instructions.
+Recorded by ZEUS (the OpenCode orchestration layer, not a BAND seat) on 2026-10-03 against
+revision `f2d512b`. Nothing here was produced by the band; it is the operator checking the band's
+work the way a judge would, using only the official harness and the repository's own instructions.
 
 ## 1. Offline gate check
 
@@ -21,62 +20,97 @@ One problem, and it is `room.json`. Layout, the `Dockerfile` and `RUN.md` in eve
 mandate presence, harness/model headers, mandate genericity against the harness's own generated
 track vocabulary, and the credential scan all pass.
 
-## 2. Fresh clone, grading mode
+## 2. Fresh clone, grading mode, all four stages
 
 ```text
-git clone <result repo> /tmp/zeus-fresh-clone      # brand-new directory, clean status
-python -m harness run --track pocketful --repo /tmp/zeus-fresh-clone \
-                      --all --mode isolated --out …/checks/zeus-freshclone-5e6f83f
+git clone <result repo> /tmp/zeus-fresh-clone-s4      # brand-new directory, clean status
+python -m harness run --track pocketful --repo /tmp/zeus-fresh-clone-s4 \
+                      --all --mode isolated --out …/checks/zeus-freshclone-f2d512b
 ```
 
 `--mode isolated` is the grading configuration: an internal Docker network with outbound traffic
-blocked.
+blocked, so this also proves the result needs no network at run time.
 
-| Folder | suite 1 | suite 2 | suite 3 | suite 4 | claimed | overshoot |
-|---|---|---|---|---|:-:|:-:|
-| `stage-1/` | 147/147 | **fail** | – | – | **1** | none |
-| `stage-2/` | 147/147 | 35/35 | **fail** | – | **2** | none |
-| `stage-3/` | 147/147 | 35/35 | 6/6 | **fail** | **3** | none |
+| Folder | tracked files | suite 1 | suite 2 | suite 3 | suite 4 | claimed | overshoot |
+|---|---:|---|---|---|---|:-:|:-:|
+| `stage-1/` | 34 | 147/147 | **fail** | – | – | **1** | none |
+| `stage-2/` | 87 | 147/147 | 35/35 | **fail** | – | **2** | none |
+| `stage-3/` | 116 | 147/147 | 35/35 | 6/6 | **fail** | **3** | none |
+| `stage-4/` | 130 | 147/147 | 35/35 | 6/6 | 5/5 | **4** | none |
 
-Every next-stage check correctly **fails**: no folder carries a later stage's answer. Raw output:
-`band-work/checks/zeus-freshclone-5e6f83f/`.
+```text
+  stage-1/: claims stage 1 on the shipped checks
+  stage-2/: claims stage 2 on the shipped checks
+  stage-3/: claims stage 3 on the shipped checks
+  stage-4/: claims stage 4 on the shipped checks
+exit 0
+```
 
-## 3. `RUN.md` executed literally, from a fresh clone
+Two properties matter here and both hold:
 
-Every command below is copied from `stage-3/RUN.md`. Because the final image is `FROM scratch`
-it has no shell, and because a Docker `--internal` network does not support published ports, the
-service was probed from a **sibling container on the same internal network** — the same technique
-the reviewer used.
+1. **The chain scores.** Every folder claims its stage, and `stage-4/` carries all four suites,
+   so the submission is a completed four-stage result rather than three stages plus a folder that
+   does not start.
+2. **Nothing overshoots.** Every next-stage check correctly **fails** — `stage-1/` cannot pass
+   suite 2, `stage-2/` cannot pass suite 3, `stage-3/` cannot pass suite 4 — and `overshoot` is
+   `null` on all four. This is what the guide requires and what most entries get wrong by copying
+   a final answer backwards.
 
-| RUN.md promise | Result |
+Also verified: no nested `.git` directory inside any stage folder (the guide records that a
+folder which is its own repository builds for you and arrives empty for a judge), and every stage
+folder has both a `Dockerfile` and a `RUN.md`.
+
+Raw output: `band-work/checks/zeus-freshclone-f2d512b/summary.json` and the per-stage
+`report.json` / `*.counts.json`.
+
+## 3. `RUN.md` executed literally, offline (stage 3)
+
+Because the final image is `FROM scratch` it has no shell, and Docker does not support published
+ports on an `--internal` network, the service was probed from a **sibling container on the same
+internal network** — the technique the reviewer used.
+
+| `RUN.md` promise | Result |
 |---|---|
 | `docker build -t pocketful-s3 .` | `Successfully built` |
 | `curl -s http://localhost:8080/health` | `{"status":"ok"}` |
-| UI routes `/`, `/requests`, `/split`, `/authorizations`, `/login`, `/signup` | **200** each |
-| `/requests`, `/authorizations` share the URL with the JSON API | 200 HTML / 401 JSON |
-| `/me`, `/requests`, `/activity`, `/authorizations` without a token | **401** |
-| `/statement` without a token | **401** |
+| `/`, `/requests`, `/split`, `/authorizations`, `/login`, `/signup` | **200** each |
+| `/me`, `/requests`, `/activity`, `/authorizations`, `/statement` without a token | **401** |
 | `GET /_test/export` | **200**, `{"track":"pocketful","format_version":1,"state":{…}}` |
 | `POST /_test/reset` | **204** |
 | unknown path | `{"error":{"code":"not_found","message":"no such route"}}` |
-| static files under `/assets/`, no token needed | `/assets/js/main.js`, `/assets/css/base.css`, `/assets/css/components.css`, `/assets/css/tokens.css` — **200** each |
-| DM Sans + Inter bundled, not linked | `/assets/fonts/dm-sans.woff2`, `/assets/fonts/inter.woff2` — **200** each, OFL licences alongside |
+| `/assets/js/main.js`, `/assets/css/{base,components,tokens}.css` | **200** each |
+| `/assets/fonts/dm-sans.woff2`, `/assets/fonts/inter.woff2` | **200** each |
 | "Nothing is requested from a CDN" | **0 external URLs** in the served HTML |
-| "The running container needs no network" | `https://example.com` and `telnet 1.1.1.1:53` both unreachable from the container's network |
+| "The running container needs no network" | `example.com` and `1.1.1.1:53` both unreachable |
 
-## 4. Two codes that looked wrong and were not
+## 4. Independent spec-literal probe (stage 3)
 
-Recorded because a verification that hides its own false alarms is not a verification.
+38 checks written from the words of `stage-3.md` rather than from the implementation — inclusive
+`as_of` bounds, verbatim echo, tie-break ordering, `opening + Σdelta = closing`, pagination
+stability, statement privacy, revision visibility, all four correction error codes, zero-amount
+reversal counted once, and the snapshot rules.
 
-- `GET /assets/main.js` → **404**. The operator's probe used the wrong path. The page references
-  `/assets/js/main.js` and three stylesheets under `/assets/css/`, and all four return 200.
-  Not a defect.
-- `POST /_test/reset` with a hand-written fixture → **422**. The service answered
-  `{"error":{"code":"validation_failed","message":"user u_a: password is required"}}`, which is
-  correct: stage 3 requires a password on a seeded user. Re-posting the exact state the export
-  endpoint returns gives **204**. Not a defect.
+```text
+== ZEUS spec-literal probe: 38 pass, 0 fail, 38 checks ==
+```
 
-## 5. What this does not prove
+Details and the five defects this probe found in itself: `SPEC-PROBE.md`.
 
-The shipped stage-3 suite is 6 checks — 9% of the graded suite. A green run proves only what it
-covers, and cannot stand in for `@jury`'s acceptance, which is still open. See `FACTORY.md` §10.
+## 5. Independence of the review, measured
+
+- All 53+ commits share **one** Git identity, so authorship cannot show distribution. The bridge is
+  `PROVENANCE.md`, which maps each commit to the room message that announced it.
+- Model spend for the submitted room, `band usage rooms`: **$169.63 estimated** at list prices
+  (an equivalent, not a bill), 44 sessions, 412,512,626 tokens. Per seat: trace $48.12 (28.4%),
+  jury $42.33 (25.0%), forge $31.09 (18.3%), route $24.54 (14.5%), loom $23.55 (13.9%). No seat
+  carried the run.
+- Elapsed wall clock, first Stage-1 dispatch 2026-09-30T23:05:20Z to 2026-10-03T08:47Z is
+  **≈57.7 hours**, and that includes three provider usage-limit outages. Active model time is not
+  measured and is not claimed.
+
+## 6. What this does not prove
+
+The shipped stage-3 and stage-4 suites are 6 and 5 checks — 9% and 16% of the graded suites. A
+green run proves only what it covers. It cannot stand in for the acceptor's judgement, it says
+nothing about the withheld tests, and `evidence/operator/PROVENANCE.md` is derived evidence that
+does not replace `room.json`. See `FACTORY.md` §10.
