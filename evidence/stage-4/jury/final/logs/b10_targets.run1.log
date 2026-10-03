@@ -1,0 +1,25 @@
+PASS setup: request paid by ada via API
+PASS setup: bob captured 15.00 of the hold
+INFO request payment id p_1 capture payment id p_2
+PASS B12 the receiver (bob) is offered Refund on a REQUEST payment
+PASS B12 the receiver (bob) is offered Refund on a CAPTURE payment
+PASS B12 capture and request payments say where they came from
+PASS B12 refund of a request payment succeeds in the browser
+PASS B12 full refund of a capture (default amount 15.00) succeeds
+PASS B12 bob's total fell by 300 + 1500
+PASS B12 refund payments: refund_of names the target, request_id and authorization_id null
+PASS B12 the request stays paid (refund never reopens it)
+PASS B12 the authorization stays captured and the released hold is not restored (held 0)
+PASS B12 the payer (ada) of those payments is offered no refund control, including on the received refund payments
+PASS setup 0-decimal fixture accepted
+PASS B12 0-decimal default refund amount is the whole payment '5000'
+PASS B12 0-decimal refund of 1200 sent as 1200 minor units
+INFO B12 0-decimal limit hint after the refund: Up to 3800 JPY can still be refunded to @bob.
+PASS B12 0-decimal out-of-range/over-limit amount refused with a message, nothing moved
+PASS setup 3-decimal fixture accepted
+PASS B12 3-decimal default refund amount is the whole payment '12.345'
+PASS B12 3-decimal refund of 2.500 sent as 2500 minor units
+INFO B12 3-decimal limit hint after the refund: Up to 9.845 KWD can still be refunded to @bob.
+PASS B12 3-decimal out-of-range/over-limit amount refused with a message, nothing moved
+== b10_targets: 20 pass, 0 fail
+rc=0

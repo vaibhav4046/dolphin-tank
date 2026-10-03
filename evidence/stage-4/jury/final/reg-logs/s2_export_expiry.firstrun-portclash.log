@@ -1,0 +1,28 @@
+PASS clock sanity: python now is past displayed expires_at (i=0)
+PASS C01 source shows expired past displayed expires_at (i=0)
+Traceback (most recent call last):
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/s2reg/s2_export_expiry.py", line 18, in <module>
+    d("POST", "/_test/import", raw=ex)
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/s2reg/s2_export_expiry.py", line 6, in d
+    kw["base"] = DSTB; return call(*a, **kw)
+                              ^^^^^^^^^^^^^^
+  File "/mnt/d/project/dolphin-tank/band-work/result/evidence/stage-3/jury/s2reg/lib.py", line 51, in call
+    c.request(method, path, body=data, headers=h)
+  File "/usr/lib/python3.12/http/client.py", line 1365, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1411, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1360, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.12/http/client.py", line 1120, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.12/http/client.py", line 1064, in send
+    self.connect()
+  File "/usr/lib/python3.12/http/client.py", line 1030, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/socket.py", line 852, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.12/socket.py", line 837, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused

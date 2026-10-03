@@ -1,0 +1,93 @@
+PASS destination is fresh: has no ada account
+PASS export 200 {track:'pocketful',format_version:1,state:object}
+PASS export is read-only and repeatable: two exports identical as JSON, state unchanged
+PASS export has no plaintext passwords
+OBS export size bytes: 11609 state keys: ['authorization_ttl_seconds', 'authorizations', 'currency', 'history_version', 'minor_units', 'payments', 'requests', 'revisions', 'seq', 'splits', 'sys', 'tokens']
+PASS import unchanged export into fresh container -> 204 empty
+PASS dst ada: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst bob: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst cy: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst dee: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst op: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst newbie: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst ada_l1: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS dst ada_l2: /me, feed, requests identical to source (tokens, ids, timestamps, visibility)
+PASS hashed-password logins work on dst (seeded + signup user)
+PASS login on dst returns the same user_id
+PASS dst old tokens (incl. 2 extra ada sessions) all valid
+PASS dst replay POST /payments key K1 -> 200 original body
+PASS dst replay POST /payments key K2 -> 200 original body
+PASS dst replay POST /requests key K3 -> 200 original body
+PASS dst replay POST /requests/rq_1/pay key K4 -> 200 original body
+PASS dst replay POST /requests key K5 -> 200 original body
+PASS dst replay POST /splits key K6 -> 200 original body
+PASS dst replay POST /settlements key K7 -> 200 original body
+OBS dst failed-key K8 (orig 409) first-use -> 409 insufficient_funds
+PASS dst failed-key K8 is treated as first use (same error again, not 200/409-reuse)
+OBS dst failed-key K9 (orig 404) first-use -> 404 not_found
+PASS dst failed-key K9 is treated as first use (same error again, not 200/409-reuse)
+OBS dst failed-key K10 (orig 422) first-use -> 422 validation_failed
+PASS dst failed-key K10 is treated as first use (same error again, not 200/409-reuse)
+PASS replays changed nothing
+PASS dst same key + different body -> 409 idempotency_key_reuse
+PASS dst failed key K8 reusable with a valid body -> 201
+PASS dst failed key K9 reusable -> 201
+PASS dst operator permission preserved (settlement 201)
+PASS dst non-operator settlement -> 403
+PASS dst operator sees none of others' requests
+PASS ids generated after import never collide with imported ids
+PASS re-import #0 -> 204 and state equals exported snapshot (mutations discarded, nothing duplicated)
+PASS re-import #1 -> 204 and state equals exported snapshot (mutations discarded, nothing duplicated)
+PASS re-import #2 -> 204 and state equals exported snapshot (mutations discarded, nothing duplicated)
+PASS after re-import tmp users gone
+PASS replay K1 still 200 after repeated imports
+PASS dst import over other state: 204
+PASS   previous destination tokens/credentials gone
+PASS   previous data gone, exported state fully restored
+PASS   previous idempotency key gone (unknown to imported state)
+PASS garbage import invalid JSON -> 400 and state intact
+PASS garbage import empty body -> 400 and state intact
+PASS garbage import array -> 422 and state intact
+PASS garbage import null -> 422 and state intact
+PASS garbage import {} -> 422 and state intact
+PASS garbage import no state -> 422 and state intact
+PASS garbage import no track -> 422 and state intact
+PASS garbage import no version -> 422 and state intact
+PASS garbage import wrong track -> 422 and state intact
+PASS garbage import version 2 -> 422 and state intact
+PASS garbage import version '1' -> 422 and state intact
+PASS garbage import state [] -> 422 and state intact
+PASS garbage import state string -> 422 and state intact
+PASS garbage import state {} -> 422 and state intact
+PASS garbage import state null -> 422 and state intact
+PASS garbage import state {x:1} -> 422 and state intact
+OBS import state minus key 'authorization_ttl_seconds' -> 204 None
+OBS import state minus key 'authorizations' -> 204 None
+OBS import state minus key 'currency' -> 422 validation_failed
+PASS state missing 'currency' rejected 422 and state intact
+OBS import state minus key 'history_version' -> 204 None
+OBS import state minus key 'minor_units' -> 204 None
+OBS import state minus key 'payments' -> 422 validation_failed
+PASS state missing 'payments' rejected 422 and state intact
+OBS import state minus key 'requests' -> 422 validation_failed
+PASS state missing 'requests' rejected 422 and state intact
+OBS import state minus key 'revisions' -> 422 validation_failed
+PASS state missing 'revisions' rejected 422 and state intact
+OBS import state minus key 'seq' -> 204 None
+OBS import state minus key 'splits' -> 204 None
+OBS import state minus key 'sys' -> 204 None
+OBS import state minus key 'tokens' -> 204 None
+OBS import state minus key 'users' -> 422 validation_failed
+PASS state missing 'users' rejected 422 and state intact
+OBS state-corruption fuzz: {'5xx': 0, '204': 12, 'rej': 78}
+PASS blind corruption of opaque state never produces 5xx, rejected imports never change state
+PASS reset after import clears imported state (old tokens 401, newbie gone, keys reusable)
+PASS reset after import: key K1 of imported state is unknown (201)
+PASS import into source after more writes restores exported state
+PASS export atomic: 17 snapshots taken during 1440 concurrent write ops each importable; balances == initial +/- ledger; sum == total; none negative
+PASS import racing 8 writers: all imports 204, no unexpected statuses/5xx
+PASS after the race, one more import yields exactly the exported state
+PASS large state (2809710 bytes): export 0.03s, import 0.07s both < 10s
+PASS large state round trip: /me identical for all 50 users
+PASS large state: conservation on destination
+== c08_export_import: 74 pass, 0 fail, 8602 requests, 0 5xx

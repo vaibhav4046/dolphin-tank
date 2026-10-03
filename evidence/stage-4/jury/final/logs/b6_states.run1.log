@@ -1,0 +1,30 @@
+PASS I19 / loading state: aria-busy=true and a loading indicator/skeleton while data is in flight
+PASS I19 / loading state resolves (aria-busy cleared)
+PASS I19 / error state: explains the failure and offers Try again (no blank page)
+PASS I19 / error state has no horizontal scroll
+PASS I19 / recovery: Try again after the outage reloads the screen
+PASS I19 /requests loading state: aria-busy=true and a loading indicator/skeleton while data is in flight
+PASS I19 /requests loading state resolves (aria-busy cleared)
+PASS I19 /requests error state: explains the failure and offers Try again (no blank page)
+PASS I19 /requests error state has no horizontal scroll
+PASS I19 /requests recovery: Try again after the outage reloads the screen
+PASS I19 /authorizations loading state: aria-busy=true and a loading indicator/skeleton while data is in flight
+PASS I19 /authorizations loading state resolves (aria-busy cleared)
+PASS I19 /authorizations error state: explains the failure and offers Try again (no blank page)
+PASS I19 /authorizations error state has no horizontal scroll
+PASS I19 /authorizations recovery: Try again after the outage reloads the screen
+PASS I19 /split loading state: aria-busy=true and a loading indicator/skeleton while data is in flight
+PASS I19 /split loading state resolves (aria-busy cleared)
+INFO /split with /me unreachable shows: We could not load this page / Try again
+PASS I19 keyboard only: handle, amount, visibility, note typed with Tab; Enter submits the pay form (1 payment of 1100)
+PASS I19 keyboard: focus order continues to the next control after the note field (pay-submit)
+PASS I19 keyboard: Enter on the focused request-pay button pays the request
+PASS I19 keyboard: Space on the focused void button voids the hold
+PASS I20 hold created through the UI: wallet-held 40.00 EUR, available 60.00 EUR
+PASS I20 after the deadline (no request sent at the deadline) wallet-refresh shows the released funds: held gone, available 100.00 EUR
+PASS I20 stale capture button on an expired hold: authorization-error, list refreshed to expired, capture control removed
+PASS I20 no money moved by the refused capture
+PASS I20 /authorizations shows the hold as expired without capture/void controls
+== b6_states: 26 pass, 0 fail
+rc=0
+rc=0

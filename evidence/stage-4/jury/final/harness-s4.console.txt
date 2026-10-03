@@ -1,0 +1,46 @@
+stage-1/ ...
+building /root/jury/s4r1/stage-1 ...
+  stage 1: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-1/stage-1.log)
+  stage 2: fail  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-1/stage-2.log)
+highest contiguous stage: 1
+claimed stage: 1 on the shipped checks
+report: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-1/report.json
+stage-2/ ...
+building /root/jury/s4r1/stage-2 ...
+  stage 1: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-2/stage-1.log)
+building upgrade source /root/jury/s4r1/stage-1 ...
+  stage 2: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-2/stage-2.log)
+  stage 3: fail  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-2/stage-3.log)
+highest contiguous stage: 2
+claimed stage: 2 on the shipped checks
+report: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-2/report.json
+stage-3/ ...
+building /root/jury/s4r1/stage-3 ...
+  stage 1: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-3/stage-1.log)
+building upgrade source /root/jury/s4r1/stage-1 ...
+  stage 2: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-3/stage-2.log)
+building upgrade source /root/jury/s4r1/stage-2 ...
+  stage 3: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-3/stage-3.log)
+  stage 4: fail  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-3/stage-4.log)
+highest contiguous stage: 3
+claimed stage: 3 on the shipped checks
+report: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-3/report.json
+stage-4/ ...
+building /root/jury/s4r1/stage-4 ...
+  stage 1: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-4/stage-1.log)
+building upgrade source /root/jury/s4r1/stage-1 ...
+  stage 2: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-4/stage-2.log)
+building upgrade source /root/jury/s4r1/stage-2 ...
+  stage 3: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-4/stage-3.log)
+building upgrade source /root/jury/s4r1/stage-3 ...
+  stage 4: pass  (log: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-4/stage-4.log)
+highest contiguous stage: 4
+claimed stage: 4 on the shipped checks
+report: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/stage-4/report.json
+  stage-1/: claims stage 1 on the shipped checks
+  stage-2/: claims stage 2 on the shipped checks
+  stage-3/: claims stage 3 on the shipped checks
+  stage-4/: claims stage 4 on the shipped checks
+summary: /mnt/d/project/dolphin-tank/band-work/result/evidence/stage-4/jury/final/harness-s4/summary.json
+NOTE: this run only includes a portion of the full tests that are applied before judging; this is meant to provide directional feedback, and ultimately you may not pass the stage with the full set of tests.
+exit 0

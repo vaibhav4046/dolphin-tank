@@ -1,0 +1,127 @@
+﻿== docker build -t pocketful-s4-jury . (RUN.md), context /mnt/c/Users/lalwa/AppData/Local/Temp/s4jury/wt-batch/stage-4
+ ---> Using cache
+ ---> ee00575de84f
+Successfully built ee00575de84f
+Successfully tagged pocketful-s4-jury:latest
+== docker build --no-cache --network none (base image cached locally; go.mod has no external requires)
+go.mod require lines: 0
+ ---> c0ca1f58b813
+Successfully built c0ca1f58b813
+Successfully tagged pocketful-s4-jury-nonet:latest
+== image config
+user=65532:65532 entrypoint=[/pocketful] port=map[8080/tcp:{}] env=[PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin PORT=8080]
+size=9.44MB
+== image file list (scratch: expect only the binary)
+.dockerenv
+dev/
+dev/console
+dev/pts/
+dev/shm/
+etc/
+etc/hostname
+etc/hosts
+etc/mtab
+etc/resolv.conf
+pocketful
+proc/
+sys/
+files matching .git*/.claude*/*.log in image: 0
+== docker run --network none
+networkmode=none running=true
+outbound blocked to 1.1.1.1 -> OSError
+outbound blocked to 8.8.8.8 -> OSError
+outbound blocked to 93.184.216.34 -> OSError
+PASS no outbound network: 3 of 3 connects fail
+PASS no DNS
+PASS only loopback interface exists ['lo']
+PASS service healthy with --network none (0.0s)
+PASS GET / -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served / contains no http(s) URL to another host (found [])
+PASS GET /login -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served /login contains no http(s) URL to another host (found [])
+PASS GET /signup -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served /signup contains no http(s) URL to another host (found [])
+PASS GET /requests -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served /requests contains no http(s) URL to another host (found [])
+PASS GET /split -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served /split contains no http(s) URL to another host (found [])
+PASS GET /authorizations -> 200 (text/html; charset=utf-8, 1626 bytes)
+PASS served /authorizations contains no http(s) URL to another host (found [])
+PASS GET /assets/css/tokens.css -> 200 (text/css; charset=utf-8, 1412 bytes)
+PASS served /assets/css/tokens.css contains no http(s) URL to another host (found [])
+PASS GET /assets/css/base.css -> 200 (text/css; charset=utf-8, 3311 bytes)
+PASS served /assets/css/base.css contains no http(s) URL to another host (found [])
+PASS GET /assets/css/components.css -> 200 (text/css; charset=utf-8, 7668 bytes)
+PASS served /assets/css/components.css contains no http(s) URL to another host (found [])
+PASS GET /assets/js/main.js -> 200 (text/javascript; charset=utf-8, 1438 bytes)
+PASS served /assets/js/main.js contains no http(s) URL to another host (found [])
+PASS GET /assets/fonts/dm-sans.woff2 -> 200 (font/woff2, 36932 bytes)
+PASS served /assets/fonts/dm-sans.woff2 contains no http(s) URL to another host (found [])
+PASS GET /assets/fonts/inter.woff2 -> 200 (font/woff2, 48256 bytes)
+PASS served /assets/fonts/inter.woff2 contains no http(s) URL to another host (found [])
+PASS GET /assets/js/api.js -> 200 (text/javascript; charset=utf-8, 1289 bytes)
+PASS served /assets/js/api.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/page-authorizations.js -> 200 (text/javascript; charset=utf-8, 6910 bytes)
+PASS served /assets/js/page-authorizations.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/page-auth.js -> 200 (text/javascript; charset=utf-8, 3418 bytes)
+PASS served /assets/js/page-auth.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/page-requests.js -> 200 (text/javascript; charset=utf-8, 5104 bytes)
+PASS served /assets/js/page-requests.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/page-split.js -> 200 (text/javascript; charset=utf-8, 5635 bytes)
+PASS served /assets/js/page-split.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/page-wallet.js -> 200 (text/javascript; charset=utf-8, 2856 bytes)
+PASS served /assets/js/page-wallet.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/outcome.js -> 200 (text/javascript; charset=utf-8, 603 bytes)
+PASS served /assets/js/outcome.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/session.js -> 200 (text/javascript; charset=utf-8, 450 bytes)
+PASS served /assets/js/session.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/shell.js -> 200 (text/javascript; charset=utf-8, 1472 bytes)
+PASS served /assets/js/shell.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/dom.js -> 200 (text/javascript; charset=utf-8, 2674 bytes)
+PASS served /assets/js/dom.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/feedback.js -> 200 (text/javascript; charset=utf-8, 1122 bytes)
+PASS served /assets/js/feedback.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/format.js -> 200 (text/javascript; charset=utf-8, 781 bytes)
+PASS served /assets/js/format.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/money.js -> 200 (text/javascript; charset=utf-8, 1748 bytes)
+PASS served /assets/js/money.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/refresh.js -> 200 (text/javascript; charset=utf-8, 1030 bytes)
+PASS served /assets/js/refresh.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/status.js -> 200 (text/javascript; charset=utf-8, 841 bytes)
+PASS served /assets/js/status.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/transferForm.js -> 200 (text/javascript; charset=utf-8, 2998 bytes)
+PASS served /assets/js/transferForm.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/wallet.js -> 200 (text/javascript; charset=utf-8, 2002 bytes)
+PASS served /assets/js/wallet.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/writes.js -> 200 (text/javascript; charset=utf-8, 2358 bytes)
+PASS served /assets/js/writes.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/messages.js -> 200 (text/javascript; charset=utf-8, 2532 bytes)
+PASS served /assets/js/messages.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/activity.js -> 200 (text/javascript; charset=utf-8, 3234 bytes)
+PASS served /assets/js/activity.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/refund.js -> 200 (text/javascript; charset=utf-8, 4397 bytes)
+PASS served /assets/js/refund.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/requestForm.js -> 200 (text/javascript; charset=utf-8, 2491 bytes)
+PASS served /assets/js/requestForm.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/latest.js -> 200 (text/javascript; charset=utf-8, 234 bytes)
+PASS served /assets/js/latest.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/attempt.js -> 200 (text/javascript; charset=utf-8, 1138 bytes)
+PASS served /assets/js/attempt.js contains no http(s) URL to another host (found [])
+PASS GET /assets/js/refund-math.js -> 200 (text/javascript; charset=utf-8, 1147 bytes)
+PASS served /assets/js/refund-math.js contains no http(s) URL to another host (found [])
+assets served by the binary: {'text/html': 6, 'text/css': 3, 'text/javascript': 26, 'font/woff2': 2}
+PASS fonts are served by the binary (woff2)
+PASS scripts are served by the binary
+PASS stylesheets are served by the binary
+PASS reset 204
+PASS payment 201 with no network
+PASS refund 201 with no network
+
+B11 probe: ALL PASSED
+probe rc=0
+2026/10/03 08:31:33 pocketful listening on 0.0.0.0:8080
+== RUN.md run command exactly: docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s4-jury
+{"status":"ok"}
+GET / (Accept text/html) -> 200 text/html; charset=utf-8
+{"error":{"code":"unauthenticated","message":"missing or malformed bearer token"}}
+GET /requests (no Accept, no token) -> 401

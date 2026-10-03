@@ -1,0 +1,121 @@
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS one clock: expires_at - created_at == ttl exactly (2 s), same precision
+PASS phase 1 produced a useful mix (>=20 payments, >=15 authorizations, >=3 captures)
+PASS every payment/authorization created_at lies within its own request window (+-30 ms): one wall clock, no ratchet
+PASS every authorization is visible to its sender
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+PASS closed_at: null only while open; every terminal authorization carries it
+PASS closed_at never before created_at (a hold cannot be released before it is placed)
+INFO closed_at vs capture created_at differences: 0 []
+PASS 1596 historical views (399 instants x 4 users): invariants, oracle equality, echo, conservation; first bad: []
+PASS no view anywhere had available < 0
+PASS ada current /me == /me?as_of=now&known_at=now (money fields)
+PASS ada statement closing_balance == /me.total
+PASS bob current /me == /me?as_of=now&known_at=now (money fields)
+PASS bob statement closing_balance == /me.total
+PASS cy current /me == /me?as_of=now&known_at=now (money fields)
+PASS cy statement closing_balance == /me.total
+PASS dee current /me == /me?as_of=now&known_at=now (money fields)
+PASS dee statement closing_balance == /me.total
+INFO host wall-clock steps seen during this run: []
+== r3_sweep seed 1 (50 payments, 35 authorizations): 118 pass, 0 fail, 1781 requests, 0 5xx, max latency 0.011s, p99 0.001s

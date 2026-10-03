@@ -1,0 +1,140 @@
+/b/b7_stage4.py:315: SyntaxWarning: invalid escape sequence '\s'
+  if (el instanceof SVGElement && el.tagName !== 'svg') { if (cs.fill && cs.fill !== 'none' && !(el.tagName === 'path' && /^[MmLlHhVv0-9\s.,-]+$/.test(el.getAttribute('d') || ''))) add(cs.fill, 'fill ' + label(el)); if (cs.stroke && cs.stroke !== 'none') add(cs.stroke, 'stroke ' + label(el)); }
+PASS B12 receiver's feed: Refund control on each received payment (p_in1 p_in2 p_in3)
+PASS B12 no refund control on a payment the person SENT (p_out)
+PASS B12 no refund control on a payment between others (p_oth)
+PASS B12 Refund toggle starts collapsed: aria-expanded=false and panel not visible
+PASS B12 refund payment appears in the refunder's feed with 'Refund of' chip
+PASS B12 NO refund control on the refund payment (sender view)
+PASS B12 NO refund control on the refund payment for its RECIPIENT either
+PASS B12 bob (sender of every original) sees no refund control at all
+PASS B12 toggle opens the panel: aria-expanded true, amount input visible
+PASS B12 limit hint names amount left and recipient
+PASS B12 amount defaults to what is left (30.00)
+PASS B12 amount field has a visible associated label 'Refund amount'
+PASS B12 success state shown (refund-success) with text
+PASS B12 money moved once: ada total -1000, one refund payment of 1000 refund_of p_in2
+PASS B12 refund payment shape: request_id null, authorization_id null, original note/visibility
+PASS B12 wallet headline updated without reload (available 90.00 EUR)
+PASS B12 panel stays open and limit now 20.00
+PASS B12 one POST with an Idempotency-Key and body {amount:1000}
+PASS B12 fully refunded -> 'Nothing left to refund' and the toggle is gone
+PASS B12 two refunds sum to the payment: 3000
+PASS B12 stale setup: default 50.00
+PASS B12 refused (refund_exceeds_payment): refund-error shown, role alert, title + text
+PASS B12 refused notice survives the feed rebuild; no success/uncertain shown
+PASS B12 after refusal the page relearned the remainder (15.00)
+PASS B12 refused write moved no money (refunds total 3500)
+PASS B12 hold setup: available 5.00 EUR headline
+PASS B12 refused (insufficient_funds, money on hold not spendable): text names holds
+PASS B12 nothing refunded, balances unchanged
+PASS B12 uncertain [after-commit]: refund-uncertain shown (role status, 'Unconfirmed'), refund-error NOT shown
+PASS B12 uncertain [after-commit]: text promises retry sends it once
+PASS B12 uncertain [after-commit]: server state matches (committed=True)
+PASS B12 uncertain [after-commit]: retry succeeds, uncertain gone, success shown
+PASS B12 uncertain [after-commit]: retry sent the SAME Idempotency-Key and byte-identical body
+PASS B12 uncertain [after-commit]: money moved exactly once (one refund of 400)
+PASS B12 uncertain [before-commit]: refund-uncertain shown (role status, 'Unconfirmed'), refund-error NOT shown
+PASS B12 uncertain [before-commit]: text promises retry sends it once
+PASS B12 uncertain [before-commit]: server state matches (committed=False)
+PASS B12 uncertain [before-commit]: retry succeeds, uncertain gone, success shown
+PASS B12 uncertain [before-commit]: retry sent the SAME Idempotency-Key and byte-identical body
+PASS B12 uncertain [before-commit]: money moved exactly once (one refund of 400)
+PASS B12 loading: submit has aria-busy=true while the write is in flight
+PASS B12 loading: repeated clicks do not send a second request (1 POST)
+PASS B12 loading: no success/error shown yet
+PASS B12 loading: busy button visibly quieter (opacity < 1) and cursor progress
+PASS B12 loading ends: aria-busy removed, success shown, exactly one refund
+PASS B12 [mocked envelope] 403 forbidden -> refund-error with plain text containing 'Only the person who received'
+PASS B12 [mocked envelope] 404 not_found -> refund-error with plain text containing 'could not be found'
+PASS B12 [mocked envelope] 422 invalid_refund_target -> refund-error with plain text containing 'cannot itself be refunded'
+PASS B12 [mocked envelope] 422 validation_failed -> refund-error with plain text containing 'greater than zero'
+PASS B12 [mocked envelope] 409 insufficient_funds -> refund-error with plain text containing 'Not enough available funds'
+PASS B12 validation '' -> refund-error shown, no request sent
+PASS B12 validation '0' -> refund-error shown, no request sent
+PASS B12 validation '0.00' -> refund-error shown, no request sent
+PASS B12 validation 'abc' -> refund-error shown, no request sent
+PASS B12 validation '1.234' -> refund-error shown, no request sent
+PASS B12 validation '-5' -> refund-error shown, no request sent
+PASS B12 validation '1e3' -> refund-error shown, no request sent
+PASS B12 validation '50.01x' -> refund-error shown, no request sent
+PASS B12 setup: sender corrected p_in3 to 6.00
+INFO B12 default amount offered for a corrected payment before any refusal: 10.00 (service decides; page shows original 10.00)
+PASS B12 corrected: refund of the stale 10.00 refused by the service (refund-error)
+PASS B12 corrected: page relearned 6.00 as the limit and the default
+PASS B12 corrected: refunding the corrected 6.00 succeeds
+PASS B12 keyboard: Refund toggle shows a visible 2px accent focus ring
+PASS B12 keyboard: Enter opens the panel
+PASS B12 keyboard: Tab from toggle lands on the amount input with a focus ring
+PASS B12 keyboard: Tab then lands on Send refund with a focus ring
+PASS B12 keyboard: Enter sends the refund (success, 1234 refunded)
+PASS B01/B05 setup: error, uncertain and success refund notices visible together
+PASS B09 notices differ by glyph shape, label/title and border style, not by colour
+INFO B09 notice signatures: [{'t': 'refund-error-p_in1', 'kind': 'refused', 'role': 'alert', 'glyph': '<path d="M2.5 2.5l7 7M9.5 2.5l-7 7" stro', 'title': 'Check the amount', 'bs': 'solid', 'bc': 'rgb(244, 240, 255)'}, {'t': 'refund-uncertain-p_in2', 'kind': 'uncertain', 'role': 'status', 'glyph': '<circle cx="6" cy="6" r="4.5" fill="none', 'title': 'Unconfirmed', 'bs': 'dashed', 'bc': 'rgb(147, 130, 255)'}, {'t': 'refund-success-p_in3', 'kind': 'success', 'role': 'status', 'glyph': '<circle cx="6" cy="6" r="5" fill="curren', 'title': None, 'bs': 'solid', 'bc': 'rgba(244, 240, 255, 0.14)'}]
+PASS B01 wallet with refund panels+notices @375: no horizontal scroll (scrollWidth 375 <= clientWidth 375)
+PASS B01 wallet @375: no element extends past the viewport ([])
+PASS B05 @375 every visible input (incl. refund amounts) has a visible label (13 inputs)
+PASS B05 @375 measured text contrast >= 4.5 on 101 text nodes (min 6.78)
+PASS B01 wallet with refund panels+notices @768: no horizontal scroll (scrollWidth 768 <= clientWidth 768)
+PASS B01 wallet @768: no element extends past the viewport ([])
+PASS B05 @768 every visible input (incl. refund amounts) has a visible label (13 inputs)
+PASS B05 @768 measured text contrast >= 4.5 on 101 text nodes (min 6.78)
+PASS B01 wallet with refund panels+notices @1280: no horizontal scroll (scrollWidth 1280 <= clientWidth 1280)
+PASS B01 wallet @1280: no element extends past the viewport ([])
+PASS B05 @1280 every visible input (incl. refund amounts) has a visible label (13 inputs)
+PASS B05 @1280 measured text contrast >= 4.5 on 101 text nodes (min 6.78)
+PASS B05 keyboard: Tab walk reaches every refund control that exists (6 stops incl. 6 refund controls)
+INFO B12 p_in2 after its lost-response refund committed and a later feed refresh: done=True uncertain-notice-still-shown=True done-text='Nothing left to refund on this payment.'
+PASS B12 the committed-but-unconfirmed refund is reflected after a refresh: p_in2 shows 'Nothing left to refund' (page learned it from the feed)
+PASS B05 keyboard: every tab stop shows a >=2px solid focus outline
+PASS B05 touch: buttons and inputs are >= 44px high
+PASS B02 empty state: empty-activity with explanation
+PASS B02 loading state: main aria-busy=true, skeleton visible, status 'Loading'
+PASS B02 loading resolves to the wallet
+PASS B02 error state: 'We could not load your wallet' with role=alert and Try again
+PASS B02 error recovery: Try again loads the wallet
+PASS B10 Available funds is the largest text on the page (['wallet-available'])
+PASS B10 headline value is /me.available (data-amount 4700 == 4700), secondary values smaller
+PASS B10 headline is above the first section heading (first thing in main)
+INFO fonts: {'st': [{'fam': 'DM Sans', 'status': 'loaded', 'w': '400 500'}, {'fam': 'Inter', 'status': 'loaded', 'w': '400 500'}], 'dm': [561, 574], 'inter': [582, 586], 'dm700': True, 'res': ['http://127.0.0.1:41760/assets/fonts/inter.woff2', 'http://127.0.0.1:41760/assets/fonts/dm-sans.woff2']}
+PASS B06 every colour computed on 7 element-colours across wallet/requests/split/authorizations/login/signup is in the palette (off-palette: {})
+INFO B06 distinct computed colours: ['rgb(147, 130, 255)', 'rgb(16, 9, 58)', 'rgb(168, 166, 183)', 'rgb(244, 240, 255)', 'rgb(3, 0, 20)', 'rgb(6, 3, 23)', 'rgba(244, 240, 255, 0.14)']
+PASS B06 canvas #030014 is the page background (body bg rgb(3, 0, 20))
+PASS B06 surface #060317 used for cards/rows
+PASS B06 raised #10093a used (wallet strip, inputs, panels)
+PASS B06 text #f4f0ff and secondary #a8a6b7 both used
+PASS B06 one accent #9382ff used
+PASS B09 no red or green hue anywhere in computed colours (chromatic: {'rgb(147, 130, 255)': 248})
+PASS B06 the only bright chromatic colour is the accent (['rgb(147, 130, 255)'])
+INFO B08 radii by value: {'5px': ['a.skip-link', 'button', 'div.refund-panel', 'input', 'p.notice', 'select'], '32px': ['a', 'span.chip'], '16px': ['form.card', 'li.row', 'section.wallet']}
+PASS B08 every radius is 5px, 16px or 32px (['16px', '32px', '5px'])
+PASS B08 controls (button, input, select) are 5px
+PASS B08 cards (.card .row .wallet .empty) are 16px
+PASS B08 badges (chips, nav pills) are 32px
+PASS B08 depth by inset rim light only: all 81 box-shadows are inset, none is a drop shadow
+PASS B08 no text-shadow, no CSS filter drop-shadow
+PASS B10 no large gradient fills (6 gradients, all <= 8px select arrows)
+PASS B10 no stock imagery / mascots: no img/picture/video/canvas/iframe, no url() backgrounds
+PASS B07 only DM Sans and Inter are used (['DM Sans', 'Inter'])
+FAIL B07 every computed font-weight is 400 or 500, never above 500 (['400', '600']) :: {'600', '400'}
+FAIL B07 headings (18 h-elements) are DM Sans 500 :: [{'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 20, 'tag': 'H2', 'lab': 'h2'}, {'fam': 'DM Sans', 'w': '600', 'size': 28, 'tag': 'H1', 'lab': 'h1.page-title'}, {'fam': 'DM Sans', 'w': '600', 'size': 24, 'tag': 'H2', 'l
+FAIL B07 body text (p, label, input, button, li, a, time: 179) is Inter 400/500 :: [{'fam': 'Inter', 'w': '600', 'size': 14, 'tag': 'BUTTON', 'lab': 'button[logout-button]'}, {'fam': 'Inter', 'w': '600', 'size': 16, 'tag': 'BUTTON', 'lab': 'button[wallet-refresh]'}, {'fam': 'Inter', 'w': '600', 'size': 16, 'tag': 'BUTTON', 'lab': 'button[pay-submit]'}, {'fam': 'Inter', 'w': '600', 'size': 16, 'tag': 'BUTTON', 'lab': 'button[request-submit]'}]
+INFO B07 non-heading elements set in DM Sans (display numbers/brand): ['span', 'span.row-amount[activity-amount-p_1]', 'span.row-amount[activity-amount-p_2]', 'span.row-amount[activity-amount-p_in1]', 'span.row-amount[activity-amount-p_in2]', 'span.row-amount[activity-amount-p_in3]', 'span.row-amount[activity-amount-p_oth]', 'span.row-amount[activity-amount-p_out]', 'span.row-amount[authorization-amount-a_o]', 'span.row-amount[request-amount-rq_dec]', 'span.row-amount[request-amount-rq_in]', 'span.row-amount[request-amount-rq_paid]', 'span.wallet-available[wallet-available]']
+PASS B07 both bundled fonts report status 'loaded' ([{'fam': 'DM Sans', 'status': 'loaded', 'w': '400 500'}, {'fam': 'Inter', 'status': 'loaded', 'w': '400 500'}])
+PASS B07 the face is genuinely variable: width at 500 differs from 400 (DM Sans [561, 574], Inter [582, 586]) so weight 500 is real, not synthesised
+PASS B07 font requests were same-origin /assets/fonts only: ['http://127.0.0.1:41760/assets/fonts/inter.woff2', 'http://127.0.0.1:41760/assets/fonts/dm-sans.woff2']
+PASS B11/B07 no request left the origin during the whole browser session (0 external)
+PASS B06 CSS hex literals are exactly the six palette colours ['#030014', '#060317', '#10093a', '#9382ff', '#a8a6b7', '#f4f0ff']
+PASS B06 CSS rgba() literals are only the text colour at low alpha (rim/line): ['rgba(244, 240, 255, 0.08)', 'rgba(244, 240, 255, 0.14)']
+PASS B06 no hsl()/oklch()/named colour red/green/blue/etc in CSS
+PASS B07 CSS declares no numeric font-weight above 500 (found [400, 500]) and no bold/bolder
+PASS B07 @font-face rules bundle DM Sans and Inter from /assets/fonts with weight 400 500
+PASS B07/B11 CSS has no http(s):// URL and no @import
+PASS B08 every CSS box-shadow declaration is var(--rim-light) or none (['var(--rim-light)'])
+PASS B08 --rim-light is an inset 0 1px 0 shadow
+PASS B08 CSS border-radius declarations use only the three tokens (['var(--radius-badge)', 'var(--radius-card)', 'var(--radius-control)'])
+PASS B08 radius tokens are 5px / 16px / 32px
+PASS B10 CSS has no text-shadow / drop-shadow; linear-gradient only on <select> arrow
+== b7_stage4: 125 pass, 3 fail
+FAILED: ["B07 every computed font-weight is 400 or 500, never above 500 (['400', '600'])", 'B07 headings (18 h-elements) are DM Sans 500', 'B07 body text (p, label, input, button, li, a, time: 179) is Inter 400/500']
+rc=1

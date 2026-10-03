@@ -1,0 +1,1409 @@
+PASS [open exp-2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [open exp-2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [open exp-2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [open exp-2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [open exp-2h created omitted] closed_at is never in the future (an event time)
+PASS [open exp-2h created omitted] open status iff closed_at null (status shown expired)
+PASS [open exp-2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T17:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T17:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T17:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T17:42:05.206629+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T17:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T17:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T17:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T17:42:05.206630+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T17:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T17:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T17:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T17:42:05.206631+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.206629+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.206629+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.206630+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.206630+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.206631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.206631+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.209236+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.209236+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.209236+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.209236+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.209237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.209237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.209237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.209237+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.209238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.209238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.209238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.209238+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.218180+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.218180+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.218180+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.218180+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.218181+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.218181+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.218181+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.218181+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.218182+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.218182+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.218182+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.218182+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.277195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.277195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.277195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.277195+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.277196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.277196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.277196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.277196+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 2026-10-03T19:42:05.277197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created omitted]: bob view at 2026-10-03T19:42:05.277197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 2026-10-03T19:42:05.277197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created omitted]: sum of totals at 2026-10-03T19:42:05.277197+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [open exp-2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp-2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [open exp-2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [open exp-2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [open exp-2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [open exp-2h created omitted] export -> 200
+PASS [open exp-2h created omitted] import #1 of its own export -> 204
+PASS [open exp-2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp-2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp-2h created omitted] import #2 of its own export -> 204
+PASS [open exp-2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp-2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp-2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [open exp-2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [open exp-2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [open exp-2h created -3h] supplied created_at kept
+PASS [open exp-2h created -3h] closed_at is never in the future (an event time)
+PASS [open exp-2h created -3h] open status iff closed_at null (status shown expired)
+PASS [open exp-2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T16:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T16:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T16:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T16:42:05.477725+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T16:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T16:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T16:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T16:42:05.477726+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T16:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T16:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T16:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T16:42:05.477727+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T17:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T17:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T17:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T17:42:05.477725+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T17:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T17:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T17:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T17:42:05.477726+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T17:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T17:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T17:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T17:42:05.477727+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.477725+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.477725+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.477726+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.477726+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.477727+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.477727+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.487140+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.487140+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.487140+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.487140+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.487141+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.487141+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.487141+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.487141+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.487142+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.487142+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.487142+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.487142+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.537771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.537771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.537771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.537771+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.537772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.537772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.537772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.537772+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 2026-10-03T19:42:05.537773+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created -3h]: bob view at 2026-10-03T19:42:05.537773+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 2026-10-03T19:42:05.537773+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp-2h created -3h]: sum of totals at 2026-10-03T19:42:05.537773+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp-2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp-2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [open exp-2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp-2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp-2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp-2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [open exp-2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [open exp-2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [open exp-2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [open exp-2h created -3h] export -> 200
+PASS [open exp-2h created -3h] import #1 of its own export -> 204
+PASS [open exp-2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp-2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp-2h created -3h] import #2 of its own export -> 204
+PASS [open exp-2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp-2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp-2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [open exp+2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [open exp+2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [open exp+2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [open exp+2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [open exp+2h created omitted] open status iff closed_at null (status shown open)
+PASS [open exp+2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (2000, 7999)
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.716770+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.716771+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.716772+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.717338+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.717338+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.717338+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.717338+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.717339+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.717339+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.717339+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.717339+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.717340+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.717340+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.717340+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.717340+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.726307+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.726307+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.726307+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.726307+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.726308+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.726308+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.726308+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.726308+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.726309+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.726309+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.726309+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.726309+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.778062+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.778062+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.778062+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.778062+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.778063+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.778063+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.778063+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.778063+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T19:42:05.778064+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T19:42:05.778064+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T19:42:05.778064+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T19:42:05.778064+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T21:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T21:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T21:42:05.716770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T21:42:05.716770+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T21:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T21:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T21:42:05.716771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T21:42:05.716771+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 2026-10-03T21:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created omitted]: bob view at 2026-10-03T21:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 2026-10-03T21:42:05.716772+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created omitted]: sum of totals at 2026-10-03T21:42:05.716772+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [open exp+2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [open exp+2h created omitted] a payment above available is refused (409 insufficient_funds) 7999
+PASS [open exp+2h created omitted] capture of the seeded live open hold -> 201, created_at now
+PASS [open exp+2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [open exp+2h created omitted] export -> 200
+PASS [open exp+2h created omitted] import #1 of its own export -> 204
+PASS [open exp+2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp+2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp+2h created omitted] import #2 of its own export -> 204
+PASS [open exp+2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp+2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp+2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [open exp+2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [open exp+2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [open exp+2h created -3h] supplied created_at kept
+PASS [open exp+2h created -3h] open status iff closed_at null (status shown open)
+PASS [open exp+2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (2000, 7999)
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T16:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T16:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T16:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T16:42:05.953774+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T16:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T16:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T16:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T16:42:05.953775+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T16:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T16:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T16:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T16:42:05.953776+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.953774+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.953775+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.953776+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.963171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.963171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.963171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.963171+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.963172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.963172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.963172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.963172+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:05.963173+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 2000, 8000)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:05.963173+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:05.963173+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:05.963173+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:06.008650+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:06.008650+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:06.008650+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:06.008650+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:06.008651+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:06.008651+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:06.008651+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:06.008651+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T19:42:06.008652+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T19:42:06.008652+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T19:42:06.008652+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T19:42:06.008652+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T21:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 2000, 7999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T21:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T21:42:05.953774+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T21:42:05.953774+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T21:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T21:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T21:42:05.953775+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T21:42:05.953775+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 2026-10-03T21:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created -3h]: bob view at 2026-10-03T21:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 2026-10-03T21:42:05.953776+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created -3h]: sum of totals at 2026-10-03T21:42:05.953776+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [open exp+2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [open exp+2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [open exp+2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [open exp+2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [open exp+2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [open exp+2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [open exp+2h created -3h] a payment above available is refused (409 insufficient_funds) 7999
+PASS [open exp+2h created -3h] capture of the seeded live open hold -> 201, created_at now
+PASS [open exp+2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [open exp+2h created -3h] export -> 200
+PASS [open exp+2h created -3h] import #1 of its own export -> 204
+PASS [open exp+2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp+2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp+2h created -3h] import #2 of its own export -> 204
+PASS [open exp+2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [open exp+2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [open exp+2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [captured exp-2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [captured exp-2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [captured exp-2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [captured exp-2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [captured exp-2h created omitted] closed_at is never in the future (an event time)
+PASS [captured exp-2h created omitted] open status iff closed_at null (status shown captured)
+PASS [captured exp-2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T17:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T17:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T17:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T17:42:06.232680+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T17:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T17:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T17:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T17:42:06.232681+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T17:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T17:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T17:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T17:42:06.232682+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.232680+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.232680+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.232681+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.232681+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.232682+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.232682+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.233170+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.233170+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.233170+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.233170+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.233171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.233171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.233171+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.233171+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.233172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.233172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.233172+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.233172+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.242334+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.242334+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.242334+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.242334+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.242335+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.242335+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.242335+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.242335+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.242336+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.242336+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.242336+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.242336+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.298259+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.298259+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.298259+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.298259+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.298260+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.298260+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.298260+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.298260+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 2026-10-03T19:42:06.298261+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created omitted]: bob view at 2026-10-03T19:42:06.298261+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 2026-10-03T19:42:06.298261+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 2026-10-03T19:42:06.298261+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [captured exp-2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp-2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [captured exp-2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [captured exp-2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [captured exp-2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [captured exp-2h created omitted] export -> 200
+PASS [captured exp-2h created omitted] import #1 of its own export -> 204
+PASS [captured exp-2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp-2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp-2h created omitted] import #2 of its own export -> 204
+PASS [captured exp-2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp-2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp-2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [captured exp-2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [captured exp-2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [captured exp-2h created -3h] supplied created_at kept
+PASS [captured exp-2h created -3h] closed_at is never in the future (an event time)
+PASS [captured exp-2h created -3h] open status iff closed_at null (status shown captured)
+PASS [captured exp-2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T16:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T16:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T16:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T16:42:06.476115+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T16:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T16:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T16:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T16:42:06.476116+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T16:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T16:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T16:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T16:42:06.476117+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T17:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T17:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T17:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T17:42:06.476115+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T17:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T17:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T17:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T17:42:06.476116+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T17:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T17:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T17:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T17:42:06.476117+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.476115+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.476115+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.476116+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.476116+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.476117+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.476117+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.485642+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.485642+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.485642+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.485642+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.485643+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.485643+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.485643+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.485643+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.485644+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.485644+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.485644+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.485644+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.536631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.536631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.536631+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.536631+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.536632+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.536632+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.536632+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.536632+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 2026-10-03T19:42:06.536633+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created -3h]: bob view at 2026-10-03T19:42:06.536633+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 2026-10-03T19:42:06.536633+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 2026-10-03T19:42:06.536633+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp-2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp-2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [captured exp-2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp-2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp-2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp-2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [captured exp-2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [captured exp-2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [captured exp-2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [captured exp-2h created -3h] export -> 200
+PASS [captured exp-2h created -3h] import #1 of its own export -> 204
+PASS [captured exp-2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp-2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp-2h created -3h] import #2 of its own export -> 204
+PASS [captured exp-2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp-2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp-2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [captured exp+2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [captured exp+2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [captured exp+2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [captured exp+2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [captured exp+2h created omitted] closed_at is never in the future (an event time)
+PASS [captured exp+2h created omitted] open status iff closed_at null (status shown captured)
+PASS [captured exp+2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.732872+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.732873+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.732874+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.734616+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.734616+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.734616+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.734616+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.734617+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.734617+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.734617+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.734617+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.734618+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.734618+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.734618+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.734618+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.745237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.745237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.745237+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.745237+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.745238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.745238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.745238+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.745238+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.745239+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.745239+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.745239+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.745239+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.833990+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.833990+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.833990+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.833990+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.833991+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.833991+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.833991+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.833991+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T19:42:06.833992+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T19:42:06.833992+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T19:42:06.833992+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T19:42:06.833992+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T21:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T21:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T21:42:06.732872+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T21:42:06.732872+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T21:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T21:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T21:42:06.732873+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T21:42:06.732873+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 2026-10-03T21:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 2026-10-03T21:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 2026-10-03T21:42:06.732874+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created omitted]: sum of totals at 2026-10-03T21:42:06.732874+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [captured exp+2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [captured exp+2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [captured exp+2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [captured exp+2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [captured exp+2h created omitted] export -> 200
+PASS [captured exp+2h created omitted] import #1 of its own export -> 204
+PASS [captured exp+2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp+2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp+2h created omitted] import #2 of its own export -> 204
+PASS [captured exp+2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp+2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp+2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [captured exp+2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [captured exp+2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [captured exp+2h created -3h] supplied created_at kept
+PASS [captured exp+2h created -3h] closed_at is never in the future (an event time)
+PASS [captured exp+2h created -3h] open status iff closed_at null (status shown captured)
+PASS [captured exp+2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T16:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T16:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T16:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T16:42:07.031161+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T16:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T16:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T16:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T16:42:07.031162+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T16:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T16:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T16:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T16:42:07.031163+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.031161+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.031162+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.031163+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.041440+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.041440+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.041440+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.041440+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.041441+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.041441+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.041441+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.041441+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.041442+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.041442+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.041442+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.041442+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.108960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.108960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.108960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.108960+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.108961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.108961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.108961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.108961+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T19:42:07.108962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T19:42:07.108962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T19:42:07.108962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T19:42:07.108962+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T21:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T21:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T21:42:07.031161+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T21:42:07.031161+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T21:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T21:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T21:42:07.031162+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T21:42:07.031162+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 2026-10-03T21:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 2026-10-03T21:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 2026-10-03T21:42:07.031163+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created -3h]: sum of totals at 2026-10-03T21:42:07.031163+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [captured exp+2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [captured exp+2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [captured exp+2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [captured exp+2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [captured exp+2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [captured exp+2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [captured exp+2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [captured exp+2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [captured exp+2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [captured exp+2h created -3h] export -> 200
+PASS [captured exp+2h created -3h] import #1 of its own export -> 204
+PASS [captured exp+2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp+2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp+2h created -3h] import #2 of its own export -> 204
+PASS [captured exp+2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [captured exp+2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [captured exp+2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [voided exp-2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [voided exp-2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [voided exp-2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [voided exp-2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [voided exp-2h created omitted] closed_at is never in the future (an event time)
+PASS [voided exp-2h created omitted] open status iff closed_at null (status shown voided)
+PASS [voided exp-2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T17:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T17:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T17:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T17:42:07.416328+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T17:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T17:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T17:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T17:42:07.416329+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T17:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T17:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T17:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T17:42:07.416330+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416328+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416328+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416329+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416329+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416330+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416330+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416802+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416802+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416802+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416802+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416803+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.416804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.416804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.416804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.416804+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.425960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.425960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.425960+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.425960+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.425961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.425961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.425961+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.425961+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.425962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.425962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.425962+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.425962+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.488342+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.488342+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.488342+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.488342+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.488343+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.488343+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.488343+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.488343+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 2026-10-03T19:42:07.488344+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created omitted]: bob view at 2026-10-03T19:42:07.488344+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 2026-10-03T19:42:07.488344+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 2026-10-03T19:42:07.488344+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [voided exp-2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp-2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [voided exp-2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [voided exp-2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [voided exp-2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [voided exp-2h created omitted] export -> 200
+PASS [voided exp-2h created omitted] import #1 of its own export -> 204
+PASS [voided exp-2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp-2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp-2h created omitted] import #2 of its own export -> 204
+PASS [voided exp-2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp-2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp-2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [voided exp-2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [voided exp-2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [voided exp-2h created -3h] supplied created_at kept
+PASS [voided exp-2h created -3h] closed_at is never in the future (an event time)
+PASS [voided exp-2h created -3h] open status iff closed_at null (status shown voided)
+PASS [voided exp-2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T16:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T16:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T16:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T16:42:07.693195+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T16:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T16:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T16:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T16:42:07.693196+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T16:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T16:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T16:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T16:42:07.693197+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T17:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T17:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T17:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T17:42:07.693195+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T17:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T17:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T17:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T17:42:07.693196+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T17:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T17:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T17:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T17:42:07.693197+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.693195+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.693195+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.693196+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.693196+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.693197+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.693197+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.703460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.703460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.703460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.703460+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.703461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.703461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.703461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.703461+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.703462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.703462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.703462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.703462+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.754460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.754460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.754460+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.754460+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.754461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.754461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.754461+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.754461+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 2026-10-03T19:42:07.754462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created -3h]: bob view at 2026-10-03T19:42:07.754462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 2026-10-03T19:42:07.754462+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 2026-10-03T19:42:07.754462+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp-2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp-2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [voided exp-2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp-2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp-2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp-2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [voided exp-2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [voided exp-2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [voided exp-2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [voided exp-2h created -3h] export -> 200
+PASS [voided exp-2h created -3h] import #1 of its own export -> 204
+PASS [voided exp-2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp-2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp-2h created -3h] import #2 of its own export -> 204
+PASS [voided exp-2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp-2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp-2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [voided exp+2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [voided exp+2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [voided exp+2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [voided exp+2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [voided exp+2h created omitted] closed_at is never in the future (an event time)
+PASS [voided exp+2h created omitted] open status iff closed_at null (status shown voided)
+PASS [voided exp+2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022202+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022203+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022204+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022947+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022947+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022947+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022947+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022948+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022948+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022948+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022948+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.022949+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.022949+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.022949+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.022949+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.032509+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.032509+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.032509+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.032509+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.032510+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.032510+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.032510+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.032510+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.032511+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.032511+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.032511+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.032511+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.096457+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.096457+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.096457+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.096457+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.096458+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.096458+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.096458+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.096458+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T19:42:08.096459+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T19:42:08.096459+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T19:42:08.096459+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T19:42:08.096459+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T21:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T21:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T21:42:08.022202+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T21:42:08.022202+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T21:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T21:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T21:42:08.022203+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T21:42:08.022203+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 2026-10-03T21:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 2026-10-03T21:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 2026-10-03T21:42:08.022204+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created omitted]: sum of totals at 2026-10-03T21:42:08.022204+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [voided exp+2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [voided exp+2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [voided exp+2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [voided exp+2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [voided exp+2h created omitted] export -> 200
+PASS [voided exp+2h created omitted] import #1 of its own export -> 204
+PASS [voided exp+2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp+2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp+2h created omitted] import #2 of its own export -> 204
+PASS [voided exp+2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp+2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp+2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [voided exp+2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [voided exp+2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [voided exp+2h created -3h] supplied created_at kept
+PASS [voided exp+2h created -3h] closed_at is never in the future (an event time)
+PASS [voided exp+2h created -3h] open status iff closed_at null (status shown voided)
+PASS [voided exp+2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T16:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T16:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T16:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T16:42:08.329568+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T16:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T16:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T16:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T16:42:08.329569+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T16:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T16:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T16:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T16:42:08.329570+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.329568+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.329569+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.329570+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.339403+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.339403+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.339403+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.339403+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.339404+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.339404+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.339404+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.339404+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.339405+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.339405+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.339405+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.339405+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.394505+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.394505+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.394505+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.394505+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.394506+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.394506+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.394506+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.394506+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T19:42:08.394507+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T19:42:08.394507+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T19:42:08.394507+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T19:42:08.394507+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T21:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T21:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T21:42:08.329568+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T21:42:08.329568+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T21:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T21:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T21:42:08.329569+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T21:42:08.329569+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 2026-10-03T21:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 2026-10-03T21:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 2026-10-03T21:42:08.329570+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created -3h]: sum of totals at 2026-10-03T21:42:08.329570+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [voided exp+2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [voided exp+2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [voided exp+2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [voided exp+2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [voided exp+2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [voided exp+2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [voided exp+2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [voided exp+2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_not_open)
+PASS [voided exp+2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [voided exp+2h created -3h] export -> 200
+PASS [voided exp+2h created -3h] import #1 of its own export -> 204
+PASS [voided exp+2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp+2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp+2h created -3h] import #2 of its own export -> 204
+PASS [voided exp+2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [voided exp+2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [voided exp+2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [expired exp-2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [expired exp-2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [expired exp-2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [expired exp-2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [expired exp-2h created omitted] closed_at is never in the future (an event time)
+PASS [expired exp-2h created omitted] stored-expired with a past deadline: closed_at == expires_at (expiry takes effect at expires_at)
+PASS [expired exp-2h created omitted] open status iff closed_at null (status shown expired)
+PASS [expired exp-2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T17:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T17:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T17:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T17:42:08.618803+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T17:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T17:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T17:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T17:42:08.618804+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T17:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T17:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T17:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T17:42:08.618805+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.618803+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.618803+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.618804+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.618804+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.618805+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.618805+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.619472+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.619472+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.619472+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.619472+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.619473+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.619473+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.619473+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.619473+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.619474+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.619474+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.619474+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.619474+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.628746+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.628746+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.628746+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.628746+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.628747+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.628747+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.628747+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.628747+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.628748+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.628748+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.628748+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.628748+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.714008+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.714008+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.714008+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.714008+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.714009+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.714009+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.714009+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.714009+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 2026-10-03T19:42:08.714010+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created omitted]: bob view at 2026-10-03T19:42:08.714010+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 2026-10-03T19:42:08.714010+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 2026-10-03T19:42:08.714010+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [expired exp-2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp-2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [expired exp-2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [expired exp-2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [expired exp-2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [expired exp-2h created omitted] export -> 200
+PASS [expired exp-2h created omitted] import #1 of its own export -> 204
+PASS [expired exp-2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp-2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp-2h created omitted] import #2 of its own export -> 204
+PASS [expired exp-2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp-2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp-2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [expired exp-2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [expired exp-2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [expired exp-2h created -3h] supplied created_at kept
+PASS [expired exp-2h created -3h] closed_at is never in the future (an event time)
+PASS [expired exp-2h created -3h] stored-expired with a past deadline: closed_at == expires_at (expiry takes effect at expires_at)
+PASS [expired exp-2h created -3h] open status iff closed_at null (status shown expired)
+PASS [expired exp-2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T16:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T16:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T16:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T16:42:08.942003+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T16:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T16:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T16:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T16:42:08.942004+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T16:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T16:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T16:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T16:42:08.942005+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T17:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T17:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T17:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T17:42:08.942003+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T17:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T17:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T17:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T17:42:08.942004+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T17:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T17:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T17:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T17:42:08.942005+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.942003+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.942003+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.942004+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.942004+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.942005+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.942005+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.951968+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.951968+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.951968+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.951968+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.951969+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.951969+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.951969+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.951969+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:08.951970+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:08.951970+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:08.951970+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:08.951970+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:09.005705+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:09.005705+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:09.005705+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:09.005705+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:09.005706+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:09.005706+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:09.005706+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:09.005706+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 2026-10-03T19:42:09.005707+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created -3h]: bob view at 2026-10-03T19:42:09.005707+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 2026-10-03T19:42:09.005707+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 2026-10-03T19:42:09.005707+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp-2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp-2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [expired exp-2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp-2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp-2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp-2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [expired exp-2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [expired exp-2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [expired exp-2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [expired exp-2h created -3h] export -> 200
+PASS [expired exp-2h created -3h] import #1 of its own export -> 204
+PASS [expired exp-2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp-2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp-2h created -3h] import #2 of its own export -> 204
+PASS [expired exp-2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp-2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp-2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS [expired exp+2h created omitted] reset -> 204 or 422 (never 5xx)
+PASS [expired exp+2h created omitted] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [expired exp+2h created omitted] clock: new authorization (cy has 1) created_at within its request window
+PASS [expired exp+2h created omitted] hold created_at omitted -> the reset instant (between request start and end), not a truncated second
+PASS [expired exp+2h created omitted] closed_at is never in the future (an event time)
+PASS [expired exp+2h created omitted] open status iff closed_at null (status shown expired)
+PASS [expired exp+2h created omitted] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.257896+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.257897+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.257898+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.258434+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.258434+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.258434+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.258434+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.258435+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.258435+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.258435+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.258435+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.258436+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.258436+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.258436+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.258436+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.268249+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.268249+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.268249+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.268249+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.268250+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.268250+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.268250+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.268250+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.268251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.268251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.268251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.268251+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.331797+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.331797+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.331797+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.331797+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.331798+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.331798+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.331798+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.331798+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T19:42:09.331799+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T19:42:09.331799+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T19:42:09.331799+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T19:42:09.331799+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T21:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T21:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T21:42:09.257896+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T21:42:09.257896+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T21:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T21:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T21:42:09.257897+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T21:42:09.257897+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 2026-10-03T21:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 2026-10-03T21:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 2026-10-03T21:42:09.257898+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created omitted]: sum of totals at 2026-10-03T21:42:09.257898+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created omitted]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created omitted]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [expired exp+2h created omitted]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created omitted]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created omitted]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created omitted]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [expired exp+2h created omitted] a payment above available is refused (409 insufficient_funds) 9999
+PASS [expired exp+2h created omitted] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [expired exp+2h created omitted] after the capture attempt: balances conserved, all views still consistent
+PASS [expired exp+2h created omitted] export -> 200
+PASS [expired exp+2h created omitted] import #1 of its own export -> 204
+PASS [expired exp+2h created omitted] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp+2h created omitted] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp+2h created omitted] import #2 of its own export -> 204
+PASS [expired exp+2h created omitted] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp+2h created omitted] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp+2h created -3h] reset -> 204 or 422 (never 5xx)
+PASS [expired exp+2h created -3h] clock: new payment created_at within its request window (+-30 ms), not ratcheted by seeded values
+PASS [expired exp+2h created -3h] clock: new authorization (cy has 1) created_at within its request window
+PASS [expired exp+2h created -3h] supplied created_at kept
+PASS [expired exp+2h created -3h] closed_at is never in the future (an event time)
+PASS [expired exp+2h created -3h] open status iff closed_at null (status shown expired)
+PASS [expired exp+2h created -3h] current /me held == 2000 exactly for a live seeded open hold, else 0 (0, 9999)
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T16:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T16:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T16:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T16:42:09.560543+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T16:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T16:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T16:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T16:42:09.560544+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T16:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T16:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T16:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T16:42:09.560545+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.560543+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.560544+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.560545+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.561594+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.561594+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.561594+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.561594+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.561595+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.561595+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.561595+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.561595+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.561596+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.561596+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.561596+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.561596+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.571476+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.571476+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.571476+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.571476+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.571477+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.571477+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.571477+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.571477+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.571478+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.571478+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.571478+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.571478+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.633769+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.633769+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.633769+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.633769+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.633770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.633770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.633770+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.633770+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T19:42:09.633771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T19:42:09.633771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T19:42:09.633771+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 1, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T19:42:09.633771+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T21:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T21:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T21:42:09.560543+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T21:42:09.560543+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T21:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T21:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T21:42:09.560544+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T21:42:09.560544+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 2026-10-03T21:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 2026-10-03T21:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 2026-10-03T21:42:09.560545+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created -3h]: sum of totals at 2026-10-03T21:42:09.560545+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS [expired exp+2h created -3h]: bob view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 1970-01-01T00:00:00.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS [expired exp+2h created -3h]: sum of totals at 1970-01-01T00:00:00.000000+00:00 == seeded total
+PASS [expired exp+2h created -3h]: ada view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (9999, 0, 9999)
+PASS [expired exp+2h created -3h]: bob view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2500, 0, 2500)
+PASS [expired exp+2h created -3h]: cy view at 9999-12-31T23:59:59.000000+00:00 consistent (balance=total, available=total-held>=0, held<=total) (1, 0, 1)
+PASS [expired exp+2h created -3h]: sum of totals at 9999-12-31T23:59:59.000000+00:00 == seeded total
+PASS [expired exp+2h created -3h] a payment above available is refused (409 insufficient_funds) 9999
+PASS [expired exp+2h created -3h] capture of a closed/expired seeded hold -> 409, never 201 (authorization_expired)
+PASS [expired exp+2h created -3h] after the capture attempt: balances conserved, all views still consistent
+PASS [expired exp+2h created -3h] export -> 200
+PASS [expired exp+2h created -3h] import #1 of its own export -> 204
+PASS [expired exp+2h created -3h] import #1: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp+2h created -3h] import #1: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp+2h created -3h] import #2 of its own export -> 204
+PASS [expired exp+2h created -3h] import #2: balances/held/available and every authorization field (closed_at, expires_at, payment_ids, status, created_at) unchanged
+PASS [expired exp+2h created -3h] import #2: next payment stamped at its own request time (clock not moved by imported values)
+PASS [expired exp+2h created +2h] reset -> 204 or 422 (never 5xx)
+PASS funded seed: seeded payment and seeded hold both default to the reset instant; the payment is not later than the hold it funds
+PASS funded seed: ada view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887251+00:00 == seeded total
+PASS funded seed: ada view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (8000, 0, 8000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2000, 1500, 500)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887252+00:00 == seeded total
+PASS funded seed: ada view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (8000, 0, 8000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2000, 1500, 500)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887253+00:00 == seeded total
+PASS funded seed: ada view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (10000, 0, 10000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887251+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887251+00:00 == seeded total
+PASS funded seed: ada view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (8000, 0, 8000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2000, 1500, 500)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887252+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887252+00:00 == seeded total
+PASS funded seed: ada view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (8000, 0, 8000)
+PASS funded seed: bob view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (2000, 1500, 500)
+PASS funded seed: cy view at 2026-10-03T19:42:09.887253+00:00 consistent (balance=total, available=total-held>=0, held<=total) (0, 0, 0)
+PASS funded seed: sum of totals at 2026-10-03T19:42:09.887253+00:00 == seeded total
+PASS funded seed: at as_of = authorization.created_at bob has total 2000 held 1500 available 500
+PASS funded seed (payment 1h ago): view at hold creation total 2000 held 1500 available 500
+INFO host wall-clock steps seen during this run: []
+== r3_seedmatrix (24 cases): 1407 pass, 0 fail, 1504 requests, 0 5xx, max latency 0.013s, p99 0.011s

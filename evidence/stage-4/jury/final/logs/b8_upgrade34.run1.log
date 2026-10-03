@@ -1,0 +1,27 @@
+PASS precondition: the source is a stage-3 service (no refund_of on its payments)
+PASS precondition: stage-3 revisions route exists on the source
+PASS precondition: the source has no refund route
+PASS B04 signed in through the UI on the stage-3 backend
+PASS B04 pre-upgrade wallet from the stage-3 /me: available 100.00 EUR headline, received payment listed
+PASS B04 pre-upgrade lost response -> pay-uncertain (not pay-error)
+PASS B04 stage-3 committed the payment: ada total 8500
+PASS B04 stage-3 correction of p_seed to 450 accepted before export
+PASS B04 the export is a stage-3 export (no refund_of in state.payments)
+PASS B04 session kept: no redirect to /login, still Ada
+PASS B04 imported balances: total 85.50 EUR (8500 + 50 from the stage-3 correction), available 85.50
+PASS B04 pay form kept its values; pay-uncertain still shown
+PASS B04 lost payment retried on stage 4 with the SAME key and byte-identical body
+PASS B04 retry recovered the original: uncertain/error gone, balance still 85.50 EUR (money once)
+PASS B04 retried POST /payments reached the STAGE-4 backend and was a replay (200)
+PASS B04 feed lists the lost payment exactly once
+PASS B04 imported payments read refund_of null on stage 4
+PASS B04 stage-3 correction retained after import: 2 revisions, current amount 450
+PASS B12/B04 refund control offered on the imported received payment p_recv, not on the sent p_seed
+PASS B12/B04 refund of an imported payment succeeds in the browser
+PASS B12/B04 server: ada total 8050 after the 500 refund
+PASS B04 imported pending requests listed (seeded and 'pending after') with Pay buttons
+PASS B04 pending request paid through the UI after the upgrade: status paid, no request-error
+PASS B04 request payment moved money once: ada total 6850
+PASS B04 conservation: totals still sum to 15500
+== b8_upgrade34: 25 pass, 0 fail
+rc=0

@@ -1,0 +1,13 @@
+.dockerenv
+dev/
+dev/console
+dev/pts/
+dev/shm/
+etc/
+etc/hostname
+etc/hosts
+etc/mtab
+etc/resolv.conf
+pocketful
+proc/
+sys/
