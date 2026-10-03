@@ -564,3 +564,39 @@ func TestRefundRacesCorrections(t *testing.T) {
 		t.Fatalf("the race did nothing: %d revisions, %d refunded", len(h), st.refundedAmount(p.PaymentID))
 	}
 }
+
+// U15 and the historical check with a refund in the history: correction debits use available funds
+// (held funds do not count), and a refund already paid out does not hide a past overdraft.
+func TestCorrectionDebitsAvailableAndRefundHistory(t *testing.T) {
+	_, st := azStore(fgU{"ada", 10000}, fgU{"bob", 0}, fgU{"cy", 0})
+	p := hsPay(t, st, "ada", "bob", 1000, hsAt(0))
+	azAuthorize(t, st, "bob", "cy", 900, hsAt(time.Second))
+	before := crSnapshot(st)
+	_, e := crCorrect(st, "ada", p, crIn(1, 500, crT0, "debit 500"), hsAt(time.Minute))
+	fgWantErr(t, "1000 total, 900 held, 500 debit", e, 409, "insufficient_funds")
+	if crSnapshot(st) != before {
+		t.Fatal("a refused correction changed the state")
+	}
+	crMust(t, st, "ada", p, crIn(1, 900, crT0, "debit exactly the available 100"), hsAt(time.Minute))
+
+	_, st2 := azStore(fgU{"ada", 10000}, fgU{"bob", 0}, fgU{"cy", 1000}, fgU{"dee", 0})
+	q := hsPay(t, st2, "ada", "bob", 1000, hsAt(0))
+	hsPay(t, st2, "bob", "dee", 600, hsAt(time.Second))
+	rfMust(t, st2, "bob", q.PaymentID, 400, hsAt(2*time.Second))
+	hsPay(t, st2, "cy", "bob", 1000, hsAt(3*time.Second))
+	before = crSnapshot(st2)
+	_, e = crCorrect(st2, "ada", q, crIn(1, 400, crT0, "to refunded, effective at creation"), hsAt(time.Minute))
+	fgWantErr(t, "bob would have been 200 short when paying dee", e, 409, "historical_overdraft")
+	if crSnapshot(st2) != before {
+		t.Fatal("a refused correction changed the state")
+	}
+	_, e = crCorrect(st2, "ada", q, crIn(1, 600, crT0, "enough for dee, not for the refund"), hsAt(time.Minute))
+	fgWantErr(t, "bob would have been 400 short when refunding", e, 409, "historical_overdraft")
+	if crSnapshot(st2) != before {
+		t.Fatal("a refused correction changed the state")
+	}
+	crMust(t, st2, "ada", q, crIn(1, 1100, crT0, "up"), hsAt(time.Minute))
+	if err := hsCheck(st2, 11000, hsAt(time.Hour)); err != nil {
+		t.Fatal(err)
+	}
+}
