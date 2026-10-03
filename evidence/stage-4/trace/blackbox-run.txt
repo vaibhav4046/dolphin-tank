@@ -1,0 +1,58 @@
+== C:\Users\lalwa\AppData\Local\Temp\pk\out1\stage1-export.json
+PASS import 204
+PASS no token -> 401
+PASS non-operator -> 403
+PASS operator without key -> 400
+PASS incomplete settlement -> 422
+PASS different instants -> 422 validation_failed
+PASS unknown payment -> 404
+PASS stale revision -> 409
+PASS unaffordable -> 409 insufficient_funds
+PASS rejected batches leave /_test/export byte-identical
+PASS complete settlement + ordinary payment -> 201
+PASS one recorded_at, batch id on every revision, input order
+PASS replay -> 200 identical bytes
+PASS same key other body -> 409 idempotency_key_reuse
+PASS re-import of own export 204
+PASS export -> import -> export byte-identical
+PASS batch replay survives the import
+PASS 8 concurrent batches on one revision: exactly one 201, rest 409
+== C:\Users\lalwa\AppData\Local\Temp\pk\out2\stage2-export.json
+PASS import 204
+PASS no token -> 401
+PASS non-operator -> 403
+PASS operator without key -> 400
+PASS incomplete settlement -> 422
+PASS different instants -> 422 validation_failed
+PASS unknown payment -> 404
+PASS stale revision -> 409
+PASS unaffordable -> 409 insufficient_funds
+PASS rejected batches leave /_test/export byte-identical
+PASS complete settlement + ordinary payment -> 201
+PASS one recorded_at, batch id on every revision, input order
+PASS replay -> 200 identical bytes
+PASS same key other body -> 409 idempotency_key_reuse
+PASS re-import of own export 204
+PASS export -> import -> export byte-identical
+PASS batch replay survives the import
+PASS 8 concurrent batches on one revision: exactly one 201, rest 409
+== C:\Users\lalwa\AppData\Local\Temp\pk\out3\stage3-export.json
+PASS import 204
+PASS no token -> 401
+PASS non-operator -> 403
+PASS operator without key -> 400
+PASS incomplete settlement -> 422
+PASS different instants -> 422 validation_failed
+PASS unknown payment -> 404
+PASS stale revision -> 409
+PASS unaffordable -> 409 insufficient_funds
+PASS rejected batches leave /_test/export byte-identical
+PASS complete settlement + ordinary payment -> 201
+PASS one recorded_at, batch id on every revision, input order
+PASS replay -> 200 identical bytes
+PASS same key other body -> 409 idempotency_key_reuse
+PASS re-import of own export 204
+PASS export -> import -> export byte-identical
+PASS batch replay survives the import
+PASS 8 concurrent batches on one revision: exactly one 201, rest 409
+ALL PASSED

@@ -1,0 +1,7 @@
+# commit e3eb44cc80732b79b703c6f0bcd4f41ee8b306a6
+$ gofmt -l .
+$ go vet ./...
+exit 0
+$ go test -count=1 ./...
+ok  	pocketful	39.213s
+exit 0

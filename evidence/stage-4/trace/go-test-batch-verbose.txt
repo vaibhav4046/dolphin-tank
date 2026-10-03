@@ -1,0 +1,30 @@
+# commit e3eb44cc80732b79b703c6f0bcd4f41ee8b306a6
+$ go test -count=1 -run "TestBatch" -v ./...
+--- PASS: TestBatchAuthAndKeyOrder (0.05s)
+--- PASS: TestBatchBodyShape (0.11s)
+--- PASS: TestBatchItemValidationAndUnknownFields (0.05s)
+--- PASS: TestBatchItemErrorsInInputOrder (0.04s)
+--- PASS: TestBatchLinkedPaymentsAndOperatorScope (0.04s)
+--- PASS: TestBatchBelowRefundedAmount (0.04s)
+--- PASS: TestBatchSettlementRules (0.05s)
+--- PASS: TestBatchCombinedAffordability (0.13s)
+--- PASS: TestBatchHistoricalOverdraftAndPrecedence (0.13s)
+--- PASS: TestBatchRejectionsLeaveNoTraceAndTheKeyStaysFree (0.04s)
+--- PASS: TestBatchResponseHistoryAndFrozenViews (0.04s)
+--- PASS: TestBatchRecordedAtPastAnImportedFutureRevision (0.04s)
+--- PASS: TestBatchConcurrentSharedRevisions (1.56s)
+    --- PASS: TestBatchConcurrentSharedRevisions/one_shared_payment,_many_batches (0.04s)
+    --- PASS: TestBatchConcurrentSharedRevisions/a_ring_of_overlapping_batches (0.49s)
+    --- PASS: TestBatchConcurrentSharedRevisions/a_batch_against_a_single_correction (0.48s)
+    --- PASS: TestBatchConcurrentSharedRevisions/one_key_sent_many_times (0.04s)
+    --- PASS: TestBatchConcurrentSharedRevisions/a_refund_against_a_correction_of_the_same_payment (0.51s)
+--- PASS: TestBatchStateRoundTripsThroughExportImport (0.05s)
+    upgrade_batch_test.go:205: 1 settlements, 4 ordinary payments, 0 captures, 6 batch items, 6 receipts replayed
+    upgrade_batch_test.go:205: 1 settlements, 4 ordinary payments, 4 captures, 6 batch items, 13 receipts replayed
+    upgrade_batch_test.go:205: 2 settlements, 5 ordinary payments, 4 captures, 10 batch items, 19 receipts replayed
+--- PASS: TestBatchOnImportedOlderExports (0.01s)
+    --- PASS: TestBatchOnImportedOlderExports/stage1-export.json (0.00s)
+    --- PASS: TestBatchOnImportedOlderExports/stage2-export.json (0.00s)
+    --- PASS: TestBatchOnImportedOlderExports/stage3-export.json (0.01s)
+PASS
+ok  	pocketful	2.396s

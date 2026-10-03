@@ -1,0 +1,12 @@
+# mutation check of the batch tests (throwaway copy of stage-4 at e3eb44c's correct_batch.go; real output of the run)
+# each line: the fault injected into correct_batch.go, then the tests that failed. M7 survived the first run
+# ("ok pocketful 2.351s"); the case "a larger funding amount, received later (balances move, then roll back)" was
+# added to TestBatchHistoricalOverdraftAndPrecedence and then fails M7: "a rejected batch changed the state".
+M1 no historical-overdraft check            => FAIL TestBatchHistoricalOverdraftAndPrecedence
+M2 no recorded_at floor over members        => FAIL TestBatchRecordedAtPastAnImportedFutureRevision
+M3 no settlement completeness               => FAIL TestBatchSettlementRules, TestBatchStateRoundTripsThroughExportImport
+M4 no identical-instant check               => FAIL TestBatchSettlementRules
+M5 clock not ratcheted to recorded_at       => FAIL TestBatchRecordedAtPastAnImportedFutureRevision
+M6 affordability per item (credits ignored) => FAIL TestBatchCombinedAffordability, TestBatchHistoricalOverdraftAndPrecedence
+M7 balances not restored on rollback        => ok (first run) / FAIL TestBatchHistoricalOverdraftAndPrecedence (with the added case)
+M8 batch id taken before the checks         => FAIL TestBatchRejectionsLeaveNoTraceAndTheKeyStaysFree, TestBatchResponseHistoryAndFrozenViews, TestBatchStateRoundTripsThroughExportImport
