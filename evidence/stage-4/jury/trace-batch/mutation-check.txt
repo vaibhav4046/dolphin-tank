@@ -1,0 +1,27 @@
+CAUGHT  M1 affordability ignores held funds (uses total balance)
+     by jury_batch_2.py: U31 X up 301 (ada net -301 > available 300; held 700 not spendable) -> 409 :: got 409 {"error": {"code": "historica | U31 X up 1000 + Y up 699: ada net -301 -> 409 :: got 409 {"error": {"code": "historical_overdraft", "message": "the | U31 Y down to 0 + X up 101: ada -301 -> 409 :: got 409 {"error": {"code": "historical_overdraft", "message": "the b
+CAUGHT  M2 affordability per item instead of net effect
+     by jury_batch_2.py: U31 X up 1000 + Y up 1000: ada nets 0, cy -1000 = exactly its funds -> 201 :: got 409 {"error": {"code": "insuffici | U31 same, other input order -> 201 :: got 409 {"error": {"code": "insufficient_funds", "message": "x"}} | U31 X up 1000 + Y up 700: ada net -300 = available -> 201 :: got 409 {"error": {"code": "insufficient_funds", "mess
+SKIP M3 historical overdraft does not roll the revisions back: pattern not found
+CAUGHT  M4 settlement members' instants not compared
+     by jury_batch_1.py: U26 complete but instants differ by 1s -> 422 validation_failed :: got 201 {"correction_batch_id": "cb_1", "recorde | U26 complete but instants differ by 1s -> 422 validation_failed [state byte-identical] | U26 complete but instants differ by 1us in the same offset -> 422 :: got 409 {"error": {"code": "stale_revision", "
+CAUGHT  M5 incomplete settlement allowed
+     by jury_batch_1.py: U25 two of three members -> 422 incomplete_settlement :: got 422 {"error": {"code": "validation_failed", "message": | U25 one of three members -> 422 incomplete_settlement :: got 422 {"error": {"code": "validation_failed", "message": | U25/U26 incomplete AND unequal instants (decision b) -> incomplete_settlement :: got 422 {"error": {"code": "valida
+CAUGHT  M6 batch recorded_at is not raised above a member's later recorded_at
+     by jury_batch_5.py: :\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 318, in _read_status
+    raise BadStatusLine(line)
+http.client.BadStatusLine: GET /health HTTP/1.1
+
+
+
+CAUGHT  M7 current-funds check removed (historical check only)
+     by jury_batch_1.py: U22 item amount=1000000000 -> batch (409 historical_overdraft) == single (409 insufficient_funds) | U22 summary: no parity mismatches over 43 bodies | U29 [unaffordable debit alone] -> insufficient_funds :: got 409 {"error": {"code": "historical_overdraft", "message
+CAUGHT  M8 stale revision not enforced for batch items
+     by jury_batch_3.py: U40/C1 round 0: 16 batches share SH rev 1 -> exactly one 201, 15 x 409 stale_revision :: [201, 201, 201, 201, 201,  | U40/C1 round 0: the shared payment has exactly 2 revisions and carries the winner's amount :: [1000, 1001, 1005, 10 | U40/C1 round 0: only the winner's private payment was revised (losers rolled back atomically) :: [2, 2, 2, 2, 2, 2,
+CAUGHT  M9 refunded amount floor not enforced
+     by jury_batch_2.py: U39 batch lowering the refunded member to 99 (< refunded 100) -> refund_exceeds_payment :: got 201 {"correction_bat | U39 ...nothing changed | U39 batch of all original members, refunded member lowered to exactly the refunded 100 -> 201 :: got 409 {"error": 
+CAUGHT  M10 refund payments not immutable in a batch
+     by jury_batch_1.py: U23 same item refund payment AND stale -> linked_payment_immutable :: got 409 {"error": {"code": "stale_revision",  | U24 batch of a refund -> 422 linked_payment_immutable :: got 201 {"correction_batch_id": "cb_2", "recorded_at": "20 | U24 batch of a refund -> 422 linked_payment_immutable [state byte-identical]
+CAUGHT  M11 imported batch ids not reserved
+     by jury_batch_4.py: U41/stage1: batch id issued after a counter-less import (cb_1) collides with none of ['cb_1', 'cb_2'] :: (201, {'co | U41/stage2: batch id issued after a counter-less import (cb_1) collides with none of ['cb_1', 'cb_2'] :: (201, {'co | U41/stage3: batch id issued after a counter-less import (cb_1) collides with none of ['cb_1', 'cb_2'] :: (201, {'co
+summary: 10 caught, 0 survived

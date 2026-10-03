@@ -1,0 +1,41 @@
+s1reg c01_conservation       rc=0 == c01_conservation: 42 pass, 0 fail, 9416 requests, 0 5xx
+s1reg c02_idempotency        rc=0 == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+s1reg c03_validation         rc=0 == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+s1reg c04_auth               rc=0 == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+s1reg c05_requests_feed      rc=0 == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+s1reg c06_reset_fixture      rc=0 == c06_reset_fixture: 40 pass, 0 fail, 884 requests, 0 5xx
+s1reg c07_splits             rc=0 == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+s1reg c08_export_import      rc=1 
+s1reg c09_no5xx_envelope     rc=1 
+s1reg c11_settlements        rc=1 
+s1reg c12_retries_edges      rc=1 
+s1reg c13_reset_vs_me        rc=1 
+s1reg d2_smoke               rc=1  | FAIL sibling has no outbound network :: 
+s2reg s2_lifecycle           rc=1 
+s2reg s2_funds               rc=1 
+s2reg s2_errors              rc=1 
+s2reg s2_idem                rc=1 
+s2reg s2_list                rc=1 
+s2reg s2_fixture             rc=1 
+s2reg s2_expiry              rc=1 
+s2reg s2_race                rc=1 
+s2reg s2_export              rc=1 
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-4\jury\trace-batch\run_reg.py", line 32, in <module>
+    a, b = Svc(EXE), Svc(EXE)
+                     ^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-4\jury\trace-batch\jlib.py", line 51, in __init__
+    if self.call("GET", "/health")[0] == 200:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-4\jury\trace-batch\jlib.py", line 76, in call
+    r = c.getresponse()
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1450, in getresponse
+    response.begin()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 318, in _read_status
+    raise BadStatusLine(line)
+http.client.BadStatusLine: GET /health HTTP/1.1
+

@@ -1,0 +1,164 @@
+PASS U20 no token + key: batch (401 unauthenticated) behaves like settlements (401 unauthenticated)
+PASS U20 no token, no key: batch (401 unauthenticated) behaves like settlements (401 unauthenticated)
+PASS U20 garbage token: batch (401 unauthenticated) behaves like settlements (401 unauthenticated)
+PASS U20 garbage token is 401
+PASS U20 non-operator with key: batch (403 forbidden) behaves like settlements (403 forbidden)
+PASS U20 non-operator is 403 forbidden
+PASS U20 non-operator without key: batch (403 forbidden) behaves like settlements (403 forbidden)
+PASS U20 non-operator, unparseable body: batch (403 forbidden) behaves like settlements (403 forbidden)
+PASS U20 operator without key: batch (400 missing_idempotency_key) behaves like settlements (400 missing_idempotency_key)
+PASS U20 operator without key is 400 missing_idempotency_key
+PASS U20 operator with empty key: batch (400 missing_idempotency_key) behaves like settlements (400 missing_idempotency_key)
+PASS U20 operator with 256-char key: batch (422 validation_failed) behaves like settlements (422 validation_failed)
+PASS U20 operator unparseable body: batch (400 malformed_request) behaves like settlements (400 malformed_request)
+PASS U20 operator body is an array: batch (400 malformed_request) behaves like settlements (400 malformed_request)
+PASS U20 operator body {}: batch (422 validation_failed) behaves like settlements (422 validation_failed)
+PASS U20 255-char key accepted
+PASS U20 GET /correction-batches is not a route (404/405)
+PASS U21 shape no corrections key -> 422 validation_failed
+PASS U21 shape corrections null -> 422 validation_failed
+PASS U21 shape corrections string -> 422 validation_failed
+PASS U21 shape corrections object -> 422 validation_failed
+PASS U21 shape corrections empty -> 422 validation_failed
+PASS U21 shape 33 items with unknown ids -> 422 validation_failed
+PASS U21 shape 33 items with real ids -> 422 validation_failed
+PASS U21 shape duplicate payment_id -> 422 validation_failed
+PASS U21 shape element is a number -> 422 validation_failed
+PASS U21 shape element is a string -> 422 validation_failed
+PASS U21 shape element is null -> 422 validation_failed
+PASS U21 shape element is an array -> 422 validation_failed
+PASS U21 shape missing payment_id -> 422 validation_failed
+PASS U21 shape payment_id number -> 422 validation_failed
+PASS U21 shape payment_id null -> 422 validation_failed
+PASS U21 exactly 32 distinct items -> 201
+PASS U21 32 revisions returned in input order
+PASS U21 shape-rejected batches changed nothing before that (export differs only after the 201)
+PASS U21 one item -> 201
+PASS U22 item amount=0 -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for amount=0
+PASS U22 item amount=-1 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount=1000000000 -> batch (409 insufficient_funds) == single (409 insufficient_funds)
+PASS U22 item amount=1000000001 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount=5.5 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount='5' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount=True -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount=None -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount=5.0 -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for amount=5.0
+PASS U22 item amount=[5] -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount={'a': 1} -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item amount missing -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=0 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=-1 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=1.5 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision='1' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=True -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=None -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision=1.0 -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for expected_revision=1.0
+PASS U22 item expected_revision=[1] -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item expected_revision missing -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2026-09-20T12:00:00' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2026-09-20' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2026-10-...(32)' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2099-01-01T00:00:00-12:00' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at=5 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at=None -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2026-09-20 12:00:00+00:00' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at='2026-10-...(32)' -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for effective_at='2026-10-...(32)'
+PASS U22 item effective_at='garbage' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item effective_at missing -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason='' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason='xxxxxxxx...(200)' -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for reason='xxxxxxxx...(200)'
+PASS U22 item reason='xxxxxxxx...(201)' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason='éééééééé...(200)' -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for reason='éééééééé...(200)'
+PASS U22 item reason='éééééééé...(201)' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason='😀😀😀😀😀😀😀😀...(200)' -> batch (201 None) == single (201 None)
+PASS U22   accepted item body shape == single revision shape for reason='😀😀😀😀😀😀😀😀...(200)'
+PASS U22 item reason='😀😀😀😀😀😀😀😀...(201)' -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason=5 -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason=None -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason=True -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 item reason missing -> batch (422 validation_failed) == single (422 validation_failed)
+PASS U22 summary: no parity mismatches over 43 bodies
+PASS U23 unknown at idx1, stale at idx2 -> 404
+PASS U23 unknown at idx1, stale at idx2 -> 404 [state byte-identical]
+PASS U23 stale at idx1, unknown at idx2 -> 409 stale_revision
+PASS U23 stale at idx1, unknown at idx2 -> 409 stale_revision [state byte-identical]
+PASS U23 validation at idx2, stale at idx1 -> 409
+PASS U23 validation at idx2, stale at idx1 -> 409 [state byte-identical]
+PASS U23 validation at idx1, 404 at idx2 -> 422 validation_failed
+PASS U23 validation at idx1, 404 at idx2 -> 422 validation_failed [state byte-identical]
+PASS U23 same item invalid AND unknown -> validation (ordinary order)
+PASS U23 same item invalid AND unknown -> validation (ordinary order) [state byte-identical]
+PASS U23 same item capture AND stale -> linked_payment_immutable
+PASS U23 same item capture AND stale -> linked_payment_immutable [state byte-identical]
+PASS U23 same item refund payment AND stale -> linked_payment_immutable
+PASS U23 same item refund payment AND stale -> linked_payment_immutable [state byte-identical]
+PASS U23 same item stale AND below refunded -> stale_revision
+PASS U23 same item stale AND below refunded -> stale_revision [state byte-identical]
+PASS U23 below refunded (A refunded 200) -> refund_exceeds_payment
+PASS U23 below refunded (A refunded 200) -> refund_exceeds_payment [state byte-identical]
+PASS U23 future effective_at at idx1, stale idx2 -> 422
+PASS U23 future effective_at at idx1, stale idx2 -> 422 [state byte-identical]
+PASS U23 stale item after unknown settlement-less idx order: idx0 stale, idx1 capture -> stale
+PASS U23 stale item after unknown settlement-less idx order: idx0 stale, idx1 capture -> stale [state byte-identical]
+PASS U23 idx0 capture, idx1 stale -> linked
+PASS U23 idx0 capture, idx1 stale -> linked [state byte-identical]
+PASS U24/U28 operator batch over request payment + ordinary payment (other users') + full settlement, unknown fields ignored -> 201
+PASS U24 balances moved exactly by the net revisions {'ada': 150, 'bob': -100, 'cy': 50, 'dee': -100, 'eve': 0, 'op': 0}
+PASS U24 total unchanged
+PASS U24 batch of a capture -> 422 linked_payment_immutable
+PASS U24 batch of a capture -> 422 linked_payment_immutable [state byte-identical]
+PASS U24 batch of a refund -> 422 linked_payment_immutable
+PASS U24 batch of a refund -> 422 linked_payment_immutable [state byte-identical]
+PASS U24 capture in a batch with valid items still rejects whole batch
+PASS U24 capture in a batch with valid items still rejects whole batch [state byte-identical]
+PASS U24 non-operator sender cannot use the batch route -> 403
+PASS U25 two of three members -> 422 incomplete_settlement
+PASS U25 two of three members -> 422 incomplete_settlement [state byte-identical]
+PASS U25 one of three members -> 422 incomplete_settlement
+PASS U25 one of three members -> 422 incomplete_settlement [state byte-identical]
+PASS U25 all members + ordinary but one member stale -> 409 stale (item error first)
+PASS U25 all members + ordinary but one member stale -> 409 stale (item error first) [state byte-identical]
+PASS U25 member + capture in same batch -> linked_payment_immutable first
+PASS U25 member + capture in same batch -> linked_payment_immutable first [state byte-identical]
+PASS U26 complete but instants differ by 1s -> 422 validation_failed
+PASS U26 complete but instants differ by 1s -> 422 validation_failed [state byte-identical]
+PASS U26 complete but instants differ by 1us in the same offset -> 422
+PASS U26 complete but instants differ by 1us in the same offset -> 422 [state byte-identical]
+PASS U25/U26 incomplete AND unequal instants (decision b) -> incomplete_settlement
+PASS U25/U26 incomplete AND unequal instants (decision b) -> incomplete_settlement [state byte-identical]
+PASS U26 same instant spelled +00:00 / +02:00 / -05:00 -> 201
+PASS U26 revision keeps the effective_at text it was given
+PASS U25 members at stale rev 1 after one batch -> 409
+PASS U25 members at rev 2 -> 201
+PASS U27 single correction of a nonmember payment by its sender -> 201
+PASS U27 single correction of a settlement member by its sender -> 422 linked_payment_immutable
+PASS U27 single correction of a settlement member by a non-sender is refused (403 or 422)
+PASS U29 [item error idx2] vs [incomplete idx0..1]: item error wins
+PASS U29 [item error idx2] vs [incomplete idx0..1]: item error wins [state byte-identical]
+PASS U29 [incomplete settlement + unaffordable debit] -> incomplete_settlement
+PASS U29 [incomplete settlement + unaffordable debit] -> incomplete_settlement [state byte-identical]
+PASS U29 [complete settlement w/ unequal instants + unaffordable debit] -> validation_failed
+PASS U29 [complete settlement w/ unequal instants + unaffordable debit] -> validation_failed [state byte-identical]
+PASS U29 [unaffordable debit alone] -> insufficient_funds
+PASS U29 [unaffordable debit alone] -> insufficient_funds [state byte-identical]
+PASS U29 [refund_exceeds_payment item + unaffordable later item] -> refund_exceeds_payment
+PASS U29 [refund_exceeds_payment item + unaffordable later item] -> refund_exceeds_payment [state byte-identical]
+PASS U29 [unaffordable idx0 + stale idx1] -> stale (items before funds)
+PASS U29 [unaffordable idx0 + stale idx1] -> stale (items before funds) [state byte-identical]
+PASS U29 [incomplete idx0 + validation idx1] -> validation_failed (item error beats completeness)
+PASS U29 [incomplete idx0 + validation idx1] -> validation_failed (item error beats completeness) [state byte-identical]
+PASS G-history fixture: bob 100, ada 0
+PASS U29/U30 current affordable but bob negative at T-2h -> historical_overdraft
+PASS U29/U30 current affordable but bob negative at T-2h -> historical_overdraft [state byte-identical]
+PASS U29 current unaffordable AND historical negative -> insufficient_funds first
+PASS U29 current unaffordable AND historical negative -> insufficient_funds first [state byte-identical]
+PASS U29 combined effect at one instant: +100 and -100 effective together -> accepted
+
+PART1 pass=162 fail=0

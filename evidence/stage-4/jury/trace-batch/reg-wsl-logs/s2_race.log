@@ -1,0 +1,55 @@
+PASS H02 r0 50-way authorize 300 vs available 10000: exactly 33 succeed, 17 insufficient_funds
+PASS H02 r0 held 9900 available 100 total 10000
+PASS H01 r0 observer clean during 50-way authorize (38 samples)
+PASS H02 r0 mixed 25 authorize + 25 pay of 300: exactly 33 succeed in total, available never negative
+PASS H02 r0 mixed: held+moved == 9900, available == 100
+PASS H01 r0 observer clean during mixed authorize/pay (30 samples)
+PASS H03 r0 40 concurrent 100-captures of a 1000 hold: exactly 10 succeed
+PASS H03 r0 captured 1000, closed, 10 payment ids, all distinct
+PASS H03 r0 money: ada 9000 bob 3500, held 0
+PASS H03 r0 20 x 300 against 1000: exactly 3 succeed (900), remainder 100 stays held
+PASS H01 r0 observer clean (55 samples)
+PASS H04 r0 40 void-vs-capture races: every one resolves to exactly one outcome {'void': 24, 'capture': 16}
+PASS H01 r0 observer clean (497 samples)
+PASS H01 r0 storm observer clean (105 samples)
+PASS H01 r0 reconcile: ada total = 10000 - paid - captured
+PASS H01 r0 reconcile: ada held == sum remaining of open holds, invariants
+PASS H01 r0 every authorization: captured <= amount, payment_ids sum == captured_amount
+PASS H01 r0 conservation across all four wallets
+PASS H02 r1 50-way authorize 300 vs available 10000: exactly 33 succeed, 17 insufficient_funds
+PASS H02 r1 held 9900 available 100 total 10000
+PASS H01 r1 observer clean during 50-way authorize (30 samples)
+PASS H02 r1 mixed 25 authorize + 25 pay of 300: exactly 33 succeed in total, available never negative
+PASS H02 r1 mixed: held+moved == 9900, available == 100
+PASS H01 r1 observer clean during mixed authorize/pay (39 samples)
+PASS H03 r1 40 concurrent 100-captures of a 1000 hold: exactly 10 succeed
+PASS H03 r1 captured 1000, closed, 10 payment ids, all distinct
+PASS H03 r1 money: ada 9000 bob 3500, held 0
+PASS H03 r1 20 x 300 against 1000: exactly 3 succeed (900), remainder 100 stays held
+PASS H01 r1 observer clean (53 samples)
+PASS H04 r1 40 void-vs-capture races: every one resolves to exactly one outcome {'void': 13, 'capture': 27}
+PASS H01 r1 observer clean (511 samples)
+PASS H01 r1 storm observer clean (98 samples)
+PASS H01 r1 reconcile: ada total = 10000 - paid - captured
+PASS H01 r1 reconcile: ada held == sum remaining of open holds, invariants
+PASS H01 r1 every authorization: captured <= amount, payment_ids sum == captured_amount
+PASS H01 r1 conservation across all four wallets
+PASS H02 r2 50-way authorize 300 vs available 10000: exactly 33 succeed, 17 insufficient_funds
+PASS H02 r2 held 9900 available 100 total 10000
+PASS H01 r2 observer clean during 50-way authorize (28 samples)
+PASS H02 r2 mixed 25 authorize + 25 pay of 300: exactly 33 succeed in total, available never negative
+PASS H02 r2 mixed: held+moved == 9900, available == 100
+PASS H01 r2 observer clean during mixed authorize/pay (28 samples)
+PASS H03 r2 40 concurrent 100-captures of a 1000 hold: exactly 10 succeed
+PASS H03 r2 captured 1000, closed, 10 payment ids, all distinct
+PASS H03 r2 money: ada 9000 bob 3500, held 0
+PASS H03 r2 20 x 300 against 1000: exactly 3 succeed (900), remainder 100 stays held
+PASS H01 r2 observer clean (56 samples)
+PASS H04 r2 40 void-vs-capture races: every one resolves to exactly one outcome {'void': 18, 'capture': 22}
+PASS H01 r2 observer clean (517 samples)
+PASS H01 r2 storm observer clean (114 samples)
+PASS H01 r2 reconcile: ada total = 10000 - paid - captured
+PASS H01 r2 reconcile: ada held == sum remaining of open holds, invariants
+PASS H01 r2 every authorization: captured <= amount, payment_ids sum == captured_amount
+PASS H01 r2 conservation across all four wallets
+== s2_race: 54 pass, 0 fail, 10432 requests, 0 5xx, max latency 0.051s, p99 0.026s

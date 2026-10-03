@@ -1,0 +1,168 @@
+== building stage-1 source and import
+PASS U41/stage1: stage-1 export (sha256 c9798298ba20094c..., 9864 bytes) imports into stage 4 -> 204
+PASS U41/stage1: pre-export bearer token of op still works, same /me
+PASS U41/stage1: pre-export bearer token of ada still works, same /me
+PASS U41/stage1: pre-export bearer token of bob still works, same /me
+PASS U41/stage1: pre-export bearer token of cy still works, same /me
+PASS U41/stage1: pre-export bearer token of dee still works, same /me
+PASS U41/stage1: pre-export bearer token of eve still works, same /me
+PASS U41/stage1: replay of pay1 -> 200 original body
+PASS U41/stage1: replay of req1 -> 200 original body
+PASS U41/stage1: replay of reqpay1 -> 200 original body
+PASS U41/stage1: replay of req2 -> 200 original body
+PASS U41/stage1: replay of split1 -> 200 original body
+PASS U41/stage1: replay of set1 -> 200 original body
+PASS U41/stage1: replay of set2 -> 200 original body
+PASS U41/stage1: replay of pay2 -> 200 original body
+PASS U41/stage1: another user's use of the same key is a first use (201)
+PASS U41/stage1: /activity of op keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: /activity of ada keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: /activity of bob keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: /activity of cy keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: /activity of dee keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: /activity of eve keeps every source payment and field (extra keys: ['authorization_id', 'refund_of'])
+PASS U41/stage1: S1 membership retained as ['p_3', 'p_4', 'p_5']
+PASS U41/stage1: S2 membership retained as ['p_6', 'p_7']
+PASS U41/stage1: incomplete imported settlement -> 422 incomplete_settlement
+PASS U41/stage1: one of two members of the second imported settlement -> 422 incomplete_settlement
+PASS U41/stage1: second settlement with different instants -> 422 validation_failed
+PASS U41/stage1: all of the above left the imported state byte-identical
+PASS U41/stage1: current revision of r1 is 1
+PASS U41/stage1: batch over both imported settlements (offset spellings) + imported ordinary + request payment -> 201
+PASS U41/stage1: balances sum unchanged by the batch
+PASS U41/stage1: new recorded_at strictly later than every member's imported recorded_at
+PASS U41/stage1: revision numbers continue the imported history
+PASS U41/stage1: refund of an imported settlement member -> 201 (settlement_id null, refund_of set)
+PASS U41/stage1: second batch on the same settlement at revision 2 -> 201 (refund payment not required)
+PASS U41/stage1: third batch lowering the refunded member below 20 -> 422 refund_exceeds_payment
+PASS U41/stage1: imported pending request is still payable -> 201
+PASS U41/stage1: stage-4 export -> import (same process) -> 204
+PASS U41/stage1: export -> import -> export byte-identical (refunds + batches + imported history)
+PASS U41/stage1: stage-4 export imports into a fresh process
+PASS U41/stage1: ... and re-exports byte-identical from the fresh process
+PASS U41/stage1: batch replay after export/import in a new process -> 200, original bytes
+PASS U41/stage1: refund replay after import -> 200
+PASS U41/stage1: batch key reuse after import -> 409
+PASS U41/stage1: a new batch after import is 201 with an id different from every earlier one
+PASS U41/stage1: export with the batch counter stripped still imports
+PASS U41/stage1: batch id issued after a counter-less import (cb_3) collides with none of ['cb_1', 'cb_2']
+== building stage-2 source and import
+PASS U41/stage2: stage-2 export (sha256 f478852f505a0277..., 14659 bytes) imports into stage 4 -> 204
+PASS U41/stage2: pre-export bearer token of op still works, same /me
+PASS U41/stage2: pre-export bearer token of ada still works, same /me
+PASS U41/stage2: pre-export bearer token of bob still works, same /me
+PASS U41/stage2: pre-export bearer token of cy still works, same /me
+PASS U41/stage2: pre-export bearer token of dee still works, same /me
+PASS U41/stage2: pre-export bearer token of eve still works, same /me
+PASS U41/stage2: replay of pay1 -> 200 original body
+PASS U41/stage2: replay of req1 -> 200 original body
+PASS U41/stage2: replay of reqpay1 -> 200 original body
+PASS U41/stage2: replay of req2 -> 200 original body
+PASS U41/stage2: replay of split1 -> 200 original body
+PASS U41/stage2: replay of set1 -> 200 original body
+PASS U41/stage2: replay of set2 -> 200 original body
+PASS U41/stage2: replay of pay2 -> 200 original body
+PASS U41/stage2: replay of auth_open -> 200 original body
+PASS U41/stage2: replay of auth_part -> 200 original body
+PASS U41/stage2: replay of cap_part -> 200 original body
+PASS U41/stage2: replay of auth_done -> 200 original body
+PASS U41/stage2: replay of cap_done -> 200 original body
+PASS U41/stage2: replay of auth_void -> 200 original body
+PASS U41/stage2: another user's use of the same key is a first use (201)
+PASS U41/stage2: /activity of op keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: /activity of ada keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: /activity of bob keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: /activity of cy keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: /activity of dee keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: /activity of eve keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage2: S1 membership retained as ['p_3', 'p_4', 'p_5']
+PASS U41/stage2: S2 membership retained as ['p_6', 'p_7']
+PASS U41/stage2: incomplete imported settlement -> 422 incomplete_settlement
+PASS U41/stage2: one of two members of the second imported settlement -> 422 incomplete_settlement
+PASS U41/stage2: second settlement with different instants -> 422 validation_failed
+PASS U41/stage2: all of the above left the imported state byte-identical
+PASS U41/stage2: current revision of r1 is 1
+PASS U41/stage2: imported capture -> 422 linked_payment_immutable
+PASS U41/stage2: batch over both imported settlements (offset spellings) + imported ordinary + request payment -> 201
+PASS U41/stage2: balances sum unchanged by the batch
+PASS U41/stage2: new recorded_at strictly later than every member's imported recorded_at
+PASS U41/stage2: revision numbers continue the imported history
+PASS U41/stage2: refund of an imported settlement member -> 201 (settlement_id null, refund_of set)
+PASS U41/stage2: second batch on the same settlement at revision 2 -> 201 (refund payment not required)
+PASS U41/stage2: third batch lowering the refunded member below 20 -> 422 refund_exceeds_payment
+PASS U41/stage2: imported pending request is still payable -> 201
+PASS U41/stage2: stage-4 export -> import (same process) -> 204
+PASS U41/stage2: export -> import -> export byte-identical (refunds + batches + imported history)
+PASS U41/stage2: stage-4 export imports into a fresh process
+PASS U41/stage2: ... and re-exports byte-identical from the fresh process
+PASS U41/stage2: batch replay after export/import in a new process -> 200, original bytes
+PASS U41/stage2: refund replay after import -> 200
+PASS U41/stage2: batch key reuse after import -> 409
+PASS U41/stage2: a new batch after import is 201 with an id different from every earlier one
+PASS U41/stage2: export with the batch counter stripped still imports
+PASS U41/stage2: batch id issued after a counter-less import (cb_3) collides with none of ['cb_1', 'cb_2']
+== building stage-3 source and import
+PASS U41/stage3: stage-3 export (sha256 e75e572cf841395b..., 18131 bytes) imports into stage 4 -> 204
+PASS U41/stage3: pre-export bearer token of op still works, same /me
+PASS U41/stage3: pre-export bearer token of ada still works, same /me
+PASS U41/stage3: pre-export bearer token of bob still works, same /me
+PASS U41/stage3: pre-export bearer token of cy still works, same /me
+PASS U41/stage3: pre-export bearer token of dee still works, same /me
+PASS U41/stage3: pre-export bearer token of eve still works, same /me
+PASS U41/stage3: replay of pay1 -> 200 original body
+PASS U41/stage3: replay of req1 -> 200 original body
+PASS U41/stage3: replay of reqpay1 -> 200 original body
+PASS U41/stage3: replay of req2 -> 200 original body
+PASS U41/stage3: replay of split1 -> 200 original body
+PASS U41/stage3: replay of set1 -> 200 original body
+PASS U41/stage3: replay of set2 -> 200 original body
+PASS U41/stage3: replay of pay2 -> 200 original body
+PASS U41/stage3: replay of auth_open -> 200 original body
+PASS U41/stage3: replay of auth_part -> 200 original body
+PASS U41/stage3: replay of cap_part -> 200 original body
+PASS U41/stage3: replay of auth_done -> 200 original body
+PASS U41/stage3: replay of cap_done -> 200 original body
+PASS U41/stage3: replay of auth_void -> 200 original body
+PASS U41/stage3: replay of corr1 -> 200 original body
+PASS U41/stage3: replay of corr2 -> 200 original body
+PASS U41/stage3: another user's use of the same key is a first use (201)
+PASS U41/stage3: /activity of op keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: /activity of ada keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: /activity of bob keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: /activity of cy keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: /activity of dee keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: /activity of eve keeps every source payment and field (extra keys: ['refund_of'])
+PASS U41/stage3: S1 membership retained as ['p_3', 'p_4', 'p_5']
+PASS U41/stage3: S2 membership retained as ['p_6', 'p_7']
+PASS U41/stage3: imported corrections retained (3 revisions, same amounts/times/reasons), correction_batch_id null
+  observation: stage-3 statement snapshot token after import into stage 4 -> HTTP 404; token present in source export text: False
+PASS U41/stage3: incomplete imported settlement -> 422 incomplete_settlement
+PASS U41/stage3: one of two members of the second imported settlement -> 422 incomplete_settlement
+PASS U41/stage3: second settlement with different instants -> 422 validation_failed
+PASS U41/stage3: all of the above left the imported state byte-identical
+PASS U41/stage3: stale revision 1 of a payment already corrected twice -> 409 stale_revision
+PASS U41/stage3: stale revision 2 of a payment already corrected twice -> 409 stale_revision
+PASS U41/stage3: current revision of r1 is 3
+PASS U41/stage3: imported capture -> 422 linked_payment_immutable
+PASS U41/stage3: batch over both imported settlements (offset spellings) + imported ordinary + request payment -> 201
+PASS U41/stage3: balances sum unchanged by the batch
+PASS U41/stage3: new recorded_at strictly later than every member's imported recorded_at
+PASS U41/stage3: revision numbers continue the imported history
+PASS U41/stage3: r1 history is now imported 3 + batch 1, batch id only on the last
+PASS U41/stage3: refund of an imported settlement member -> 201 (settlement_id null, refund_of set)
+PASS U41/stage3: second batch on the same settlement at revision 2 -> 201 (refund payment not required)
+PASS U41/stage3: third batch lowering the refunded member below 20 -> 422 refund_exceeds_payment
+PASS U41/stage3: imported pending request is still payable -> 201
+PASS U41/stage3: stage-4 export -> import (same process) -> 204
+PASS U41/stage3: export -> import -> export byte-identical (refunds + batches + imported history)
+PASS U41/stage3: stage-4 export imports into a fresh process
+PASS U41/stage3: ... and re-exports byte-identical from the fresh process
+PASS U41/stage3: batch replay after export/import in a new process -> 200, original bytes
+PASS U41/stage3: refund replay after import -> 200
+PASS U41/stage3: batch key reuse after import -> 409
+PASS U41/stage3: a new batch after import is 201 with an id different from every earlier one
+PASS U41/stage3: export with the batch counter stripped still imports
+PASS U41/stage3: batch id issued after a counter-less import (cb_3) collides with none of ['cb_1', 'cb_2']
+
+PART4 pass=161 fail=0
+summary: {"snapshot_after_import_s3": 404}

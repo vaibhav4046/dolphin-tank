@@ -1,0 +1,30 @@
+✔ same scope and fingerprint keeps the key; a change mints a new one (3.9799ms)
+✔ scopes are independent and forget starts over (0.4476ms)
+✔ default key generator works with and without crypto.randomUUID (7.4228ms)
+✔ formatTime reads microsecond instants at minute resolution (1.0142ms)
+✔ formatTime shows an unparseable value as given (2.2125ms)
+✔ timeEl keeps the exact instant for assistive tech and tooltips (0.4389ms)
+✔ only the most recently begun token is current (1.7141ms)
+✔ out-of-order responses: the later refresh wins (36.8361ms)
+✔ classify (0.6441ms)
+✔ parseAmount accepts plain decimals (0.5135ms)
+✔ parseAmount rejects with the right reason (0.2636ms)
+✔ formatAmount / formatDecimal (0.9788ms)
+✔ parse then format round-trips (0.1922ms)
+✔ splitShares: stage-1 section 9 examples (0.1487ms)
+✔ splitShares matches the shared table (amount 1..60, n 1..8) (1.4736ms)
+✔ parseHandles (0.2059ms)
+✔ refundSums totals refunds per target and ignores other payments (0.1344ms)
+✔ refundSums keeps adding into an existing map (older pages) (0.6747ms)
+✔ currentAmount is the highest revision, null without a usable one (0.1515ms)
+✔ remainder uses the read corrected amount over the original and never goes negative (0.0791ms)
+✔ only the receiver of a non-refund payment may be offered a refund (0.0631ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 166.986
+exit 0

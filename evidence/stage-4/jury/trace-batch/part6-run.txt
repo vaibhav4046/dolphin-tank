@@ -1,0 +1,46 @@
+PASS literal example: reversal of both settlement members -> 201
+PASS literal example: balances restored to the opening 10000 each
+PASS literal example: both revisions amount 0, effective_at echoed as given, reason reversal
+PASS literal example: statement of bob shows both zero-amount entries with delta 0 (zero revisions still appear)
+PASS literal example: statement sums (opening + deltas = closing)
+PASS literal example: replay 200 identical
+PASS literal example: reversing the same revision again -> 409 stale_revision
+PASS literal example: restoring the original amounts at the same instant -> 201 and balances as after the settlement
+PASS hostile body (0 bytes) b'' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (4 bytes) b'null' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (4 bytes) b'true' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (3 bytes) b'123' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (3 bytes) b'"x"' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (2 bytes) b'[]' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (1 bytes) b'{' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (15 bytes) b'{"corrections":' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (20 bytes) b'{"corrections":[{}]}' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (22 bytes) b'{"corrections":[null]}' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (10016 bytes) b'{"corrections":[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (137 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (137 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (149 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (135 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 201)
+PASS hostile body (138 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (153 bytes) b'{"corrections":[{"payment_id":"p_1","expected_revi' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (1000131 bytes) b'{"corrections":[{"payment_id":"xxxxxxxxxxxxxxxxxxx' -> no 5xx, error envelope on 4xx (got 404)
+PASS hostile body (1428907 bytes) b'{"corrections":[{"payment_id":"p0"},{"payment_id":' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (135 bytes) b'{"corrections":[{"payment_id":"\\ud800","expected_r' -> no 5xx, error envelope on 4xx (got 404)
+PASS hostile body (20 bytes) b'\xff\xfe{"corrections":[]}' -> no 5xx, error envelope on 4xx (got 400)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (153 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (140 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (135 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 409)
+PASS hostile body (139 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (142 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS hostile body (142 bytes) b'{"corrections": [{"payment_id": "p_1", "expected_r' -> no 5xx, error envelope on 4xx (got 422)
+PASS server still healthy and the state is unchanged unless a hostile body was a valid correction
+revisions of the target after the sweep: 2 (valid ones among the hostile bodies may legitimately apply)
+statuses: [201, 400, 404, 409, 422] 201 count 1
+
+PART6 pass=42 fail=0

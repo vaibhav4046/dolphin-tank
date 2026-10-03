@@ -1,0 +1,30 @@
+PASS health exact body + content type
+OBS HEAD /health -> 404
+OBS GET     /nope                                    -> 404 not_found application/json; charset=utf-8
+OBS POST    /nope                                    -> 404 not_found application/json; charset=utf-8
+OBS GET     /                                        -> 200 None text/html; charset=utf-8
+OBS GET     /payments                                -> 404 not_found application/json; charset=utf-8
+OBS PUT     /payments                                -> 404 not_found application/json; charset=utf-8
+OBS DELETE  /me                                      -> 404 not_found application/json; charset=utf-8
+OBS PATCH   /requests                                -> 404 not_found application/json; charset=utf-8
+OBS POST    /me                                      -> 404 not_found application/json; charset=utf-8
+OBS POST    /activity                                -> 404 not_found application/json; charset=utf-8
+OBS OPTIONS /payments                                -> 404 not_found application/json; charset=utf-8
+OBS GET     /me/                                     -> 404 not_found application/json; charset=utf-8
+OBS GET     //me                                     -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests//pay                           -> 404 not_found application/json; charset=utf-8
+OBS POST    /requests/%00/pay                        -> 404 not_found application/json; charset=utf-8
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c09_no5xx_envelope.py", line 42, in <module>
+    r = call(m, p, token=A, key=k(), raw=b"{}" if m in ("POST", "PUT", "PATCH") else None)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 51, in call
+    b = r.read()
+        ^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 497, in read
+    s = self.fp.read()
+        ^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host

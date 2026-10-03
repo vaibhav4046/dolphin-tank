@@ -1,0 +1,22 @@
+stage-3 (accepted): snapshot token present in its own export: False
+stage-3 (accepted): token before import 200, after export->import of the same state 404
+stage-4: snapshot token present in its own export: False
+stage-4: token before import 200, after export->import of the same state 404
+PASS surface GET /correction-batches is refused with an error envelope (404)
+PASS surface PUT /correction-batches is refused with an error envelope (404)
+PASS surface PATCH /correction-batches is refused with an error envelope (404)
+PASS surface DELETE /correction-batches is refused with an error envelope (404)
+PASS surface POST /correction-batches/ -> 404 envelope (404)
+PASS surface POST /Correction-Batches -> 404 envelope (404)
+PASS surface POST /correction-batches/x -> 404 envelope (404)
+PASS surface POST /correction-batch -> 404 envelope (404)
+PASS surface unknown query parameters are ignored (201)
+PASS surface body without a JSON content-type is still parsed (stage-1 convention) -> 201 or 4xx envelope
+import of a state with a revision recorded 2h ahead of the clock -> 204
+PASS future-recorded member: batch accepted (201)
+PASS U34 batch recorded_at is strictly later than the member's imported recorded_at (+2h)
+PASS U34 both revisions share it
+PASS a default read after the batch sees both new revisions (known_at defaults to the read's start)
+PASS a following batch records strictly later again
+
+PART5 pass=15 fail=0

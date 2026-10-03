@@ -1,0 +1,20 @@
+s1reg c08_export_import      rc=0 == c08_export_import: 74 pass, 0 fail, 8593 requests, 0 5xx
+s1reg c09_no5xx_envelope     rc=1 
+s1reg c11_settlements        rc=0 == c11_settlements: 69 pass, 0 fail, 611 requests, 0 5xx
+s1reg c12_retries_edges      rc=0 == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+s1reg c13_reset_vs_me        rc=1 
+s2reg s2_lifecycle           rc=0 == s2_lifecycle: 82 pass, 0 fail, 86 requests, 0 5xx, max latency 0.031s, p99 0.021s
+s2reg s2_funds               rc=0 == s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.031s, p99 0.029s
+s2reg s2_errors              rc=0 == s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.029s, p99 0.026s
+s2reg s2_idem                rc=0 == s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx, max latency 0.034s, p99 0.029s
+s2reg s2_list                rc=0 == s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.027s, p99 0.026s
+s2reg s2_fixture             rc=0 == s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.092s, p99 0.038s
+s2reg s2_expiry              rc=0 == s2_expiry: 30 pass, 0 fail, 95 requests, 0 5xx, max latency 0.059s, p99 0.056s
+s2reg s2_race                rc=1 == s2_race: 53 pass, 1 fail, 9567 requests, 0 5xx, max latency 0.061s, p99 0.025s | FAIL H01 r2 observer clean (41 samples) :: ["obs error OSError(10048, 'Only one usage of each socket address (protocol/network address/port) is normally permitted', None, 10048
+s2reg s2_export              rc=0 == s2_export: 30 pass, 0 fail, 3392 requests, 0 5xx, max latency 0.043s, p99 0.016s
+s2reg s2_export_expiry       rc=0 == s2_export_expiry: 18 pass, 0 fail, 54 requests, 0 5xx, max latency 0.031s, p99 0.030s
+s3chk r3_corr_order          rc=0 == r3_corr_order: 20 pass, 0 fail, 2705 requests, 0 5xx, max latency 0.047s, p99 0.034s
+s3chk r3_seedmatrix          rc=0 == r3_seedmatrix (24 cases): 1407 pass, 0 fail, 1504 requests, 0 5xx, max latency 0.065s, p99 0.030s
+s3chk r3_sweep               rc=0 == r3_sweep seed 1 (50 payments, 35 authorizations): 118 pass, 0 fail, 1781 requests, 0 5xx, max latency 0.040s, p99 0.026s
+s3chk probe_shapes           rc=0 
+regression: 19 scripts, 3 non-zero

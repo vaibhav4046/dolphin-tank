@@ -1,0 +1,43 @@
+PASS A0 exactly 10 payments succeed of 50 (balance 1000)
+PASS A0 final balances ada 0 bob 1000
+PASS A0 conservation
+PASS A0 observers saw no negative/torn state (23 samples)
+PASS A0 ledger has exactly 10 payments
+PASS A1 exactly 10 payments succeed of 50 (balance 1000)
+PASS A1 final balances ada 0 bob 1000
+PASS A1 conservation
+PASS A1 observers saw no negative/torn state (31 samples)
+PASS A1 ledger has exactly 10 payments
+PASS A2 exactly 10 payments succeed of 50 (balance 1000)
+PASS A2 final balances ada 0 bob 1000
+PASS A2 conservation
+PASS A2 observers saw no negative/torn state (31 samples)
+PASS A2 ledger has exactly 10 payments
+PASS B0 one 201 among 30 distinct-key pays
+PASS B0 others 409 request_not_pending
+PASS B0 money moved once
+PASS B0 request paid w/ payment_id
+PASS B1 one 201 among 30 distinct-key pays
+PASS B1 others 409 request_not_pending
+PASS B1 money moved once
+PASS B1 request paid w/ payment_id
+PASS B2 one 201 among 30 distinct-key pays
+PASS B2 others 409 request_not_pending
+PASS B2 money moved once
+PASS B2 request paid w/ payment_id
+PASS B2 15 rounds pay/decline/cancel race: single terminal state, money at most once, consistent responses
+PASS C0 at most one 600 debit from balance 1000 (got 1)
+PASS C0 ada=400, conservation
+PASS C0 failures are 409 insufficient_funds
+PASS C0 observers clean (4 samples)
+PASS C1 at most one 600 debit from balance 1000 (got 1)
+PASS C1 ada=400, conservation
+PASS C1 failures are 409 insufficient_funds
+PASS C1 observers clean (2 samples)
+PASS C2 at most one 600 debit from balance 1000 (got 1)
+PASS C2 ada=400, conservation
+PASS C2 failures are 409 insufficient_funds
+PASS C2 observers clean (4 samples)
+PASS D churn: 3000 payments, 1488 observer samples, no torn/negative reads
+PASS D final ada=3000-sent, bob=sent, sum 3000
+== c01_conservation: 42 pass, 0 fail, 9416 requests, 0 5xx

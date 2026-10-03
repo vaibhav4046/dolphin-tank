@@ -1,0 +1,5 @@
+CAUGHT  M3 historical overdraft does not roll the revisions back
+     by jury_batch_1.py: U29/U30 current affordable but bob negative at T-2h -> historical_overdraft [state byte-identical] | U29 current unaffordable AND historical negative -> insufficient_funds first :: got 409 {"error": {"code": "stale_r | U29 combined effect at one instant: +100 and -100 effective together -> accepted :: got 409 {"error": {"code": "sta
+CAUGHT  M6 batch recorded_at is not raised above a member's later recorded_at
+     by jury_batch_5.py: U34 batch recorded_at is strictly later than the member's imported recorded_at (+2h) :: ('2026-10-03T08:01:16.62002
+summary: 2 caught, 0 survived

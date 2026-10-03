@@ -1,0 +1,147 @@
+PASS U40/C1 round 0: 16 batches share SH rev 1 -> exactly one 201, 15 x 409 stale_revision
+PASS U40/C1 round 0: the shared payment has exactly 2 revisions and carries the winner's amount
+PASS U40/C1 round 0: only the winner's private payment was revised (losers rolled back atomically)
+PASS U40/C1 round 0: sum of balances conserved
+PASS U40/C1 round 1: 16 batches share SH rev 1 -> exactly one 201, 15 x 409 stale_revision
+PASS U40/C1 round 1: the shared payment has exactly 2 revisions and carries the winner's amount
+PASS U40/C1 round 1: only the winner's private payment was revised (losers rolled back atomically)
+PASS U40/C1 round 1: sum of balances conserved
+PASS U40/C1 round 2: 16 batches share SH rev 1 -> exactly one 201, 15 x 409 stale_revision
+PASS U40/C1 round 2: the shared payment has exactly 2 revisions and carries the winner's amount
+PASS U40/C1 round 2: only the winner's private payment was revised (losers rolled back atomically)
+PASS U40/C1 round 2: sum of balances conserved
+PASS U40/C1 round 3: 16 batches share SH rev 1 -> exactly one 201, 15 x 409 stale_revision
+PASS U40/C1 round 3: the shared payment has exactly 2 revisions and carries the winner's amount
+PASS U40/C1 round 3: only the winner's private payment was revised (losers rolled back atomically)
+PASS U40/C1 round 3: sum of balances conserved
+PASS U40/C2 round 0: 6 batches + 6 single corrections on one revision -> exactly one 201
+PASS U40/C2 round 0: the payment has exactly 2 revisions
+PASS U40/C2 round 1: 6 batches + 6 single corrections on one revision -> exactly one 201
+PASS U40/C2 round 1: the payment has exactly 2 revisions
+PASS U40/C2 round 2: 6 batches + 6 single corrections on one revision -> exactly one 201
+PASS U40/C2 round 2: the payment has exactly 2 revisions
+PASS U40/C2 round 3: 6 batches + 6 single corrections on one revision -> exactly one 201
+PASS U40/C2 round 3: the payment has exactly 2 revisions
+PASS U40/C2 round 4: 6 batches + 6 single corrections on one revision -> exactly one 201
+PASS U40/C2 round 4: the payment has exactly 2 revisions
+PASS U40/C3 ring n=3: winners pairwise disjoint (1 winners)
+PASS U40/C3 ring n=3: every loser got 409 stale_revision and overlaps a winner
+PASS U40/C3 ring n=3: every payment has <= 2 revisions, exactly the winners' payments have 2
+PASS U40/C3 ring n=5: winners pairwise disjoint (2 winners)
+PASS U40/C3 ring n=5: every loser got 409 stale_revision and overlaps a winner
+PASS U40/C3 ring n=5: every payment has <= 2 revisions, exactly the winners' payments have 2
+PASS U40/C3 ring n=8: winners pairwise disjoint (3 winners)
+PASS U40/C3 ring n=8: every loser got 409 stale_revision and overlaps a winner
+PASS U40/C3 ring n=8: every payment has <= 2 revisions, exactly the winners' payments have 2
+PASS U40/C3 ring n=12: winners pairwise disjoint (5 winners)
+PASS U40/C3 ring n=12: every loser got 409 stale_revision and overlaps a winner
+PASS U40/C3 ring n=12: every payment has <= 2 revisions, exactly the winners' payments have 2
+PASS U40/C3 sum of balances conserved
+PASS U40/C4 setup: ada total 1000 held 810 available 190
+PASS U40/C4 8 batches each debiting ada 90 with 190 available: exactly two win, six 409 insufficient_funds
+PASS U40/C4 ada ends with available 10, never negative
+PASS U40/C4 conserved
+PASS U40/C5 round 0: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 1: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 2: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+PASS U40/C5 round 3: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+PASS U40/C5 round 4: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+PASS U40/C5 round 5: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+PASS U40/C5 round 6: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 7: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 8: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 9: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+PASS U40/C5 round 10: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 422, batch 201)
+PASS U40/C5 round 11: refund 60 vs batch lowering to 50: never both succeed, never both fail (refund 201, batch 422)
+C5 outcomes (refund status, batch status): [(201, 422), (422, 201)]
+PASS U40/C5 conserved
+PASS U42/batch concurrent same key: exactly one 201 and 19 x 200
+PASS U42/batch concurrent same key: all 20 bodies identical bytes
+PASS U42/batch concurrent same key: one effect (each member has exactly 2 revisions)
+PASS U42/batch concurrent same key: money moved once (+50 for M0, -50 for M1 => ada net 0; bob net 0 but each revision applied once)
+PASS U42/batch concurrent same key: amounts are the batch's (150, 50, 100)
+PASS U42/batch same key, two different bodies racing: exactly one body wins (one 201, its replays 200, the other body all 409)
+PASS U42/batch ...and only one of the two payments gained a revision
+PASS U42 POST /payments: first use 201
+PASS U42 POST /payments: replay -> 200, identical bytes
+PASS U42 POST /payments: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /payments: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /payments: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /payments: ...identical bodies
+PASS U42 POST /payments: ...exactly one effect (1)
+PASS U42 POST /requests: first use 201
+PASS U42 POST /requests: replay -> 200, identical bytes
+PASS U42 POST /requests: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /requests: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /requests: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /requests: ...identical bodies
+PASS U42 POST /requests: ...exactly one effect (1)
+PASS U42 POST /requests: its key used on POST /payments is a first use (201)
+PASS U42 POST /requests/{id}/pay: first use 201
+PASS U42 POST /requests/{id}/pay: replay -> 200, identical bytes
+PASS U42 POST /requests/{id}/pay: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /requests/{id}/pay: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /requests/{id}/pay: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /requests/{id}/pay: ...identical bodies
+PASS U42 POST /requests/{id}/pay: ...exactly one effect (1)
+PASS U42 POST /requests/{id}/pay: its key used on POST /payments is a first use (201)
+PASS U42 POST /splits: first use 201
+PASS U42 POST /splits: replay -> 200, identical bytes
+PASS U42 POST /splits: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /splits: exactly one effect after first+replay+reuse (2 expected)
+PASS U42 POST /splits: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /splits: ...identical bodies
+PASS U42 POST /splits: ...exactly one effect (2)
+PASS U42 POST /splits: its key used on POST /payments is a first use (201)
+PASS U42 POST /settlements: first use 201
+PASS U42 POST /settlements: replay -> 200, identical bytes
+PASS U42 POST /settlements: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /settlements: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /settlements: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /settlements: ...identical bodies
+PASS U42 POST /settlements: ...exactly one effect (1)
+PASS U42 POST /settlements: its key used on POST /payments is a first use (201)
+PASS U42 POST /authorizations: first use 201
+PASS U42 POST /authorizations: replay -> 200, identical bytes
+PASS U42 POST /authorizations: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /authorizations: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /authorizations: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /authorizations: ...identical bodies
+PASS U42 POST /authorizations: ...exactly one effect (1)
+PASS U42 POST /authorizations: its key used on POST /payments is a first use (201)
+PASS U42 POST /authorizations/{id}/capture: first use 201
+PASS U42 POST /authorizations/{id}/capture: replay -> 200, identical bytes
+PASS U42 POST /authorizations/{id}/capture: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /authorizations/{id}/capture: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /authorizations/{id}/capture: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /authorizations/{id}/capture: ...identical bodies
+PASS U42 POST /authorizations/{id}/capture: ...exactly one effect (1)
+PASS U42 POST /authorizations/{id}/capture: its key used on POST /payments is a first use (201)
+PASS U42 POST /payments/{id}/corrections: first use 201
+PASS U42 POST /payments/{id}/corrections: replay -> 200, identical bytes
+PASS U42 POST /payments/{id}/corrections: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /payments/{id}/corrections: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /payments/{id}/corrections: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /payments/{id}/corrections: ...identical bodies
+PASS U42 POST /payments/{id}/corrections: ...exactly one effect (1)
+PASS U42 POST /payments/{id}/corrections: its key used on POST /payments is a first use (201)
+PASS U42 POST /payments/{id}/refunds: first use 201
+PASS U42 POST /payments/{id}/refunds: replay -> 200, identical bytes
+PASS U42 POST /payments/{id}/refunds: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /payments/{id}/refunds: exactly one effect after first+replay+reuse (1 expected)
+PASS U42 POST /payments/{id}/refunds: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /payments/{id}/refunds: ...identical bodies
+PASS U42 POST /payments/{id}/refunds: ...exactly one effect (1)
+PASS U42 POST /payments/{id}/refunds: its key used on POST /payments is a first use (201)
+PASS U42 POST /correction-batches: first use 201
+PASS U42 POST /correction-batches: replay -> 200, identical bytes
+PASS U42 POST /correction-batches: same key, different body -> 409 idempotency_key_reuse
+PASS U42 POST /correction-batches: exactly one effect after first+replay+reuse (2 expected)
+PASS U42 POST /correction-batches: 12 concurrent same-key calls -> exactly one 201, eleven 200
+PASS U42 POST /correction-batches: ...identical bodies
+PASS U42 POST /correction-batches: ...exactly one effect (2)
+PASS U42 POST /correction-batches: its key used on POST /payments is a first use (201)
+balances total conserved over U42: True
+PASS U42 sum of balances conserved after all ten paths
+
+PART3 pass=143 fail=0

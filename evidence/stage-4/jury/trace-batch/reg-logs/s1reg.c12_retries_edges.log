@@ -1,0 +1,46 @@
+PASS A0 same key, 2 different bodies x10: exactly one 201
+PASS A0 winner-body calls: 1x201 + 9x200 identical; other-body calls: 10 x 409 idempotency_key_reuse
+PASS A0 one effect
+PASS A1 same key, 2 different bodies x10: exactly one 201
+PASS A1 winner-body calls: 1x201 + 9x200 identical; other-body calls: 10 x 409 idempotency_key_reuse
+PASS A1 one effect
+PASS A2 same key, 2 different bodies x10: exactly one 201
+PASS A2 winner-body calls: 1x201 + 9x200 identical; other-body calls: 10 x 409 idempotency_key_reuse
+PASS A2 one effect
+PASS B0 retry after lost response: every retry is 201 (never applied) or 200 (applied), never 409/5xx
+PASS B0 second retry always 200 and identical to first retry's body
+PASS B0 each key took effect exactly once: ada -200 (payments) -200 (pay requests); bob -60 (settlements); dee +60
+PASS B0 conservation
+PASS B0 requests created exactly N (+ split requests N*2) outgoing by ada: 60
+PASS B0 every pay request paid exactly once
+PASS B1 retry after lost response: every retry is 201 (never applied) or 200 (applied), never 409/5xx
+PASS B1 second retry always 200 and identical to first retry's body
+PASS B1 each key took effect exactly once: ada -200 (payments) -200 (pay requests); bob -60 (settlements); dee +60
+PASS B1 conservation
+PASS B1 requests created exactly N (+ split requests N*2) outgoing by ada: 60
+PASS B1 every pay request paid exactly once
+PASS B2 retry after lost response: every retry is 201 (never applied) or 200 (applied), never 409/5xx
+PASS B2 second retry always 200 and identical to first retry's body
+PASS B2 each key took effect exactly once: ada -200 (payments) -200 (pay requests); bob -60 (settlements); dee +60
+PASS B2 conservation
+PASS B2 requests created exactly N (+ split requests N*2) outgoing by ada: 60
+PASS B2 every pay request paid exactly once
+PASS pay visibility 5 -> 422
+PASS pay visibility null -> 422
+PASS pay visibility 'x' -> 422
+PASS pay visibility 'PRIVATE' -> 422
+PASS pay array body -> 400
+PASS pay string body -> 400
+PASS pay bad json -> 400
+OBS pay with empty body -> 201
+PASS pay with empty body behaves like {} (201, public)
+PASS pay private with unknown field -> 201 private
+PASS no-key pay -> 400
+OBS non-payer pay on declined request -> 403 | payer pay on declined -> 409
+OBS unknown request, valid key -> 404 | unknown request, no key -> 400
+PASS GET /activity default limit 50, has_more true
+PASS GET /activity limit=200 -> 200 items, has_more true (220 total)
+PASS offset 200 -> remaining 20, has_more false; union has 220 distinct payments
+PASS GET /requests default limit 50, has_more true
+PASS GET /requests limit=200 -> 200 items, has_more true (220 total)
+== c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx

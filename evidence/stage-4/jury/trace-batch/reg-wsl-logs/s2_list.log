@@ -1,0 +1,71 @@
+PASS F03 200 + keys authorizations/has_more
+PASS F03 ada sees exactly those involving her (0,1,2,3,5), newest first
+PASS F03 stranger dee sees none
+PASS F03 cy sees 2,3,4,6 only
+PASS F03 direction=outgoing (caller is payer)
+PASS F03 direction=incoming (caller is receiver)
+PASS F03 status=open
+PASS F03 status=captured
+PASS F03 status=voided
+PASS F03 status=expired
+PASS F03 direction+status combined
+PASS F04 limit=2 page1 has_more
+PASS F04 page2 has_more
+PASS F04 page3 last, has_more false
+PASS F04 limit exactly equals count: has_more false
+PASS F04 limit < count: has_more true
+PASS F04 offset past end: empty, has_more false
+PASS F04 limit 200 accepted, limit 1 accepted
+PASS F04 invalid limit=0 -> 422 validation_failed
+PASS F04 invalid limit=201 -> 422 validation_failed
+PASS F04 invalid limit=-1 -> 422 validation_failed
+PASS F04 invalid limit=abc -> 422 validation_failed
+PASS F04 invalid limit=1e2 -> 422 validation_failed
+PASS F04 invalid limit=%2B4 -> 422 validation_failed
+PASS F04 invalid limit=4.0 -> 422 validation_failed
+PASS F04 invalid limit= -> 422 validation_failed
+PASS F04 invalid offset=-1 -> 422 validation_failed
+PASS F04 invalid offset=1e1 -> 422 validation_failed
+PASS F04 invalid offset=x -> 422 validation_failed
+PASS F04 invalid offset=%2B1 -> 422 validation_failed
+PASS F04 invalid offset=1.0 -> 422 validation_failed
+PASS F04 invalid direction=sideways -> 422 validation_failed
+PASS F04 invalid direction= -> 422 validation_failed
+PASS F04 invalid status=bogus -> 422 validation_failed
+PASS F04 invalid status=OPEN -> 422 validation_failed
+PASS F04 invalid status= -> 422 validation_failed
+PASS F05 unknown query params ignored
+PASS E07 list element a_6: remaining consistent
+PASS E07 list element a_4: remaining consistent
+PASS E07 list element a_3: remaining consistent
+PASS E07 list element a_2: remaining consistent
+PASS E07 list element a_1: remaining consistent
+PASS E07 partially captured open (5): remaining 100+5-50=55, captured 50
+PASS I02 GET /requests Accept text/html... -> 200 HTML without a token
+PASS I02 GET /requests Accept text/html,applicatio... -> 200 HTML without a token
+PASS I02 GET /requests Accept None no token -> 401 JSON envelope
+PASS I02 GET /requests Accept None with token -> 200 JSON
+PASS I02 GET /requests Accept 'application/json' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept 'application/json' with token -> 200 JSON
+PASS I02 GET /requests Accept '*/*' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept '*/*' with token -> 200 JSON
+PASS I02 GET /requests Accept 'application/json, text/plain, */*' no token -> 401 JSON envelope
+PASS I02 GET /requests Accept 'application/json, text/plain, */*' with token -> 200 JSON
+PASS I02 GET /authorizations Accept text/html... -> 200 HTML without a token
+PASS I02 GET /authorizations Accept text/html,applicatio... -> 200 HTML without a token
+PASS I02 GET /authorizations Accept None no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept None with token -> 200 JSON
+PASS I02 GET /authorizations Accept 'application/json' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept 'application/json' with token -> 200 JSON
+PASS I02 GET /authorizations Accept '*/*' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept '*/*' with token -> 200 JSON
+PASS I02 GET /authorizations Accept 'application/json, text/plain, */*' no token -> 401 JSON envelope
+PASS I02 GET /authorizations Accept 'application/json, text/plain, */*' with token -> 200 JSON
+PASS I02 POST /authorizations with Accept text/html is still the API (201 JSON)
+PASS I02 POST /requests with Accept text/html is still the API (201 JSON)
+PASS I01 GET / serves the UI
+PASS I01 GET /split serves the UI
+PASS I01 GET /login serves the UI
+PASS I01 GET /signup serves the UI
+PASS I01 unknown path 404 not 5xx
+== s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.013s, p99 0.012s

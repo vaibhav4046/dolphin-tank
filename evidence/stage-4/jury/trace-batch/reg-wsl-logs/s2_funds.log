@@ -1,0 +1,33 @@
+PASS A02 setup hold 9000
+PASS A06 payment above available refused 409 insufficient_funds
+PASS A06 refused payment changed nothing
+PASS A02 payment of exactly available allowed
+PASS A05 payment moved money immediately and created no hold
+PASS A02 available 0 -> payment of 1 refused
+PASS A05 payment is not an authorization
+PASS A06 authorize above available refused 409 insufficient_funds
+PASS A06 refused authorize created nothing
+PASS A02 capture of reserved funds succeeds with available 0
+PASS A02 after capture ada total 0 available 0 held 0, bob +9000
+PASS A01 conservation
+PASS A06 request pay above available 409 insufficient_funds
+PASS A06 refused request pay: still pending, nothing moved
+PASS A06 void releases; request now payable
+PASS A06 request payable after release
+PASS A02 request pay of exactly available (1500) allowed
+PASS A06 settlement net debit above available 409 insufficient_funds
+PASS A06 refused settlement changed nothing
+PASS A06 net debit 999 (<= available 1000) allowed though gross 1500 > 1000
+PASS A06 after settlement
+PASS A02 settlement exactly one above available refused
+PASS A02 settlement of exactly available allowed
+PASS A06 settlement members authorization_id null
+PASS A06 net-zero cycle with available 0 allowed
+PASS A01 conservation after settlements
+PASS A02 captures still spend reserved after settlement drains available
+PASS A07 split works with available 0, shares 334/333/333
+PASS A07 split no balance check
+PASS A04 /me while held==total: available 0
+PASS A02 hold of exactly total allowed
+PASS A02 further hold refused at available 0
+== s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.013s, p99 0.013s

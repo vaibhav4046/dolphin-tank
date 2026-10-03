@@ -1,0 +1,21 @@
+expected_revision 1e30                       -> 409 stale_revision
+amount 1e30                                  -> 422 validation_failed
+amount 9007199254740993                      -> 422 validation_failed
+amount -0                                    -> 201 None
+amount 1e999                                 -> 422 validation_failed
+expected_revision 99999999999999999999       -> 409 stale_revision
+amount 1e3 (=1000)                           -> 201 None
+amount 5.0                                   -> 201 None
+amount 1000000000                            -> 409 insufficient_funds
+expected_revision 1.0                        -> 201 None
+effective_at '0001-01-01T00:00:00+00:00'     -> 201 None
+effective_at '0000-01-01T00:00:00+00:00'     -> 201 None
+effective_at '9999-12-31T23:59:59+00:00'     -> 422 validation_failed
+effective_at '2026-02-30T00:00:00+00:00'     -> 422 validation_failed
+effective_at '2026-09-20T23:59:60+00:00'     -> 422 validation_failed
+effective_at '2026-09-20T12:00:00.123456789123+00:00' -> 201 None
+effective_at '2026-09-20T12:00:00+99:99'     -> 422 validation_failed
+effective_at '2026-09-20T12:00:00-23:59'     -> 201 None
+effective_at '1900-01-01T00:00:00Z'          -> 201 None
+effective_at '2026-09-20T12:00:00+0000'      -> 422 validation_failed
+effective_at '  2026-09-20T12:00:00+00:00'   -> 422 validation_failed

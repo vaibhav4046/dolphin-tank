@@ -1,0 +1,35 @@
+outbound reachable to 1.1.1.1
+outbound reachable to 8.8.8.8
+FAIL sibling has no outbound network :: 
+PASS health 200 on internal net
+PASS payment 201 on internal net
+Traceback (most recent call last):
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\d2_smoke.py", line 20, in <module>
+    ok("balances after payment", bal(t["ada"]) == 8500 and bal(t["bob"]) == 4000)
+                                 ^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 119, in bal
+    return me(tok)["balance"]
+           ^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 113, in me
+    r = call("GET", "/me", token=tok)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted

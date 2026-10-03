@@ -1,0 +1,77 @@
+PASS D03 authorize amount 0 -> 422 validation_failed
+PASS D03 authorize amount -1 -> 422 validation_failed
+PASS D03 authorize amount 1.5 -> 422 validation_failed
+PASS D03 authorize amount string -> 422 validation_failed
+PASS D03 authorize amount true -> 422 validation_failed
+PASS D03 authorize amount null -> 422 validation_failed
+PASS D03 authorize amount missing -> 422 validation_failed
+PASS D03 authorize amount 1e9+1 -> 422 validation_failed
+PASS D03 authorize self payment -> 422 self_payment
+PASS D03 authorize unknown handle -> 404 not_found
+PASS D03 authorize note 201 chars -> 422 validation_failed
+PASS D03 authorize note null -> 422 validation_failed
+PASS D03 authorize note number -> 422 validation_failed
+PASS D03 authorize visibility bad -> 422 validation_failed
+PASS D03 authorize visibility null -> 422 validation_failed
+PASS D03 authorize to_handle missing -> 422 validation_failed
+PASS D03 authorize to_handle number -> 400 malformed_request
+PASS D03 no hold created by any refusal
+PASS D03 unparseable body 400 malformed_request
+PASS D03 array body 400 malformed_request
+PASS D03 authorize without key 400 missing_idempotency_key
+PASS D03 authorize empty key 400 missing_idempotency_key
+PASS D03 authorize 256-char key 422 validation_failed
+PASS D03 authorize 255-char key accepted
+PASS D03 authorize integral amount 1000.0 accepted
+PASS D03 authorize integral amount 1e3 accepted
+PASS D03 authorize integral amount 1 accepted
+PASS D03 amount exactly 1e9 accepted
+PASS D03 note exactly 200 chars accepted
+PASS D03 unicode note verbatim
+PASS F06 authorize token none -> 401 unauthenticated
+PASS F06 authorize token garbage -> 401 unauthenticated
+PASS D03 authorize above available 409 insufficient_funds
+PASS D03 authorize exactly available allowed
+PASS E01 capture without key 400 missing_idempotency_key
+PASS E01 capture empty key 400
+PASS E01 capture 256-char key 422
+PASS E01 payer cannot capture 403 forbidden
+PASS F02 stranger capture 403 forbidden (not 404)
+PASS F02 receiver void 403 forbidden
+PASS F02 stranger void 403 forbidden
+PASS E09 unknown authorization capture 404 not_found
+PASS E09 unknown authorization void 404 not_found
+PASS F02 refused calls changed nothing
+PASS E09 capture amount 0 -> 422 validation_failed
+PASS E09 capture amount -3 -> 422 validation_failed
+PASS E09 capture amount 1.5 -> 422 validation_failed
+PASS E09 capture amount string -> 422 validation_failed
+PASS E09 capture amount true -> 422 validation_failed
+PASS E09 capture above remaining 422 capture_exceeds_authorization
+PASS E11 capture final=string false rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=zero rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=null rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=string true rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 capture final=one rejected (400 malformed_request per section 5, wrong type) [got 400 malformed_request]
+PASS E11 refused finals captured nothing
+PASS E09 capture unparseable body 400 malformed_request
+PASS E09 capture array body 400 malformed_request
+INFO capture with no body at all -> 201 None
+PASS F06 capture no token -> 401
+PASS F06 void no token -> 401
+PASS F06 GET /authorizations no token -> 401 JSON envelope
+PASS F06 capture bad token -> 401
+PASS F06 void bad token -> 401
+PASS F06 GET /authorizations bad token -> 401 JSON envelope
+INFO capture amount:null -> 422 validation_failed
+PASS E09 amount:null does not 5xx
+PASS E09 capture voided -> 409 authorization_not_open
+PASS F02 stranger capture on closed hold still 403 (permission before state)
+PASS F02 payer capture on closed hold 403
+PASS E09 odd id '' does not 5xx (got 404)
+PASS E09 odd id 'xxxxxxxxxxxx' does not 5xx (got 404)
+PASS E09 odd id 'a%20b' does not 5xx (got 404)
+PASS E09 odd id '../me' does not 5xx (got 404)
+INFO GET /authorizations/{id} -> 404
+PASS E09 method not allowed paths are JSON 4xx not 5xx
+== s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.029s, p99 0.026s

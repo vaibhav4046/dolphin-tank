@@ -1,0 +1,220 @@
+PASS payments amount 1 -> 201 amount==1 (int)
+PASS payments amount 1000 -> 201 amount==1000 (int)
+PASS payments amount 1000.0 -> 201 amount==1000 (int)
+PASS payments amount 1e3 -> 201 amount==1000 (int)
+PASS payments amount 1E3 -> 201 amount==1000 (int)
+PASS payments amount 1.0e3 -> 201 amount==1000 (int)
+PASS payments amount 10e2 -> 201 amount==1000 (int)
+PASS payments amount 0.1e4 -> 201 amount==1000 (int)
+PASS payments amount 1000000000 -> 201 amount==1000000000 (int)
+PASS payments amount 1e9 -> 201 amount==1000000000 (int)
+PASS payments amount 1.0E9 -> 201 amount==1000000000 (int)
+PASS payments amount 0 -> 422 validation_failed
+PASS payments amount -1 -> 422 validation_failed
+PASS payments amount 1000000001 -> 422 validation_failed
+PASS payments amount 1.5 -> 422 validation_failed
+PASS payments amount 0.5 -> 422 validation_failed
+PASS payments amount 1000.5 -> 422 validation_failed
+PASS payments amount true -> 422 validation_failed
+PASS payments amount false -> 422 validation_failed
+PASS payments amount "1000" -> 422 validation_failed
+PASS payments amount "abc" -> 422 validation_failed
+PASS payments amount "" -> 422 validation_failed
+PASS payments amount null -> 422 validation_failed
+PASS payments amount [1] -> 422 validation_failed
+PASS payments amount {} -> 422 validation_failed
+PASS payments amount 1e10 -> 422 validation_failed
+PASS payments amount 9007199254740993 -> 422 validation_failed
+PASS payments amount -0 -> 422 validation_failed
+PASS payments amount 0.0 -> 422 validation_failed
+PASS payments amount 1e-1 -> 422 validation_failed
+PASS payments amount 1e400 -> 422 validation_failed
+PASS payments amount -1e400 -> 422 validation_failed
+PASS payments amount 123456789012345678901234567890 -> 422 validation_failed
+PASS payments amount missing -> 422
+PASS balances only reflect the accepted payments
+PASS requests amount 1e3 -> 201 int
+PASS splits amount 1e3 -> 201, shares 500/500
+PASS settlements amount 1e3 -> 201 int
+PASS requests amount 1000.0 -> 201 int
+PASS splits amount 1000.0 -> 201, shares 500/500
+PASS settlements amount 1000.0 -> 201 int
+PASS requests amount 0 -> 422
+PASS splits amount 0 -> 422
+PASS settlements amount 0 -> 422
+PASS requests amount 1000000001 -> 422
+PASS splits amount 1000000001 -> 422
+PASS settlements amount 1000000001 -> 422
+PASS requests amount true -> 422
+PASS splits amount true -> 422
+PASS settlements amount true -> 422
+PASS requests amount "1000" -> 422
+PASS splits amount "1000" -> 422
+PASS settlements amount "1000" -> 422
+PASS requests amount 1.5 -> 422
+PASS splits amount 1.5 -> 422
+PASS settlements amount 1.5 -> 422
+PASS requests amount null -> 422
+PASS splits amount null -> 422
+PASS settlements amount null -> 422
+PASS requests amount 1e9 boundary -> 201
+PASS splits amount 1e9 -> shares 333333334/333333333/333333333
+PASS poor user amount>1e9 -> 422 (not 409)
+PASS poor user amount 50 -> 409 insufficient_funds
+PASS poor user note>200 -> 422 (not 409)
+PASS self payment -> 422 self_payment
+PASS unknown handle -> 404 not_found
+OBS to_handle='' -> 404 not_found
+PASS non-matching handle '' -> 404 (no user has that handle)
+OBS to_handle='BOB' -> 404 not_found
+PASS non-matching handle 'BOB' -> 404 (no user has that handle)
+OBS to_handle='Bob' -> 404 not_found
+PASS non-matching handle 'Bob' -> 404 (no user has that handle)
+OBS to_handle='b o b' -> 404 not_found
+PASS non-matching handle 'b o b' -> 404 (no user has that handle)
+OBS to_handle='xxxxxxxxxxxxxxxxxxxx' -> 404 not_found
+PASS non-matching handle 'xxxxxxxxxxxxxxxxxxxx' -> 404 (no user has that handle)
+OBS to_handle='bob ' -> 404 not_found
+PASS non-matching handle 'bob ' -> 404 (no user has that handle)
+PASS note empty accepted
+PASS note 200 ascii accepted
+PASS note 200 emoji (code points) accepted
+PASS note 200 e-acute accepted
+PASS note 201 ascii -> 422
+PASS note 201 emoji -> 422
+PASS note 201 e-acute -> 422
+PASS note null -> 422
+PASS note 5 -> 422
+PASS note true -> 422
+PASS note [] -> 422
+PASS note {} -> 422
+PASS note verbatim round trip in response (ensure_ascii=False)
+PASS note verbatim in GET /activity (ensure_ascii=False)
+PASS note verbatim round trip in response (ensure_ascii=True)
+PASS note verbatim in GET /activity (ensure_ascii=True)
+PASS request note verbatim
+PASS request note verbatim in GET /requests
+PASS note defaults to '' and visibility to public
+PASS payment body exact key set (incl. settlement_id null for non-members)
+PASS timestamp RFC3339 with offset; ids <=64
+PASS visibility "public" -> 201
+PASS visibility "private" -> 201
+PASS visibility "PUBLIC" -> 422
+PASS visibility "" -> 422
+PASS visibility "x" -> 422
+PASS visibility null -> 422
+PASS visibility 1 -> 422
+PASS visibility true -> 422
+OBS payments to_handle number -> 400 malformed_request
+PASS payments to_handle number -> 400 malformed_request
+OBS payments to_handle array  -> 400 malformed_request
+PASS payments to_handle array -> 400 malformed_request
+OBS payments to_handle object -> 400 malformed_request
+PASS payments to_handle object -> 400 malformed_request
+OBS payments to_handle bool   -> 400 malformed_request
+PASS payments to_handle bool -> 400 malformed_request
+OBS payments truncated json   -> 400 malformed_request
+PASS payments truncated json -> 400 malformed_request
+OBS payments not json         -> 400 malformed_request
+PASS payments not json -> 400 malformed_request
+OBS payments empty body       -> 400 malformed_request
+PASS payments empty body -> 400 malformed_request
+OBS payments trailing garbage -> 400 malformed_request
+PASS payments trailing garbage -> 400 malformed_request
+OBS payments array body       -> 400 malformed_request
+PASS payments array body -> 400 malformed_request
+OBS payments null body        -> 400 malformed_request
+PASS payments null body -> 400 malformed_request
+OBS payments string body      -> 400 malformed_request
+PASS payments string body -> 400 malformed_request
+OBS payments number body      -> 400 malformed_request
+PASS payments number body -> 400 malformed_request
+OBS payments invalid utf-8    -> 400 malformed_request
+PASS payments invalid utf-8 -> 400 malformed_request
+OBS payments BOM prefix       -> 400 malformed_request
+PASS payments BOM prefix -> 400 malformed_request
+PASS payments to_handle missing -> 422
+OBS payments to_handle null -> 400 malformed_request
+PASS payments to_handle null -> 400 or 422 (never 2xx/5xx)
+PASS unknown body fields ignored
+PASS requests payer_handle number -> 400
+PASS splits participant_handles string -> 400 malformed_request
+OBS splits participant_handles [5] -> 400 malformed_request
+PASS splits participant_handles [5] -> 400 or 422
+PASS splits participant_handles missing -> 422
+PASS /activity limit=1 -> 200
+PASS /activity limit=50 -> 200
+PASS /activity limit=200 -> 200
+OBS /activity limit=007 -> 200
+PASS /activity limit='0' -> 422 validation_failed
+PASS /activity limit='201' -> 422 validation_failed
+PASS /activity limit='-1' -> 422 validation_failed
+PASS /activity limit='1e9' -> 422 validation_failed
+PASS /activity limit='4.0' -> 422 validation_failed
+PASS /activity limit='+4' -> 422 validation_failed
+PASS /activity limit='%2B4' -> 422 validation_failed
+PASS /activity limit='abc' -> 422 validation_failed
+PASS /activity limit='' -> 422 validation_failed
+PASS /activity limit='1%20' -> 422 validation_failed
+PASS /activity limit='%20' -> 422 validation_failed
+PASS /activity limit='0x10' -> 422 validation_failed
+PASS /activity limit='9999999999999999999999' -> 422 validation_failed
+PASS /activity limit='%D9%A4' -> 422 validation_failed
+PASS /activity offset=0 -> 200
+PASS /activity offset=5 -> 200
+PASS /activity offset=1000000 -> 200
+PASS /activity offset='-1' -> 422
+PASS /activity offset='1e9' -> 422
+PASS /activity offset='4.0' -> 422
+PASS /activity offset='+4' -> 422
+PASS /activity offset='%2B4' -> 422
+PASS /activity offset='abc' -> 422
+PASS /activity offset='' -> 422
+PASS /activity offset='0x1' -> 422
+PASS /activity unknown query params ignored
+PASS /requests limit=1 -> 200
+PASS /requests limit=50 -> 200
+PASS /requests limit=200 -> 200
+OBS /requests limit=007 -> 200
+PASS /requests limit='0' -> 422 validation_failed
+PASS /requests limit='201' -> 422 validation_failed
+PASS /requests limit='-1' -> 422 validation_failed
+PASS /requests limit='1e9' -> 422 validation_failed
+PASS /requests limit='4.0' -> 422 validation_failed
+PASS /requests limit='+4' -> 422 validation_failed
+PASS /requests limit='%2B4' -> 422 validation_failed
+PASS /requests limit='abc' -> 422 validation_failed
+PASS /requests limit='' -> 422 validation_failed
+PASS /requests limit='1%20' -> 422 validation_failed
+PASS /requests limit='%20' -> 422 validation_failed
+PASS /requests limit='0x10' -> 422 validation_failed
+PASS /requests limit='9999999999999999999999' -> 422 validation_failed
+PASS /requests limit='%D9%A4' -> 422 validation_failed
+PASS /requests offset=0 -> 200
+PASS /requests offset=5 -> 200
+PASS /requests offset=1000000 -> 200
+PASS /requests offset='-1' -> 422
+PASS /requests offset='1e9' -> 422
+PASS /requests offset='4.0' -> 422
+PASS /requests offset='+4' -> 422
+PASS /requests offset='%2B4' -> 422
+PASS /requests offset='abc' -> 422
+PASS /requests offset='' -> 422
+PASS /requests offset='0x1' -> 422
+PASS /requests unknown query params ignored
+PASS /requests?direction=sideways -> 422
+PASS /requests?direction=INCOMING -> 422
+PASS /requests?status=unknown -> 422
+PASS /requests?status=PENDING -> 422
+PASS /requests?direction= -> 422
+PASS /requests?status= -> 422
+PASS /requests?direction=incoming -> 200
+PASS /requests?direction=outgoing -> 200
+PASS /requests?status=pending -> 200
+PASS /requests?status=paid -> 200
+PASS /requests?status=declined -> 200
+PASS /requests?status=cancelled -> 200
+PASS /requests?direction=incoming&status=pending -> 200
+PASS exact minor-unit arithmetic near 2^53 (9007199254740001 - 5*999999999)
+PASS /me serialises balance as integer literal (no float/exponent)
+== c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx

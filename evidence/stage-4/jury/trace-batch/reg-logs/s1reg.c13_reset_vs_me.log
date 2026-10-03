@@ -1,0 +1,491 @@
+Exception in thread Thread-10 (hammer)Exception in thread :
+Exception in thread Traceback (most recent call last):
+Exception in thread Thread-2 (hammer):
+Thread-5 (hammer):
+Thread-12 (hammer):
+Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Exception in thread     Thread-14 (hammer)Exception in thread self.run()    :
+Thread-6 (hammer)
+Exception in thread Exception in thread self.run()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+:
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+Thread-7 (hammer)Traceback (most recent call last):
+    Traceback (most recent call last):
+:
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+self.run()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()Thread-4 (hammer):
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Exception in thread Thread-15 (hammer):
+    self._target(*self._args, **self._kwargs)Exception in thread Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 20, in hammer
+Thread-13 (hammer):
+    r = call("GET", "/me", token=tok)
+ Traceback (most recent call last):
+    Exception in thread Thread-11 (hammer):
+Traceback (most recent call last):
+   File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 45, in <module>
+self.run()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+Traceback (most recent call last):
+   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Exception in thread   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+  Thread-8 (hammer)       Exception in thread Exception in thread     Exception in thread self.run()Thread-16 (hammer)        self._target(*self._args, **self._kwargs)
+Thread-1 (hammer)^^    :
+    :
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+:
+^^self.run()self.run()
+
+self._target(*self._args, **self._kwargs)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+self.run()Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Thread-3 (hammer)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+
+
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 20, in hammer
+^Traceback (most recent call last):
+^:
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Traceback (most recent call last):
+    ^Traceback (most recent call last):
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+Exception in thread self._target(*self._args, **self._kwargs)^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+^^Thread-9 (hammer):
+Traceback (most recent call last):
+
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+          File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+r = call("POST", path, body, token=tok, key=k())reset(fx()); n += 1
+
+     r = call("GET", "/me", token=tok)
+                     self._target(*self._args, **self._kwargs)     ^ self.run()
+
+self.run()      self.run()
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+self._target(*self._args, **self._kwargs)^^self._target(*self._args, **self._kwargs)          
+    
+r = call("POST", path, body, token=tok, key=k())  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+^self.run()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+ ^^^^^
+
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 20, in hammer
+            File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+self.run()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self.run()    File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+  self._target(*self._args, **self._kwargs)
+self._target(*self._args, **self._kwargs)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+ ^^^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 20, in hammer
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+^^^     ^^^ ^^self.run()^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 34, in hammer
+^^ ^
+^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+^    ^^^^^ ^^^^            r = call("GET", "/me", token=tok)^^r = call("POST", path, body, token=tok, key=k())
+^     self._target(*self._args, **self._kwargs) 
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 34, in hammer
+ r = call("POST", path, body, token=tok, key=k())
+
+r = call("GET", "/me", token=tok) ^ ^^ 
+ 
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 95, in reset
+
+      self._target(*self._args, **self._kwargs)^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+ ^ ^
+^^^^^^^    ^self._target(*self._args, **self._kwargs)^
+       File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 20, in hammer
+    self._target(*self._args, **self._kwargs)
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+   ^           ^ ^ ^^ self._target(*self._args, **self._kwargs)^   File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 30, in hammer
+^^
+ ^ ^ ^ ^ ^^^^       ^     ^self._target(*self._args, **self._kwargs)^^^^        r = call("GET", "/activity", token=tok)^r = call("POST", "/_test/reset", f if f is not None else fx())^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 34, in hammer
+^    ^ self._target(*self._args, **self._kwargs)
+r = call("GET", "/activity", token=tok)
+   
+^^r = call("POST", path, body, token=tok, key=k())^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 34, in hammer
+
+  ^ ^    r = call("POST", path, body, token=tok, key=k())
+^^^^
+   ^^    ^     ^r = call("GET", "/activity", token=tok)^
+^  ^ ^^        ^^^^^^^     c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^^ ^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\c13_reset_vs_me.py", line 34, in hammer
+^^^^^^^ ^^   ^^ ^^^^^^^^^^^^^^^^^ ^^^ ^^^^^^^    ^^^^ ^ ^^^^^^^^^^^^^^^^^^^^^^ ^ ^^  ^^^^^^^    ^r = call("GET", "/me", token=tok)^
+^ ^^^^^^^^ ^  ^^^^  ^^^^^^^      ^r = call("GET", "/activity", token=tok)^
+^ 
+^^ ^ ^^ ^^^^^^^^ ^r = call("GET", "/activity", token=tok)
+^ ^ ^ ^^^^^^^ ^^^^^^^^ ^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+
+     ^^^^ ^ ^ ^^^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^^ ^^self._send_request(method, url, body, headers, encode_chunked)^
+  ^^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+^^^^ ^ ^^^^^ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ ^^^^^^^^^^ ^ ^^^^^^^^^^^^    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^^^^^^^^^^^ ^^^^    c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^^^^^^^^^^^^    ^c.request(method, path, body=data, headers=h)^^^^^^^^^^^^^^^^    ^^^^^^^^^^^^^^^^self.endheaders(body, encode_chunked=encode_chunked)^^^^^^
+^^^^^^
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+^^^^^^^^^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^^^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^^^^^^^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+    ^^^^^^c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^    ^^^^^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^^^^^^^^    ^c.request(method, path, body=data, headers=h)^c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^    ^^^^^^^^^self._send_request(method, url, body, headers, encode_chunked)^^^^
+^    c.request(method, path, body=data, headers=h)^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+
+^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+
+^^^^^^^    self._send_request(method, url, body, headers, encode_chunked)
+^^      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+^^^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+^
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+^^    
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+self._send_request(method, url, body, headers, encode_chunked)^^        ^^self._send_request(method, url, body, headers, encode_chunked)c.request(method, path, body=data, headers=h)    
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+^^^^^
+
+self._send_output(message_body, encode_chunked=encode_chunked)        ^^^^^c.request(method, path, body=data, headers=h)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+
+c.request(method, path, body=data, headers=h)^^self._send_request(method, url, body, headers, encode_chunked)^
+
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^    ^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self.endheaders(body, encode_chunked=encode_chunked)^self._send_request(method, url, body, headers, encode_chunked)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+
+
+^  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+            self._send_request(method, url, body, headers, encode_chunked)
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+c.request(method, path, body=data, headers=h)^^^^c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    
+    ^    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+self.endheaders(body, encode_chunked=encode_chunked)      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+
+c.request(method, path, body=data, headers=h)
+  File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+    self._send_request(method, url, body, headers, encode_chunked)    
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+self._send_request(method, url, body, headers, encode_chunked)    self.endheaders(body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+      File "D:\project\dolphin-tank\band-work\result\evidence\stage-3\jury\s1reg\lib.py", line 49, in call
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+    self.endheaders(body, encode_chunked=encode_chunked)c.request(method, path, body=data, headers=h)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+
+    
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+            self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+        self._send_request(method, url, body, headers, encode_chunked)
+        self._send_request(method, url, body, headers, encode_chunked)self._send_request(method, url, body, headers, encode_chunked)self._send_output(message_body, encode_chunked=encode_chunked)c.request(method, path, body=data, headers=h)
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+self.endheaders(body, encode_chunked=encode_chunked)self._send_request(method, url, body, headers, encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.endheaders(body, encode_chunked=encode_chunked)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+    
+    
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1358, in request
+self.endheaders(body, encode_chunked=encode_chunked)self.endheaders(body, encode_chunked=encode_chunked)
+    
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+          File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+self._send_output(message_body, encode_chunked=encode_chunked)    self.endheaders(body, encode_chunked=encode_chunked)self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+
+self.endheaders(body, encode_chunked=encode_chunked)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+self._send_request(method, url, body, headers, encode_chunked)    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+          File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+        self.send(msg)
+    self._send_output(message_body, encode_chunked=encode_chunked)self._send_request(method, url, body, headers, encode_chunked)    self.endheaders(body, encode_chunked=encode_chunked)
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.send(msg)self._send_output(message_body, encode_chunked=encode_chunked)
+
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1404, in _send_request
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+          File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.connect()    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+        self.send(msg)self.send(msg)
+self.endheaders(body, encode_chunked=encode_chunked)
+self.endheaders(body, encode_chunked=encode_chunked)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+
+    self.send(msg)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+
+self._send_output(message_body, encode_chunked=encode_chunked)    self.endheaders(body, encode_chunked=encode_chunked)    self.sock = self._create_connection(
+  
+       File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+   self.send(msg)        self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.connect() 
+   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+       
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+         self._send_output(message_body, encode_chunked=encode_chunked)self.send(msg)^    
+            self._send_output(message_body, encode_chunked=encode_chunked)
+self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+self.connect()
+self._send_output(message_body, encode_chunked=encode_chunked)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+
+^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+    self.sock = self._create_connection(
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+    self.endheaders(body, encode_chunked=encode_chunked)    
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1353, in endheaders
+ self.send(msg)self.send(msg)self.connect()^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    
+    
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+self.connect()  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+ ^    ^    self.connect()    self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+^    self._send_output(message_body, encode_chunked=encode_chunked)
+          self.send(msg)  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+    self.sock = self._create_connection(self.connect()^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+
+    
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+^self.connect()
+^      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+ self._send_output(message_body, encode_chunked=encode_chunked)
+             self.send(msg)
+ ^^^^           File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1113, in _send_output
+^^^self.sock = self._create_connection(
+self.send(msg) 
+self.sock = self._create_connection( ^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+     ^ 
+self.sock = self._create_connection(self.sock = self._create_connection(
+^      ^^     
+^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    self.sock = self._create_connection(     self.connect() 
+  ^ 
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+     ^     self.connect()             ^^^^
+ ^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+       self.connect()        raise exceptions[0]self.connect()
+
+      ^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+ self.sock = self._create_connection(
+        ^^     self.send(msg) 
+^   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+        ^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+   ^^ ^^self.sock = self._create_connection(  
+  self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+            ^    ^    ^  ^self.send(msg)
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1057, in send
+^      ^^          ^^^ self.sock = self._create_connection(     ^^^^^^^^^^^^^
+  ^^    sock.connect(sa) 
+    ^^^^^^^^^^^^^^^^^^^              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+          ^^^^    ^     self.connect() 
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+OSError: ^^^^^self.sock = self._create_connection(
+^^^ ^^^^^^^
+^^^^^^^self.sock = self._create_connection([WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^
+
+^^^^^^^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+  ^^^^^^^^^^^^^^ ^ ^ ^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+     ^^^^^    self.sock = self._create_connection(self.sock = self._create_connection(
+
+^^^^^^^
+    ^  ^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^   ^         ^^    self.connect()
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\http\client.py", line 1023, in connect
+ ^ ^ ^^^^^^^^ raise exceptions[0] ^^  
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+ 
+  ^    ^    ^self.sock = self._create_connection(      ^ ^     ^
+  ^ ^^ 
+   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+   ^^   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+  ^^ ^ ^^^  raise exceptions[0]   ^    raise exceptions[0] 
+   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^^^
+^^^^^^^^^     raise exceptions[0]
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+      File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^^^ ^^     ^^ ^ ^^^^^^^  ^^^^^^
+^^^^^^^raise exceptions[0]^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^    ^^^^^^^^     self.sock = self._create_connection(
+^^^   ^^^^^^       File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^ ^^^^^^^^sock.connect(sa)^     sock.connect(sa) 
+^^^
+^^^     sock.connect(sa)  ^ ^  OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+^^
+^^^^raise exceptions[0]^
+^^^^^ OSError^^    : [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^^ ^^ ^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^^^^^^OSError    ^raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+sock.connect(sa)
+OSError: 
+^^^     sock.connect(sa)
+
+OSError:  ^ 
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^^^^^    File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^^^
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^^   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+
+
+
+    raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^^^^^^^^^^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^^ ^^^^^^ ^^     ^^^sock.connect(sa)
+     ^^^^^    OSError^^^: ^^raise exceptions[0]^raise exceptions[0]^
+    [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permittedraise exceptions[0]
+
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+
+^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+     ^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^raise exceptions[0]
+^^  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+    ^^ ^sock.connect(sa)^ ^^    sock.connect(sa)
+
+
+OSError  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+^ ^OSError^^: : ^[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^^[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+^^    ^
+    raise exceptions[0]sock.connect(sa)
+
+
+OSError  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+: ^^^^    ^sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted^
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+    ^raise exceptions[0]
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+^        ^sock.connect(sa)sock.connect(sa)
+^
+^OSError^: ^OSError    ^: raise exceptions[0]^
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+
+^
+  File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 865, in create_connection
+    sock.connect(sa)
+OSError    sock.connect(sa)
+OSError    raise exceptions[0]: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+:   File "C:\Users\lalwa\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\socket.py", line 850, in create_connection
+
+[WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted
+    sock.connect(sa)
+OSError: [WinError 10048] Only one usage of each socket address (protocol/network address/port) is normally permitted

@@ -1,0 +1,42 @@
+c01_conservation rc=1 :: == c01_conservation: 41 pass, 1 fail, 4239 requests, 0 5xx
+FAIL A2 observers saw no negative/torn state (14 samples) :: []
+FAILED: ['A2 observers saw no negative/torn state (14 samples)']
+c02_idempotency rc=0 :: == c02_idempotency: 144 pass, 0 fail, 742 requests, 0 5xx
+c03_validation rc=0 :: == c03_validation: 195 pass, 0 fail, 218 requests, 0 5xx
+c04_auth rc=0 :: == c04_auth: 88 pass, 0 fail, 144 requests, 0 5xx
+c05_requests_feed rc=0 :: == c05_requests_feed: 49 pass, 0 fail, 138 requests, 0 5xx
+c06_reset_fixture rc=0 :: == c06_reset_fixture: 40 pass, 0 fail, 742 requests, 0 5xx
+c07_splits rc=0 :: == c07_splits: 98 pass, 0 fail, 146 requests, 0 5xx
+c08_export_import rc=0 :: == c08_export_import: 74 pass, 0 fail, 8646 requests, 0 5xx
+c09_no5xx_envelope rc=0 :: == c09_no5xx_envelope: 10 pass, 0 fail, 8910 requests, 0 5xx
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf4d-632-11118 (e6c9151a7b49651a8f7cf3f715b19f8f6690ca5ad74e591af14c5c842fe31692): failed to bind host port 127.0.0.1:34598/tcp: address already in use
+
+Run 'docker run --help' for more information
+c11_settlements rc=0 :: == c11_settlements: 69 pass, 0 fail, 629 requests, 0 5xx
+c12_retries_edges rc=0 :: == c12_retries_edges: 42 pass, 0 fail, 1266 requests, 0 5xx
+c13_reset_vs_me rc=0 :: == c13_reset_vs_me: 2 pass, 0 fail, 18782 requests, 0 5xx
+d2_smoke rc=1 :: == d2_smoke: 3 pass, 1 fail, 9 requests, 0 5xx
+FAIL sibling has no outbound network :: 
+FAILED: ['sibling has no outbound network']
+s2_lifecycle rc=0 :: == s2_lifecycle: 82 pass, 0 fail, 86 requests, 0 5xx, max latency 0.014s, p99 0.013s
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf4d-632-30779 (4b15258eb3de5dec242c13c0e95c5fec07238631dbd64e8f38366cb3d4a6d890): failed to bind host port 127.0.0.1:37030/tcp: address already in use
+
+Run 'docker run --help' for more information
+s2_funds rc=0 :: == s2_funds: 32 pass, 0 fail, 97 requests, 0 5xx, max latency 0.013s, p99 0.013s
+s2_errors rc=0 :: == s2_errors: 73 pass, 0 fail, 89 requests, 0 5xx, max latency 0.015s, p99 0.013s
+s2_idem rc=0 :: == s2_idem: 50 pass, 0 fail, 358 requests, 0 5xx, max latency 0.053s, p99 0.050s
+s2_list rc=0 :: == s2_list: 70 pass, 0 fail, 83 requests, 0 5xx, max latency 0.013s, p99 0.012s
+s2_fixture rc=0 :: == s2_fixture: 84 pass, 0 fail, 261 requests, 0 5xx, max latency 0.014s, p99 0.013s
+s2_expiry rc=0 :: == s2_expiry: 30 pass, 0 fail, 95 requests, 0 5xx, max latency 0.016s, p99 0.014s
+s2_race rc=0 :: == s2_race: 54 pass, 0 fail, 10432 requests, 0 5xx, max latency 0.051s, p99 0.026s
+s2_export rc=0 :: == s2_export: 30 pass, 0 fail, 2412 requests, 0 5xx, max latency 0.024s, p99 0.016s
+s2_export_expiry rc=0 :: == s2_export_expiry: 18 pass, 0 fail, 54 requests, 0 5xx, max latency 0.014s, p99 0.012s
+r3_corr_order rc=0 :: == r3_corr_order: 20 pass, 0 fail, 3503 requests, 0 5xx, max latency 0.028s, p99 0.018s
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint pf4d-632-32143 (f973a823f123398b412e4604a13fc3f144344d15772b8e5f037d3e8e0d189b3b): failed to bind host port 127.0.0.1:34496/tcp: address already in use
+
+Run 'docker run --help' for more information
+r3_seedmatrix rc=0 :: == r3_seedmatrix (24 cases): 1407 pass, 0 fail, 1504 requests, 0 5xx, max latency 0.013s, p99 0.011s
+r3_sweep rc=0 :: == r3_sweep seed 1 (50 payments, 35 authorizations): 118 pass, 0 fail, 1781 requests, 0 5xx, max latency 0.013s, p99 0.001s
+probe_shapes rc=0 :: 
+done
+finished
