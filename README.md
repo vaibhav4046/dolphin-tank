@@ -113,10 +113,12 @@ python -m harness check <path-to-clone> --track pocketful
 Stages 1, 2 and 3 are independently accepted. Stage 4's refunds and batch-correction items are
 accepted; its browser/Docker/stage-regression item was still in review when the model provider's
 usage limit cut the acceptor's turn, so treat stage 4 as **not yet fully accepted**. The provider
-usage limit ended seat turns four times across the run; the operator's recovery of those turns is
-disclosed in [`FACTORY.md`](FACTORY.md) §8, together with the fact that **no seat ever asked the
-operator for anything** — all six operator messages were three stage dispatches and three
-provider-quota resumes. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
+usage limit ended seat turns four times across the run; recovery meant restarting the affected
+runtimes so Band would redeliver the queued handoffs, which is a daemon operation and added
+**nothing** to the room. Disclosed in [`FACTORY.md`](FACTORY.md) §8, together with the measured
+fact that of 7,004 room messages exactly **seven are human** — four legitimate stage dispatches
+and three provider-quota resumes — and that **no seat ever asked the operator for anything**:
+every seat→operator message is a status report, not a question. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
 it inside a container. All commits share one Git identity, so distribution is evidenced by the
 room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than by authorship.
 `room.json` has not been downloaded yet, which is why `harness check` still reports one problem.

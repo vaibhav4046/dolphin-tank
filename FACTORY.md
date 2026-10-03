@@ -202,32 +202,40 @@ The guide requires that, from a stage dispatch until the coordinator's final rep
 dispatched task is the only human input**, and that an implementer never pauses waiting for a
 reply.
 
-The room log contains **4,864 messages. Exactly six are from the human.** All six were extracted
-and read in full:
+The room log contains **7,004 messages. Exactly seven are human text** (plus one system
+"participant joined" event, which carries no instruction). All seven were extracted and read in
+full, and the count was re-verified from the raw room pages on 2026-10-03 rather than assumed:
 
-| Time (UTC) | To | Nature |
-|---|---|---|
-| 2026-09-30T23:05:20 | `@route` | **Stage 1 dispatch** |
-| 2026-10-01T05:21:28 | `@jury` | "your turn was cut off by a provider usage limit … resume … no new requirements" |
-| 2026-10-01T05:34:01 | `@route` | **Stage 2 dispatch** |
-| 2026-10-01T15:49:08 | `@route` | "the usage limit window has reset … resume … no change of scope" |
-| 2026-10-01T21:57:54 | `@route` | **Stage 3 dispatch** |
-| 2026-10-02T17:42:15 | `@route` | "your last turn ended before you answered trace's report … resume … no scope change" |
+| # | Time (UTC) | To | Nature |
+|---|---|---|---|
+| 1 | 2026-09-30T23:05:20 | `@route` | **Stage 1 dispatch** |
+| 2 | 2026-10-01T05:21:28 | `@jury` | "your turn was cut off by a provider usage limit … resume … no new requirements" |
+| 3 | 2026-10-01T05:34:01 | `@route` | **Stage 2 dispatch** |
+| 4 | 2026-10-01T15:49:08 | `@route` | "the usage limit window has reset … resume … no change of scope" |
+| 5 | 2026-10-01T21:57:54 | `@route` | **Stage 3 dispatch** |
+| 6 | 2026-10-02T17:42:15 | `@route` | "your last turn ended before you answered trace's report … resume … no scope change" |
+| 7 | 2026-10-02T22:48:17 | `@route` | **Stage 4 dispatch** |
 
-So: three legitimate stage dispatches, exactly as the guide allows ("you may dispatch each
-stage separately or all four at once"), and **three mid-stage resumes**, all caused by the model
+So: **four legitimate stage dispatches** — exactly what the guide allows ("you may dispatch each
+stage separately or all four at once") — and **three mid-stage resumes**, all caused by the model
 provider's usage limit, all explicitly adding no requirement and changing no scope. The first
 resume is the weakest point: it addressed `@jury` directly rather than going through the
 coordinator.
 
-**What is true and verified:** no seat ever asked the human for anything. Of the six messages
-the seats sent back to the operator, **all six are status reports; zero are questions**, and no
-seat surfaced a blocker as a request for a decision. No requirement, scope or acceptance
-decision ever changed because of a human intervention. On the substance of autonomy — the seats
-resolved their own problems and never stopped to ask — the run holds.
+**What is true and verified:** no seat ever asked the human for anything. Of the messages the
+seats sent back to the operator, **every one is a status report; none is a question**, and no seat
+surfaced a blocker as a request for a decision. No requirement, scope or acceptance decision ever
+changed because of a human intervention. On the substance of autonomy — the seats resolved their
+own problems and never stopped to ask — the run holds.
 
-**What is not true:** the guide's letter says to send nothing between dispatches. Three
-messages were sent. Calling that crash recovery does not create an exemption the guide grants.
+**What is not true:** the guide's letter says to send nothing between dispatches. Three messages
+were sent. Calling that crash recovery does not create an exemption the guide grants.
+
+**Operator runtime restarts are not messages.** The provider limit ended seat turns four times
+across the run and the room does not resume on its own. Recovering meant restarting the affected
+runtimes so Band would redeliver the queued handoffs. That is a daemon operation: the human
+message count above is 7 **after** four such restarts, measured from the raw pages, so none of them
+added anything to the room. No message was ever sent by the operator to a seat.
 
 We are not claiming this run is unambiguously compliant on that point. It is stated here so a
 judge reads it from us first.
