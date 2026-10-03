@@ -246,26 +246,32 @@ From `band usage rooms`, which reports catalog **estimates at list prices, not p
 billing**:
 
 ```text
-room 5dd42746 (submitted run)   53 sessions   469,083,054 tokens   $189.42
-   @jury   $52.69   (27.8%)
-   @trace  $50.31   (26.6%)
-   @forge  $35.95   (19.0%)
-   @route  $26.53   (14.0%)
-   @loom   $23.94   (12.6%)
+room 5dd42746 (submitted run)   55 sessions   487,800,071 tokens   $196.92
+   @jury   $59.37   (30.1%)
+   @trace  $50.31   (25.5%)
+   @forge  $35.95   (18.3%)
+   @route  $27.35   (13.9%)
+   @loom   $23.94   (12.2%)
 room 7e2f1aa9 (earlier Codex attempt)  $47.08
 room a4b60871 (toy rehearsal)         $15.26
 ```
 
+Measured 2026-10-03 22:48 UTC, after the coordinator's final report, so these are final rather
+than interim. `band usage agents` attributes the same work slightly differently ($70.53 jury,
+$55.24 trace, $37.74 forge, $30.91 route, $26.47 loom) because it attributes by live binding
+before the session ledger; the room-scoped figures above are the ones published because they
+cover exactly the submitted run.
+
 The per-seat split matters more than the total: no seat carried the run, which is what the
 rubric actually reads.
 
-Elapsed, first Stage-1 dispatch to the last room message: **≈69 hours wall clock**
-(2026-09-30T23:05:20Z → 2026-10-03T20:00:27Z). That figure **includes repeated provider quota
+Elapsed, first Stage-1 dispatch to the last room message: **68.9 hours wall clock**
+(2026-09-30T23:05:20Z to 2026-10-03T20:00:27Z). That figure **includes repeated provider quota
 outages (30 usage-limit error events in the room) and long idle gaps, so it is not active model
 time** — active model time is not measured and is not claimed.
 
 For scale: the full four-stage chain reached, with one rejection/repair cycle, one cross-attack that found a
-third defect and four further cross-attacks that found nothing, cost about **$189 of model spend** (estimate at list prices).
+third defect and four further cross-attacks that found nothing, cost about **$197 of model spend** (estimate at list prices).
 
 ## 10. Known limitations
 

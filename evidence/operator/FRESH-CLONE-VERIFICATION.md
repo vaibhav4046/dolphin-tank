@@ -98,15 +98,15 @@ Details and the five defects this probe found in itself: `SPEC-PROBE.md`.
 
 ## 5. Independence of the review, measured
 
-- All 53+ commits share **one** Git identity, so authorship cannot show distribution. The bridge is
-  `PROVENANCE.md`, which maps each commit to the room message that announced it.
-- Model spend for the submitted room, `band usage rooms`: **$169.63 estimated** at list prices
-  (an equivalent, not a bill), 44 sessions, 412,512,626 tokens. Per seat: trace $48.12 (28.4%),
-  jury $42.33 (25.0%), forge $31.09 (18.3%), route $24.54 (14.5%), loom $23.55 (13.9%). No seat
-  carried the run.
-- Elapsed wall clock, first Stage-1 dispatch 2026-09-30T23:05:20Z to 2026-10-03T08:47Z is
-  **≈57.7 hours**, and that includes three provider usage-limit outages. Active model time is not
-  measured and is not claimed.
+- All commits share **one** Git identity, so authorship cannot show distribution. The bridge is
+  \PROVENANCE.md\, which maps each commit to the room message that announced it.
+- Model spend for the submitted room, \and usage rooms\, measured 2026-10-03 22:48 UTC after the
+  coordinator's final report: **\.92 estimated** at list prices (an equivalent, not a bill),
+  55 sessions, 487,800,071 tokens. Per seat: jury \.37 (30.1%), trace \.31 (25.5%),
+  forge \.95 (18.3%), route \.35 (13.9%), loom \.94 (12.2%). No seat carried the run.
+- Elapsed wall clock, first Stage-1 dispatch 2026-09-30T23:05:20Z to the coordinator's final
+  report, is **68.9 hours**, and that includes four provider usage-limit outages and long idle
+  gaps. Active model time is not measured and is not claimed.
 
 ## 6. What this does not prove
 
