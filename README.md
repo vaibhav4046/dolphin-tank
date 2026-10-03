@@ -8,10 +8,9 @@ application is **Pocketful** — Dolphin Tank is the factory that builds it.
 
 **Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
 **Run:** room `5dd42746-f387-4763-afe0-f96d8f504f71`, five seats, Claude Code / `claude-sonnet-5-5`
-**Status:** 2026-10-03 08:50 UTC. **Stages 1, 2 and 3 independently accepted.** Stage 4 built by
-all three implementers, cross-attacked clean by the other two, and two of its three acceptance
-items accepted; the final UI/Docker/regression item is in review. **Not submission ready** — the
-room export is still missing.
+**Status:** 2026-10-03 20:00 UTC. **All four stages independently accepted**, the last at
+`1dd5560` (stage 4 source unchanged since). Stage 4 was cross-attacked clean by the two seats that
+did not write each part. **Not submission ready** until the room export (`room.json`) is added.
 
 ---
 
@@ -25,7 +24,7 @@ the previous accepted folder copied forward and widened — never a final answer
 | [`stage-1/`](stage-1/) | accounts, payments, requests, splits, activity feed, idempotency, reset, export/import, atomic settlement | 147/147 | **ACCEPT** — `0024598`, [`verdict`](evidence/stage-1/jury/verdict.md) |
 | [`stage-2/`](stage-2/) | payment authorizations and captures, hold/partial/extended capture, void, real-clock expiry, `/me` held-aware funds, fixture seeding, stage-1 upgrade, browser UI | 147 + 35 | **ACCEPT** — `f33035a`, [`verdict`](evidence/stage-2/jury/verdict.md) |
 | [`stage-3/`](stage-3/) | history: statements, snapshots, corrections with revisions, the hold timeline over time, import of earlier exports | 147 + 35 + 6 | **ACCEPT** — `5e6f83f`, [`verdict`](evidence/stage-3/jury/r3-verdict.md), evidence `829e053` |
-| [`stage-4/`](stage-4/) | refunds and corrected history, batch corrections, the browser refund control | 147 + 35 + 6 + 5 | refunds **ACCEPT** `f2698c2`; batch corrections **ACCEPT** `1dd5560` (697 own checks, 11/11 mutations); UI/Docker item in review |
+| [`stage-4/`](stage-4/) | refunds and corrected history, batch corrections, the browser refund control | 147 + 35 + 6 + 5 | refunds **ACCEPT** `f2698c2`; batch corrections **ACCEPT** `1dd5560` (697 own checks, 11/11 mutations); UI/Docker/regression item **ACCEPT** (`86bf3a7`) |
 
 Fresh-clone verification of revision `f2d512b`, run with the official harness in **isolated**
 mode (internal network, outbound blocked):
@@ -110,10 +109,10 @@ python -m harness check <path-to-clone> --track pocketful
 
 ## Honest limitations
 
-Stages 1, 2 and 3 are independently accepted. Stage 4's refunds and batch-correction items are
-accepted; its browser/Docker/stage-regression item was still in review when the model provider's
-usage limit cut the acceptor's turn, so treat stage 4 as **not yet fully accepted**. The provider
-usage limit ended seat turns four times across the run; recovery meant restarting the affected
+All four stages are independently accepted; stage 4's three items (refunds `f2698c2`, batch
+corrections `1dd5560`, browser/Docker/regression `86bf3a7`) were accepted after the provider
+usage limit had interrupted the acceptor once. The provider
+usage limit ended seat turns several times across the run; recovery meant restarting the affected
 runtimes so Band would redeliver the queued handoffs, which is a daemon operation and added
 **nothing** to the room. Disclosed in [`FACTORY.md`](FACTORY.md) §8, together with the measured
 fact that of 7,004 room messages exactly **seven are human** — four legitimate stage dispatches

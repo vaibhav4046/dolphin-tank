@@ -269,12 +269,12 @@ that found nothing, cost about **$170 of model spend**.
 
 ## 10. Known limitations
 
-1. **Stage 4 is not fully accepted.** Its refunds and batch-correction items are accepted — the
-   latter on 697 independent checks plus 11 deliberate mutations, all 11 caught, with real exports
-   built from the accepted stage-1/2/3 commits and imported. The browser/Docker/stage-regression
-   item was still in review when the provider limit ended the acceptor's turn.
+1. **Stage 4 is fully accepted** (all three items, source `1dd5560`). Batch corrections were accepted
+   on 697 independent checks plus 11 deliberate mutations, all 11 caught, with real exports built
+   from the accepted stage-1/2/3 commits and imported; the browser/Docker/regression item was
+   accepted afterwards (`86bf3a7`) once the acceptor's turn was re-delivered.
 2. **The provider usage limit is a real operational hazard.** It ended four seat turns mid-task.
-   It is the reason for every resume in §8, and the reason a stage item is still open.
+   It is the reason for every resume in §8.
 3. **`go test -race` cannot run on the operator host** (needs cgo; no gcc). It was run inside a
    container by the reviewer — `go test -count=1 -race ./...` ok in 363 s at stage 3.
 4. **All commits share one Git identity**, so authorship alone cannot show distribution. The
