@@ -10,7 +10,8 @@ application is **Pocketful** — Dolphin Tank is the factory that builds it.
 **Run:** room `5dd42746-f387-4763-afe0-f96d8f504f71`, five seats, Claude Code / `claude-sonnet-5-5`
 **Status:** 2026-10-03 20:00 UTC. **All four stages independently accepted**, the last at
 `1dd5560` (stage 4 source unchanged since). Stage 4 was cross-attacked clean by the two seats that
-did not write each part. **Not submission ready** until the room export (`room.json`) is added.
+did not write each part. `room.json` is the unedited full-session download (7,216 messages, 2026-09-30T23:05Z to
+2026-10-03T20:00Z); `harness check` passes.
 
 ---
 
@@ -120,7 +121,9 @@ and three provider-quota resumes — and that **no seat ever asked the operator 
 every seat→operator message is a status report, not a question. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
 it inside a container. All commits share one Git identity, so distribution is evidenced by the
 room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than by authorship.
-`room.json` has not been downloaded yet, which is why `harness check` still reports one problem.
+`room.json` was downloaded from the Band console as **Download full session** and committed
+byte-for-byte unchanged (SHA-256 `e9b69df9...62f97e`). It was read for credential shapes before
+commit; none were found.
 
 Two accessibility findings are known and disclosed rather than patched, because the code is
 band-owned: the wallet route `/` has no `h1` (it renders four `h2` sections; every other route

@@ -279,13 +279,14 @@ that found nothing, cost about **$170 of model spend**.
    container by the reviewer — `go test -count=1 -race ./...` ok in 363 s at stage 3.
 4. **All commits share one Git identity**, so authorship alone cannot show distribution. The
    bridge is `evidence/operator/PROVENANCE.md`, which maps each commit to the room message that
-   announced it. `room.json` is the authoritative record and is still missing.
+   announced it. `room.json` is the authoritative record (full-session download, unedited).
 5. **Shipped-check coverage is thin at the top end** — stage 3 ships 6 checks (9% of its graded
    suite) and stage 4 ships 5 (16%). A stage judged mostly on withheld tests is exactly why this
    document leans on independent checks rather than green runs.
 6. **Elapsed active time and true provider billing are unknown** and are not estimated.
-7. **`room.json` is absent**, so `harness check` still exits 1 and the room log is not yet
-   inspectable by a judge.
+7. **`room.json` was downloaded after the work was complete**, so it holds the whole run but
+   not any later activity; it is the unedited Band export (7,216 messages) and `harness check`
+   passes with it present.
 8. **Two known accessibility findings, disclosed rather than quietly fixed.** An independent
    product-quality pass (`evidence/operator/PRODUCT-QUALITY.md`, 134 checks) found that the wallet
    route `/` renders four `h2` sections and **no `h1`**, while all five other routes have a
