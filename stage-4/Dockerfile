@@ -1,3 +1,4 @@
+# Pocketful stage 4. Build: docker build -t pocketful-s4 .   Run: docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s4
 FROM golang:1.24-alpine AS build
 WORKDIR /src
 COPY go.mod ./

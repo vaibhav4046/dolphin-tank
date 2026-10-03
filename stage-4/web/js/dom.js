@@ -30,6 +30,7 @@ const GLYPHS = {
   slash: '<circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M2.8 9.2l6.4-6.4" stroke="currentColor" stroke-width="1.5"/>',
   dash: '<path d="M2 6h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
   globe: '<circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 6h9M6 1.5c-2 2.2-2 6.8 0 9M6 1.5c2 2.2 2 6.8 0 9" fill="none" stroke="currentColor" stroke-width="1.1"/>',
+  return: '<path d="M4.5 2.2L2 4.8l2.5 2.6M2 4.8h5.3a2.7 2.7 0 010 5.4H5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>',
   lock: '<rect x="2.2" y="5.2" width="7.6" height="5.2" rx="1" fill="currentColor"/><path d="M4 5.2V4a2 2 0 014 0v1.2" fill="none" stroke="currentColor" stroke-width="1.4"/>',
 };
 

@@ -77,6 +77,11 @@
 .tech { font-size: var(--text-xs); color: var(--color-text-2); }
 .row-actions { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3); padding-top: var(--space-2); }
 .row-actions .field { flex: 1 1 140px; max-width: 220px; }
+.refund { display: grid; gap: var(--space-3); justify-items: start; min-width: 0; padding-top: var(--space-3); border-top: 1px solid var(--color-line); }
+.refund-panel { display: grid; gap: var(--space-3); width: 100%; min-width: 0; padding: var(--space-3); border-radius: var(--radius-control); background: var(--color-raised); box-shadow: var(--rim-light); }
+.refund-panel .row-actions { padding-top: 0; }
+.refund .stack { width: 100%; }
+.refund .stack:empty { display: none; }
 .empty { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-6) var(--space-4); border: 1px dashed var(--color-line); border-radius: var(--radius-card); color: var(--color-text-2); }
 .empty strong { color: var(--color-text); }
 .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2); }

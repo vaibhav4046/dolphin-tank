@@ -146,3 +146,31 @@ func TestGarbageSweepNo5xx(t *testing.T) {
 	}
 	_ = http.StatusOK
 }
+
+var heavyWeight = regexp.MustCompile(`(?i)font-weight:\s*(?:[6-9]00|bold|bolder)\b|font:\s*(?:[^;]*\s)?(?:[6-9]00|bold|bolder)\b`)
+
+// The visual brief caps every weight at 500; the stylesheets must never ask for more.
+func TestNoFontWeightAbove500(t *testing.T) {
+	_ = fs.WalkDir(webFS, "web", func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(p, ".css") {
+			return err
+		}
+		b, _ := fs.ReadFile(webFS, p)
+		if m := heavyWeight.FindString(string(b)); m != "" {
+			t.Errorf("%s asks for a weight above 500: %q", p, m)
+		}
+		return nil
+	})
+}
+
+func TestRefundAssetsServed(t *testing.T) {
+	h, _ := newTestServer(t)
+	for _, name := range []string{"js/refund.js", "js/refund-math.js"} {
+		if rec := do(h, "GET", assetPrefix+name, "", nil); rec.Code != 200 || rec.Body.Len() == 0 {
+			t.Errorf("GET %s: %d", name, rec.Code)
+		}
+	}
+	if b, _ := fs.ReadFile(webFS, "web/js/activity.js"); !strings.Contains(string(b), "Refund of ") {
+		t.Error("the feed must label refund payments 'Refund of <payment>'")
+	}
+}

@@ -1,0 +1,25 @@
+ ---> Running in abe091fc6b54
+ ---> Removed intermediate container abe091fc6b54
+ ---> 0d075dfd5936
+Step 7/12 : FROM scratch
+ ---> 
+Step 8/12 : COPY --from=build /out/pocketful /pocketful
+ ---> d20fbc90a51e
+Step 9/12 : USER 65532:65532
+ ---> Running in e926815955c8
+ ---> Removed intermediate container e926815955c8
+ ---> bb1e64d17a55
+Step 10/12 : ENV PORT=8080
+ ---> Running in b48c0b3072f2
+ ---> Removed intermediate container b48c0b3072f2
+ ---> 87b942f75ff0
+Step 11/12 : EXPOSE 8080
+ ---> Running in afc33cae52a2
+ ---> Removed intermediate container afc33cae52a2
+ ---> 46bfbfdbd29d
+Step 12/12 : ENTRYPOINT ["/pocketful"]
+ ---> Running in 0eebdf5354f1
+ ---> Removed intermediate container 0eebdf5354f1
+ ---> 102d02d9b8fc
+Successfully built 102d02d9b8fc
+Successfully tagged pocketful-s4:latest

@@ -1,0 +1,120 @@
+PASS [375] receiver sees Refund on p_1 and p_2 but not on p_3
+PASS [375] panel starts closed
+PASS no horizontal scroll: 375 idle feed
+PASS [375] opening shows a labelled amount defaulting to the remainder
+PASS no horizontal scroll: 375 panel open
+PASS [375] invalid amounts are refused in the page without any request
+PASS [375] typed text is preserved after a validation refusal
+PASS [375] double click sends exactly one request
+PASS [375] available funds fall by the refund
+PASS [375] refund row shows 'Refund of p_1' and the success notice stays
+PASS [375] refund payment itself offers no refund
+PASS [375] remainder updates to 6.00 from what the page knows
+PASS no horizontal scroll: 375 after success
+PASS [375] sum of balances preserved
+PASS [375] over-remainder is refused with a reason and the input kept
+PASS no horizontal scroll: 375 refused
+PASS [375] setup: correction of p_1 to 5.00
+PASS [375] stale limit refused, then corrected amount learned (limit 1.00), typed 6.00 kept
+PASS [375] exact remainder accepted; row then says nothing is left
+PASS [375] lost response reads as unknown, not refused
+PASS [375] input kept after the unknown outcome
+PASS no horizontal scroll: 375 uncertain
+PASS [375] retry re-sends the same key and body
+PASS [375] the lost-response refund exists once (200 replay, not a second refund)
+PASS [375] 403 forbidden shows its reason (mocked envelope)
+PASS [375] 404 not_found shows its reason (mocked envelope)
+PASS [375] 422 invalid_refund_target shows its reason (mocked envelope)
+PASS [375] no external requests and no script errors (browser logs for the deliberate 4xx/aborted responses ignored)
+PASS [375] insufficient available funds is a refusal with the reason, nothing moved
+PASS no horizontal scroll: 375 insufficient
+PASS [768] receiver sees Refund on p_1 and p_2 but not on p_3
+PASS [768] panel starts closed
+PASS no horizontal scroll: 768 idle feed
+PASS [768] opening shows a labelled amount defaulting to the remainder
+PASS no horizontal scroll: 768 panel open
+PASS [768] invalid amounts are refused in the page without any request
+PASS [768] typed text is preserved after a validation refusal
+PASS [768] double click sends exactly one request
+PASS [768] available funds fall by the refund
+PASS [768] refund row shows 'Refund of p_1' and the success notice stays
+PASS [768] refund payment itself offers no refund
+PASS [768] remainder updates to 6.00 from what the page knows
+PASS no horizontal scroll: 768 after success
+PASS [768] sum of balances preserved
+PASS [768] over-remainder is refused with a reason and the input kept
+PASS no horizontal scroll: 768 refused
+PASS [768] setup: correction of p_1 to 5.00
+PASS [768] stale limit refused, then corrected amount learned (limit 1.00), typed 6.00 kept
+PASS [768] exact remainder accepted; row then says nothing is left
+PASS [768] lost response reads as unknown, not refused
+PASS [768] input kept after the unknown outcome
+PASS no horizontal scroll: 768 uncertain
+PASS [768] retry re-sends the same key and body
+PASS [768] the lost-response refund exists once (200 replay, not a second refund)
+PASS [768] 403 forbidden shows its reason (mocked envelope)
+PASS [768] 404 not_found shows its reason (mocked envelope)
+PASS [768] 422 invalid_refund_target shows its reason (mocked envelope)
+PASS [768] no external requests and no script errors (browser logs for the deliberate 4xx/aborted responses ignored)
+PASS [768] insufficient available funds is a refusal with the reason, nothing moved
+PASS no horizontal scroll: 768 insufficient
+PASS [1280] receiver sees Refund on p_1 and p_2 but not on p_3
+PASS [1280] panel starts closed
+PASS no horizontal scroll: 1280 idle feed
+PASS [1280] opening shows a labelled amount defaulting to the remainder
+PASS no horizontal scroll: 1280 panel open
+PASS [1280] invalid amounts are refused in the page without any request
+PASS [1280] typed text is preserved after a validation refusal
+PASS [1280] double click sends exactly one request
+PASS [1280] available funds fall by the refund
+PASS [1280] refund row shows 'Refund of p_1' and the success notice stays
+PASS [1280] refund payment itself offers no refund
+PASS [1280] remainder updates to 6.00 from what the page knows
+PASS no horizontal scroll: 1280 after success
+PASS [1280] sum of balances preserved
+PASS [1280] over-remainder is refused with a reason and the input kept
+PASS no horizontal scroll: 1280 refused
+PASS [1280] setup: correction of p_1 to 5.00
+PASS [1280] stale limit refused, then corrected amount learned (limit 1.00), typed 6.00 kept
+PASS [1280] exact remainder accepted; row then says nothing is left
+PASS [1280] lost response reads as unknown, not refused
+PASS [1280] input kept after the unknown outcome
+PASS no horizontal scroll: 1280 uncertain
+PASS [1280] retry re-sends the same key and body
+PASS [1280] the lost-response refund exists once (200 replay, not a second refund)
+PASS [1280] 403 forbidden shows its reason (mocked envelope)
+PASS [1280] 404 not_found shows its reason (mocked envelope)
+PASS [1280] 422 invalid_refund_target shows its reason (mocked envelope)
+PASS [1280] no external requests and no script errors (browser logs for the deliberate 4xx/aborted responses ignored)
+PASS [1280] insufficient available funds is a refusal with the reason, nothing moved
+PASS no horizontal scroll: 1280 insufficient
+PASS [375] no font weight above 500
+PASS [375] contrast >= 4.5 on every text (worst 6.78: Skip to content)
+PASS [375] every visible input has a label
+PASS [375] touch targets >= 44px high
+PASS [375] DM Sans and Inter loaded from the page's own origin
+PASS [375] keyboard reaches the Refund toggle and shows a focus ring
+PASS [375] Enter on the toggle opens the panel (aria-expanded true)
+PASS [768] no font weight above 500
+PASS [768] contrast >= 4.5 on every text (worst 6.78: Skip to content)
+PASS [768] every visible input has a label
+PASS [768] touch targets >= 44px high
+PASS [768] DM Sans and Inter loaded from the page's own origin
+PASS [768] keyboard reaches the Refund toggle and shows a focus ring
+PASS [768] Enter on the toggle opens the panel (aria-expanded true)
+PASS [1280] no font weight above 500
+PASS [1280] contrast >= 4.5 on every text (worst 6.78: Skip to content)
+PASS [1280] every visible input has a label
+PASS [1280] touch targets >= 44px high
+PASS [1280] DM Sans and Inter loaded from the page's own origin
+PASS [1280] keyboard reaches the Refund toggle and shows a focus ring
+PASS [1280] Enter on the toggle opens the panel (aria-expanded true)
+PASS no horizontal scroll: 320 px with panel and refusal
+PASS no horizontal scroll: 200% zoom of 1280 with panel and refusal
+PASS reduced motion: no transitions or animations on refund controls
+PASS sender (ada) is offered no Refund on p_1/p_2/p_3
+PASS refund after logout/login: the earlier 3.00 refund is counted, remainder 7.00
+PASS refund after logout/login succeeds with a fresh key
+PASS no console errors
+
+ALL PASSED

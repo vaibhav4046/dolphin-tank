@@ -1,0 +1,30 @@
+PASS [375] stage 3: lost payment reads as unconfirmed
+PASS [375] stage 3: the server did apply it once
+PASS [375] stage-3 export taken
+PASS [375] stage-4 imports the stage-3 export
+PASS [375] sessions (tokens) survive the import
+PASS [375] retry after the upgrade re-sends the same key and body
+PASS [375] the lost payment is applied exactly once (replay, not a second payment)
+PASS [375] the page stayed signed in on the upgraded server
+PASS no horizontal scroll: 375 after upgrade
+PASS [375] the imported pending request is payable in the browser
+PASS no horizontal scroll: 375 requests after upgrade
+PASS [375] no page errors or external requests
+PASS [375] a stage-3 payment is refundable on the upgraded server; old payment reads refund_of null
+PASS no horizontal scroll: 375 refund of an imported payment
+PASS [1280] stage 3: lost payment reads as unconfirmed
+PASS [1280] stage 3: the server did apply it once
+PASS [1280] stage-3 export taken
+PASS [1280] stage-4 imports the stage-3 export
+PASS [1280] sessions (tokens) survive the import
+PASS [1280] retry after the upgrade re-sends the same key and body
+PASS [1280] the lost payment is applied exactly once (replay, not a second payment)
+PASS [1280] the page stayed signed in on the upgraded server
+PASS no horizontal scroll: 1280 after upgrade
+PASS [1280] the imported pending request is payable in the browser
+PASS no horizontal scroll: 1280 requests after upgrade
+PASS [1280] no page errors or external requests
+PASS [1280] a stage-3 payment is refundable on the upgraded server; old payment reads refund_of null
+PASS no horizontal scroll: 1280 refund of an imported payment
+
+ALL PASSED

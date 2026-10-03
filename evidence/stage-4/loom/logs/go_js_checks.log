@@ -1,0 +1,12 @@
+$ gofmt -l .
+(exit 0)
+$ go vet ./...
+(exit 0)
+$ go test -count=1 ./...
+ok  	pocketful	48.769s
+$ node --test jstest
+ℹ tests 21
+ℹ pass 21
+ℹ fail 0
+$ git rev-parse HEAD
+f2698c29fabf99fb648243cc80bb7c3a472c7481

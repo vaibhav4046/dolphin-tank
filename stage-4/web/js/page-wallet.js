@@ -2,6 +2,7 @@ import * as api from "./api.js";
 import { renderActivity } from "./activity.js";
 import { h } from "./dom.js";
 import { createRefresher } from "./refresh.js";
+import { createRefundControls } from "./refund.js";
 import { createRequestForm } from "./requestForm.js";
 import { createTransferForm } from "./transferForm.js";
 import { createWalletStrip } from "./wallet.js";
@@ -14,6 +15,7 @@ export function mountWalletPage(shell) {
   let layout = [];
   const feedHost = h("div", { class: "stack" });
   const strip = createWalletStrip({ onRefresh: () => refresh() });
+  const refunds = createRefundControls({ getMe: () => me, onDone: () => refresh() });
 
   const refresh = createRefresher(
     { me: "/me", activity: `/activity?limit=${PAGE_SIZE}` },
@@ -22,7 +24,7 @@ export function mountWalletPage(shell) {
       if (!strip.el.isConnected) shell.main.replaceChildren(...layout);
       shell.showSignedIn(me);
       strip.update(me);
-      renderActivity(feedHost, activity.payments, activity.has_more, me, loadOlder);
+      renderActivity(feedHost, activity.payments, activity.has_more, me, loadOlder, refunds);
       shell.setBusy(false);
     },
     () => (me ? strip.showRefreshFailed() : showLoadFailure()),

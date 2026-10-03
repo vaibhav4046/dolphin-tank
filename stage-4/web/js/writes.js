@@ -36,7 +36,7 @@ export async function busy(button, fn) {
 //   onSuccess(json)    runs after the notices are cleared; refresh goes here (not awaited, so the button frees up
 //                      even if a refresh read is slow)
 //   onRefused(res)     runs after the refusal is shown; refresh goes here
-export async function runWrite({ method = "POST", path, body, scope, fingerprint, what, feedback, onSuccess, onRefused, onUncertain }) {
+export async function runWrite({ method = "POST", path, body, scope, fingerprint, what, feedback, onSuccess, onRefused, onUncertain, refusal = refusalText }) {
   feedback.clear();
   const key = scope ? tracker.attemptFor(scope, JSON.stringify(fingerprint)).key : undefined;
   const res = await api.request(method, path, { body, key });
@@ -45,7 +45,7 @@ export async function runWrite({ method = "POST", path, body, scope, fingerprint
     feedback.clear();
     onSuccess?.(res.json);
   } else if (kind === "refused") {
-    feedback.showError(refusalText(res.json));
+    feedback.showError(refusal(res.json));
     onRefused?.(res);
   } else if (kind === "uncertain") {
     feedback.showUncertain(uncertainText(what));

@@ -37,3 +37,14 @@ export function amountText(reason, minorUnits) {
 
 export const uncertainText = (what) =>
   `We could not confirm this ${what}. Nothing is lost: retry sends the same ${what} once.`;
+
+const REFUND_REFUSAL = {
+  insufficient_funds: "Not enough available funds to refund this. Money on hold cannot be spent.",
+  refund_exceeds_payment: "That is more than is left to refund on this payment.",
+  invalid_refund_target: "A refund cannot itself be refunded.",
+  forbidden: "Only the person who received a payment can refund it.",
+  not_found: "That payment could not be found.",
+  validation_failed: "Enter an amount greater than zero.",
+};
+
+export const refundRefusalText = (json) => REFUND_REFUSAL[json?.error?.code] || refusalText(json);
