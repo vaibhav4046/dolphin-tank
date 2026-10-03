@@ -16,21 +16,35 @@ Every commit here shares one operator Git identity (`vaibhav4046 <115102797+vaib
 
 ## Coverage
 
-- commits: **53**
-- with a room announcement: **50** (94%)
-- announced in a self-identifying report: **31**
-- with no room announcement: **3** — `f190358, 6e35abc, 2ad9306`
+- commits: **80**
+- with a room announcement: **64** (80%)
+- announced in a self-identifying report: **34**
+- with no room announcement: **16** — `f190358, 6e35abc, 2ad9306, c830f82, 2e76ca0, 66b45bb, 1a3d864, 8654d93, c6af733, 7b2cb44, f2d512b, 4c20e6c, 85a3ee6, fd8bdc2, 1296181, ec466fb`
 
-## Commits announced per seat
+## Origin of every commit
+
+| Origin | Commits | Meaning |
+|---|---:|---|
+| band, announced in the room | 64 | produced by a seat and traceable to a room message |
+| band, no room announcement | 5 | band commits not named in any agent text message |
+| operator (ZEUS) | 11 | written by the OpenCode orchestration layer, not a seat |
+
+The operator rows are listed separately on purpose. This factory's provenance claim is that the
+*stage code* is the band's work; the operator wrote documentation and derived evidence, and
+saying so plainly is stronger than letting those commits blend in. No operator commit touches
+anything under `stage-N/`.
+
+## Band commits announced per seat
 
 | Announcing seat | Commits |
 |---|---:|
-| Route | 15 |
-| Forge | 15 |
-| Trace | 9 |
-| Loom | 7 |
-| Jury | 4 |
-| (no room announcement) | 3 |
+| Forge | 19 |
+| Route | 17 |
+| Trace | 14 |
+| OPERATOR (ZEUS) | 11 |
+| Loom | 9 |
+| (no room announcement) | 5 |
+| Jury | 5 |
 
 ## Files touched per stage folder, by announcing seat
 
@@ -39,6 +53,7 @@ Every commit here shares one operator Git identity (`vaibhav4046 <115102797+vaib
 | `stage-1/` | 2 | 11 | 14 | 0 | 10 |
 | `stage-2/` | 0 | 57 | 0 | 38 | 13 |
 | `stage-3/` | 0 | 45 | 11 | 87 | 16 |
+| `stage-4/` | 0 | 6 | 15 | 116 | 12 |
 
 ## Full index
 
@@ -53,7 +68,7 @@ Every commit here shares one operator Git identity (`vaibhav4046 <115102797+vaib
 | 7 | `36c4914` | Trace | 2026-09-30T23:24:20 | yes | 4 | feat(stage-1): idempotency, settlements, reset/fixture, export/import (trace) |
 | 8 | `b5d424f` | Forge | 2026-09-30T23:25:20 | yes | 3 | test(stage-1): forge validators, auth, ledger, split, races (forge) |
 | 9 | `6e35abc` | — | — |  | 0 | refactor(stage-1): drop unused HashPasswords, fixture loader hashes in parallel  |
-| 10 | `0024598` | Forge | 2026-09-30T23:25:20 | yes | 11 | fix(stage-1): pbkdf2 iterations 60000 to meet ~10 ms/hash target (forge) |
+| 10 | `0024598` | Forge | 2026-09-30T23:25:20 | yes | 15 | fix(stage-1): pbkdf2 iterations 60000 to meet ~10 ms/hash target (forge) |
 | 11 | `2c9a5d4` | Jury | 2026-10-01T05:27:44 |  | 1 | evidence(stage-1): jury acceptance - ACCEPT 0024598 (ledger, gaps, checks, logs, |
 | 12 | `6619c91` | Jury | 2026-10-01T05:27:44 |  | 1 | evidence(stage-1): jury - drop stray pycache |
 | 13 | `cb2af8b` | Route | 2026-10-01T05:29:10 |  | 2 | docs(stage-1): route summary and rejection history, stage 1 accepted |
@@ -69,7 +84,7 @@ Every commit here shares one operator Git identity (`vaibhav4046 <115102797+vaib
 | 23 | `cc952b8` | Route | 2026-10-01T15:57:05 |  | 3 | evidence: preserve fresh clone isolated stage 1 and 2 results |
 | 24 | `17aa87e` | Trace | 2026-10-01T15:59:16 |  | 6 | fix(stage-2): explicit null authorization_ttl_seconds is supplied and rejected ( |
 | 25 | `bcf386b` | Loom | 2026-10-01T16:06:51 | yes | 2 | evidence(stage-2): loom browser run, clean-clone image, startup, offline serving |
-| 26 | `f33035a` | Route | 2026-10-01T16:09:30 |  | 9 | chore: ignore go build executables and caches |
+| 26 | `f33035a` | Route | 2026-10-01T16:09:30 |  | 13 | chore: ignore go build executables and caches |
 | 27 | `9111851` | Jury | 2026-10-01T21:56:27 |  | 2 | evidence(stage-2): jury acceptance of f33035a - ACCEPT (ledger, gaps, own API/br |
 | 28 | `163d14f` | Route | 2026-10-01T21:58:08 |  | 1 | docs(stage-2): route summary and history, jury harness evidence relocated, stage |
 | 29 | `3240b1c` | Route | 2026-10-02T01:45:04 |  | 1 | chore(stage-3): copy accepted stage-2 as baseline |
@@ -85,18 +100,45 @@ Every commit here shares one operator Git identity (`vaibhav4046 <115102797+vaib
 | 39 | `1f28f13` | Route | 2026-10-02T06:48:24 |  | 2 | docs(stage-3): record hold-time decision for historical views vs overdraft check |
 | 40 | `27c3813` | Trace | 2026-10-02T06:59:31 | yes | 3 | test(stage-3): property oracle, concurrency storm and attack tests for statement |
 | 41 | `7e25c9c` | Trace | 2026-10-02T06:59:31 | yes | 3 | test(stage-3): import mutation sweep, created_exact import rules, differential o |
-| 42 | `3c7c411` | Trace | 2026-10-02T06:59:31 | yes | 27 | test(stage-3): Reset mutation sweep, shared sweep helper, whole-second hold repr |
+| 42 | `3c7c411` | Trace | 2026-10-02T06:59:31 | yes | 30 | test(stage-3): Reset mutation sweep, shared sweep helper, whole-second hold repr |
 | 43 | `31b2361` | Loom | 2026-10-02T07:06:44 |  | 5 | test(stage-3): loom browser, upgrade and clean-container evidence against 3c7c41 |
 | 44 | `54cbd0b` | Jury | 2026-10-02T07:55:01 | yes | 4 | evidence(stage-3): jury REJECT of 3c7c411 (ledger, gaps, own checks, repros F1 s |
 | 45 | `ce30bcd` | Forge | 2026-10-02T12:08:58 | yes | 1 | docs(stage-3): record jury REJECT of 3c7c411 (F1 expired-future clock ratchet, F |
-| 46 | `11e76f9` | Forge | 2026-10-02T12:08:58 | yes | 10 | fix(stage-3): one clock for holds and money - authorization created_at/expires_a |
+| 46 | `11e76f9` | Forge | 2026-10-02T12:08:58 | yes | 11 | fix(stage-3): one clock for holds and money - authorization created_at/expires_a |
 | 47 | `eac8c61` | Trace | 2026-10-02T12:22:32 | yes | 1 | docs(stage-3): revoke D-HOLD-TIME, record one-clock decision after F2 |
-| 48 | `ac96360` | Trace | 2026-10-02T12:22:32 | yes | 11 | fix(stage-3): seeded and imported values never move the clock; seeded holds defa |
+| 48 | `ac96360` | Trace | 2026-10-02T12:22:32 | yes | 15 | fix(stage-3): seeded and imported values never move the clock; seeded holds defa |
 | 49 | `cbfc128` | Route | 2026-10-02T16:47:09 |  | 2 | docs(stage-3): record repairs for jury REJECT of 3c7c411 (F1 ac96360, F2 11e76f9 |
-| 50 | `b2d9bf3` | Forge | 2026-10-02T16:53:54 | yes | 5 | fix(stage-3): corrections record strictly after the payment's previous revision  |
+| 50 | `b2d9bf3` | Forge | 2026-10-02T16:53:54 | yes | 7 | fix(stage-3): corrections record strictly after the payment's previous revision  |
 | 51 | `71d08d4` | Route | 2026-10-02T16:54:55 | yes | 1 | docs(stage-3): record declined Import future-dated payment hardening (forge E3) |
 | 52 | `849b017` | Route | 2026-10-02T17:43:58 |  | 5 | evidence(stage-3): trace cross-attack of F2 (11e76f9) at ac96360 - jury scripts, |
-| 53 | `5e6f83f` | Forge | 2026-10-02T17:49:55 | yes | 4 | fix(stage-3): import places a hold at created_exact when it differs from created |
+| 53 | `5e6f83f` | Forge | 2026-10-02T17:49:55 | yes | 17 | fix(stage-3): import places a hold at created_exact when it differs from created |
+| 54 | `c830f82` | — | — |  | 0 | evidence(operator): provenance index mapping every commit to the room message th |
+| 55 | `2e76ca0` | — | — |  | 0 | docs: rewrite FACTORY.md against verified evidence |
+| 56 | `66b45bb` | — | — |  | 0 | docs: rewrite README.md against verified evidence |
+| 57 | `1a3d864` | — | — |  | 0 | docs(history): record cross-attack finding L-F2-1 and the declined D-IMPORT-FUTU |
+| 58 | `8654d93` | — | — |  | 0 | evidence(operator): fresh-clone isolated verification and literal RUN.md executi |
+| 59 | `c6af733` | — | — |  | 0 | evidence(operator): independent spec-literal conformance probe for stage 3 |
+| 60 | `6359c0e` | Trace | 2026-10-02T21:56:58 |  | 3 | evidence(stage-3): trace attack of R-L1 fix (5e6f83f placeAtCreatedExact) - lega |
+| 61 | `829e053` | Jury | 2026-10-02T22:47:16 |  | 1 | evidence(stage-3): jury ACCEPT of 5e6f83f (R3 ledger, verdict, one-clock/seeded/ |
+| 62 | `7b2cb44` | — | — |  | 0 | docs(stage-3): route summary and history, stage 3 accepted at 5e6f83f |
+| 63 | `ea999cf` | Route | 2026-10-02T22:54:42 |  | 4 | chore(stage-4): copy accepted stage-3 as baseline |
+| 64 | `5e80adb` | Route | 2026-10-02T22:54:42 |  | 4 | docs(stage-4): requirement ledger U01-U43, B01-B12 |
+| 65 | `ada0ac3` | Forge | 2026-10-02T22:56:18 | yes | 4 | feat(stage-4): refund domain API - Payment.refund_of, State.Refund, refundedAmou |
+| 66 | `3a61608` | Loom | 2026-10-03T02:55:07 |  | 3 | feat(stage-4): POST /payments/{id}/refunds handler and route tests (loom) |
+| 67 | `53fdc42` | Forge | 2026-10-03T02:52:47 |  | 3 | feat(stage-4): refund limits in Correct, refund domain tests, refund_of in upgra |
+| 68 | `f2698c2` | Forge | 2026-10-03T02:52:47 |  | 13 | test(stage-4): correction debits vs held funds and historical overdraft with a r |
+| 69 | `620e5df` | Loom | 2026-10-03T02:55:07 |  | 5 | feat(stage-4): refund control in the wallet feed, Refund-of label, UI tests, sta |
+| 70 | `e3eb44c` | Trace | 2026-10-03T03:01:36 | yes | 6 | feat(stage-4): POST /correction-batches, Revision.correction_batch_id, real stag |
+| 71 | `1b15e89` | Trace | 2026-10-03T03:01:36 | yes | 4 | evidence(stage-4): trace batch corrections - decisions, black-box run on exports |
+| 72 | `1dd5560` | Trace | 2026-10-03T07:44:32 |  | 13 | test(stage-4): stage-3 expectations follow Revision.correction_batch_id null (ed |
+| 73 | `5a951db` | Trace | 2026-10-03T07:51:49 |  | 2 | evidence(stage-4): trace attack on refunds x batch corrections - 83 black-box ch |
+| 74 | `2eba3ac` | Forge | 2026-10-03T08:08:41 |  | 2 | evidence(stage-4): forge attack of batch corrections at 1dd5560 - HTTP script (1 |
+| 75 | `f2d512b` | — | — |  | 0 | evidence(stage-4): jury ACCEPT of 1dd5560 batch corrections (697 own checks, 11/ |
+| 76 | `4c20e6c` | — | — |  | 0 | evidence(operator): fresh-clone verification of all four stages, grading mode |
+| 77 | `85a3ee6` | — | — |  | 0 | docs: bring README.md and FACTORY.md up to date with stage 4 |
+| 78 | `fd8bdc2` | — | — |  | 0 | evidence(operator): product-quality gate for the stage-4 browser product |
+| 79 | `1296181` | — | — |  | 0 | docs: disclose the two accessibility findings from the product-quality gate |
+| 80 | `ec466fb` | — | — |  | 0 | docs: correct the measured autonomy figures against a fresh room scan |
 
 ## Re-deriving this from `room.json`
 

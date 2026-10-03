@@ -1,24 +1,43 @@
 {
   "room": "5dd42746-f387-4763-afe0-f96d8f504f71",
   "repository": "/mnt/d/project/dolphin-tank/band-work/result",
-  "head": "5e6f83f0a2d9fe9e09615341dde23a376d273967",
+  "head": "ec466fb114ce21a39909248665acd348bc7aef56",
   "generated_by": "ZEUS (OpenCode orchestration layer, not a BAND seat)",
   "rule": "first agent message of type text|task, ordered by inserted_at ascending, whose content contains the commit's 40-hex or 7-hex sha",
-  "commit_count": 53,
-  "with_room_announcement": 50,
-  "self_reported": 31,
+  "commit_count": 80,
+  "by_origin": {
+    "band-unannounced": 5,
+    "band": 64,
+    "operator": 11
+  },
+  "with_room_announcement": 64,
+  "self_reported": 34,
   "without_room_announcement": [
     "f1903588bb1f965087647c608d8e352ba3ce4efc",
     "6e35abc7d4b076d982aa707d156bfcf55ba65b6c",
-    "2ad930673d293d46aedace20636082cf523f7d39"
+    "2ad930673d293d46aedace20636082cf523f7d39",
+    "c830f82f79ef9c25b35521cf211a99f5557c108f",
+    "2e76ca0c50238387640bc72d0d7528efd673e5cb",
+    "66b45bbc2b02c91a724c6f1015db88dbf2ffdb65",
+    "1a3d86470f8160973a50ec44a060d30015587e25",
+    "8654d93d3a87fe1e59cdad7b2d2b10d090082386",
+    "c6af733f14eb22f51518052c927452fdcf0bea49",
+    "7b2cb447a8d56e10d73dbf0ad427fe2418752f3d",
+    "f2d512b7814b6230c7b2aaa9ff02772f3e1e8b01",
+    "4c20e6c26e9609058f2f234e21d7d1ecc281848a",
+    "85a3ee6d25843309c5c274d841486d64ec36cd9a",
+    "fd8bdc27f27e0a26595ffd091776048381add6ac",
+    "129618196a14aa9ec9f20d183f00273314104b35",
+    "ec466fb114ce21a39909248665acd348bc7aef56"
   ],
   "by_announcing_seat": {
-    "(no room announcement)": 3,
-    "Route": 15,
-    "Loom": 7,
-    "Trace": 9,
-    "Forge": 15,
-    "Jury": 4
+    "(no room announcement)": 5,
+    "Route": 17,
+    "Loom": 9,
+    "Trace": 14,
+    "Forge": 19,
+    "Jury": 5,
+    "OPERATOR (ZEUS)": 11
   },
   "commits": [
     {
@@ -40,7 +59,8 @@
       "announced_at": null,
       "announce_msgtype": null,
       "self_report": false,
-      "announce_quote": null
+      "announce_quote": null,
+      "origin": "band-unannounced"
     },
     {
       "sha": "270152984c66a24f0bbfa2e2b32494879a24c171",
@@ -59,7 +79,8 @@
       "announced_at": "2026-09-30T23:14:27.744483Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "normative statement, with owner): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\requirement-ledger.md CURRENT_COMMIT: 2701529 (ledger only; stage-1\\ does not exist yet) RESULT REPO: D:\\project\\dolphin-tank\\ba"
+      "announce_quote": "normative statement, with owner): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\requirement-ledger.md CURRENT_COMMIT: 2701529 (ledger only; stage-1\\ does not exist yet) RESULT REPO: D:\\project\\dolphin-tank\\ba",
+      "origin": "band"
     },
     {
       "sha": "61101ffef8cf8dd4eaacaa1d302a9bb4086a9945",
@@ -77,7 +98,8 @@
       "announced_at": "2026-09-30T23:25:47.429760Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "14 R16 R36-R39 R44-R46 R49 R52 R64). IMPLEMENTATION_COMMIT: 9cb0bc375554f5c7f2bdbbe95c9ffce4a0668c7e (my files). go.mod alone was 61101ff. INTEGRATED_HEAD tested: b5d424f2747041583bc7826990bcc1ddc62fca46 (forge be0f7de +"
+      "announce_quote": "14 R16 R36-R39 R44-R46 R49 R52 R64). IMPLEMENTATION_COMMIT: 9cb0bc375554f5c7f2bdbbe95c9ffce4a0668c7e (my files). go.mod alone was 61101ff. INTEGRATED_HEAD tested: b5d424f2747041583bc7826990bcc1ddc62fca46 (forge be0f7de +",
+      "origin": "band"
     },
     {
       "sha": "edcfe3fb588f07b5f05859a7fc223436236dba5b",
@@ -96,7 +118,8 @@
       "announced_at": "2026-09-30T23:24:20.196779Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": " R33-35 R38 R41 R45(key) R52-59 R68 R78-90) IMPLEMENTATION_COMMIT: 36c4914503b9ab04c999d9b3e3f5c83e33a89534 (earlier trace commit edcfe3f = sys.go + canon.go) FILES_CHANGED (stage-1\\): sys.go idem.go canon.go settlement."
+      "announce_quote": " R33-35 R38 R41 R45(key) R52-59 R68 R78-90) IMPLEMENTATION_COMMIT: 36c4914503b9ab04c999d9b3e3f5c83e33a89534 (earlier trace commit edcfe3f = sys.go + canon.go) FILES_CHANGED (stage-1\\): sys.go idem.go canon.go settlement.",
+      "origin": "band"
     },
     {
       "sha": "9cb0bc375554f5c7f2bdbbe95c9ffce4a0668c7e",
@@ -126,7 +149,8 @@
       "announced_at": "2026-09-30T23:25:47.429760Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "TEM: LOOM HTTP layer, integration build, Dockerfile, RUN.md (R05-R12 R14 R16 R36-R39 R44-R46 R49 R52 R64). IMPLEMENTATION_COMMIT: 9cb0bc375554f5c7f2bdbbe95c9ffce4a0668c7e (my files). go.mod alone was 61101ff. INTEGRATED_"
+      "announce_quote": "TEM: LOOM HTTP layer, integration build, Dockerfile, RUN.md (R05-R12 R14 R16 R36-R39 R44-R46 R49 R52 R64). IMPLEMENTATION_COMMIT: 9cb0bc375554f5c7f2bdbbe95c9ffce4a0668c7e (my files). go.mod alone was 61101ff. INTEGRATED_",
+      "origin": "band"
     },
     {
       "sha": "be0f7de7b6a54ff5ec910d1abe7c2652e9285764",
@@ -151,7 +175,8 @@
       "announced_at": "2026-09-30T23:25:20.394661Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "ITEM: FORGE domain core, validators, auth, store (R01-R04 R15 R17-R32 R40 R42-R43 R47-R51 R60-R67 R69-R77) IMPLEMENTATION_COMMIT: be0f7de7b6a54ff5ec910d1abe7c2652e9285764 (source). Tests: b5d424f2747041583bc7826990bcc1dd"
+      "announce_quote": "ITEM: FORGE domain core, validators, auth, store (R01-R04 R15 R17-R32 R40 R42-R43 R47-R51 R60-R67 R69-R77) IMPLEMENTATION_COMMIT: be0f7de7b6a54ff5ec910d1abe7c2652e9285764 (source). Tests: b5d424f2747041583bc7826990bcc1dd",
+      "origin": "band"
     },
     {
       "sha": "36c4914503b9ab04c999d9b3e3f5c83e33a89534",
@@ -178,7 +203,8 @@
       "announced_at": "2026-09-30T23:24:20.196779Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "E - idempotency, settlements, reset/fixture, export/import (R13 R33-35 R38 R41 R45(key) R52-59 R68 R78-90) IMPLEMENTATION_COMMIT: 36c4914503b9ab04c999d9b3e3f5c83e33a89534 (earlier trace commit edcfe3f = sys.go + canon.go"
+      "announce_quote": "E - idempotency, settlements, reset/fixture, export/import (R13 R33-35 R38 R41 R45(key) R52-59 R68 R78-90) IMPLEMENTATION_COMMIT: 36c4914503b9ab04c999d9b3e3f5c83e33a89534 (earlier trace commit edcfe3f = sys.go + canon.go",
+      "origin": "band"
     },
     {
       "sha": "b5d424f2747041583bc7826990bcc1ddc62fca46",
@@ -199,7 +225,8 @@
       "announced_at": "2026-09-30T23:25:20.394661Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "R15 R17-R32 R40 R42-R43 R47-R51 R60-R67 R69-R77) IMPLEMENTATION_COMMIT: be0f7de7b6a54ff5ec910d1abe7c2652e9285764 (source). Tests: b5d424f2747041583bc7826990bcc1ddc62fca46. FINAL HEAD (source+tests, all fix-forward, nothi"
+      "announce_quote": "R15 R17-R32 R40 R42-R43 R47-R51 R60-R67 R69-R77) IMPLEMENTATION_COMMIT: be0f7de7b6a54ff5ec910d1abe7c2652e9285764 (source). Tests: b5d424f2747041583bc7826990bcc1ddc62fca46. FINAL HEAD (source+tests, all fix-forward, nothi",
+      "origin": "band"
     },
     {
       "sha": "6e35abc7d4b076d982aa707d156bfcf55ba65b6c",
@@ -216,7 +243,8 @@
       "announced_at": null,
       "announce_msgtype": null,
       "self_report": false,
-      "announce_quote": null
+      "announce_quote": null,
+      "origin": "band-unannounced"
     },
     {
       "sha": "0024598cf4a43b6584171b1f7b8f92523c652c3a",
@@ -226,7 +254,7 @@
       "files": [
         "stage-1/auth.go"
       ],
-      "mention_count": 11,
+      "mention_count": 15,
       "mentioned_by": [
         "Forge",
         "Jury",
@@ -237,7 +265,8 @@
       "announced_at": "2026-09-30T23:25:20.394661Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "9285764 (source). Tests: b5d424f2747041583bc7826990bcc1ddc62fca46. FINAL HEAD (source+tests, all fix-forward, nothing rewritten): 0024598cf4a43b6584171b1f7b8f92523c652c3a. Give jury the final HEAD. FILES_CHANGED (stage-1"
+      "announce_quote": "9285764 (source). Tests: b5d424f2747041583bc7826990bcc1ddc62fca46. FINAL HEAD (source+tests, all fix-forward, nothing rewritten): 0024598cf4a43b6584171b1f7b8f92523c652c3a. Give jury the final HEAD. FILES_CHANGED (stage-1",
+      "origin": "band"
     },
     {
       "sha": "2c9a5d47568e909711cb00f482e0b2f12abfa76c",
@@ -324,7 +353,8 @@
       "announced_at": "2026-10-01T05:27:44.904160Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "d, only that path; stage-1\\ untouched): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\jury\\ (commit 6619c91 on top of 2c9a5d4). Read verdict.md first. Also there: ledger.md (88 rows, all PASS), gaps.md, check"
+      "announce_quote": "d, only that path; stage-1\\ untouched): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\jury\\ (commit 6619c91 on top of 2c9a5d4). Read verdict.md first. Also there: ledger.md (88 rows, all PASS), gaps.md, check",
+      "origin": "band"
     },
     {
       "sha": "6619c91c06b52216efe6a9c73323c9cfcee28eca",
@@ -342,7 +372,8 @@
       "announced_at": "2026-10-01T05:27:44.904160Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "Evidence (committed, only that path; stage-1\\ untouched): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\jury\\ (commit 6619c91 on top of 2c9a5d4). Read verdict.md first. Also there: ledger.md (88 rows, all PAS"
+      "announce_quote": "Evidence (committed, only that path; stage-1\\ untouched): D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-1\\jury\\ (commit 6619c91 on top of 2c9a5d4). Read verdict.md first. Also there: ledger.md (88 rows, all PAS",
+      "origin": "band"
     },
     {
       "sha": "cb2af8b83ea8f7ce87d4fb6da27fc86a030f357d",
@@ -361,7 +392,8 @@
       "announced_at": "2026-10-01T05:29:10.678957Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "\\band-work\\result\\stage-1\\ ACCEPTED SOURCE COMMIT: 0024598cf4a43b6584171b1f7b8f92523c652c3a (stage-1/ unchanged since). Repo HEAD cb2af8b adds only the jury evidence, my ledger, route summary and rejection history. Spec "
+      "announce_quote": "\\band-work\\result\\stage-1\\ ACCEPTED SOURCE COMMIT: 0024598cf4a43b6584171b1f7b8f92523c652c3a (stage-1/ unchanged since). Repo HEAD cb2af8b adds only the jury evidence, my ledger, route summary and rejection history. Spec ",
+      "origin": "band"
     },
     {
       "sha": "2783dc6f0ab7ea7681df4cd3bff1a169f103937c",
@@ -414,7 +446,8 @@
       "announced_at": "2026-10-01T05:42:31.886723Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "project\\dolphin-tank\\band-work\\result\\evidence\\stage-2\\requirement-ledger.md (stage-1 rows R01..R90 still apply). CURRENT_COMMIT: 2783dc6 = stage-2\\ is an exact copy of the accepted stage-1 folder (Go 1.24 stdlib, packag"
+      "announce_quote": "project\\dolphin-tank\\band-work\\result\\evidence\\stage-2\\requirement-ledger.md (stage-1 rows R01..R90 still apply). CURRENT_COMMIT: 2783dc6 = stage-2\\ is an exact copy of the accepted stage-1 folder (Go 1.24 stdlib, packag",
+      "origin": "band"
     },
     {
       "sha": "2ad930673d293d46aedace20636082cf523f7d39",
@@ -430,7 +463,8 @@
       "announced_at": null,
       "announce_msgtype": null,
       "self_report": false,
-      "announce_quote": null
+      "announce_quote": null,
+      "origin": "band-unannounced"
     },
     {
       "sha": "fbe45732c7cde93429572fee596b7f020f5d9b07",
@@ -465,7 +499,8 @@
       "announced_at": "2026-10-01T10:25:27.907528Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "LEMENTATION_COMMIT: 950f272490317ff7d63961ec2a67ca232a7afa0a (tests + evidence). Step 1 (CONTRACT v2 code + JS, already in tree): fbe45732c7cde93429572fee596b7f020f5d9b07. stage-1\\ untouched (git diff 2783dc6 HEAD -- sta"
+      "announce_quote": "LEMENTATION_COMMIT: 950f272490317ff7d63961ec2a67ca232a7afa0a (tests + evidence). Step 1 (CONTRACT v2 code + JS, already in tree): fbe45732c7cde93429572fee596b7f020f5d9b07. stage-1\\ untouched (git diff 2783dc6 HEAD -- sta",
+      "origin": "band"
     },
     {
       "sha": "42fef7a9eb6ae9e0d70fe1b7b06287feca6d4ffd",
@@ -523,7 +558,8 @@
       "announced_at": "2026-10-01T10:25:27.907528Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "93429572fee596b7f020f5d9b07. stage-1\\ untouched (git diff 2783dc6 HEAD -- stage-1 is empty). Pocketful tree was green with loom's 42fef7a on top; trace's uncommitted fixture/settlement/snapshot edits were also in the tre"
+      "announce_quote": "93429572fee596b7f020f5d9b07. stage-1\\ untouched (git diff 2783dc6 HEAD -- stage-1 is empty). Pocketful tree was green with loom's 42fef7a on top; trace's uncommitted fixture/settlement/snapshot edits were also in the tre",
+      "origin": "band"
     },
     {
       "sha": "950f272490317ff7d63961ec2a67ca232a7afa0a",
@@ -545,7 +581,8 @@
       "announced_at": "2026-10-01T10:25:27.907528Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "zation domain, validators, funds rule, JS logic modules (S13 S14 S16 S21 S22 S24 S27 S33-S40 S46-S58 S63). IMPLEMENTATION_COMMIT: 950f272490317ff7d63961ec2a67ca232a7afa0a (tests + evidence). Step 1 (CONTRACT v2 code + JS"
+      "announce_quote": "zation domain, validators, funds rule, JS logic modules (S13 S14 S16 S21 S22 S24 S27 S33-S40 S46-S58 S63). IMPLEMENTATION_COMMIT: 950f272490317ff7d63961ec2a67ca232a7afa0a (tests + evidence). Step 1 (CONTRACT v2 code + JS",
+      "origin": "band"
     },
     {
       "sha": "7875bf1cb365e4d994f43567eb0558496b37ec6f",
@@ -565,7 +602,8 @@
       "announced_at": "2026-10-01T15:57:05.173469Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "rement-ledger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7a, 7875bf1, dbf467c. forge DONE 950f272. trace DONE a16ad67 and is making one small follow-up"
+      "announce_quote": "rement-ledger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7a, 7875bf1, dbf467c. forge DONE 950f272. trace DONE a16ad67 and is making one small follow-up",
+      "origin": "band"
     },
     {
       "sha": "a16ad671454bb411a0ff3002ba66d07aa3db83a7",
@@ -593,7 +631,8 @@
       "announced_at": "2026-10-01T10:31:39.032221Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "export upgrade, idempotency for new paths, time/concurrency attacks (S29-S32 S34 S35 S39 S41-S46 S55 S63). IMPLEMENTATION_COMMIT: a16ad671454bb411a0ff3002ba66d07aa3db83a7 (on top of forge fbe4573 and loom 42fef7a; tree c"
+      "announce_quote": "export upgrade, idempotency for new paths, time/concurrency attacks (S29-S32 S34 S35 S39 S41-S46 S55 S63). IMPLEMENTATION_COMMIT: a16ad671454bb411a0ff3002ba66d07aa3db83a7 (on top of forge fbe4573 and loom 42fef7a; tree c",
+      "origin": "band"
     },
     {
       "sha": "dbf467cf409c0fb8336ca5d990b44b872b62260a",
@@ -613,7 +652,8 @@
       "announced_at": "2026-10-01T15:57:05.173469Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "dger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7a, 7875bf1, dbf467c. forge DONE 950f272. trace DONE a16ad67 and is making one small follow-up (explici"
+      "announce_quote": "dger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7a, 7875bf1, dbf467c. forge DONE 950f272. trace DONE a16ad67 and is making one small follow-up (explici",
+      "origin": "band"
     },
     {
       "sha": "c1b8416cc9d41164ddb16d23c237e95afe604fc4",
@@ -636,7 +676,8 @@
       "announced_at": "2026-10-01T15:57:17.268363Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "g is accepted yet. I'll send the exact commit to jury once loom and trace report. I'm not treating the operator evidence commits (c1b8416, cc952b8) as acceptance."
+      "announce_quote": "g is accepted yet. I'll send the exact commit to jury once loom and trace report. I'm not treating the operator evidence commits (c1b8416, cc952b8) as acceptance.",
+      "origin": "band"
     },
     {
       "sha": "cc952b85a7b0f5800f47ce223ac37567912aa323",
@@ -657,7 +698,8 @@
       "announced_at": "2026-10-01T15:57:05.173469Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": " S59-S62, S64, S66 are yours: D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-2\\requirement-ledger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7"
+      "announce_quote": " S59-S62, S64, S66 are yours: D:\\project\\dolphin-tank\\band-work\\result\\evidence\\stage-2\\requirement-ledger.md). STATE I SEE: HEAD cc952b8 (the last two commits are operator evidence only, no source). Your commits: 42fef7",
+      "origin": "band"
     },
     {
       "sha": "17aa87e2f690ccf0ec582e01f7a44cd5453bcb30",
@@ -680,7 +722,8 @@
       "announced_at": "2026-10-01T15:59:16.305618Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] trace -> route: strict authorization_ttl_seconds done. Commit 17aa87e2f690ccf0ec582e01f7a44cd5453bcb30 (parent cc952b8; stage-2 work was a16ad67). Files"
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] trace -> route: strict authorization_ttl_seconds done. Commit 17aa87e2f690ccf0ec582e01f7a44cd5453bcb30 (parent cc952b8; stage-2 work was a16ad67). Files",
+      "origin": "band"
     },
     {
       "sha": "bcf386b6798816c3a3f1f4c8790d56685be1ef08",
@@ -744,7 +787,8 @@
       "announced_at": "2026-10-01T16:06:51.765242Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "65e4d994f43567eb0558496b37ec6f + dbf467cf409c0fb8336ca5d990b44b872b62260a (fixes). EVIDENCE_COMMIT (only evidence/stage-2/loom/): bcf386b6798816c3a3f1f4c8790d56685be1ef08. Everything below was run against clean clone of "
+      "announce_quote": "65e4d994f43567eb0558496b37ec6f + dbf467cf409c0fb8336ca5d990b44b872b62260a (fixes). EVIDENCE_COMMIT (only evidence/stage-2/loom/): bcf386b6798816c3a3f1f4c8790d56685be1ef08. Everything below was run against clean clone of ",
+      "origin": "band"
     },
     {
       "sha": "f33035a390c63c61dfc4ce12feb8076542c8469b",
@@ -754,16 +798,18 @@
       "files": [
         ".gitignore"
       ],
-      "mention_count": 9,
+      "mention_count": 13,
       "mentioned_by": [
         "Jury",
-        "Route"
+        "Route",
+        "Trace"
       ],
       "announced_by": "Route",
       "announced_at": "2026-10-01T16:09:30.584973Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "nds checks now on available, /me shape, payment authorization_id, idempotent paths 5 -> 7). CURRENT_COMMIT (verify exactly this): f33035a in D:\\project\\dolphin-tank\\band-work\\result (WSL /mnt/d/project/dolphin-tank/band-"
+      "announce_quote": "nds checks now on available, /me shape, payment authorization_id, idempotent paths 5 -> 7). CURRENT_COMMIT (verify exactly this): f33035a in D:\\project\\dolphin-tank\\band-work\\result (WSL /mnt/d/project/dolphin-tank/band-",
+      "origin": "band"
     },
     {
       "sha": "9111851897aa5a1f9915f9b6c7a67cfa141ddaa6",
@@ -1164,7 +1210,8 @@
       "announced_at": "2026-10-01T21:56:27.895732Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": ". stage-1/ is unchanged since the commit I accepted before. I did not touch stage-1/ or stage-2/ source. Evidence is committed at 9111851, under evidence/stage-2/jury/ (verdict.md, ledger.md with 78 rows from the spec, g"
+      "announce_quote": ". stage-1/ is unchanged since the commit I accepted before. I did not touch stage-1/ or stage-2/ source. Evidence is committed at 9111851, under evidence/stage-2/jury/ (verdict.md, ledger.md with 78 rows from the spec, g",
+      "origin": "band"
     },
     {
       "sha": "163d14f13e0090b02c30b3715fa9204de482066a",
@@ -1191,7 +1238,8 @@
       "announced_at": "2026-10-01T21:58:08.683891Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": ": f33035a390c63c61dfc4ce12feb8076542c8469b (stage-2/ source byte-identical to trace's 17aa87e). Jury evidence 9111851. Route docs 163d14f (current HEAD of D:\\project\\dolphin-tank\\band-work\\result). stage-1/ unchanged sin"
+      "announce_quote": ": f33035a390c63c61dfc4ce12feb8076542c8469b (stage-2/ source byte-identical to trace's 17aa87e). Jury evidence 9111851. Route docs 163d14f (current HEAD of D:\\project\\dolphin-tank\\band-work\\result). stage-1/ unchanged sin",
+      "origin": "band"
     },
     {
       "sha": "3240b1c59b4784e4f02404aebb3815e232d612de",
@@ -1295,7 +1343,8 @@
       "announced_at": "2026-10-02T01:45:04.824068Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": " sha256 2255d3f2181c22dc6eac6919bf7712197d812248bd9de8a7e59260ede6056e54. - stage-3/ is an exact copy of accepted stage 2 (commit 3240b1c). The requirement ledger T01-T65 is committed (c9d6b6d). stage-1/ and stage-2/ are"
+      "announce_quote": " sha256 2255d3f2181c22dc6eac6919bf7712197d812248bd9de8a7e59260ede6056e54. - stage-3/ is an exact copy of accepted stage 2 (commit 3240b1c). The requirement ledger T01-T65 is committed (c9d6b6d). stage-1/ and stage-2/ are",
+      "origin": "band"
     },
     {
       "sha": "c9d6b6d0f912f5682cfcdcf797539627e172cc95",
@@ -1313,7 +1362,8 @@
       "announced_at": "2026-10-01T22:46:58.070500Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "work\\result\\evidence\\stage-3\\requirement-ledger.md (stage-1 rows R01..R90 and stage-2 rows S01..S66 still apply). CURRENT_COMMIT: c9d6b6d = stage-3\\ is an exact copy of accepted stage-2 (f33035a; Go 1.24 stdlib, package "
+      "announce_quote": "work\\result\\evidence\\stage-3\\requirement-ledger.md (stage-1 rows R01..R90 and stage-2 rows S01..S66 still apply). CURRENT_COMMIT: c9d6b6d = stage-3\\ is an exact copy of accepted stage-2 (f33035a; Go 1.24 stdlib, package ",
+      "origin": "band"
     },
     {
       "sha": "9a05b278b10bec25991c4172a13b383a0a7caf36",
@@ -1339,7 +1389,8 @@
       "announced_at": "2026-10-02T01:53:36.870846Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "2f5661fe7]] route: LOOM interim (step 1 done, integration NOT done - not the final report). COMMITTED (stage-3\\, explicit paths): 9a05b27 HTTP layer (handlers_history.go, corrections_in.go, revisions.go, routes.go, handl"
+      "announce_quote": "2f5661fe7]] route: LOOM interim (step 1 done, integration NOT done - not the final report). COMMITTED (stage-3\\, explicit paths): 9a05b27 HTTP layer (handlers_history.go, corrections_in.go, revisions.go, routes.go, handl",
+      "origin": "band"
     },
     {
       "sha": "deea3a571a17ad5c5e83a576d6c5a27722f1c467",
@@ -1359,7 +1410,8 @@
       "announced_at": "2026-10-02T01:53:36.870846Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "it paths): 9a05b27 HTTP layer (handlers_history.go, corrections_in.go, revisions.go, routes.go, handlers_read.go, 3 test files) | deea3a5 RUN.md + jstest/format.test.mjs | 071d55e test fix. Latest full id: 071d55eb... (s"
+      "announce_quote": "it paths): 9a05b27 HTTP layer (handlers_history.go, corrections_in.go, revisions.go, routes.go, handlers_read.go, 3 test files) | deea3a5 RUN.md + jstest/format.test.mjs | 071d55e test fix. Latest full id: 071d55eb... (s",
+      "origin": "band"
     },
     {
       "sha": "25a1e22d84566374dfee19fe839fc42b9ab3829a",
@@ -1384,7 +1436,8 @@
       "announced_at": "2026-10-02T02:03:14.198328Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "36-T38 T40 T48 T50 T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Verified from `git archive a8340f1 stage-3` in D:\\proj"
+      "announce_quote": "36-T38 T40 T48 T50 T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Verified from `git archive a8340f1 stage-3` in D:\\proj",
+      "origin": "band"
     },
     {
       "sha": "071d55eb6df43b5872763537630d5428035f8110",
@@ -1403,7 +1456,8 @@
       "announced_at": "2026-10-02T01:53:36.870846Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "story.go, corrections_in.go, revisions.go, routes.go, handlers_read.go, 3 test files) | deea3a5 RUN.md + jstest/format.test.mjs | 071d55e test fix. Latest full id: 071d55eb... (see git log). BUILT: GET /me (as_of, known_"
+      "announce_quote": "story.go, corrections_in.go, revisions.go, routes.go, handlers_read.go, 3 test files) | deea3a5 RUN.md + jstest/format.test.mjs | 071d55e test fix. Latest full id: 071d55eb... (see git log). BUILT: GET /me (as_of, known_",
+      "origin": "band"
     },
     {
       "sha": "45bbd4971527ab7b226cdc524b115cdabb0af87b",
@@ -1423,7 +1477,8 @@
       "announced_at": "2026-10-02T02:03:14.198328Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": " T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Verified from `git archive a8340f1 stage-3` in D:\\project\\dolphin-tank\\b"
+      "announce_quote": " T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Verified from `git archive a8340f1 stage-3` in D:\\project\\dolphin-tank\\b",
+      "origin": "band"
     },
     {
       "sha": "8c778be33650ab2c34dbea745d6da7e7ef6e67d5",
@@ -1453,7 +1508,8 @@
       "announced_at": "2026-10-02T02:03:14.198328Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "lean - go build ./... -> ok - go test -count=1 ./... -> `ok pocketful 14.276s` (whole package incl. trace/loom tests committed at 8c778be/071d55e) - node --test jstest . -> tests 16, pass 16, fail 0 NOT run: docker image"
+      "announce_quote": "lean - go build ./... -> ok - go test -count=1 ./... -> `ok pocketful 14.276s` (whole package incl. trace/loom tests committed at 8c778be/071d55e) - node --test jstest . -> tests 16, pass 16, fail 0 NOT run: docker image",
+      "origin": "band"
     },
     {
       "sha": "a8340f1c7d85b90004a39681cfc53fa974f913ad",
@@ -1479,7 +1535,8 @@
       "announced_at": "2026-10-02T02:03:14.198328Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "ge-3 history core (T02 T03 T07-T11 T20 T22 T24-T34 T36-T38 T40 T48 T50 T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Ve"
+      "announce_quote": "ge-3 history core (T02 T03 T07-T11 T20 T22 T24-T34 T36-T38 T40 T48 T50 T52-T57 T61), report to route only. IMPLEMENTATION_COMMIT: a8340f1c7d85b90004a39681cfc53fa974f913ad (on top of 25a1e22 skeleton, 45bbd49 Correct). Ve",
+      "origin": "band"
     },
     {
       "sha": "4dcefac0ba43db8d04a7b0b0f23c1419c0e1bf48",
@@ -1498,7 +1555,8 @@
       "announced_at": "2026-10-02T06:46:44.293265Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "8d-bdd0-8392f5661fe7]] forge: ack. Self-check done: corrections never leave a view with negative total or exact available. Commit 4dcefac0ba43db8d04a7b0b0f23c1419c0e1bf48 adds stage-3/views_invariant_test.go (test only, "
+      "announce_quote": "8d-bdd0-8392f5661fe7]] forge: ack. Self-check done: corrections never leave a view with negative total or exact available. Commit 4dcefac0ba43db8d04a7b0b0f23c1419c0e1bf48 adds stage-3/views_invariant_test.go (test only, ",
+      "origin": "band"
     },
     {
       "sha": "1f28f13db25a0a16273972674486187a89f4b847",
@@ -1516,7 +1574,8 @@
       "announced_at": "2026-10-02T06:48:24.405830Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "from making every correction historical_overdraft. Both rules and the known same-second negative-available are recorded in commit 1f28f13 (evidence/stage-3/decisions.md). Your commit 4dcefac (test only) is accepted into "
+      "announce_quote": "from making every correction historical_overdraft. Both rules and the known same-second negative-available are recorded in commit 1f28f13 (evidence/stage-3/decisions.md). Your commit 4dcefac (test only) is accepted into ",
+      "origin": "band"
     },
     {
       "sha": "27c381361f3a6a22002e557867a12740aafa017b",
@@ -1539,7 +1598,8 @@
       "announced_at": "2026-10-02T06:59:31.590753Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "tement.go, fixture.go, snapshot.go, settlement.go, testdata/stage2-export.json (+gen + notes), upgrade tests (reported earlier) - 27c381361f3a6a22002e557867a12740aafa017b property oracle, storm, attack tests, snapshot.go"
+      "announce_quote": "tement.go, fixture.go, snapshot.go, settlement.go, testdata/stage2-export.json (+gen + notes), upgrade tests (reported earlier) - 27c381361f3a6a22002e557867a12740aafa017b property oracle, storm, attack tests, snapshot.go",
+      "origin": "band"
     },
     {
       "sha": "7e25c9c2404f74af66f9f586a77b4739a03bf007",
@@ -1560,7 +1620,8 @@
       "announced_at": "2026-10-02T06:59:31.590753Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": " tests (reported earlier) - 27c381361f3a6a22002e557867a12740aafa017b property oracle, storm, attack tests, snapshot.go importAt - 7e25c9c2404f74af66f9f586a77b4739a03bf007 import sweep, created_exact import rules, differe"
+      "announce_quote": " tests (reported earlier) - 27c381361f3a6a22002e557867a12740aafa017b property oracle, storm, attack tests, snapshot.go importAt - 7e25c9c2404f74af66f9f586a77b4739a03bf007 import sweep, created_exact import rules, differe",
+      "origin": "band"
     },
     {
       "sha": "3c7c41160655da780df7567ec93ee7ad8f1c8f79",
@@ -1572,7 +1633,7 @@
         "stage-3/holds_views_test.go",
         "stage-3/import_attack_test.go"
       ],
-      "mention_count": 27,
+      "mention_count": 30,
       "mentioned_by": [
         "Forge",
         "Jury",
@@ -1584,7 +1645,8 @@
       "announced_at": "2026-10-02T06:59:31.590753Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "ot.go importAt - 7e25c9c2404f74af66f9f586a77b4739a03bf007 import sweep, created_exact import rules, differential Correct oracle - 3c7c41160655da780df7567ec93ee7ad8f1c8f79 Reset sweep, whole-second hold reproduction, evid"
+      "announce_quote": "ot.go importAt - 7e25c9c2404f74af66f9f586a77b4739a03bf007 import sweep, created_exact import rules, differential Correct oracle - 3c7c41160655da780df7567ec93ee7ad8f1c8f79 Reset sweep, whole-second hold reproduction, evid",
+      "origin": "band"
     },
     {
       "sha": "31b2361dce5f8f419bfa8cc7d2bf62db14a6d251",
@@ -1666,7 +1728,8 @@
       "announced_at": "2026-10-02T07:06:44.632175Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": " loom: T62/T64 re-run against 3c7c41160655da780df7567ec93ee7ad8f1c8f79. No check failed. No stage-3 code change. EVIDENCE COMMIT: 31b2361dce5f8f419bfa8cc7d2bf62db14a6d251. 63 files, only evidence/stage-3/loom/ (scripts 8"
+      "announce_quote": " loom: T62/T64 re-run against 3c7c41160655da780df7567ec93ee7ad8f1c8f79. No check failed. No stage-3 code change. EVIDENCE COMMIT: 31b2361dce5f8f419bfa8cc7d2bf62db14a6d251. 63 files, only evidence/stage-3/loom/ (scripts 8",
+      "origin": "band"
     },
     {
       "sha": "54cbd0bd276343d4ec0d9cc86103b985117d4450",
@@ -1946,7 +2009,8 @@
       "announced_at": "2026-10-02T07:55:01.854962Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "ement violations, each reproduced deterministically. Everything else I tested passes. Evidence: evidence\\stage-3\\jury\\ (committed 54cbd0b: verdict.md, ledger.md with 58 rows, gaps.md, checks\\, s1reg\\, s2reg\\, browser\\, l"
+      "announce_quote": "ement violations, each reproduced deterministically. Everything else I tested passes. Evidence: evidence\\stage-3\\jury\\ (committed 54cbd0b: verdict.md, ledger.md with 58 rows, gaps.md, checks\\, s1reg\\, s2reg\\, browser\\, l",
+      "origin": "band"
     },
     {
       "sha": "ce30bcdad67abc917ebc4c1a79a460e376eec20b",
@@ -1964,7 +2028,8 @@
       "announced_at": "2026-10-02T12:08:58.901089Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "d and verified; it is not self-accepted, jury decides. IMPLEMENTATION_COMMIT: 11e76f9d8a82946c1629f9d31d6d7a8547299bef (on top of ce30bcd; only my paths; stage-1/2 untouched, 0-line diff) FILES_CHANGED (stage-3/) - authz"
+      "announce_quote": "d and verified; it is not self-accepted, jury decides. IMPLEMENTATION_COMMIT: 11e76f9d8a82946c1629f9d31d6d7a8547299bef (on top of ce30bcd; only my paths; stage-1/2 untouched, 0-line diff) FILES_CHANGED (stage-3/) - authz",
+      "origin": "band"
     },
     {
       "sha": "11e76f9d8a82946c1629f9d31d6d7a8547299bef",
@@ -1986,7 +2051,7 @@
         "stage-3/holds_views_test.go",
         "stage-3/views_invariant_test.go"
       ],
-      "mention_count": 10,
+      "mention_count": 11,
       "mentioned_by": [
         "Forge",
         "Route",
@@ -1996,7 +2061,8 @@
       "announced_at": "2026-10-02T12:08:58.901089Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "2f5661fe7]] FORGE F2 DONE. Repair 1 / F2 is committed and verified; it is not self-accepted, jury decides. IMPLEMENTATION_COMMIT: 11e76f9d8a82946c1629f9d31d6d7a8547299bef (on top of ce30bcd; only my paths; stage-1/2 unto"
+      "announce_quote": "2f5661fe7]] FORGE F2 DONE. Repair 1 / F2 is committed and verified; it is not self-accepted, jury decides. IMPLEMENTATION_COMMIT: 11e76f9d8a82946c1629f9d31d6d7a8547299bef (on top of ce30bcd; only my paths; stage-1/2 unto",
+      "origin": "band"
     },
     {
       "sha": "eac8c612632e4c306a98e1e9f318334d2c20d9aa",
@@ -2014,7 +2080,8 @@
       "announced_at": "2026-10-02T12:22:32.487469Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": " F1b DONE (answers a1b7e097 and 33cf7fd6; one commit). IMPLEMENTATION_COMMIT: ac963602446d34d8820440410e33597f651ee56e (on top of eac8c61, includes forge's 11e76f9). Only my paths staged. ROOT CAUSE confirmed (your readi"
+      "announce_quote": " F1b DONE (answers a1b7e097 and 33cf7fd6; one commit). IMPLEMENTATION_COMMIT: ac963602446d34d8820440410e33597f651ee56e (on top of eac8c61, includes forge's 11e76f9). Only my paths staged. ROOT CAUSE confirmed (your readi",
+      "origin": "band"
     },
     {
       "sha": "ac963602446d34d8820440410e33597f651ee56e",
@@ -2034,9 +2101,10 @@
         "stage-3/snapshot.go",
         "stage-3/store.go"
       ],
-      "mention_count": 11,
+      "mention_count": 15,
       "mentioned_by": [
         "Forge",
+        "Jury",
         "Route",
         "Trace"
       ],
@@ -2044,7 +2112,8 @@
       "announced_at": "2026-10-02T12:22:32.487469Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] trace F1 + F1b DONE (answers a1b7e097 and 33cf7fd6; one commit). IMPLEMENTATION_COMMIT: ac963602446d34d8820440410e33597f651ee56e (on top of eac8c61, includes forge's 11e76f9). On"
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] trace F1 + F1b DONE (answers a1b7e097 and 33cf7fd6; one commit). IMPLEMENTATION_COMMIT: ac963602446d34d8820440410e33597f651ee56e (on top of eac8c61, includes forge's 11e76f9). On",
+      "origin": "band"
     },
     {
       "sha": "cbfc1281d905ec0163dfbb9f828d3044b184c259",
@@ -2063,7 +2132,8 @@
       "announced_at": "2026-10-02T16:47:09.409291Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "nd you one commit hash after those land and the tree is clean, so you verify once instead of twice. The rejection log is updated (cbfc128)."
+      "announce_quote": "nd you one commit hash after those land and the tree is clean, so you verify once instead of twice. The rejection log is updated (cbfc128).",
+      "origin": "band"
     },
     {
       "sha": "b2d9bf3644934c294496581b98961439d8de5e3d",
@@ -2080,16 +2150,18 @@
         "stage-3/correct_monotone_test.go",
         "stage-3/f2_probe_a4_test.go"
       ],
-      "mention_count": 5,
+      "mention_count": 7,
       "mentioned_by": [
         "Forge",
+        "Jury",
         "Route"
       ],
       "announced_by": "Forge",
       "announced_at": "2026-10-02T16:53:54.406539Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "E REPORT. Items 1+2 done in one commit. Attack verdict: defect Y (low-moderate, import-only, repro below). IMPLEMENTATION_COMMIT: b2d9bf3644934c294496581b98961439d8de5e3d (on top of cbfc128; stage-1/2 diff empty; no amen"
+      "announce_quote": "E REPORT. Items 1+2 done in one commit. Attack verdict: defect Y (low-moderate, import-only, repro below). IMPLEMENTATION_COMMIT: b2d9bf3644934c294496581b98961439d8de5e3d (on top of cbfc128; stage-1/2 diff empty; no amen",
+      "origin": "band"
     },
     {
       "sha": "71d08d4a065dc810b55c015f5a0a24d80a4a3887",
@@ -2107,7 +2179,8 @@
       "announced_at": "2026-10-02T16:54:55.408263Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": " fix and probe deletion; diff matches what I read in the working tree). E3 declined, recorded as D-IMPORT-FUTURE in decisions.md (71d08d4). Reason: only Reset must reject a future seeded created_at (stage-3.md line 17); "
+      "announce_quote": " fix and probe deletion; diff matches what I read in the working tree). E3 declined, recorded as D-IMPORT-FUTURE in decisions.md (71d08d4). Reason: only Reset must reject a future seeded created_at (stage-3.md line 17); ",
+      "origin": "band"
     },
     {
       "sha": "849b017c5f8c97c988b990b3a99b22bd1027a626",
@@ -2140,7 +2213,8 @@
       "announced_at": "2026-10-02T17:43:58.740488Z",
       "announce_msgtype": "text",
       "self_report": false,
-      "announce_quote": "expectations for those must stay green. DEPENDENCIES: none. Based on your 11e76f9 + trace ac96360 + your b2d9bf3. CURRENT_COMMIT: 849b017 (stage-3/ source identical to b2d9bf3; git diff b2d9bf3 HEAD -- stage-3 is empty)."
+      "announce_quote": "expectations for those must stay green. DEPENDENCIES: none. Based on your 11e76f9 + trace ac96360 + your b2d9bf3. CURRENT_COMMIT: 849b017 (stage-3/ source identical to b2d9bf3; git diff b2d9bf3 HEAD -- stage-3 is empty).",
+      "origin": "band"
     },
     {
       "sha": "5e6f83f0a2d9fe9e09615341dde23a376d273967",
@@ -2157,16 +2231,1055 @@
         "stage-3/import_exact_test.go",
         "stage-3/store.go"
       ],
-      "mention_count": 4,
+      "mention_count": 17,
       "mentioned_by": [
         "Forge",
-        "Route"
+        "Jury",
+        "Route",
+        "Trace"
       ],
       "announced_by": "Forge",
       "announced_at": "2026-10-02T17:49:55.900674Z",
       "announce_msgtype": "text",
       "self_report": true,
-      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] FORGE R-L1 DONE. IMPLEMENTATION_COMMIT: 5e6f83f0a2d9fe9e09615341dde23a376d273967 (parent 849b017; one commit; no amend; stage-1/2 "
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] FORGE R-L1 DONE. IMPLEMENTATION_COMMIT: 5e6f83f0a2d9fe9e09615341dde23a376d273967 (parent 849b017; one commit; no amend; stage-1/2 ",
+      "origin": "band"
+    },
+    {
+      "sha": "c830f82f79ef9c25b35521cf211a99f5557c108f",
+      "short": "c830f82",
+      "subject": "evidence(operator): provenance index mapping every commit to the room message that announced it",
+      "when": "2026-10-02T21:30:50+01:00",
+      "files": [
+        "evidence/operator/PROVENANCE.md",
+        "evidence/operator/provenance.json"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "2e76ca0c50238387640bc72d0d7528efd673e5cb",
+      "short": "2e76ca0",
+      "subject": "docs: rewrite FACTORY.md against verified evidence",
+      "when": "2026-10-02T21:32:33+01:00",
+      "files": [
+        "FACTORY.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "66b45bbc2b02c91a724c6f1015db88dbf2ffdb65",
+      "short": "66b45bb",
+      "subject": "docs: rewrite README.md against verified evidence",
+      "when": "2026-10-02T21:33:33+01:00",
+      "files": [
+        "README.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "1a3d86470f8160973a50ec44a060d30015587e25",
+      "short": "1a3d864",
+      "subject": "docs(history): record cross-attack finding L-F2-1 and the declined D-IMPORT-FUTURE",
+      "when": "2026-10-02T21:34:22+01:00",
+      "files": [
+        "history/rejections.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "8654d93d3a87fe1e59cdad7b2d2b10d090082386",
+      "short": "8654d93",
+      "subject": "evidence(operator): fresh-clone isolated verification and literal RUN.md execution",
+      "when": "2026-10-02T21:42:58+01:00",
+      "files": [
+        "evidence/operator/FRESH-CLONE-VERIFICATION.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "c6af733f14eb22f51518052c927452fdcf0bea49",
+      "short": "c6af733",
+      "subject": "evidence(operator): independent spec-literal conformance probe for stage 3",
+      "when": "2026-10-02T21:58:33+01:00",
+      "files": [
+        "evidence/operator/SPEC-PROBE.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "6359c0e10743121d6211e31af72485670aac0c5f",
+      "short": "6359c0e",
+      "subject": "evidence(stage-3): trace attack of R-L1 fix (5e6f83f placeAtCreatedExact) - legacy/imp1/imp2, jury import+hold scripts, 13 targeted created_exact cases, 2 real-legacy rand seeds; no defect",
+      "when": "2026-10-02T22:56:28+01:00",
+      "files": [
+        "evidence/stage-3/trace/f2_attack.py",
+        "evidence/stage-3/trace/rl1-attack-ahead.txt",
+        "evidence/stage-3/trace/rl1-attack-allafter.txt",
+        "evidence/stage-3/trace/rl1-attack-bad.txt",
+        "evidence/stage-3/trace/rl1-attack-corr.txt",
+        "evidence/stage-3/trace/rl1-attack-dup.txt",
+        "evidence/stage-3/trace/rl1-attack-edges.txt",
+        "evidence/stage-3/trace/rl1-attack-imp1.txt",
+        "evidence/stage-3/trace/rl1-attack-imp2.txt",
+        "evidence/stage-3/trace/rl1-attack-legacy.txt",
+        "evidence/stage-3/trace/rl1-attack-mix.txt",
+        "evidence/stage-3/trace/rl1-attack-nullabs.txt",
+        "evidence/stage-3/trace/rl1-attack-offsets.txt",
+        "evidence/stage-3/trace/rl1-attack-rand-seed29.txt",
+        "evidence/stage-3/trace/rl1-attack-rand.txt",
+        "evidence/stage-3/trace/rl1-attack-stage2.txt",
+        "evidence/stage-3/trace/rl1-attack-subus.txt",
+        "evidence/stage-3/trace/rl1-attack-summary.txt",
+        "evidence/stage-3/trace/rl1-attack-ttl1.txt",
+        "evidence/stage-3/trace/rl1-control-ac96360.txt",
+        "evidence/stage-3/trace/rl1-go-test.txt",
+        "evidence/stage-3/trace/rl1-jury-checks.txt",
+        "evidence/stage-3/trace/rl1-probe-expired.txt",
+        "evidence/stage-3/trace/rl1-probe-legacy-closed.txt",
+        "evidence/stage-3/trace/rl1_attack.py",
+        "evidence/stage-3/trace/rl1_jury_run.sh",
+        "evidence/stage-3/trace/rl1_probe_expired.py",
+        "evidence/stage-3/trace/rl1_probe_legacy_closed.py"
+      ],
+      "mention_count": 3,
+      "mentioned_by": [
+        "Route",
+        "Trace"
+      ],
+      "announced_by": "Trace",
+      "announced_at": "2026-10-02T21:56:58.384066Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "0048dcfb0f517fbd431731eb0778f (rebuilt from a fresh archive: same sha). Spec sha256 2255d3f2...6056e54 verified. EVIDENCE COMMIT: 6359c0e (evidence/stage-3/trace/ only; summary = rl1-attack-summary.txt). FILES_CHANGED: e",
+      "origin": "band"
+    },
+    {
+      "sha": "829e0536dc87e4e89beee9286f964b09cc635fc1",
+      "short": "829e053",
+      "subject": "evidence(stage-3): jury ACCEPT of 5e6f83f (R3 ledger, verdict, one-clock/seeded/legacy-import/correction-order checks with controls, regression, browser, offline, harness, race)",
+      "when": "2026-10-02T23:46:36+01:00",
+      "files": [
+        "evidence/stage-3/jury/browser/shots/runr3/after_logout_root_b1.png",
+        "evidence/stage-3/jury/browser/shots/runr3/auth_error_login_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/auth_error_signup_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/authorization_error_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/authorizations_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/authorizations_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/authorizations_after_authorize_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/empty_activity_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/empty_authorizations_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/empty_requests_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/error_authorizations.png",
+        "evidence/stage-3/jury/browser/shots/runr3/error_requests.png",
+        "evidence/stage-3/jury/browser/shots/runr3/error_wallet.png",
+        "evidence/stage-3/jury/browser/shots/runr3/expired_after_stale_capture_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/loading_authorizations.png",
+        "evidence/stage-3/jury/browser/shots/runr3/loading_requests.png",
+        "evidence/stage-3/jury/browser/shots/runr3/loading_split.png",
+        "evidence/stage-3/jury/browser/shots/runr3/loading_wallet.png",
+        "evidence/stage-3/jury/browser/shots/runr3/pay_error_decimals_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/pay_refused_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/pay_uncertain_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/request_error_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/requests_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_authorizations_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_authorizations_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_authorizations_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_login_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_login_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_login_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_requests_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_requests_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_requests_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_signup_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_signup_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_signup_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_split_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_split_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_split_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_wallet_1280.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_wallet_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/route_wallet_768.png",
+        "evidence/stage-3/jury/browser/shots/runr3/split_after_submit_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/split_preview_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/upgrade_after_retry.png",
+        "evidence/stage-3/jury/browser/shots/runr3/upgrade_before_import.png",
+        "evidence/stage-3/jury/browser/shots/runr3/upgrade_requests_after_pay.png",
+        "evidence/stage-3/jury/browser/shots/runr3/wallet_holds_375.png",
+        "evidence/stage-3/jury/browser/shots/runr3/wallet_new_user_375.png",
+        "evidence/stage-3/jury/checks/clk.py",
+        "evidence/stage-3/jury/checks/probe_r3_legacy.py",
+        "evidence/stage-3/jury/checks/probe_r3_ttl.py",
+        "evidence/stage-3/jury/checks/r3_corr_order.py",
+        "evidence/stage-3/jury/checks/r3_legacy_import.py",
+        "evidence/stage-3/jury/checks/r3_seedmatrix.py",
+        "evidence/stage-3/jury/checks/r3_sweep.py",
+        "evidence/stage-3/jury/checks/run_multi.sh",
+        "evidence/stage-3/jury/harness-r3/stage-1/report.json",
+        "evidence/stage-3/jury/harness-r3/stage-1/stage-1.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-1/stage-1.log",
+        "evidence/stage-3/jury/harness-r3/stage-1/stage-2.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-1/stage-2.log",
+        "evidence/stage-3/jury/harness-r3/stage-2/report.json",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-1.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-1.log",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-2.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-2.log",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-3.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-2/stage-3.log",
+        "evidence/stage-3/jury/harness-r3/stage-3/report.json",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-1.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-1.log",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-2.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-2.log",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-3.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-3.log",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-4.counts.json",
+        "evidence/stage-3/jury/harness-r3/stage-3/stage-4.log",
+        "evidence/stage-3/jury/harness-r3/summary.json",
+        "evidence/stage-3/jury/logs/b1_quality.runr3.log",
+        "evidence/stage-3/jury/logs/b1_quality.runr3.server.log",
+        "evidence/stage-3/jury/logs/b2_wallet.runr3.log",
+        "evidence/stage-3/jury/logs/b2_wallet.runr3.server.log",
+        "evidence/stage-3/jury/logs/b3_flows.runr3.log",
+        "evidence/stage-3/jury/logs/b3_flows.runr3.server.log",
+        "evidence/stage-3/jury/logs/b4_upgrade.runr3.log",
+        "evidence/stage-3/jury/logs/b4_upgrade.runr3.s1.server.log",
+        "evidence/stage-3/jury/logs/b4_upgrade.runr3.s2.server.log",
+        "evidence/stage-3/jury/logs/b5_visual.runr3.log",
+        "evidence/stage-3/jury/logs/b5_visual.runr3.server.log",
+        "evidence/stage-3/jury/logs/b6_states.runr3.log",
+        "evidence/stage-3/jury/logs/b6_states.runr3.server.log",
+        "evidence/stage-3/jury/logs/probe_r3_legacy.runr3probe.c1.server.log",
+        "evidence/stage-3/jury/logs/probe_r3_legacy.runr3probe.c2.server.log",
+        "evidence/stage-3/jury/logs/probe_r3_legacy.runr3probe.log",
+        "evidence/stage-3/jury/logs/probe_r3_ttl.runr3a.c1.server.log",
+        "evidence/stage-3/jury/logs/probe_r3_ttl.runr3a.c2.server.log",
+        "evidence/stage-3/jury/logs/probe_r3_ttl.runr3a.log",
+        "evidence/stage-3/jury/logs/r3-browser.summary.log",
+        "evidence/stage-3/jury/logs/r3-docker_build.log",
+        "evidence/stage-3/jury/logs/r3-gotest.log",
+        "evidence/stage-3/jury/logs/r3-gotest_race.log",
+        "evidence/stage-3/jury/logs/r3-harness.log",
+        "evidence/stage-3/jury/logs/r3-jstest.log",
+        "evidence/stage-3/jury/logs/r3-offline-and-runmd.log",
+        "evidence/stage-3/jury/logs/r3-regression.summary.log",
+        "evidence/stage-3/jury/logs/r3-run-main.summary.log",
+        "evidence/stage-3/jury/logs/r3-run-new.summary.log",
+        "evidence/stage-3/jury/logs/r3_corr_order.runr3a.log",
+        "evidence/stage-3/jury/logs/r3_corr_order.runr3a.server.log",
+        "evidence/stage-3/jury/logs/r3_corr_order.runr3ctl-ac96360.log",
+        "evidence/stage-3/jury/logs/r3_corr_order.runr3ctl-ac96360.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s5.c1.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s5.c2.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s5.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s6.c1.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s6.c2.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s6.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s7.c1.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s7.c2.server.log",
+        "evidence/stage-3/jury/logs/r3_legacy_import.runr3s7.log",
+        "evidence/stage-3/jury/logs/r3_seedmatrix.runr3a.log",
+        "evidence/stage-3/jury/logs/r3_seedmatrix.runr3a.server.log",
+        "evidence/stage-3/jury/logs/r3_seedmatrix.runr3ctl1.log",
+        "evidence/stage-3/jury/logs/r3_seedmatrix.runr3ctl1.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3ctl1.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3ctl1.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s1.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s1.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s2.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s2.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s3.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s3.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s4.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s4.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s5.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s5.server.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s6.log",
+        "evidence/stage-3/jury/logs/r3_sweep.runr3s6.server.log",
+        "evidence/stage-3/jury/logs/repro_expired_future.runr3a.c1.server.log",
+        "evidence/stage-3/jury/logs/repro_expired_future.runr3a.c2.server.log",
+        "evidence/stage-3/jury/logs/repro_expired_future.runr3a.log",
+        "evidence/stage-3/jury/logs/s1reg.c01_conservation.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c02_idempotency.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c03_validation.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c04_auth.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c05_requests_feed.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c06_reset_fixture.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c07_splits.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c08_export_import.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c09_no5xx_envelope.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c11_settlements.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c12_retries_edges.runr3.log",
+        "evidence/stage-3/jury/logs/s1reg.c13_reset_vs_me.runr3.log",
+        "evidence/stage-3/jury/logs/s2_errors.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_errors.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_expiry.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_expiry.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_export.runr3a.dst.server.log",
+        "evidence/stage-3/jury/logs/s2_export.runr3a.log",
+        "evidence/stage-3/jury/logs/s2_export.runr3a.src.server.log",
+        "evidence/stage-3/jury/logs/s2_export_expiry.runr3a.dst.server.log",
+        "evidence/stage-3/jury/logs/s2_export_expiry.runr3a.log",
+        "evidence/stage-3/jury/logs/s2_export_expiry.runr3a.src.server.log",
+        "evidence/stage-3/jury/logs/s2_fixture.runr3a.log",
+        "evidence/stage-3/jury/logs/s2_fixture.runr3a.server.log",
+        "evidence/stage-3/jury/logs/s2_fixture.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_fixture.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_funds.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_funds.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_idem.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_idem.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_lifecycle.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_lifecycle.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_list.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_list.runrr3.server.log",
+        "evidence/stage-3/jury/logs/s2_race.runrr3.log",
+        "evidence/stage-3/jury/logs/s2_race.runrr3.server.log",
+        "evidence/stage-3/jury/logs/t3_corr.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_corr.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_corr.runr3b.log",
+        "evidence/stage-3/jury/logs/t3_corr.runr3b.server.log",
+        "evidence/stage-3/jury/logs/t3_fixture.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_fixture.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3b.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3b.server.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3c.log",
+        "evidence/stage-3/jury/logs/t3_holds.runr3c.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.c1.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.c2.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.c3.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.c4.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.c5.server.log",
+        "evidence/stage-3/jury/logs/t3_import.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed11.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed11.server.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed21.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed21.server.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed45.log",
+        "evidence/stage-3/jury/logs/t3_known.runr3seed45.server.log",
+        "evidence/stage-3/jury/logs/t3_misc.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_misc.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3b.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3b.server.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3c.log",
+        "evidence/stage-3/jury/logs/t3_race.runr3c.server.log",
+        "evidence/stage-3/jury/logs/t3_scale.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_scale.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_seedholds.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_seedholds.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_settle.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_settle.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_snap.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_snap.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed21.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed21.server.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed45.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed45.server.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed7.log",
+        "evidence/stage-3/jury/logs/t3_statement.runr3seed7.server.log",
+        "evidence/stage-3/jury/logs/t3_time.runr3a.log",
+        "evidence/stage-3/jury/logs/t3_time.runr3a.server.log",
+        "evidence/stage-3/jury/logs/t3_time.runr3b.log",
+        "evidence/stage-3/jury/logs/t3_time.runr3b.server.log",
+        "evidence/stage-3/jury/logs/wsl_clock_steps.log",
+        "evidence/stage-3/jury/r3-ledger.md",
+        "evidence/stage-3/jury/r3-verdict.md",
+        "evidence/stage-3/jury/r3_browser_all.sh",
+        "evidence/stage-3/jury/r3_offline_check.sh",
+        "evidence/stage-3/jury/r3_run_main.sh",
+        "evidence/stage-3/jury/r3_run_new.sh"
+      ],
+      "mention_count": 1,
+      "mentioned_by": [
+        "Jury"
+      ],
+      "announced_by": "Jury",
+      "announced_at": "2026-10-02T22:47:16.338744Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "f5661fe7]] S3-JURY-R3 VERDICT: ACCEPT. Commit verified: 5e6f83f0a2d9fe9e09615341dde23a376d273967 (stage 3). Evidence committed as 829e053, paths under evidence/stage-3/jury/ only (r3-verdict.md, r3-ledger.md, logs/, chec",
+      "origin": "band"
+    },
+    {
+      "sha": "7b2cb447a8d56e10d73dbf0ad427fe2418752f3d",
+      "short": "7b2cb44",
+      "subject": "docs(stage-3): route summary and history, stage 3 accepted at 5e6f83f",
+      "when": "2026-10-02T23:48:12+01:00",
+      "files": [
+        "evidence/stage-3/route-summary.md",
+        "history/rejections.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "band-unannounced"
+    },
+    {
+      "sha": "ea999cf3922974da815545b7223941d7b7eab177",
+      "short": "ea999cf",
+      "subject": "chore(stage-4): copy accepted stage-3 as baseline",
+      "when": "2026-10-02T23:51:38+01:00",
+      "files": [
+        "stage-4/.dockerignore",
+        "stage-4/Dockerfile",
+        "stage-4/RUN.md",
+        "stage-4/auth.go",
+        "stage-4/auth_test.go",
+        "stage-4/authz.go",
+        "stage-4/authz_fixture_test.go",
+        "stage-4/authz_idem_test.go",
+        "stage-4/authz_race_test.go",
+        "stage-4/authz_test.go",
+        "stage-4/canon.go",
+        "stage-4/canon_test.go",
+        "stage-4/clock_ratchet_test.go",
+        "stage-4/correct.go",
+        "stage-4/correct_monotone_test.go",
+        "stage-4/correct_test.go",
+        "stage-4/corrections_in.go",
+        "stage-4/corrections_in_test.go",
+        "stage-4/decode.go",
+        "stage-4/errors.go",
+        "stage-4/fixture.go",
+        "stage-4/go.mod",
+        "stage-4/handlers_auth.go",
+        "stage-4/handlers_authz.go",
+        "stage-4/handlers_authz_test.go",
+        "stage-4/handlers_history.go",
+        "stage-4/handlers_history_query_test.go",
+        "stage-4/handlers_history_test.go",
+        "stage-4/handlers_read.go",
+        "stage-4/handlers_sys.go",
+        "stage-4/handlers_write.go",
+        "stage-4/history.go",
+        "stage-4/history_fixture_test.go",
+        "stage-4/history_test.go",
+        "stage-4/holds_one_clock_test.go",
+        "stage-4/holds_views_test.go",
+        "stage-4/idem.go",
+        "stage-4/idem_test.go",
+        "stage-4/import_attack_test.go",
+        "stage-4/import_exact_test.go",
+        "stage-4/jstest/attempt.test.mjs",
+        "stage-4/jstest/format.test.mjs",
+        "stage-4/jstest/index.js",
+        "stage-4/jstest/latest-outcome.test.mjs",
+        "stage-4/jstest/money.test.mjs",
+        "stage-4/jstest/package.json",
+        "stage-4/jstest/split-table.json",
+        "stage-4/ledger.go",
+        "stage-4/ledger_test.go",
+        "stage-4/main.go",
+        "stage-4/model.go",
+        "stage-4/respond.go",
+        "stage-4/revisions.go",
+        "stage-4/routes.go",
+        "stage-4/seeded_defaults_test.go",
+        "stage-4/server.go",
+        "stage-4/server_test.go",
+        "stage-4/settlement.go",
+        "stage-4/settlement_test.go",
+        "stage-4/snapshot.go",
+        "stage-4/snapshot_test.go",
+        "stage-4/split.go",
+        "stage-4/split_table_test.go",
+        "stage-4/statement.go",
+        "stage-4/statement_corr_test.go",
+        "stage-4/statement_prop_test.go",
+        "stage-4/statement_storm_test.go",
+        "stage-4/statement_test.go",
+        "stage-4/store.go",
+        "stage-4/sys.go",
+        "stage-4/testdata/gen_stage1_export.go",
+        "stage-4/testdata/gen_stage2_export.go",
+        "stage-4/testdata/stage1-export.json",
+        "stage-4/testdata/stage1-export.notes.txt",
+        "stage-4/testdata/stage2-export.json",
+        "stage-4/testdata/stage2-export.notes.txt",
+        "stage-4/ui.go",
+        "stage-4/ui_test.go",
+        "stage-4/upgrade_stage2_test.go",
+        "stage-4/upgrade_test.go",
+        "stage-4/validate.go",
+        "stage-4/validate_test.go",
+        "stage-4/views_invariant_test.go",
+        "stage-4/web/css/base.css",
+        "stage-4/web/css/components.css",
+        "stage-4/web/css/tokens.css",
+        "stage-4/web/fonts/OFL-DM-Sans.txt",
+        "stage-4/web/fonts/OFL-Inter.txt",
+        "stage-4/web/fonts/dm-sans.woff2",
+        "stage-4/web/fonts/inter.woff2",
+        "stage-4/web/index.html",
+        "stage-4/web/js/activity.js",
+        "stage-4/web/js/api.js",
+        "stage-4/web/js/attempt.js",
+        "stage-4/web/js/dom.js",
+        "stage-4/web/js/feedback.js",
+        "stage-4/web/js/format.js",
+        "stage-4/web/js/latest.js",
+        "stage-4/web/js/main.js",
+        "stage-4/web/js/messages.js",
+        "stage-4/web/js/money.js",
+        "stage-4/web/js/outcome.js",
+        "stage-4/web/js/package.json",
+        "stage-4/web/js/page-auth.js",
+        "stage-4/web/js/page-authorizations.js",
+        "stage-4/web/js/page-requests.js",
+        "stage-4/web/js/page-split.js",
+        "stage-4/web/js/page-wallet.js",
+        "stage-4/web/js/refresh.js",
+        "stage-4/web/js/requestForm.js",
+        "stage-4/web/js/session.js",
+        "stage-4/web/js/shell.js",
+        "stage-4/web/js/status.js",
+        "stage-4/web/js/transferForm.js",
+        "stage-4/web/js/wallet.js",
+        "stage-4/web/js/writes.js"
+      ],
+      "mention_count": 4,
+      "mentioned_by": [
+        "Route"
+      ],
+      "announced_by": "Route",
+      "announced_at": "2026-10-02T22:54:42.831212Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "s/{id}/refunds against YOUR API below; trace writes batch corrections and needs your refundedAmount and isRefund. CURRENT_COMMIT: ea999cf (stage-4 baseline, byte-identical to 5e6f83f stage-3 source) + ledger 5e80adb. FIL",
+      "origin": "band"
+    },
+    {
+      "sha": "5e80adb295de2a9bd4584404224aaefca33b38b4",
+      "short": "5e80adb",
+      "subject": "docs(stage-4): requirement ledger U01-U43, B01-B12",
+      "when": "2026-10-02T23:51:39+01:00",
+      "files": [
+        "evidence/stage-4/requirement-ledger.md"
+      ],
+      "mention_count": 4,
+      "mentioned_by": [
+        "Route"
+      ],
+      "announced_by": "Route",
+      "announced_at": "2026-10-02T22:54:42.831212Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "s your refundedAmount and isRefund. CURRENT_COMMIT: ea999cf (stage-4 baseline, byte-identical to 5e6f83f stage-3 source) + ledger 5e80adb. FILES_OWNED: stage-4/refund.go (new), stage-4/refund_test.go (new), stage-4/corre",
+      "origin": "band"
+    },
+    {
+      "sha": "ada0ac3e832ec6bcd47417bfc4eb7cf7844c629c",
+      "short": "ada0ac3",
+      "subject": "feat(stage-4): refund domain API - Payment.refund_of, State.Refund, refundedAmount, isRefund",
+      "when": "2026-10-02T23:56:13+01:00",
+      "files": [
+        "stage-4/model.go",
+        "stage-4/refund.go"
+      ],
+      "mention_count": 4,
+      "mentioned_by": [
+        "Forge",
+        "Loom"
+      ],
+      "announced_by": "Forge",
+      "announced_at": "2026-10-02T22:56:18.716086Z",
+      "announce_msgtype": "text",
+      "self_report": true,
+      "announce_quote": "@[[b8e91848-9fb5-4867-b94e-88e037ed0a78]] @[[a7612512-1148-46fc-a2bb-676679e27b36]] forge phase A committed: ada0ac3e832ec6bcd47417bfc4eb7cf7844c629c (stage-4/refund.go, Payment.RefundOf in model.go)",
+      "origin": "band"
+    },
+    {
+      "sha": "3a61608e74e98a6d426d7c84e2eca8097283ac3f",
+      "short": "3a61608",
+      "subject": "feat(stage-4): POST /payments/{id}/refunds handler and route tests (loom)",
+      "when": "2026-10-02T23:57:19+01:00",
+      "files": [
+        "stage-4/handlers_refund.go",
+        "stage-4/handlers_refund_test.go"
+      ],
+      "mention_count": 3,
+      "mentioned_by": [
+        "Jury",
+        "Loom"
+      ],
+      "announced_by": "Loom",
+      "announced_at": "2026-10-03T02:55:07.335994Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "loom S4-LOOM-UI ready for your browser attack. IMPLEMENTATION_COMMIT 620e5df17542444bc265ca971709fb21e428daca (handler earlier at 3a61608; domain by forge at ada0ac3, 53fdc42, f2698c2). Repo D:\\project\\dolphin-tank\\band-",
+      "origin": "band"
+    },
+    {
+      "sha": "53fdc42b55ffc9e0c2064574262e331b1dc3954f",
+      "short": "53fdc42",
+      "subject": "feat(stage-4): refund limits in Correct, refund domain tests, refund_of in upgrade expectations (forge)",
+      "when": "2026-10-03T03:47:44+01:00",
+      "files": [
+        "stage-4/correct.go",
+        "stage-4/refund_test.go",
+        "stage-4/upgrade_test.go"
+      ],
+      "mention_count": 3,
+      "mentioned_by": [
+        "Forge",
+        "Loom"
+      ],
+      "announced_by": "Forge",
+      "announced_at": "2026-10-03T02:52:47.069650Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "ain, repo D:\\project\\dolphin-tank\\band-work\\result). Chain: ada0ac3 (Payment.RefundOf, State.Refund, refundedAmount, isRefund) -> 53fdc42 (Correct changes, tests) -> f2698c2 (extra test + decisions). SPECIFICATION_HASH: ",
+      "origin": "band"
+    },
+    {
+      "sha": "f2698c29fabf99fb648243cc80bb7c3a472c7481",
+      "short": "f2698c2",
+      "subject": "test(stage-4): correction debits vs held funds and historical overdraft with a refund; forge decisions (forge)",
+      "when": "2026-10-03T03:50:50+01:00",
+      "files": [
+        "evidence/stage-4/forge/decisions.md",
+        "stage-4/refund_test.go"
+      ],
+      "mention_count": 13,
+      "mentioned_by": [
+        "Forge",
+        "Jury",
+        "Loom",
+        "Route"
+      ],
+      "announced_by": "Forge",
+      "announced_at": "2026-10-03T02:52:47.069650Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "69230]] S4-FORGE-REFUNDS handoff for review. Every command below is reproducible; do not trust my summary. IMPLEMENTATION_COMMIT: f2698c29fabf99fb648243cc80bb7c3a472c7481 (branch main, repo D:\\project\\dolphin-tank\\band-w",
+      "origin": "band"
+    },
+    {
+      "sha": "620e5df17542444bc265ca971709fb21e428daca",
+      "short": "620e5df",
+      "subject": "feat(stage-4): refund control in the wallet feed, Refund-of label, UI tests, stage-4 RUN.md and image name, browser evidence",
+      "when": "2026-10-03T03:54:05+01:00",
+      "files": [
+        "evidence/stage-4/loom/decisions.md",
+        "evidence/stage-4/loom/logs/docker_build.log",
+        "evidence/stage-4/loom/logs/go_js_checks.log",
+        "evidence/stage-4/loom/logs/ui_refund.log",
+        "evidence/stage-4/loom/logs/ui_upgrade.log",
+        "evidence/stage-4/loom/scripts/common.py",
+        "evidence/stage-4/loom/scripts/ui_refund.py",
+        "evidence/stage-4/loom/scripts/ui_upgrade.py",
+        "evidence/stage-4/loom/shots/refund-320.png",
+        "evidence/stage-4/loom/shots/refund-640.png",
+        "evidence/stage-4/loom/shots/refund-idle-1280.png",
+        "evidence/stage-4/loom/shots/refund-idle-375.png",
+        "evidence/stage-4/loom/shots/refund-idle-768.png",
+        "evidence/stage-4/loom/shots/refund-quality-1280.png",
+        "evidence/stage-4/loom/shots/refund-quality-375.png",
+        "evidence/stage-4/loom/shots/refund-quality-768.png",
+        "evidence/stage-4/loom/shots/refund-refused-1280.png",
+        "evidence/stage-4/loom/shots/refund-refused-375.png",
+        "evidence/stage-4/loom/shots/refund-refused-768.png",
+        "evidence/stage-4/loom/shots/refund-sending-1280.png",
+        "evidence/stage-4/loom/shots/refund-sending-375.png",
+        "evidence/stage-4/loom/shots/refund-sending-768.png",
+        "evidence/stage-4/loom/shots/refund-success-1280.png",
+        "evidence/stage-4/loom/shots/refund-success-375.png",
+        "evidence/stage-4/loom/shots/refund-success-768.png",
+        "evidence/stage-4/loom/shots/refund-uncertain-1280.png",
+        "evidence/stage-4/loom/shots/refund-uncertain-375.png",
+        "evidence/stage-4/loom/shots/refund-uncertain-768.png",
+        "evidence/stage-4/loom/shots/upgrade-refund-1280.png",
+        "evidence/stage-4/loom/shots/upgrade-refund-375.png",
+        "evidence/stage-4/loom/shots/upgrade-wallet-1280.png",
+        "evidence/stage-4/loom/shots/upgrade-wallet-375.png",
+        "stage-4/Dockerfile",
+        "stage-4/RUN.md",
+        "stage-4/jstest/refund-math.test.mjs",
+        "stage-4/ui_test.go",
+        "stage-4/web/css/base.css",
+        "stage-4/web/css/components.css",
+        "stage-4/web/js/activity.js",
+        "stage-4/web/js/dom.js",
+        "stage-4/web/js/messages.js",
+        "stage-4/web/js/page-wallet.js",
+        "stage-4/web/js/refund-math.js",
+        "stage-4/web/js/refund.js",
+        "stage-4/web/js/writes.js"
+      ],
+      "mention_count": 5,
+      "mentioned_by": [
+        "Forge",
+        "Jury",
+        "Loom",
+        "Route"
+      ],
+      "announced_by": "Loom",
+      "announced_at": "2026-10-03T02:55:07.335994Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "@[[f8154972-a884-413a-90dc-6e9a59d69230]] loom S4-LOOM-UI ready for your browser attack. IMPLEMENTATION_COMMIT 620e5df17542444bc265ca971709fb21e428daca (handler earlier at 3a61608; domain by forge at a",
+      "origin": "band"
+    },
+    {
+      "sha": "e3eb44cc80732b79b703c6f0bcd4f41ee8b306a6",
+      "short": "e3eb44c",
+      "subject": "feat(stage-4): POST /correction-batches, Revision.correction_batch_id, real stage-3 export fixture and batch/import tests (trace)",
+      "when": "2026-10-03T03:58:03+01:00",
+      "files": [
+        "stage-4/correct_batch.go",
+        "stage-4/correct_batch_test.go",
+        "stage-4/handlers_batch.go",
+        "stage-4/model.go",
+        "stage-4/store.go",
+        "stage-4/testdata/gen_stage3_export.go",
+        "stage-4/testdata/stage3-export.json",
+        "stage-4/testdata/stage3-export.notes.txt",
+        "stage-4/upgrade_batch_test.go"
+      ],
+      "mention_count": 6,
+      "mentioned_by": [
+        "Route",
+        "Trace"
+      ],
+      "announced_by": "Trace",
+      "announced_at": "2026-10-03T03:01:36.201961Z",
+      "announce_msgtype": "text",
+      "self_report": true,
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] S4-TRACE-BATCH done. IMPLEMENTATION_COMMIT: e3eb44cc80732b79b703c6f0bcd4f41ee8b306a6 (evidence commit 1b15e8964729c4d3c1d4592c728f1afe",
+      "origin": "band"
+    },
+    {
+      "sha": "1b15e8964729c4d3c1d4592c728f1afe20eb0004",
+      "short": "1b15e89",
+      "subject": "evidence(stage-4): trace batch corrections - decisions, black-box run on exports from the stage 1/2/3 commits, mutation check, suite output",
+      "when": "2026-10-03T04:00:58+01:00",
+      "files": [
+        "evidence/stage-4/trace/batch_blackbox.py",
+        "evidence/stage-4/trace/blackbox-run.txt",
+        "evidence/stage-4/trace/decisions.md",
+        "evidence/stage-4/trace/go-full-suite.txt",
+        "evidence/stage-4/trace/go-test-batch-verbose.txt",
+        "evidence/stage-4/trace/mutation-check.txt"
+      ],
+      "mention_count": 4,
+      "mentioned_by": [
+        "Route",
+        "Trace"
+      ],
+      "announced_by": "Trace",
+      "announced_at": "2026-10-03T03:01:36.201961Z",
+      "announce_msgtype": "text",
+      "self_report": true,
+      "announce_quote": "1e-4c8d-bdd0-8392f5661fe7]] S4-TRACE-BATCH done. IMPLEMENTATION_COMMIT: e3eb44cc80732b79b703c6f0bcd4f41ee8b306a6 (evidence commit 1b15e8964729c4d3c1d4592c728f1afe20eb0004) FILES_CHANGED: stage-4/correct_batch.go, handler",
+      "origin": "band"
+    },
+    {
+      "sha": "1dd55604328167f20af96d6c69989289381bbf47",
+      "short": "1dd5560",
+      "subject": "test(stage-4): stage-3 expectations follow Revision.correction_batch_id null (edited by forge, committed by trace)",
+      "when": "2026-10-03T04:02:08+01:00",
+      "files": [
+        "stage-4/correct_test.go",
+        "stage-4/handlers_history_test.go",
+        "stage-4/upgrade_test.go"
+      ],
+      "mention_count": 13,
+      "mentioned_by": [
+        "Forge",
+        "Route",
+        "Trace"
+      ],
+      "announced_by": "Trace",
+      "announced_at": "2026-10-03T07:44:32.606585Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "@[[e865f6d9-9919-444a-9758-cab52c00f4da]] already done. Commit 1dd55604328167f20af96d6c69989289381bbf47 holds your three test files (correct_test.go, han",
+      "origin": "band"
+    },
+    {
+      "sha": "5a951dbc95eee3666d72c260bd96445b2f7e7a8f",
+      "short": "5a951db",
+      "subject": "evidence(stage-4): trace attack on refunds x batch corrections - 83 black-box checks on a clean 1dd5560 build, all pass; sensitivity mutants",
+      "when": "2026-10-03T08:51:20+01:00",
+      "files": [
+        "evidence/stage-4/trace/attack/attack-run.txt",
+        "evidence/stage-4/trace/attack/build.txt",
+        "evidence/stage-4/trace/attack/mutation-check.txt",
+        "evidence/stage-4/trace/attack/refund_attack.py"
+      ],
+      "mention_count": 2,
+      "mentioned_by": [
+        "Route",
+        "Trace"
+      ],
+      "announced_by": "Trace",
+      "announced_at": "2026-10-03T07:51:49.367440Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] S4-TRACE-ATTACK-REFUND: no defects. All 83 checks PASS, 6/6 cases. Evidence commit 5a951dbc95eee3666d72c260bd96445b2f7e7a8f. It adds only evidence/stage-4/trace/attack/: ref",
+      "origin": "band"
+    },
+    {
+      "sha": "2eba3ace25bc347cfa3b83692cd51281639f9ba1",
+      "short": "2eba3ac",
+      "subject": "evidence(stage-4): forge attack of batch corrections at 1dd5560 - HTTP script (12 scenarios), clean run 297 PASS, mutation check, report (forge)",
+      "when": "2026-10-03T09:08:13+01:00",
+      "files": [
+        "evidence/stage-4/forge/attack/batch_attack.py",
+        "evidence/stage-4/forge/attack/mutation-check.txt",
+        "evidence/stage-4/forge/attack/report.md",
+        "evidence/stage-4/forge/attack/run-clean-1dd5560.txt"
+      ],
+      "mention_count": 2,
+      "mentioned_by": [
+        "Forge",
+        "Route"
+      ],
+      "announced_by": "Forge",
+      "announced_at": "2026-10-03T08:08:41.523656Z",
+      "announce_msgtype": "text",
+      "self_report": false,
+      "announce_quote": "@[[0a3e7847-f11e-4c8d-bdd0-8392f5661fe7]] S4-FORGE-ATTACK-BATCH: no defect found. Evidence is committed at 2eba3ace25bc347cfa3b83692cd51281639f9ba1 (evidence/stage-4/forge/attack/ only; stage-4\\ un",
+      "origin": "band"
+    },
+    {
+      "sha": "f2d512b7814b6230c7b2aaa9ff02772f3e1e8b01",
+      "short": "f2d512b",
+      "subject": "evidence(stage-4): jury ACCEPT of 1dd5560 batch corrections (697 own checks, 11/11 mutations, real stage-1/2/3 imports, 26 earlier scripts on the image) and forge-refunds verdict",
+      "when": "2026-10-03T09:25:46+01:00",
+      "files": [
+        "evidence/stage-4/jury/forge-refunds/VERDICT.md",
+        "evidence/stage-4/jury/forge-refunds/go-test-full-f2698c2.log",
+        "evidence/stage-4/jury/forge-refunds/jury-and-refund-tests.log",
+        "evidence/stage-4/jury/forge-refunds/jury_s4_refund_test.go",
+        "evidence/stage-4/jury/trace-batch/VERDICT.md",
+        "evidence/stage-4/jury/trace-batch/gaps.md",
+        "evidence/stage-4/jury/trace-batch/go-test-full-1dd5560.log",
+        "evidence/stage-4/jury/trace-batch/hostile-individual.txt",
+        "evidence/stage-4/jury/trace-batch/jlib.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_1.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_2.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_3.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_4.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_5.py",
+        "evidence/stage-4/jury/trace-batch/jury_batch_6.py",
+        "evidence/stage-4/jury/trace-batch/mutate.py",
+        "evidence/stage-4/jury/trace-batch/mutation-check-m3-m6.txt",
+        "evidence/stage-4/jury/trace-batch/mutation-check.txt",
+        "evidence/stage-4/jury/trace-batch/node-test-1dd5560.log",
+        "evidence/stage-4/jury/trace-batch/part1-run.txt",
+        "evidence/stage-4/jury/trace-batch/part2-run.txt",
+        "evidence/stage-4/jury/trace-batch/part3-run.txt",
+        "evidence/stage-4/jury/trace-batch/part4-run.txt",
+        "evidence/stage-4/jury/trace-batch/part5-run.txt",
+        "evidence/stage-4/jury/trace-batch/part6-run.txt",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c01_conservation.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c02_idempotency.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c03_validation.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c04_auth.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c05_requests_feed.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c06_reset_fixture.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c07_splits.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c08_export_import.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c09_no5xx_envelope.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c11_settlements.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c12_retries_edges.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.c13_reset_vs_me.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s1reg.d2_smoke.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_errors.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_expiry.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_export.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_export_expiry.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_fixture.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_funds.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_idem.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_lifecycle.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_list.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s2reg.s2_race.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s3chk.probe_shapes.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s3chk.r3_corr_order.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s3chk.r3_seedmatrix.log",
+        "evidence/stage-4/jury/trace-batch/reg-logs/s3chk.r3_sweep.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c01_conservation.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c02_idempotency.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c03_validation.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c04_auth.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c05_requests_feed.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c06_reset_fixture.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c07_splits.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c08_export_import.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c09_no5xx_envelope.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c11_settlements.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c12_retries_edges.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/c13_reset_vs_me.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/d2_smoke.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/probe_shapes.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/r3_corr_order.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/r3_seedmatrix.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/r3_sweep.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_errors.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_expiry.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_export.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_export_expiry.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_fixture.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_funds.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_idem.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_lifecycle.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_list.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-logs/s2_race.log",
+        "evidence/stage-4/jury/trace-batch/reg-wsl-run.txt",
+        "evidence/stage-4/jury/trace-batch/regression-run-2.txt",
+        "evidence/stage-4/jury/trace-batch/regression-run.txt",
+        "evidence/stage-4/jury/trace-batch/run_reg.py",
+        "evidence/stage-4/jury/trace-batch/run_wsl_reg.sh"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "band-unannounced"
+    },
+    {
+      "sha": "4c20e6c26e9609058f2f234e21d7d1ecc281848a",
+      "short": "4c20e6c",
+      "subject": "evidence(operator): fresh-clone verification of all four stages, grading mode",
+      "when": "2026-10-03T09:49:15+01:00",
+      "files": [
+        "evidence/operator/FRESH-CLONE-VERIFICATION.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "85a3ee6d25843309c5c274d841486d64ec36cd9a",
+      "short": "85a3ee6",
+      "subject": "docs: bring README.md and FACTORY.md up to date with stage 4",
+      "when": "2026-10-03T09:52:03+01:00",
+      "files": [
+        "FACTORY.md",
+        "README.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "fd8bdc27f27e0a26595ffd091776048381add6ac",
+      "short": "fd8bdc2",
+      "subject": "evidence(operator): product-quality gate for the stage-4 browser product",
+      "when": "2026-10-03T10:21:17+01:00",
+      "files": [
+        "evidence/operator/PRODUCT-QUALITY.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "129618196a14aa9ec9f20d183f00273314104b35",
+      "short": "1296181",
+      "subject": "docs: disclose the two accessibility findings from the product-quality gate",
+      "when": "2026-10-03T10:22:02+01:00",
+      "files": [
+        "FACTORY.md",
+        "README.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
+    },
+    {
+      "sha": "ec466fb114ce21a39909248665acd348bc7aef56",
+      "short": "ec466fb",
+      "subject": "docs: correct the measured autonomy figures against a fresh room scan",
+      "when": "2026-10-03T10:24:42+01:00",
+      "files": [
+        "FACTORY.md",
+        "README.md"
+      ],
+      "mention_count": 0,
+      "mentioned_by": [],
+      "announced_by": null,
+      "announced_at": null,
+      "announce_msgtype": null,
+      "self_report": false,
+      "announce_quote": null,
+      "origin": "operator"
     }
   ]
 }
