@@ -3,8 +3,8 @@
 **Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
 **Submitted room:** `5dd42746-f387-4763-afe0-f96d8f504f71`
 **Actual runtime:** Claude Code, model `claude-sonnet-5-5`, five seats
-**Document state:** 2026-10-03 08:50 UTC (09:50 BST). Stages 1–3 accepted; stage 4 two of three
-acceptance items accepted, the last in review — read §10 before quoting anything from this file.
+**Document state:** 2026-10-03 21:30 UTC. All four stages accepted (stage 4 source `1dd5560`);
+`room.json` present — read §10 before quoting anything from this file.
 
 This document was written by the operator, as the participant guide requires. Every number in
 it comes from a command that was run or a file in this repository. Where something is not
@@ -116,7 +116,7 @@ worth something if the reviewer is also fallible and shows it.
 | 3 | `5e6f83f` | **ACCEPT** | `evidence/stage-3/jury/r3-verdict.md` (`829e053`) |
 | 4 | `f2698c2` refunds | **ACCEPT** | `evidence/stage-4/jury/forge-refunds/VERDICT.md` |
 | 4 | `1dd5560` batch corrections | **ACCEPT** | `evidence/stage-4/jury/trace-batch/VERDICT.md` (`f2d512b`) |
-| 4 | browser UI + Docker + regression | **in review** | `evidence/stage-4/jury/final/` |
+| 4 | browser UI + Docker + regression | **ACCEPT** | `evidence/stage-4/jury/final/VERDICT.md` (`86bf3a7`) |
 
 ## 6. A real rejected candidate, and the repair path
 
@@ -202,7 +202,7 @@ The guide requires that, from a stage dispatch until the coordinator's final rep
 dispatched task is the only human input**, and that an implementer never pauses waiting for a
 reply.
 
-The room log contains **7,004 messages. Exactly seven are human text** (plus one system
+The room log contains **7,216 messages. Exactly seven are human text** (plus one system
 "participant joined" event, which carries no instruction). All seven were extracted and read in
 full, and the count was re-verified from the raw room pages on 2026-10-03 rather than assumed:
 
@@ -246,12 +246,12 @@ From `band usage rooms`, which reports catalog **estimates at list prices, not p
 billing**:
 
 ```text
-room 5dd42746 (submitted run)   44 sessions   412,512,626 tokens   $169.63
-   @trace  $48.12   (28.4%)
-   @jury   $42.33   (25.0%)
-   @forge  $31.09   (18.3%)
-   @route  $24.54   (14.5%)
-   @loom   $23.55   (13.9%)
+room 5dd42746 (submitted run)   53 sessions   469,083,054 tokens   $189.42
+   @jury   $52.69   (27.8%)
+   @trace  $50.31   (26.6%)
+   @forge  $35.95   (19.0%)
+   @route  $26.53   (14.0%)
+   @loom   $23.94   (12.6%)
 room 7e2f1aa9 (earlier Codex attempt)  $47.08
 room a4b60871 (toy rehearsal)         $15.26
 ```
@@ -265,7 +265,7 @@ and long idle gaps, so it is not active model time** — active model time is no
 not claimed.
 
 For scale: the full four-stage chain reached, with one rejection/repair cycle and two cross-attacks
-that found nothing, cost about **$170 of model spend**.
+that found nothing, cost about **$189 of model spend** (estimate at list prices).
 
 ## 10. Known limitations
 
@@ -318,9 +318,9 @@ that found nothing, cost about **$170 of model spend**.
 8. At the end, download the **full** room session as `room.json`, run `harness check`, then
    verify every claimed stage from a fresh clone in isolated mode.
 
-What this costs: five seats, one coordinator, and roughly **$120 of model spend** to reach
-accepted stage 2 and a working stage 3 for a four-stage financial service — including one full
-rejection/repair cycle and one cross-attack that found a third defect.
+What this costs: five seats, one coordinator, and about **$189 of model spend** (list-price
+estimate) for an accepted four-stage financial service — including one full rejection/repair
+cycle and one cross-attack that found a third defect.
 
 ## 12. Where to look
 

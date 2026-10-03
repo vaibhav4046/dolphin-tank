@@ -116,7 +116,7 @@ usage limit had interrupted the acceptor once. The provider
 usage limit ended seat turns several times across the run; recovery meant restarting the affected
 runtimes so Band would redeliver the queued handoffs, which is a daemon operation and added
 **nothing** to the room. Disclosed in [`FACTORY.md`](FACTORY.md) §8, together with the measured
-fact that of 7,004 room messages exactly **seven are human** — four legitimate stage dispatches
+fact that of 7,216 room messages exactly **seven are human** — four legitimate stage dispatches
 and three provider-quota resumes — and that **no seat ever asked the operator for anything**:
 every seat→operator message is a status report, not a question. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
 it inside a container. All commits share one Git identity, so distribution is evidenced by the
