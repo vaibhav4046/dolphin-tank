@@ -106,7 +106,7 @@ python -m harness check <path-to-clone> --track pocketful
 | Which seat announced which commit? | [`evidence/operator/PROVENANCE.md`](evidence/operator/PROVENANCE.md) |
 | Rejections and repairs | [`history/`](history/) and [`evidence/stage-3/decisions.md`](evidence/stage-3/decisions.md) |
 | Measured cost and elapsed time | [`FACTORY.md`](FACTORY.md) §9 |
-| Live demo and video | not yet produced |
+| Showcase, demo video and deck | [showcase](https://dolphin-tank.vercel.app) · [video](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-demo.mp4) · [deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) |
 
 ## Honest limitations
 
