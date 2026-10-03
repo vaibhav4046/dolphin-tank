@@ -1,0 +1,91 @@
+binary: C:/Users/lalwa/AppData/Local/Temp/s4clean/pocketful.exe
+== (1) refund vs batch race on one payment: refund 60 vs batch correct to 50 (p_1 = 100)
+PASS exactly one of refund/batch wins every time, loser 422 refund_exceeds_payment, balances exact (60 runs: {'refund-won': 31, 'batch-won': 29})
+PASS both interleavings were exercised
+PASS 3 refunds of 40 + batch to 50: only 201/422 refund_exceeds_payment, refunded <= amount, ledger exact ({'batch422-refunds2': 35, 'batch201-refunds1': 25})
+== (2) refund of settlement members, then a batch over the whole settlement below / at the refunded amounts
+PASS prelude: refunds 201, refund_of names the member, request/authorization/settlement null
+PASS prelude audit exact (m1 40 refunded 30, m2 30 refunded 10, m3 25 refunded 20)
+PASS prelude balances
+PASS batch with every member below its refunded amount -> 422 refund_exceeds_payment, nothing changes
+PASS batch, only m1 one below (29 < 30) -> 422 refund_exceeds_payment
+PASS batch, only m2 one below (9 < 10) -> 422 refund_exceeds_payment
+PASS batch, only m3 one below (19 < 20) -> 422 refund_exceeds_payment
+PASS batch at exactly the refunded amounts -> 201
+PASS 201 carries one batch id on 3 revisions of revision 2, input order
+PASS money after: every payment equals what was refunded, so wallets are back to 1000/500/100/0
+PASS audit exact after the batch (refunded <= current amount, wallets re-derived from the export)
+PASS replay of the batch -> 200 identical bytes
+PASS refund 1 more of p_1 (refunded == current amount) -> 422 refund_exceeds_payment
+PASS refund 1 more of p_2 (refunded == current amount) -> 422 refund_exceeds_payment
+PASS refund 1 more of p_3 (refunded == current amount) -> 422 refund_exceeds_payment
+PASS batch on revision 2 below the (unchanged) refunded amount -> 422 refund_exceeds_payment
+PASS replay of an earlier refund after the batch -> 200 original body
+== (4) batch below refunded + single correction on the same payment, concurrently (p_1 = 100, refunded 60)
+PASS 4a batch to 50 (below refunded) vs single correction to 80: single wins once, batch never, ledger exact (60 runs: {'single-won-batch-409': 31, 'single-won-batch-422': 29})
+PASS 4b batch to 50 vs single correction to 55, both below refunded: both 422, export byte-identical (60 runs: {'both-422': 60})
+PASS 4c batch to 65 vs single correction to 70 (both >= refunded, same expected_revision): exactly one wins, loser 409 stale_revision (60 runs: {'single-won': 34, 'batch-won': 26})
+PASS 4c both interleavings exercised
+PASS 4d single correction to 60 (= refunded) vs refund of 10 more: exactly one wins, loser 422 refund_exceeds_payment (60 runs: {'refund-won': 28, 'correction-won': 32})
+PASS 4d both interleavings exercised
+== (5) refund of a capture, then a batch containing that capture
+PASS capture payment carries the authorization id
+PASS refund of a capture -> 201, refund_of names the capture, authorization_id null, request_id null
+PASS refund of the capture above its amount (50 + 101 > 150) -> 422 refund_exceeds_payment
+PASS authorization records unchanged by the refund (no reopen, status kept)
+PASS released hold not restored: ada held is 0 and available == balance
+PASS audit exact after capture + refund
+PASS batch containing the refunded capture -> 422 linked_payment_immutable
+PASS batch of an ordinary payment then the capture -> 422 linked_payment_immutable, p_1 untouched
+PASS batch of the capture then a stale ordinary item: input order, first failure wins -> linked_payment_immutable
+PASS batch of a stale ordinary item then the capture -> 409 stale_revision (input order)
+PASS batch containing the refund payment of the capture -> 422 linked_payment_immutable
+PASS batch of the capture to the refunded amount or below is still immutable (not refund_exceeds_payment)
+PASS single correction of the capture -> 422 linked_payment_immutable
+PASS refund of the refund payment -> 422 invalid_refund_target
+PASS ledger and authorizations unchanged after all refused batches
+PASS control: an ordinary payment alone in a batch is still accepted -> 201
+PASS audit exact at the end
+== (6) refunds of settlement members do not change membership
+PASS membership after refunds is exactly the three original payments
+PASS every refund payment has settlement_id null in the export
+PASS batch with two of three members (refunds exist) -> 422 incomplete_settlement
+PASS batch naming the three members and one refund payment -> 422 linked_payment_immutable
+PASS batch with different instants over the members -> 422 validation_failed (instants rule still applies)
+PASS batch with only the original members (still complete, mixed offset spellings of one instant) -> 201
+PASS membership unchanged after the batch
+PASS refund payments still settlement_id null after the batch
+PASS audit exact
+PASS a further refund of a corrected member (35 - 30 = 5 left) -> 201 and its settlement_id is null
+PASS membership still the three after the further refund
+PASS second batch over the members after the further refund -> 201 (membership still complete)
+PASS audit exact at the end
+== (3) import of a state that already holds refunds (fresh process), then a batch over it
+PASS export of the imported state is byte-identical (refund_of, ids, keys survive)
+PASS audit exact on the imported state
+PASS refund replay for p_1 after import -> 200 original body
+PASS refund replay for p_2 after import -> 200 original body
+PASS refund replay for p_3 after import -> 200 original body
+PASS refund replay for p_4 after import -> 200 original body
+PASS after import: batch p_1 to 59 (refunded 60) -> 422 refund_exceeds_payment
+PASS after import: batch over the settlement, m3 at 19 (refunded 20) -> 422 refund_exceeds_payment
+PASS after import: single correction of p_1 to 59 (refunded 60) -> 422 refund_exceeds_payment
+PASS after import: refund p_1 41 more (60+41 > 100) -> 422 refund_exceeds_payment
+PASS after import: refund of an imported refund -> 422 invalid_refund_target
+PASS after import: batch naming an imported refund payment -> 422 linked_payment_immutable
+PASS after import: single correction of an imported refund payment -> 422 linked_payment_immutable
+PASS after import: batch at exactly the refunded amounts (p_1 + whole settlement) -> 201
+PASS after import + batch: audit exact
+PASS after import + batch: every payment equals its refunded amount, so ada/bob hold opening 1100/400 (p_1 seeded 100 before the fixture balances)
+PASS after import + batch: refund 1 more of p_1 -> 422 refund_exceeds_payment
+PASS after import + batch: refund 1 more of p_2 -> 422 refund_exceeds_payment
+PASS after import + batch: refund 1 more of p_3 -> 422 refund_exceeds_payment
+PASS after import + batch: refund 1 more of p_4 -> 422 refund_exceeds_payment
+PASS second round trip (state with refunds AND batch revisions) byte-identical
+PASS second round trip: batch p_1 to 59 on revision 2 -> 422 refund_exceeds_payment
+PASS second round trip: batch replay -> 200 identical bytes
+PASS limit after import: refund m1 remainder + 1 (10+1) -> 422 refund_exceeds_payment
+PASS limit after import: refund exactly the remainder (10) -> 201
+PASS limit after import: then 1 more -> 422 refund_exceeds_payment
+PASS audit exact after the remainder refund
+ALL PASSED

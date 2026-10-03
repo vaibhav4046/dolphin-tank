@@ -1,0 +1,37 @@
+### mutant A
+FAIL exactly one of refund/batch wins every time, loser 422 refund_exceeds_payment, balances exact (8 runs: {'batch-won': 4, 'BAD': 4}) :: [(1, 201, '{"payment_id":"p_2",
+FAIL both interleavings were exercised :: {'batch-won': 4, 'BAD': 4}
+FAIL 3 refunds of 40 + batch to 50: only 201/422 refund_exceeds_payment, refunded <= amount, ledger exact ({'batch201-refunds2': 3, 'batch201-refunds1': 5}) :: [(0, [201,
+FAIL batch with every member below its refunded amount -> 422 refund_exceeds_payment, nothing changes :: got 201 {"correction_batch_id":"cb_1","recorded_at":"2026-10-03T0
+FAIL batch, only m1 one below (29 < 30) -> 422 refund_exceeds_payment :: got 409 {"error":{"code":"stale_revision","message":"expected_revision is not the latest revision
+FAIL batch, only m2 one below (9 < 10) -> 422 refund_exceeds_payment :: got 409 {"error":{"code":"stale_revision","message":"expected_revision is not the latest revision"
+FAIL batch, only m3 one below (19 < 20) -> 422 refund_exceeds_payment :: got 409 {"error":{"code":"stale_revision","message":"expected_revision is not the latest revision
+FAIL batch at exactly the refunded amounts -> 201 :: 409 {"error":{"code":"stale_revision","message":"expected_revision is not the latest revision"}}
+FAIL money after: every payment equals what was refunded, so wallets are back to 1000/500/100/0 :: {'ada': 1020, 'bob': 495, 'cy': 85, 'dee': 0}
+FAIL audit exact after the batch (refunded <= current amount, wallets re-derived from the export) :: ['p_1 refunded 30 > current amount 20', 'p_2 refunded 10 > current am
+FAIL replay of the batch -> 200 identical bytes :: 409
+FAIL batch on revision 2 below the (unchanged) refunded amount -> 422 refund_exceeds_payment :: 201 {"correction_batch_id":"cb_2","recorded_at":"2026-10-03T07:50:56.79290
+FAIL 4a batch to 50 (below refunded) vs single correction to 80: single wins once, batch never, ledger exact (8 runs: {'BAD': 3, 'single-won-batch-409': 5}) :: [(0, 'BAD'
+FAIL 4b batch to 50 vs single correction to 55, both below refunded: both 422, export byte-identical (8 runs: {'BAD': 8}) :: [(0, 'BAD', 'batch 201 single 422', ['p_1 ref
+FAIL after import: batch p_1 to 59 (refunded 60) -> 422 refund_exceeds_payment :: got 201 {"correction_batch_id":"cb_1","recorded_at":"2026-10-03T07:51:00.555686+00:00","
+FAIL after import: batch over the settlement, m3 at 19 (refunded 20) -> 422 refund_exceeds_payment :: got 201 {"correction_batch_id":"cb_2","recorded_at":"2026-10-03T07:5
+FAIL after import: single correction of p_1 to 59 (refunded 60) -> 422 refund_exceeds_payment :: got 409 {"error":{"code":"stale_revision","message":"expected_revision is
+FAIL after import: batch at exactly the refunded amounts (p_1 + whole settlement) -> 201 :: 409 {"error":{"code":"stale_revision","message":"expected_revision is not the 
+FAIL after import + batch: audit exact :: ['p_4 refunded 20 > current amount 19', 'p_1 refunded 60 > current amount 59']
+FAIL after import + batch: every payment equals its refunded amount, so ada/bob hold opening 1100/400 (p_1 seeded 100 before the fixture balances) :: {'ada': 1102, 'bob':
+FAIL second round trip: batch p_1 to 59 on revision 2 -> 422 refund_exceeds_payment :: got 201 {"correction_batch_id":"cb_3","recorded_at":"2026-10-03T07:51:00.839350+00:
+FAIL second round trip: batch replay -> 200 identical bytes :: 409
+FAILED: ["exactly one of refund/batch wins every time, loser 422 refund_exceeds_payment, balances exact (8 runs: {'batch-won': 4, 'BAD': 4})", 'both interleavings were ex
+### mutant B
+FAIL batch containing the refund payment of the capture -> 422 linked_payment_immutable :: got 201 {"correction_batch_id":"cb_1","recorded_at":"2026-10-03T07:51:04.194463
+FAIL ledger and authorizations unchanged after all refused batches
+FAIL audit exact at the end :: ['p_3 refund payment was corrected']
+FAIL batch naming the three members and one refund payment -> 422 linked_payment_immutable :: got 201 {"correction_batch_id":"cb_1","recorded_at":"2026-10-03T07:51:04.472
+FAIL batch with different instants over the members -> 422 validation_failed (instants rule still applies) :: got 409 {"error":{"code":"stale_revision","message":"expecte
+FAIL batch with only the original members (still complete, mixed offset spellings of one instant) -> 201 :: 409 {"error":{"code":"stale_revision","message":"expected_revi
+FAIL audit exact :: ['p_4 refund payment was corrected']
+FAIL audit exact at the end :: ['p_4 refund payment was corrected']
+FAIL after import: batch naming an imported refund payment -> 422 linked_payment_immutable :: got 201 {"correction_batch_id":"cb_1","recorded_at":"2026-10-03T07:51:05.946
+FAIL after import + batch: audit exact :: ['p_5 refund payment was corrected']
+FAIL after import + batch: every payment equals its refunded amount, so ada/bob hold opening 1100/400 (p_1 seeded 100 before the fixture balances) :: {'ada': 1071, 'bob':
+FAILED: ['batch containing the refund payment of the capture -> 422 linked_payment_immutable', 'ledger and authorizations unchanged after all refused batches', 'audit exa
