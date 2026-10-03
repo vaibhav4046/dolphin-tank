@@ -185,6 +185,11 @@ func (st *State) ReindexAt(now time.Time) error {
 	if err := checkOpenings(st.Users, st.Payments, revByPay); err != nil {
 		return err
 	}
+	for _, r := range st.Revisions {
+		if r.CorrectionBatchID != nil {
+			ids[*r.CorrectionBatchID] = struct{}{} // an imported batch id is never issued again
+		}
+	}
 	reqByID := map[string]*Request{}
 	for _, r := range st.Requests {
 		if r == nil || r.RequestID == "" {

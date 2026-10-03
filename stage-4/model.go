@@ -62,6 +62,8 @@ type Revision struct {
 	EffectiveAt string `json:"effective_at"`
 	RecordedAt  string `json:"recorded_at"`
 	Reason      string `json:"reason"`
+	// CorrectionBatchID names the POST /correction-batches request that recorded this revision; null otherwise.
+	CorrectionBatchID *string `json:"correction_batch_id"`
 
 	eff, rec time.Time // parsed EffectiveAt / RecordedAt, set by ReindexAt and on creation
 }
