@@ -63,3 +63,12 @@ and commit `71d08d4`. Recorded here so it is not silently re-opened later.
 
 ### Stage 3 outcome
 Jury ACCEPTED `5e6f83f0a2d9fe9e09615341dde23a376d273967` on its second pass (verdict `evidence/stage-3/jury/r3-verdict.md`, evidence commit 829e053). F1 and F2 repaired and each guarded by a check that fails on 3c7c411; L1 and L-F2-1 repaired at b2d9bf3 and 5e6f83f. Residual risks and what the shipped harness never exercised: `evidence/stage-3/route-summary.md`.
+
+## Stage 4
+
+No jury rejection and no cross-attack defect. Trace attacked forge's refunds (83 black-box checks, `5a951db`) and forge attacked trace's batch corrections (297 PASS, `2eba3ac`); neither found a defect. The only repair after a first commit was tests-only (`1dd5560`: stage-3 expectations follow `Revision.correction_batch_id` null). Jury's own two first-run fails in `b7_stage4` were script mistakes, fixed with the first-run log kept.
+
+### Stage 4 outcome
+Jury ACCEPTED `1dd55604328167f20af96d6c69989289381bbf47` across three verdicts (refunds `f2698c2`, batch corrections `f2d512b`, browser/Docker/regression `86bf3a7`). Declined/accepted route decisions D-B1, D-B2, D-B8. Residual risks and uncovered requirements: `evidence/stage-4/route-summary.md`.
+
+Transferable rule (from stage 3, held in stage 4): attack the work with the seat that did not write it, and run the older stages' scripts against the new image — both stayed clean here because the baseline was an accepted folder copied forward, not rewritten.
