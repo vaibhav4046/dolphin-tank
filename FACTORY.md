@@ -259,13 +259,13 @@ room a4b60871 (toy rehearsal)         $15.26
 The per-seat split matters more than the total: no seat carried the run, which is what the
 rubric actually reads.
 
-Elapsed, first Stage-1 dispatch to now: **≈57.7 hours wall clock**
-(2026-09-30T23:05:20Z → 2026-10-03T08:47Z). That figure **includes four provider quota outages
-and long idle gaps, so it is not active model time** — active model time is not measured and is
-not claimed.
+Elapsed, first Stage-1 dispatch to the last room message: **≈69 hours wall clock**
+(2026-09-30T23:05:20Z → 2026-10-03T20:00:27Z). That figure **includes repeated provider quota
+outages (30 usage-limit error events in the room) and long idle gaps, so it is not active model
+time** — active model time is not measured and is not claimed.
 
-For scale: the full four-stage chain reached, with one rejection/repair cycle and two cross-attacks
-that found nothing, cost about **$189 of model spend** (estimate at list prices).
+For scale: the full four-stage chain reached, with one rejection/repair cycle, one cross-attack that found a
+third defect and four further cross-attacks that found nothing, cost about **$189 of model spend** (estimate at list prices).
 
 ## 10. Known limitations
 
