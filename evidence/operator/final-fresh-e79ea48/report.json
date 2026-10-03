@@ -1,0 +1,119 @@
+{
+  "revision": "e79ea489a02531d7f1d13f79a052d858c2a20fdd",
+  "track": "pocketful",
+  "stages": {
+    "1": "pass",
+    "2": "pass",
+    "3": "pass",
+    "4": "pass"
+  },
+  "highest_contiguous": 4,
+  "started_at": "2026-10-03T20:01:26.314142+00:00",
+  "finished_at": "2026-10-03T20:03:05.135203+00:00",
+  "schema_version": 2,
+  "run_id": "ea5fe247605c47feaa1524d2e8248dd6",
+  "mode": "isolated",
+  "provenance": "working-tree",
+  "state": "completed",
+  "pytest_args": [],
+  "suite_digest": "1dc9a38bca94eacabd16beae3c5d0bb754759db998969748d4ef4f8377396fed",
+  "checks": {
+    "1": {
+      "collected": 147,
+      "passed": 147,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_1/test_me_payments.py": {
+          "passed": 24,
+          "total": 24
+        },
+        "stage_1/test_requests_splits_feed.py": {
+          "passed": 39,
+          "total": 39
+        },
+        "stage_1/test_retries_splits_input.py": {
+          "passed": 51,
+          "total": 51
+        },
+        "stage_1/test_sample.py": {
+          "passed": 19,
+          "total": 19
+        },
+        "stage_1/test_seeded_state.py": {
+          "passed": 14,
+          "total": 14
+        }
+      }
+    },
+    "2": {
+      "collected": 35,
+      "passed": 35,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_2/test_sample.py": {
+          "passed": 10,
+          "total": 10
+        },
+        "stage_2/test_ui.py": {
+          "passed": 25,
+          "total": 25
+        }
+      }
+    },
+    "3": {
+      "collected": 6,
+      "passed": 6,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_3/test_sample.py": {
+          "passed": 6,
+          "total": 6
+        }
+      }
+    },
+    "4": {
+      "collected": 5,
+      "passed": 5,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "xfailed": 0,
+      "files": {
+        "stage_4/test_sample.py": {
+          "passed": 5,
+          "total": 5
+        }
+      }
+    }
+  },
+  "overshoot": null,
+  "claimed_stage": "4",
+  "share": 1.0,
+  "upgrade_sources": {
+    "2": {
+      "folder": "/mnt/d/project/dolphin-tank/band-work/fresh/stage-1",
+      "revision": "e79ea489a02531d7f1d13f79a052d858c2a20fdd"
+    },
+    "3": {
+      "folder": "/mnt/d/project/dolphin-tank/band-work/fresh/stage-2",
+      "revision": "e79ea489a02531d7f1d13f79a052d858c2a20fdd"
+    },
+    "4": {
+      "folder": "/mnt/d/project/dolphin-tank/band-work/fresh/stage-3",
+      "revision": "e79ea489a02531d7f1d13f79a052d858c2a20fdd"
+    }
+  }
+}

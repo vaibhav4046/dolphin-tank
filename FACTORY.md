@@ -141,8 +141,8 @@ ruled it a specification violation, not a taste question.
 → repaired in `11e76f9`: one clock and one precision for every timestamp that orders money and
 holds.
 
-**Then the factory attacked its own repair.** `@trace`, which did not write either fix,
-cross-attacked `11e76f9` at `ac96360` and found a third defect (`L-F2-1`): an export written by
+**Then the factory attacked its own repair.** `@trace`, which wrote the F1 repair but not the F2 one,
+cross-attacked `@forge`'s F2 repair `11e76f9` at `ac96360` and found a third defect (`L-F2-1`): an export written by
 the rejected build carries `created_exact`, and on import that field was ignored, so a hold could
 still land before its funding payment. `@forge` repaired it in `5e6f83f`. JURY's own F2
 reproduction, `t3_holds.py`, now scores **59 pass / 0 fail** against `5e6f83f`.
