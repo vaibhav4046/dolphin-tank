@@ -73,7 +73,7 @@ func TestCorrectDirectionsZeroAndOriginalUntouched(t *testing.T) {
 	if len(revs) != 5 || revs[0].Amount != 1000 || revs[0].Reason != "" || revs[0].EffectiveAt != revs[0].RecordedAt || revs[0].EffectiveAt != p.CreatedAt {
 		t.Fatalf("%d revisions, first %+v", len(revs), revs[0])
 	}
-	if got := string(mustJSON(r)); got != `{"payment_id":"p_1","revision":2,"amount":1500,"effective_at":"`+crT0+`","recorded_at":"2026-09-24T13:11:00.000000+00:00","reason":"raise"}` {
+	if got := string(mustJSON(r)); got != `{"payment_id":"p_1","revision":2,"amount":1500,"effective_at":"`+crT0+`","recorded_at":"2026-09-24T13:11:00.000000+00:00","reason":"raise","correction_batch_id":null}` {
 		t.Fatal(got)
 	}
 	// a change of effective time alone, or the same amount, is a valid correction

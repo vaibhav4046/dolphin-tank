@@ -392,7 +392,7 @@ func txCheckMigratedReads(t testing.TB, h http.Handler, original []byte, tokens 
 				continue
 			}
 			rv := txJSON(t, txWant(t, "revisions", txDo(h, "GET", "/payments/"+p.ID+"/revisions", tok, "", ""), 200))["revisions"].([]any)
-			want := map[string]any{"payment_id": p.ID, "revision": float64(1), "amount": p.Amount, "effective_at": p.Created, "recorded_at": p.Created, "reason": ""}
+			want := map[string]any{"payment_id": p.ID, "revision": float64(1), "amount": p.Amount, "effective_at": p.Created, "recorded_at": p.Created, "reason": "", "correction_batch_id": nil}
 			if len(rv) != 1 || !reflect.DeepEqual(rv[0], want) {
 				t.Fatalf("revisions of %s: %v, want %v", p.ID, rv, want)
 			}

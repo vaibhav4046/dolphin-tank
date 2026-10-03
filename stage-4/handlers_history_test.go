@@ -137,7 +137,7 @@ func TestCorrectionMatrix(t *testing.T) {
 		t.Fatalf("correct: %d %s", rec.Code, rec.Body)
 	}
 	rev := decode(t, rec.Body.Bytes())
-	if len(rev) != 6 || rev["payment_id"] != id || rev["revision"] != float64(2) || rev["amount"] != float64(400) ||
+	if len(rev) != 7 || rev["correction_batch_id"] != nil || rev["payment_id"] != id || rev["revision"] != float64(2) || rev["amount"] != float64(400) ||
 		rev["effective_at"] != created || rev["reason"] != "corrected amount" {
 		t.Errorf("201 body: %s", rec.Body)
 	}
