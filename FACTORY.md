@@ -3,8 +3,8 @@
 **Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
 **Submitted room:** `5dd42746-f387-4763-afe0-f96d8f504f71`
 **Actual runtime:** Claude Code, model `claude-sonnet-5-5`, five seats
-**Document state:** 2026-10-02 20:31 UTC (21:31 BST). Stage 3 acceptance is **still open** —
-read §9 before quoting anything from this file.
+**Document state:** 2026-10-03 08:50 UTC (09:50 BST). Stages 1–3 accepted; stage 4 two of three
+acceptance items accepted, the last in review — read §10 before quoting anything from this file.
 
 This document was written by the operator, as the participant guide requires. Every number in
 it comes from a command that was run or a file in this repository. Where something is not
@@ -113,7 +113,10 @@ worth something if the reviewer is also fallible and shows it.
 | 1 | `0024598` | **ACCEPT** | `evidence/stage-1/jury/verdict.md` (`2c9a5d4`) |
 | 2 | `f33035a` | **ACCEPT** | `evidence/stage-2/jury/verdict.md` (`9111851`) |
 | 3 | `3c7c411` | **REJECT** | `evidence/stage-3/jury/verdict.md` (`54cbd0b`) |
-| 3 | `5e6f83f` | **OPEN** | repairs landed; re-review not yet performed |
+| 3 | `5e6f83f` | **ACCEPT** | `evidence/stage-3/jury/r3-verdict.md` (`829e053`) |
+| 4 | `f2698c2` refunds | **ACCEPT** | `evidence/stage-4/jury/forge-refunds/VERDICT.md` |
+| 4 | `1dd5560` batch corrections | **ACCEPT** | `evidence/stage-4/jury/trace-batch/VERDICT.md` (`f2d512b`) |
+| 4 | browser UI + Docker + regression | **in review** | `evidence/stage-4/jury/final/` |
 
 ## 6. A real rejected candidate, and the repair path
 
@@ -159,22 +162,26 @@ Official harness, unmodified, from the official kickoff checkout. Evidence:
 `band-work/checks/zeus-freshclone-5e6f83f/` (operator workspace).
 
 ```text
-git clone <result repo> /tmp/zeus-fresh-clone          # brand-new directory
+git clone <result repo> /tmp/zeus-fresh-clone      # brand-new directory
 python -m harness run --track pocketful --repo /tmp/zeus-fresh-clone \
                       --all --mode isolated --out <new dir>
 ```
 
 `--mode isolated` is the grading configuration: an internal network with outbound traffic
-blocked, so the result also proves the service needs no network at run time.
+blocked, so the result also proves the service needs no network at run time. Revision `f2d512b`,
+exit 0.
 
 | Folder | suite 1 | suite 2 | suite 3 | suite 4 | claimed | overshoot |
 |---|---|---|---|---|:-:|:-:|
 | `stage-1/` | 147/147 | **fail** | – | – | **1** | none |
 | `stage-2/` | 147/147 | 35/35 | **fail** | – | **2** | none |
 | `stage-3/` | 147/147 | 35/35 | 6/6 | **fail** | **3** | none |
+| `stage-4/` | 147/147 | 35/35 | 6/6 | 5/5 | **4** | none |
 
 Every negative check is correct: no folder contains a later stage's answer, which is what the
-guide requires and what most teams get wrong by copying a final answer backwards.
+guide requires and what most teams get wrong by copying a final answer backwards. Because
+`stage-4/` passes all four suites, the chain scores as a completed four-stage result rather than
+three stages plus a folder that does not start.
 
 Independent JURY evidence, at `3c7c411`, before the repairs:
 
@@ -231,12 +238,12 @@ From `band usage rooms`, which reports catalog **estimates at list prices, not p
 billing**:
 
 ```text
-room 5dd42746 (submitted run)   27 sessions   292,591,022 tokens   $120.75
-   @jury   $32.16   (26.6%)
-   @trace  $31.52   (26.1%)
-   @forge  $21.06   (17.4%)
-   @route  $18.56   (15.4%)
-   @loom   $17.44   (14.4%)
+room 5dd42746 (submitted run)   44 sessions   412,512,626 tokens   $169.63
+   @trace  $48.12   (28.4%)
+   @jury   $42.33   (25.0%)
+   @forge  $31.09   (18.3%)
+   @route  $24.54   (14.5%)
+   @loom   $23.55   (13.9%)
 room 7e2f1aa9 (earlier Codex attempt)  $47.08
 room a4b60871 (toy rehearsal)         $15.26
 ```
@@ -244,27 +251,33 @@ room a4b60871 (toy rehearsal)         $15.26
 The per-seat split matters more than the total: no seat carried the run, which is what the
 rubric actually reads.
 
-Elapsed, first Stage-1 dispatch to now: **≈45.4 hours wall clock**
-(2026-09-30T23:05:20Z → 2026-10-02T20:31Z). That figure **includes three provider quota
-outages and long idle gaps, so it is not active model time** — active model time is not measured
-and is not claimed.
+Elapsed, first Stage-1 dispatch to now: **≈57.7 hours wall clock**
+(2026-09-30T23:05:20Z → 2026-10-03T08:47Z). That figure **includes four provider quota outages
+and long idle gaps, so it is not active model time** — active model time is not measured and is
+not claimed.
+
+For scale: the full four-stage chain reached, with one rejection/repair cycle and two cross-attacks
+that found nothing, cost about **$170 of model spend**.
 
 ## 10. Known limitations
 
-1. **Stage 3 is not accepted.** The shipped checks pass and JURY's own F2 reproduction passes,
-   but only `@jury` can accept, and it has not re-reviewed since rejecting `3c7c411`.
-2. **Stage 4 does not exist.** The guide treats a missing folder as claiming nothing, so the
-   chain still scores stage 3 — but stage 4 is unfinished, not skipped by choice.
-3. **The provider usage limit is a real operational hazard.** It ended three seat turns
-   mid-task. It is the reason for every resume in §8.
-4. **`go test -race` cannot run on the operator host** (needs cgo; no gcc). Concurrency evidence
-   comes from JURY's race runs in WSL and from non-race stress runs.
-5. **All commits share one Git identity**, so authorship alone cannot show distribution. The
-   bridge is `evidence/operator/PROVENANCE.md`, which maps 50 of 53 commits to the room message
-   that announced them.
-6. **Shipped-check coverage for stage 3 is 9%.** Six checks. A stage judged mostly on withheld
-   tests is exactly why this document leans on independent checks rather than green runs.
-7. **Elapsed active time and true provider billing are unknown** and are not estimated.
+1. **Stage 4 is not fully accepted.** Its refunds and batch-correction items are accepted — the
+   latter on 697 independent checks plus 11 deliberate mutations, all 11 caught, with real exports
+   built from the accepted stage-1/2/3 commits and imported. The browser/Docker/stage-regression
+   item was still in review when the provider limit ended the acceptor's turn.
+2. **The provider usage limit is a real operational hazard.** It ended four seat turns mid-task.
+   It is the reason for every resume in §8, and the reason a stage item is still open.
+3. **`go test -race` cannot run on the operator host** (needs cgo; no gcc). It was run inside a
+   container by the reviewer — `go test -count=1 -race ./...` ok in 363 s at stage 3.
+4. **All commits share one Git identity**, so authorship alone cannot show distribution. The
+   bridge is `evidence/operator/PROVENANCE.md`, which maps each commit to the room message that
+   announced it. `room.json` is the authoritative record and is still missing.
+5. **Shipped-check coverage is thin at the top end** — stage 3 ships 6 checks (9% of its graded
+   suite) and stage 4 ships 5 (16%). A stage judged mostly on withheld tests is exactly why this
+   document leans on independent checks rather than green runs.
+6. **Elapsed active time and true provider billing are unknown** and are not estimated.
+7. **`room.json` is absent**, so `harness check` still exits 1 and the room log is not yet
+   inspectable by a judge.
 
 ## 11. Standing up this factory on a different problem
 

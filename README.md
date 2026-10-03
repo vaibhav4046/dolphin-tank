@@ -8,8 +8,10 @@ application is **Pocketful** — Dolphin Tank is the factory that builds it.
 
 **Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
 **Run:** room `5dd42746-f387-4763-afe0-f96d8f504f71`, five seats, Claude Code / `claude-sonnet-5-5`
-**Status:** 2026-10-02 20:35 UTC. Stage 1 and Stage 2 independently accepted; Stage 3 implemented
-and repaired but **not yet accepted**; Stage 4 not started. **Not submission ready.**
+**Status:** 2026-10-03 08:50 UTC. **Stages 1, 2 and 3 independently accepted.** Stage 4 built by
+all three implementers, cross-attacked clean by the other two, and two of its three acceptance
+items accepted; the final UI/Docker/regression item is in review. **Not submission ready** — the
+room export is still missing.
 
 ---
 
@@ -22,21 +24,25 @@ the previous accepted folder copied forward and widened — never a final answer
 |---|---|---|---|
 | [`stage-1/`](stage-1/) | accounts, payments, requests, splits, activity feed, idempotency, reset, export/import, atomic settlement | 147/147 | **ACCEPT** — `0024598`, [`verdict`](evidence/stage-1/jury/verdict.md) |
 | [`stage-2/`](stage-2/) | payment authorizations and captures, hold/partial/extended capture, void, real-clock expiry, `/me` held-aware funds, fixture seeding, stage-1 upgrade, browser UI | 147 + 35 | **ACCEPT** — `f33035a`, [`verdict`](evidence/stage-2/jury/verdict.md) |
-| [`stage-3/`](stage-3/) | history: statements, snapshots, corrections with revisions, the hold timeline over time, import of earlier exports | 147 + 35 + 6 | **REJECT** at `3c7c411`, repaired to `5e6f83f`, **re-review open** — [`verdict`](evidence/stage-3/jury/verdict.md) |
-| `stage-4/` | — | — | not started |
+| [`stage-3/`](stage-3/) | history: statements, snapshots, corrections with revisions, the hold timeline over time, import of earlier exports | 147 + 35 + 6 | **ACCEPT** — `5e6f83f`, [`verdict`](evidence/stage-3/jury/r3-verdict.md), evidence `829e053` |
+| [`stage-4/`](stage-4/) | refunds and corrected history, batch corrections, the browser refund control | 147 + 35 + 6 + 5 | refunds **ACCEPT** `f2698c2`; batch corrections **ACCEPT** `1dd5560` (697 own checks, 11/11 mutations); UI/Docker item in review |
 
-Fresh-clone verification of the current revision, run with the official harness in **isolated**
+Fresh-clone verification of revision `f2d512b`, run with the official harness in **isolated**
 mode (internal network, outbound blocked):
 
 ```text
-stage-1/  147/147  suite2 FAIL   ->  claims stage 1
-stage-2/  147/147  35/35  suite3 FAIL ->  claims stage 2
-stage-3/  147/147  35/35  6/6    suite4 FAIL ->  claims stage 3
+stage-1/  147/147  suite2 FAIL        ->  claims stage 1
+stage-2/  147/147  35/35   suite3 FAIL ->  claims stage 2
+stage-3/  147/147  35/35   6/6    suite4 FAIL ->  claims stage 3
+stage-4/  147/147  35/35   6/6    5/5   ->  claims stage 4     exit 0
 overshoot: none in any folder
 ```
 
-Each failing "next stage" check is deliberate and correct: a folder must **not** contain the
-answer to the stage after it.
+Two things to read out of that table. **The chain scores**: `stage-4/` carries all four suites, so
+this is a completed four-stage result rather than three stages plus a folder that does not start.
+And **nothing overshoots**: every failing "next stage" check is deliberate and correct — a folder
+must *not* contain the answer to the stage after it, which is what most entries get wrong by
+copying a final answer backwards.
 
 ## The rejection that changed the work
 
@@ -53,7 +59,15 @@ Stage 3 was rejected with two reproducible defects, then cross-attacked into a t
 - **L-F2-1** — found afterwards by the systems seat attacking a fix it did not write: an export
   from the rejected build carries `created_exact`, which import ignored. → fixed in `5e6f83f`.
 
-The reviewer's own reproduction of F2 now scores 59 pass / 0 fail.
+The reviewer's own reproduction of F2 now scores 59 pass / 0 fail, and the stage-3 re-review
+accepted the repair with the race detector run (`go test -count=1 -race ./...`, 363 s) and every
+stage-1/2 regression suite at 0 fail.
+
+Stage 4 then followed the same loop: three implementers wrote disjoint parts, each attacked the
+other's work (**forge 297 PASS / 0 FAIL** on batch corrections, **trace 83 black-box checks all
+pass** on refunds), and the acceptor ran 697 of its own checks plus **11 deliberate mutations,
+all 11 caught**, importing real exports built from the accepted stage-1, stage-2 and stage-3
+commits.
 
 ## Run it
 
@@ -62,15 +76,15 @@ service needs **no outbound network** at run time — fonts, scripts and styles 
 image.
 
 ```sh
-cd stage-3
-docker build -t pocketful-s3 .
-docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s3
+cd stage-4
+docker build -t pocketful-s4 .
+docker run --rm -e PORT=8080 -p 8080:8080 pocketful-s4
 curl http://localhost:8080/health          # {"status":"ok"}
 ```
 
 Then open <http://localhost:8080/> for the browser application. Full instructions:
 [`stage-1/RUN.md`](stage-1/RUN.md) · [`stage-2/RUN.md`](stage-2/RUN.md) ·
-[`stage-3/RUN.md`](stage-3/RUN.md)
+[`stage-3/RUN.md`](stage-3/RUN.md) · [`stage-4/RUN.md`](stage-4/RUN.md)
 
 Verify a revision the way the competition does:
 
@@ -96,15 +110,16 @@ python -m harness check <path-to-clone> --track pocketful
 
 ## Honest limitations
 
-Stage 3 is implemented, repaired and independently re-checked against the shipped checks, but
-only the acceptor can accept it and that has not happened. Stage 4 is absent. The model
-provider's usage limit ended three seat turns mid-task; the operator's recovery of those turns is
+Stages 1, 2 and 3 are independently accepted. Stage 4's refunds and batch-correction items are
+accepted; its browser/Docker/stage-regression item was still in review when the model provider's
+usage limit cut the acceptor's turn, so treat stage 4 as **not yet fully accepted**. The provider
+usage limit ended seat turns four times across the run; the operator's recovery of those turns is
 disclosed in [`FACTORY.md`](FACTORY.md) §8, together with the fact that **no seat ever asked the
 operator for anything** — all six operator messages were three stage dispatches and three
-provider-quota resumes. `go test -race` cannot run on the operator host; concurrency evidence
-comes from the reviewer's race runs in WSL. All commits share one Git identity, so distribution
-is evidenced by the room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than
-by authorship.
+provider-quota resumes. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
+it inside a container. All commits share one Git identity, so distribution is evidenced by the
+room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than by authorship.
+`room.json` has not been downloaded yet, which is why `harness check` still reports one problem.
 
 The official Pocketful specifications and the competition participant guide are authoritative.
 Nothing here claims a result against withheld tests.
