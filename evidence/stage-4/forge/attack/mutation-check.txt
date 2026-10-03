@@ -1,0 +1,50 @@
+# mutation check of batch_attack.py (forge)
+
+Each mutant is a copy of stage-4 at 1dd5560 with ONE edit in correct_batch.go (scratch dir, never the repo),
+built and run against the unchanged batch_attack.py. A mutant is killed when at least one check FAILs.
+
+clean 1dd5560 with the script as it was for this check (S1-S11): 285 PASS, 0 FAIL, 1 INFO.
+S12 (request payments) was added afterwards; no mutant targets it. Final clean run: run-clean-1dd5560.txt (297 PASS).
+
+## m1_no_refund_floor - delete the refund_exceeds_payment item check in checkBatchItems
+PASS=268 FAIL=14 -> KILLED
+  FAIL S1 batch lowers member below its refund (complete settlement) -> 422 refund_exceeds_payment :: 201 b'{"correction_batch_id":"cb_1","recorded_at":"2026-10-03T08:01:14
+  FAIL S1 batch lowers member below its refund (complete settlement) leaves /_test/export byte-identical
+  FAIL S1 same, only the refunded member named (item error beats incomplete_settlement) -> 422 refund_exceeds_payment :: 409 b'{"error":{"code":"stale_revision","message":"
+  FAIL S1 refund_exceeds item 0 beats stale item 1 -> 422 refund_exceeds_payment :: 409 b'{"error":{"code":"stale_revision","message":"expected_revision is not the latest r
+  FAIL S1 incomplete beats unaffordable -> 422 incomplete_settlement :: 409 b'{"error":{"code":"stale_revision","message":"expected_revision is not the latest revision"}}'
+
+## m2_per_item_funds - checkBatchAffordable never reports a shortfall (n < -1<<60)
+PASS=278 FAIL=8 -> KILLED
+  FAIL S4 raise p1 by 500 alone (balance covers it, held funds do not) -> 409 insufficient_funds :: 409 b'{"error":{"code":"historical_overdraft","message":"the batch would
+  FAIL S4 one over: bob net -401 -> 409 insufficient_funds :: 409 b'{"error":{"code":"historical_overdraft","message":"the batch would leave a wallet negative at a past mom
+  FAIL S4 lower p2 by 600 alone (bob -600 > available 400) -> 409 insufficient_funds :: 409 b'{"error":{"code":"historical_overdraft","message":"the batch would leave a wal
+  FAIL S4 dee cannot fund +99200 -> 409 insufficient_funds :: 409 b'{"error":{"code":"historical_overdraft","message":"the batch would leave a wallet negative at a past mom
+  FAIL S4 funds fault and historical fault together -> insufficient_funds first -> 409 insufficient_funds :: 409 b'{"error":{"code":"historical_overdraft","message":"the ba
+
+## m3_no_historical - applyBatch skips the overdrawnInThePast check for every wallet
+PASS=265 FAIL=21 -> KILLED
+  FAIL S5 moves m1+m2 oracle=overdraft -> 409 historical_overdraft :: 201 b'{"correction_batch_id":"cb_1","recorded_at":"2026-10-03T08:01:16.216586+00:00","revisions":[{"pa
+  FAIL S5 moves m1+m2 oracle=overdraft leaves /_test/export byte-identical
+  FAIL S5 moves m1+m2+m3 oracle=overdraft -> 409 historical_overdraft :: 201 b'{"correction_batch_id":"cb_1","recorded_at":"2026-10-03T08:01:16.545434+00:00","revisions":[{
+  FAIL S5 moves m1+m2+m3 oracle=overdraft leaves /_test/export byte-identical
+  FAIL S6 raise to funds limit: single 409/historical_overdraft == batch 201/None :: (b'{"error":{"code":"historical_overdraft","message":"the correction would leave a wall
+
+## m4_no_rec_floor - applyBatch ignores the member recorded_at floor (rec.Before(floor) -> false)
+PASS=284 FAIL=2 -> KILLED
+  FAIL S8 recorded_at later than the imported future revision's :: ('2026-10-03T08:01:20.919664+00:00', '2026-10-03T10:01:20.907204+00:00')
+  FAILED: ["S8 recorded_at later than the imported future revision's"]
+
+## m5_no_balance_restore_on_overdraft - historical_overdraft rollback drops revisions but does not restore balances
+PASS=283 FAIL=3 -> KILLED
+  FAIL S6 raise to funds limit: balances equal after the call :: ({'ada': 4300, 'bob': 500, 'cy': 200}, {'ada': 0, 'bob': 4800, 'cy': 200})
+  FAIL S6 historical: move later than pB: balances equal after the call :: ({'ada': 4300, 'bob': 500, 'cy': 200}, {'ada': 4600, 'bob': 200, 'cy': 200})
+  FAILED: ['S6 raise to funds limit: balances equal after the call', 'S6 historical: move later than pB: balances equal after the call']
+
+## m6_no_linked_check_refund - checkBatchItems lets refund payments through (only captures are linked)
+PASS=277 FAIL=9 -> KILLED
+  FAIL S6 refund payment: single 422/linked_payment_immutable and batch 409/historical_overdraft are both 422 linked_payment_immutable
+  FAIL S7 refund mixed with valid items -> 422 linked_payment_immutable :: 201 b'{"correction_batch_id":"cb_1","recorded_at":"2026-10-03T08:01:21.187896+00:00","revisions":
+  FAIL S7 refund mixed with valid items leaves /_test/export byte-identical
+  FAIL S7 linked item 0 before an unknown item 1 -> 422 linked_payment_immutable :: 409 b'{"error":{"code":"stale_revision","message":"expected_revision is not the latest r
+  FAIL S7 validation fault at item 1 before linked item 2 -> 422 validation_failed :: 409 b'{"error":{"code":"stale_revision","message":"expected_revision is not the latest

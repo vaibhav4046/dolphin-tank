@@ -1,0 +1,311 @@
+== S1 settlement member lowered below an existing refund
+PASS S1 settlement 201
+PASS S1 refund of a settlement member -> 201
+PASS S1 refund has settlement_id null and refund_of = member
+PASS S1 settlement retry still returns the original bytes
+PASS S1 batch lowers member below its refund (complete settlement) -> 422 refund_exceeds_payment
+PASS S1 batch lowers member below its refund (complete settlement) leaves /_test/export byte-identical
+PASS S1 same, only the refunded member named (item error beats incomplete_settlement) -> 422 refund_exceeds_payment
+PASS S1 same, only the refunded member named (item error beats incomplete_settlement) leaves /_test/export byte-identical
+PASS S1 stale item 0 beats refund_exceeds item 1 -> 409 stale_revision
+PASS S1 stale item 0 beats refund_exceeds item 1 leaves /_test/export byte-identical
+PASS S1 refund_exceeds item 0 beats stale item 1 -> 422 refund_exceeds_payment
+PASS S1 refund_exceeds item 0 beats stale item 1 leaves /_test/export byte-identical
+PASS S1 incomplete beats unaffordable -> 422 incomplete_settlement
+PASS S1 incomplete beats unaffordable leaves /_test/export byte-identical
+PASS S1 differing instants (1 microsecond apart) -> 422 validation_failed
+PASS S1 differing instants (1 microsecond apart) leaves /_test/export byte-identical
+PASS S1 batch lowers member exactly to its refund (offset spellings differ) -> 201
+PASS S1 batch lowers member exactly to its refund (offset spellings differ) conserves the sum of balances
+PASS S1 revisions carry the batch id and share recorded_at
+PASS S1 ada = opening 100000 - 200 - 300 + 200 refund
+PASS S1 bob = opening 5000 + 200 - 200
+PASS S1 cy = opening 5000 + 300
+PASS S1 refund 1 more beyond the corrected amount -> 422 refund_exceeds_payment
+PASS S1 original payment record unchanged (m1 amount 500)
+PASS S1 settlement retry after the batch still original bytes
+PASS S1 raise m1 to 700 (members share one instant) -> 201
+PASS S1 raise m1 to 700 (members share one instant) conserves the sum of balances
+PASS S1 refund 500 more (200+500 <= 700) -> 201
+PASS S1 one more -> 422 refund_exceeds_payment
+PASS S1 below the new refunded 700 -> refund_exceeds_payment -> 422 refund_exceeds_payment
+PASS S1 below the new refunded 700 -> refund_exceeds_payment leaves /_test/export byte-identical
+INFO S1 ambiguity: differing member instants + unaffordable amount -> 422 validation_failed (spec lists no slot for the instants check)
+PASS S1 total conserved over the whole scenario
+PASS S1 refunds never changed settlement membership
+== S2 refunds racing batches and single corrections over HTTP
+PASS S2 round 0 exactly one correction (batch or single) wins the shared revision
+PASS S2 round 0 losers are stale_revision or refund_exceeds_payment only
+PASS S2 round 0 201 refund responses add up to the refunded total grown this round
+PASS S2 round 0 refund failures are limit/funds only
+PASS S2 round 0 refunded 4900 <= current amount 5000
+PASS S2 round 0 balances exact (ada=110000-L+R, bob=50000+L-R)
+PASS S2 round 0 sum conserved
+PASS S2 round 0 p_1 gained exactly one revision
+PASS S2 round 1 exactly one correction (batch or single) wins the shared revision
+PASS S2 round 1 losers are stale_revision or refund_exceeds_payment only
+PASS S2 round 1 201 refund responses add up to the refunded total grown this round
+PASS S2 round 1 refund failures are limit/funds only
+PASS S2 round 1 refunded 4900 <= current amount 5000
+PASS S2 round 1 balances exact (ada=110000-L+R, bob=50000+L-R)
+PASS S2 round 1 sum conserved
+PASS S2 round 1 p_1 gained exactly one revision
+PASS S2 round 2 exactly one correction (batch or single) wins the shared revision
+PASS S2 round 2 losers are stale_revision or refund_exceeds_payment only
+PASS S2 round 2 201 refund responses add up to the refunded total grown this round
+PASS S2 round 2 refund failures are limit/funds only
+PASS S2 round 2 refunded 4900 <= current amount 5000
+PASS S2 round 2 balances exact (ada=110000-L+R, bob=50000+L-R)
+PASS S2 round 2 sum conserved
+PASS S2 round 2 p_1 gained exactly one revision
+== S3 batches and single corrections racing on shared expected revisions
+PASS S3 round 0 no two operations sharing a revision both succeeded (won=['B', 'F'])
+PASS S3 round 0 every loser is a plain stale_revision
+PASS S3 round 0 every loser conflicts with a winner (no spurious refusal)
+PASS S3 round 0 p_1 revisions == 1
+PASS S3 round 0 p_2 revisions == 2
+PASS S3 round 0 p_3 revisions == 2
+PASS S3 round 0 p_4 revisions == 1
+PASS S3 round 0 p_5 revisions == 2
+PASS S3 round 0 p_6 revisions == 1
+PASS S3 round 0 sum conserved
+PASS S3 round 1 no two operations sharing a revision both succeeded (won=['C', 'F', 'S2'])
+PASS S3 round 1 every loser is a plain stale_revision
+PASS S3 round 1 every loser conflicts with a winner (no spurious refusal)
+PASS S3 round 1 p_1 revisions == 1
+PASS S3 round 1 p_2 revisions == 3
+PASS S3 round 1 p_3 revisions == 3
+PASS S3 round 1 p_4 revisions == 2
+PASS S3 round 1 p_5 revisions == 3
+PASS S3 round 1 p_6 revisions == 1
+PASS S3 round 1 sum conserved
+PASS S3 round 2 no two operations sharing a revision both succeeded (won=['B', 'E'])
+PASS S3 round 2 every loser is a plain stale_revision
+PASS S3 round 2 every loser conflicts with a winner (no spurious refusal)
+PASS S3 round 2 p_1 revisions == 1
+PASS S3 round 2 p_2 revisions == 4
+PASS S3 round 2 p_3 revisions == 4
+PASS S3 round 2 p_4 revisions == 2
+PASS S3 round 2 p_5 revisions == 4
+PASS S3 round 2 p_6 revisions == 1
+PASS S3 round 2 sum conserved
+PASS S3 round 3 no two operations sharing a revision both succeeded (won=['B', 'F'])
+PASS S3 round 3 every loser is a plain stale_revision
+PASS S3 round 3 every loser conflicts with a winner (no spurious refusal)
+PASS S3 round 3 p_1 revisions == 1
+PASS S3 round 3 p_2 revisions == 5
+PASS S3 round 3 p_3 revisions == 5
+PASS S3 round 3 p_4 revisions == 2
+PASS S3 round 3 p_5 revisions == 5
+PASS S3 round 3 p_6 revisions == 1
+PASS S3 round 3 sum conserved
+PASS S3 round 4 no two operations sharing a revision both succeeded (won=['C', 'F', 'S2'])
+PASS S3 round 4 every loser is a plain stale_revision
+PASS S3 round 4 every loser conflicts with a winner (no spurious refusal)
+PASS S3 round 4 p_1 revisions == 1
+PASS S3 round 4 p_2 revisions == 6
+PASS S3 round 4 p_3 revisions == 6
+PASS S3 round 4 p_4 revisions == 3
+PASS S3 round 4 p_5 revisions == 6
+PASS S3 round 4 p_6 revisions == 1
+PASS S3 round 4 sum conserved
+PASS S3 12 identical retries -> one 201, eleven 200
+PASS S3 all retries carry identical bytes
+PASS S3 retries moved money once
+== S4 combined affordability per wallet, held funds
+PASS S4 fixture: bob balance 1000, held 600, available 400
+PASS S4 raise p1 by 500 alone (balance covers it, held funds do not) -> 409 insufficient_funds
+PASS S4 raise p1 by 500 alone (balance covers it, held funds do not) leaves /_test/export byte-identical
+PASS S4 raise p1 by 500 together with raise p2 by 200 (bob net -300; p1 alone failed) -> 201
+PASS S4 raise p1 by 500 together with raise p2 by 200 (bob net -300; p1 alone failed) conserves the sum of balances
+PASS S4 one over: bob net -401 -> 409 insufficient_funds
+PASS S4 one over: bob net -401 leaves /_test/export byte-identical
+PASS S4 exactly available: bob net -400 -> 201
+PASS S4 exactly available: bob net -400 conserves the sum of balances
+PASS S4 bob ends balance 600 held 600 available 0
+PASS S4 lower p2 by 600 alone (bob -600 > available 400) -> 409 insufficient_funds
+PASS S4 lower p2 by 600 alone (bob -600 > available 400) leaves /_test/export byte-identical
+PASS S4 lower p2 by 600 with lower p1 by 300 (bob net -300, cy -300, dee +600) -> 201
+PASS S4 lower p2 by 600 with lower p1 by 300 (bob net -300, cy -300, dee +600) conserves the sum of balances
+PASS S4 dee cannot fund +99200 -> 409 insufficient_funds
+PASS S4 dee cannot fund +99200 leaves /_test/export byte-identical
+PASS S4 funds fault and historical fault together -> insufficient_funds first -> 409 insufficient_funds
+PASS S4 funds fault and historical fault together -> insufficient_funds first leaves /_test/export byte-identical
+PASS S4 stale item before funds fault -> 409 stale_revision
+PASS S4 stale item before funds fault leaves /_test/export byte-identical
+PASS S4 item 0 would fail funds, item 1 unknown payment -> 404 (item errors first) -> 404 not_found
+PASS S4 item 0 would fail funds, item 1 unknown payment -> 404 (item errors first) leaves /_test/export byte-identical
+== S5 historical_overdraft only visible with several backdated effective instants
+PASS S5 moves m1 oracle=ok -> 201
+PASS S5 moves m1 oracle=ok conserves the sum of balances
+PASS S5 moves m2 oracle=ok -> 201
+PASS S5 moves m2 oracle=ok conserves the sum of balances
+PASS S5 moves m1+m2 oracle=overdraft -> 409 historical_overdraft
+PASS S5 moves m1+m2 oracle=overdraft leaves /_test/export byte-identical
+PASS S5 moves m3 oracle=ok -> 201
+PASS S5 moves m3 oracle=ok conserves the sum of balances
+PASS S5 moves m1+m3 oracle=ok -> 201
+PASS S5 moves m1+m3 oracle=ok conserves the sum of balances
+PASS S5 moves m2+m3 oracle=ok -> 201
+PASS S5 moves m2+m3 oracle=ok conserves the sum of balances
+PASS S5 moves m1+m2+m3 oracle=overdraft -> 409 historical_overdraft
+PASS S5 moves m1+m2+m3 oracle=overdraft leaves /_test/export byte-identical
+== S6 one-item batch vs single correction, same fault, same fixture
+PASS S6 lower to 600: single 201/None == batch 201/None
+PASS S6 lower to 600: balances equal after the call
+PASS S6 lower to 600: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 lower to 600: single revision has correction_batch_id null, batch has an id
+PASS S6 lower to 600: recorded_at is 6-digit UTC micro in both
+PASS S6 raise to 2000: single 201/None == batch 201/None
+PASS S6 raise to 2000: balances equal after the call
+PASS S6 raise to 2000: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 raise to 2000: single revision has correction_batch_id null, batch has an id
+PASS S6 raise to 2000: recorded_at is 6-digit UTC micro in both
+PASS S6 same amount new instant: single 201/None == batch 201/None
+PASS S6 same amount new instant: balances equal after the call
+PASS S6 same amount new instant: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 same amount new instant: single revision has correction_batch_id null, batch has an id
+PASS S6 same amount new instant: recorded_at is 6-digit UTC micro in both
+PASS S6 exactly the refunded 300: single 409/insufficient_funds == batch 409/insufficient_funds
+PASS S6 exactly the refunded 300: balances equal after the call
+PASS S6 exactly the refunded 300: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 below refunded 299: single 422/refund_exceeds_payment == batch 422/refund_exceeds_payment
+PASS S6 below refunded 299: balances equal after the call
+PASS S6 below refunded 299: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 zero below refunded: single 422/refund_exceeds_payment == batch 422/refund_exceeds_payment
+PASS S6 zero below refunded: balances equal after the call
+PASS S6 zero below refunded: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 raise beyond funds: single 409/insufficient_funds == batch 409/insufficient_funds
+PASS S6 raise beyond funds: balances equal after the call
+PASS S6 raise beyond funds: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 raise to funds limit: single 409/historical_overdraft == batch 409/historical_overdraft
+PASS S6 raise to funds limit: balances equal after the call
+PASS S6 raise to funds limit: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 historical: move later than pB: single 409/historical_overdraft == batch 409/historical_overdraft
+PASS S6 historical: move later than pB: balances equal after the call
+PASS S6 historical: move later than pB: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 negative amount: single 422/validation_failed == batch 422/validation_failed
+PASS S6 negative amount: balances equal after the call
+PASS S6 negative amount: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 amount over 1e9: single 422/validation_failed == batch 422/validation_failed
+PASS S6 amount over 1e9: balances equal after the call
+PASS S6 amount over 1e9: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 empty reason: single 422/validation_failed == batch 422/validation_failed
+PASS S6 empty reason: balances equal after the call
+PASS S6 empty reason: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 201-char reason: single 422/validation_failed == batch 422/validation_failed
+PASS S6 201-char reason: balances equal after the call
+PASS S6 201-char reason: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 200-char reason: single 201/None == batch 201/None
+PASS S6 200-char reason: balances equal after the call
+PASS S6 200-char reason: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 200-char reason: single revision has correction_batch_id null, batch has an id
+PASS S6 200-char reason: recorded_at is 6-digit UTC micro in both
+PASS S6 naive instant: single 422/validation_failed == batch 422/validation_failed
+PASS S6 naive instant: balances equal after the call
+PASS S6 naive instant: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 future instant: single 422/validation_failed == batch 422/validation_failed
+PASS S6 future instant: balances equal after the call
+PASS S6 future instant: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 expected 0: single 422/validation_failed == batch 422/validation_failed
+PASS S6 expected 0: balances equal after the call
+PASS S6 expected 0: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 stale expected 3: single 409/stale_revision == batch 409/stale_revision
+PASS S6 stale expected 3: balances equal after the call
+PASS S6 stale expected 3: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 unknown payment: single 404/not_found == batch 404/not_found
+PASS S6 unknown payment: balances equal after the call
+PASS S6 unknown payment: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 amount as string: single 422/validation_failed == batch 422/validation_failed
+PASS S6 amount as string: balances equal after the call
+PASS S6 amount as string: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 amount as float: single 422/validation_failed == batch 422/validation_failed
+PASS S6 amount as float: balances equal after the call
+PASS S6 amount as float: revision history equal (fields revision,amount,effective_at,reason)
+PASS S6 refund payment: single 422/linked_payment_immutable and batch 422/linked_payment_immutable are both 422 linked_payment_immutable
+== S7 capture or refund item mixed with valid items
+PASS S7 the capture payment names its authorization
+PASS S7 capture mixed with valid items -> 422 linked_payment_immutable
+PASS S7 capture mixed with valid items leaves /_test/export byte-identical
+PASS S7 refund mixed with valid items -> 422 linked_payment_immutable
+PASS S7 refund mixed with valid items leaves /_test/export byte-identical
+PASS S7 linked item 0 before a stale item 1 -> 422 linked_payment_immutable
+PASS S7 linked item 0 before a stale item 1 leaves /_test/export byte-identical
+PASS S7 stale item 0 before a linked item 1 -> 409 stale_revision
+PASS S7 stale item 0 before a linked item 1 leaves /_test/export byte-identical
+PASS S7 linked item 0 before an unknown item 1 -> 422 linked_payment_immutable
+PASS S7 linked item 0 before an unknown item 1 leaves /_test/export byte-identical
+PASS S7 unknown item 0 before a linked item 1 -> 404 not_found
+PASS S7 unknown item 0 before a linked item 1 leaves /_test/export byte-identical
+PASS S7 validation fault at item 1 before linked item 2 -> 422 validation_failed
+PASS S7 validation fault at item 1 before linked item 2 leaves /_test/export byte-identical
+PASS S7 linked item before incomplete/unaffordable -> 422 linked_payment_immutable
+PASS S7 linked item before incomplete/unaffordable leaves /_test/export byte-identical
+PASS S7 rejected batch under a key -> 422 linked_payment_immutable
+PASS S7 rejected batch under a key leaves /_test/export byte-identical
+PASS S7 same key after a rejection can still succeed (key not burned)
+PASS S7 and its retry replays the 201 body as 200
+== S8 recorded_at strictly later than every member's previous recorded_at; clock ratchet
+PASS S8 batch after a single correction of a member -> 201
+PASS S8 batch after a single correction of a member conserves the sum of balances
+PASS S8 batch recorded_at > p's previous (single) recorded_at and > q's original
+PASS S8 every revision shares recorded_at
+PASS S8 25 rapid batch+single rounds: one strictly increasing clock for every operation
+PASS S8 original payment retries return their original bytes after batches
+PASS S8 p_1 recorded_at strictly increasing across all its revisions
+PASS S8 p_2 recorded_at strictly increasing across all its revisions
+PASS S8 batch over a member recorded in the future -> 201
+PASS S8 batch over a member recorded in the future conserves the sum of balances
+PASS S8 recorded_at later than the imported future revision's
+PASS S8 and shared by every revision (q's earlier rev was in the past)
+PASS S8 a later single correction is later still
+== S9 refund created_at is a history boundary for the batch
+PASS S9 ordinary refund 201
+PASS S9 ordinary: payment moved to just after its refund -> 409 historical_overdraft
+PASS S9 ordinary: payment moved to just after its refund leaves /_test/export byte-identical
+PASS S9 ordinary: lower to 599 < refunded 600 -> 422 refund_exceeds_payment
+PASS S9 ordinary: lower to 599 < refunded 600 leaves /_test/export byte-identical
+PASS S9 ordinary: lower to exactly the refunded 600, instant before the refund -> 201
+PASS S9 ordinary: lower to exactly the refunded 600, instant before the refund conserves the sum of balances
+PASS S9 ordinary: bob is whole (600 received - 600 refunded)
+PASS S9 member refund 201
+PASS S9 member: payment moved to just after its refund -> 409 historical_overdraft
+PASS S9 member: payment moved to just after its refund leaves /_test/export byte-identical
+PASS S9 member: lower to 599 < refunded 600 -> 422 refund_exceeds_payment
+PASS S9 member: lower to 599 < refunded 600 leaves /_test/export byte-identical
+PASS S9 member: lower to exactly the refunded 600, instant before the refund -> 201
+PASS S9 member: lower to exactly the refunded 600, instant before the refund conserves the sum of balances
+PASS S9 member: bob is whole (600 received - 600 refunded)
+== S10 snapshots and known_at/as_of views around a batch
+PASS S10 batch lowers p1 to 100 and raises p2 to 900 -> 201
+PASS S10 batch lowers p1 to 100 and raises p2 to 900 conserves the sum of balances
+PASS S10 earlier snapshot token pages the same frozen entries (offset 1)
+PASS S10 and offset 0
+PASS S10 a new statement reflects the new revisions (revision 2, amounts 100 and 900)
+PASS S10 and closes at bob's balance
+PASS S10 /me known_at before the batch is the old balance
+PASS S10 /me known_at after the batch is the new balance
+PASS S10 as_of 1 day ago under current knowledge: payments moved to -2h are not yet in
+PASS S10 as_of 1 day ago under pre-batch knowledge: both payments counted
+PASS S10 payment records keep their original amounts
+== S11 32 items and 33 items
+PASS S11 33 items -> 422 validation_failed
+PASS S11 33 items leaves /_test/export byte-identical
+PASS S11 32 items -> 201
+PASS S11 32 items conserves the sum of balances
+PASS S11 revisions in input order, one recorded_at, one batch id
+PASS S11 bob balance exact: opening 1000 + q32 100 + 32 lowered payments of 50
+== S12 request payment: batch correction and refund leave the request closed
+PASS S12 request payment carries request_id
+PASS S12 request is paid
+PASS S12 refund of the request payment -> 201, request_id null, request still paid
+PASS S12 operator lowers the request payment below its refund -> 422 refund_exceeds_payment
+PASS S12 operator lowers the request payment below its refund leaves /_test/export byte-identical
+PASS S12 operator (not a party) lowers the request payment to 250 -> 201
+PASS S12 operator (not a party) lowers the request payment to 250 conserves the sum of balances
+PASS S12 request still paid after the batch
+PASS S12 the paid request cannot be paid again
+PASS S12 refund 151 more (100+151 > 250) -> 422 refund_exceeds_payment
+PASS S12 refund the remaining 150 -> 201
+PASS S12 request still paid after refunds
+ALL PASSED
