@@ -278,6 +278,19 @@ that found nothing, cost about **$170 of model spend**.
 6. **Elapsed active time and true provider billing are unknown** and are not estimated.
 7. **`room.json` is absent**, so `harness check` still exits 1 and the room log is not yet
    inspectable by a judge.
+8. **Two known accessibility findings, disclosed rather than quietly fixed.** An independent
+   product-quality pass (`evidence/operator/PRODUCT-QUALITY.md`, 134 checks) found that the wallet
+   route `/` renders four `h2` sections and **no `h1`**, while all five other routes have a
+   proper `h1`; and that one link on `/signup` measures 40 × 44 px at a 390 px viewport, 4 px
+   short on width. Both are low severity. They sit in `stage-4/`, which is band-owned code, so
+   they were **not patched by the operator** — anything an operator commits under `stage-N/` is
+   code the band did not write — and they were **not injected into the room** either, because a
+   "fix the h1" message between a stage dispatch and the coordinator's final report is exactly
+   the steering the guide prohibits. Recording them here costs two minor findings and saves the
+   autonomy evidence. The same pass found zero horizontal overflow, zero clipped elements, an
+   accessible name on every interactive element across all 30 route × viewport combinations, a
+   visible focus indicator on every tab stop, a skip link first in the tab order, and no console
+   errors.
 
 ## 11. Standing up this factory on a different problem
 

@@ -121,5 +121,14 @@ it inside a container. All commits share one Git identity, so distribution is ev
 room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than by authorship.
 `room.json` has not been downloaded yet, which is why `harness check` still reports one problem.
 
+Two accessibility findings are known and disclosed rather than patched, because the code is
+band-owned: the wallet route `/` has no `h1` (it renders four `h2` sections; every other route
+has a proper `h1`), and one "Log in" link on `/signup` is 40 × 44 px at a 390 px viewport. Both are
+low severity; the reasoning is in [`FACTORY.md`](FACTORY.md) §10. An independent pass over the
+same build found zero horizontal overflow and zero clipped elements at all five viewports, an
+accessible name on every interactive element, a visible focus ring on every tab stop, a skip link
+first in the tab order, and no console errors — see
+[`PRODUCT-QUALITY.md`](evidence/operator/PRODUCT-QUALITY.md).
+
 The official Pocketful specifications and the competition participant guide are authoritative.
 Nothing here claims a result against withheld tests.
