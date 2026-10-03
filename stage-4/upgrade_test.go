@@ -267,6 +267,10 @@ func txStripMigratedHistory(t testing.TB, gs map[string]any) {
 			r["effective_at"] != pm["created_at"] || r["recorded_at"] != pm["created_at"] || r["reason"] != "" {
 			t.Fatalf("revision %d of the migrated state: %v for payment %v", i, r, pm)
 		}
+		if v, ok := pm["refund_of"]; !ok || v != nil {
+			t.Fatalf("an imported payment must expose refund_of null: %v", pm)
+		}
+		delete(pm, "refund_of") // stage-4 default; a stage-1..3 export has none
 		net[pm["from_user_id"].(string)] -= pm["amount"].(float64)
 		net[pm["to_user_id"].(string)] += pm["amount"].(float64)
 	}
@@ -297,6 +301,9 @@ func txCheckMigratedReads(t testing.TB, h http.Handler, original []byte, tokens 
 		pm := p.(map[string]any)
 		if _, ok := pm["authorization_id"]; !ok {
 			pm["authorization_id"] = nil // a stage-1 payment gains the stage-2 field
+		}
+		if _, ok := pm["refund_of"]; !ok {
+			pm["refund_of"] = nil // a stage-1..3 payment gains the stage-4 field
 		}
 		pays = append(pays, txOriginalPay{pm["payment_id"].(string), pm["from_user_id"].(string), pm["to_user_id"].(string),
 			pm["created_at"].(string), pm["amount"].(float64), pm})

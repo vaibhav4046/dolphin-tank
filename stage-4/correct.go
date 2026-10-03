@@ -18,7 +18,8 @@ type CorrectionIn struct {
 // Correct appends a revision to a payment the caller sent and moves the difference between the same
 // two wallets, or changes nothing. The Store lock (held by the caller) is what serialises concurrent
 // corrections: expected_revision is compared and the revision appended inside one critical section.
-// Order: validation 422 -> 404 -> 403 -> linked 422 -> stale 409 -> funds 409 -> historical overdraft 409.
+// Order: validation 422 -> 404 -> 403 -> linked 422 (settlement member, capture, refund) -> stale 409
+// -> refund_exceeds_payment 422 (amount below what is already refunded) -> funds 409 -> historical overdraft 409.
 func (st *State) Correct(caller, paymentID string, in CorrectionIn, now time.Time) (*Revision, *AppError) {
 	now = st.Stamp(now)
 	u, e := st.caller(caller)
@@ -36,13 +37,16 @@ func (st *State) Correct(caller, paymentID string, in CorrectionIn, now time.Tim
 	if p.FromUserID != u.ID {
 		return nil, errForbidden("only the original sender may correct a payment")
 	}
-	if p.SettlementID != nil || p.AuthorizationID != nil {
-		return nil, NewErr(422, "linked_payment_immutable", "settlement members and captures cannot be corrected")
+	if p.SettlementID != nil || p.AuthorizationID != nil || p.isRefund() {
+		return nil, NewErr(422, "linked_payment_immutable", "settlement members, captures and refunds cannot be corrected")
 	}
 	history := st.revByPay[paymentID]
 	latest := history[len(history)-1]
 	if in.ExpectedRevision != latest.Revision {
 		return nil, NewErr(409, "stale_revision", "expected_revision is not the latest revision")
+	}
+	if in.Amount < st.refundedAmount(paymentID) {
+		return nil, NewErr(422, "refund_exceeds_payment", "the correction would leave the payment below its refunded amount")
 	}
 
 	sender, receiver := st.usersByID[p.FromUserID], st.usersByID[p.ToUserID]
