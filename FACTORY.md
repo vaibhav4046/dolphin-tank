@@ -258,7 +258,7 @@ room 5dd42746 (submitted run)   55 sessions   487,800,071 tokens   $196.92
    @forge  $35.95   (18.3%)
    @route  $27.35   (13.9%)
    @loom   $23.94   (12.2%)
-room 7e2f1aa9 (earlier Codex attempt)  $47.08
+room 7e2f1aa9 (earlier Codex attempt)  $94.16
 room a4b60871 (toy rehearsal)         $15.26
 ```
 
@@ -335,24 +335,94 @@ third defect and four further cross-attacks that found nothing, cost about **$19
 
 ## 11. Standing up this factory on a different problem
 
-1. Install BAND, authenticate the operator and the model provider, and configure **at least
-   three** seats — each its own identity, each with a mandate naming its real harness and model.
-2. Give every seat the same **absolute** path to the result repository. A seat working in its own
-   sandbox cannot resolve a relative path and will otherwise create a repository only it sees.
-3. Rehearse on the unscored practice track in a **separate** room and repository.
-4. Freeze the mandates. Copy `mandates/` verbatim; keep them generic.
-5. Dispatch one stage to the coordinator. It pastes the full requirement set into every delegated
-   handoff and sends nothing further until the coordinator's final report.
-6. Advance by **copying the accepted folder forward** and widening only the new folder. Delete
-   any nested `.git` in the copy, or the folder will build for you and arrive empty for a judge.
-7. Let the acceptor reject freely. A rejection that changes the work is the most valuable
-   artefact this factory produces.
-8. At the end, download the **full** room session as `room.json`, run `harness check`, then
-   verify every claimed stage from a fresh clone in isolated mode.
+Everything here ran on Windows 11 with Band Desktop 0.4.12 and the `band` CLI, with Docker inside
+WSL2. Only commands and incidents that actually happened are listed.
 
-What this costs: five seats, one coordinator, and about **$189 of model spend** (list-price
-estimate) for an accepted four-stage financial service — including one full rejection/repair
-cycle and one cross-attack that found a third defect.
+**Setup**
+
+1. Install Band Desktop, sign in, run `band preflight`. Install Docker inside WSL2 and the
+   official harness in a venv there (the harness needs Docker).
+2. Create one Band agent per seat. Each seat is a persistent agent with a parked runtime:
+
+   ```text
+   band agent create --name <Name> --description "<one line>" \
+       --cwd <ABSOLUTE path of the shared result repository> \
+       --session seat-<name> --transport <runtime> --runtime-model <model> \
+       --instructions "$(cat mandates/<name>.md)"
+   ```
+
+   The five Claude Code seats used `--transport claude-code-cli` with the parked template pointed
+   at the native `claude.exe`. The abandoned OpenCode run (section 11a) used `--transport opencode
+   --runtime-model opencode/space-bunny-free`. Seats may share a runtime and a model.
+3. Give every seat the same **absolute** path to the result repository. A seat in its own sandbox
+   cannot resolve a relative path and will create a repository only it sees.
+4. Freeze the mandates. Copy `mandates/` and change only the handle table and the two header lines
+   (`Harness:`, `Model:`), which must state what the seat really runs. Keep them generic.
+5. Rehearse on the unscored practice track in a **separate** room and repository.
+
+**Run**
+
+6. Create the room and add the seats: `band chat new --session seat-<coordinator> --with
+   <owner>/<seat>`. The CLI prints a harmless decode error and adds only the first participant, so
+   add the rest one at a time with `band chat add <room-id> <owner>/<seat>` and check
+   `band room participants <room-id>`.
+7. Dispatch from Git Bash (PowerShell mangles quotes): `band room send <room-id> "$(cat
+   dispatch.txt)" --mention <coordinator-id>`. `dispatch/dispatch-template.md` is the generic
+   shape of the four dispatches in `room.json`: track, specification path, absolute repository
+   path, the harness command, rules. The coordinator pastes the full requirement set into every
+   delegated handoff.
+8. Advance by **copying the accepted folder forward** and widening only the new folder. Delete any
+   nested `.git` in the copy, or the folder will build for you and arrive empty for a judge.
+9. Let the acceptor reject freely. A rejection that changes the work is the most valuable artefact
+   this factory produces.
+10. When a seat stalls on a provider limit or a crashed runtime, restart the runtime, not the
+    conversation: `band restart --session seat-<name> --host-session default-<room-id>`. That is a
+    daemon operation and adds no room message; Band redelivers the queued handoff.
+
+**Close**
+
+11. Open the room in the Band console (an account that owns the room), choose Download, then
+    **Download full session**. Check the message count equals the room total: a first attempt can
+    export only the messages the page had loaded. Save it unchanged as `room.json`.
+12. Run `python -m harness check --track <track> <repo>`, then verify every claimed stage from a
+    fresh clone of the public repository with `harness run --all --mode isolated`.
+13. Measure active time rather than quoting wall clock: `python tools/active_time.py room.json`.
+
+What this costs: five seats, one coordinator, about **$197 of model spend** (list-price estimate,
+not a bill) and about 10 hours of measured active room time for an accepted four-stage financial
+service, including one full rejection/repair cycle and one cross-attack that found a third defect.
+
+## 11a. What we tried that failed
+
+Judges asked what failed. These are the real incidents, in the order they cost time.
+
+1. **Setup.** The operator's standalone Claude login had expired, so every seat failed with an
+   expired-session error until the login was redone. The npm `claude` shim timed out under the
+   runtime, so the templates were pointed at the native `claude.exe`. The bare context mode needs an
+   API key, so the seats use the local-config context mode. A careless `taskkill /IM claude.exe`
+   would have killed the host session; processes are killed by PID only. Docker was not installed
+   on the host and went into WSL2 (3 GB memory cap).
+2. **A parallel Codex run.** A separate room with five `codex-app-server` seats built a stage 1
+   candidate and its own evidence, then every seat stopped on 2026-10-02T15:48Z with "You've hit
+   your usage limit". It was never used for the submission.
+3. **Provider usage limits on the submitted run.** The room export holds 30 usage-limit error events
+   (session and weekly). They produced the 58.7 hours of idle time in section 9 and the three
+   resume messages in section 8. A seat that is restarted after a limit does not always wake on its
+   own; one seat needed a human message to resume, which is disclosed.
+4. **A second, clean run on OpenCode with the `space-bunny-free` model (2026-10-04).** Five new
+   seats, one single dispatch for all four stages, no usage limit. Both the dispatch and the seats
+   worked at first: a 97-row requirement ledger, a container surface and a service core were
+   committed. Then the OpenCode runtimes died twice ("runtime exited before the ACP handshake", at
+   09:24Z and 11:55Z), the coordinator closed stage 1 as unaccepted because the acceptor's turn had
+   been cut off, and it stood the band down for good. The host had 2.8 GB of 15.7 GB free with five
+   OpenCode runtimes, Docker in WSL2, a browser and the operator's own session running together.
+   We stopped the seats and kept the first run as the submission, because resuming would have added
+   human messages and there was not enough time to finish four stages. Lesson: leave headroom for
+   concurrent seats and do not run an unattended factory on a memory-starved host.
+5. **Early wrong claims in our own write-up.** FACTORY.md once said "Trace wrote neither fix"
+   (Trace wrote the F1 repair and attacked Forge's F2 repair), once said usage-limit restarts
+   happened "four times" (the room holds 30 limit events and the restarts were not counted), and
+   once said active time was not measured. All three were corrected against `room.json`.
 
 ## 12. Where to look
 
