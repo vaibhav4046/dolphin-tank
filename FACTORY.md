@@ -231,11 +231,13 @@ own problems and never stopped to ask — the run holds.
 **What is not true:** the guide's letter says to send nothing between dispatches. Three messages
 were sent. Calling that crash recovery does not create an exemption the guide grants.
 
-**Operator runtime restarts are not messages.** The provider limit ended seat turns four times
-across the run and the room does not resume on its own. Recovering meant restarting the affected
-runtimes so Band would redeliver the queued handoffs. That is a daemon operation: the human
-message count above is 7 **after** four such restarts, measured from the raw pages, so none of them
-added anything to the room. No message was ever sent by the operator to a seat.
+**Operator runtime restarts are not messages.** The room export holds 30 usage-limit error events
+(session and weekly limits) and the room does not resume on its own. Recovering meant restarting
+the affected seat runtimes so Band would redeliver the queued handoffs. That is a daemon
+operation and it was done many times; the restarts were not counted, so no number is claimed.
+The human message count above is 7, measured from the raw export after all of them, so none of
+the restarts added anything to the room. Apart from those seven, the operator sent no message to
+any seat.
 
 We are not claiming this run is unambiguously compliant on that point. It is stated here so a
 judge reads it from us first.
@@ -279,8 +281,9 @@ third defect and four further cross-attacks that found nothing, cost about **$19
    on 697 independent checks plus 11 deliberate mutations, all 11 caught, with real exports built
    from the accepted stage-1/2/3 commits and imported; the browser/Docker/regression item was
    accepted afterwards (`86bf3a7`) once the acceptor's turn was re-delivered.
-2. **The provider usage limit is a real operational hazard.** It ended four seat turns mid-task.
-   It is the reason for every resume in §8.
+2. **The provider usage limit is a real operational hazard.** It ended seat turns repeatedly
+   (30 usage-limit error events in the room export) and cost wall-clock time. It is the reason for
+   every resume in §8.
 3. **`go test -race` cannot run on the operator host** (needs cgo; no gcc). It was run inside a
    container by the reviewer — `go test -count=1 -race ./...` ok in 363 s at stage 3.
 4. **All commits share one Git identity**, so authorship alone cannot show distribution. The
