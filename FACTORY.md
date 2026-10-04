@@ -216,6 +216,10 @@ full, and the count was re-verified from the raw room pages on 2026-10-03 rather
 | 6 | 2026-10-02T17:42:15 | `@route` | "your last turn ended before you answered trace's report … resume … no scope change" |
 | 7 | 2026-10-02T22:48:17 | `@route` | **Stage 4 dispatch** |
 
+In words: the four dispatches are 322, 537, 543 and 538 words (the task for each stage), and the
+three resumes are 41, 44 and 42 words (127 in total), none containing a requirement. Seats wrote
+about 103,000 words of text in the room against 2,067 from the human.
+
 So: **four legitimate stage dispatches** — exactly what the guide allows ("you may dispatch each
 stage separately or all four at once") — and **three mid-stage resumes**, all caused by the model
 provider's usage limit, all explicitly adding no requirement and changing no scope. The first
@@ -268,9 +272,26 @@ The per-seat split matters more than the total: no seat carried the run, which i
 rubric actually reads.
 
 Elapsed, first Stage-1 dispatch to the last room message: **68.9 hours wall clock**
-(2026-09-30T23:05:20Z to 2026-10-03T20:00:27Z). That figure **includes repeated provider quota
-outages (30 usage-limit error events in the room) and long idle gaps, so it is not active model
-time** — active model time is not measured and is not claimed.
+(2026-09-30T23:05:20Z to 2026-10-03T20:00:27Z). Most of that is waiting, not working.
+
+**Measured active room time: about 10 hours.** Method: sort all 7,216 room events by timestamp
+and add up the gaps between consecutive events that are no longer than a threshold; longer gaps
+count as idle. The result barely moves with the threshold, so it is not a tuning artefact:
+
+```text
+gap threshold    active    idle
+  3 min           8.7 h    60.2 h
+  5 min           9.3 h    59.7 h
+ 10 min          10.2 h    58.7 h
+ 15 min          10.2 h    58.7 h
+ 30 min          10.6 h    58.3 h
+```
+
+The idle time is the provider's usage-limit windows (30 usage-limit error events in the room
+export). The eight longest gaps run 4.3 to 5.4 hours, which is the length of a five-hour
+session window, plus one 10.7-hour gap on 2026-10-03 (a weekly limit, then the operator
+restarting the seats). This is room-activity time, not billed model time, and the active
+figure is the one to compare with a run that never hit a limit. Reproduce it from `room.json`.
 
 For scale: the full four-stage chain reached, with one rejection/repair cycle, one cross-attack that found a
 third defect and four further cross-attacks that found nothing, cost about **$197 of model spend** (estimate at list prices).
@@ -292,7 +313,9 @@ third defect and four further cross-attacks that found nothing, cost about **$19
 5. **Shipped-check coverage is thin at the top end** — stage 3 ships 6 checks (9% of its graded
    suite) and stage 4 ships 5 (16%). A stage judged mostly on withheld tests is exactly why this
    document leans on independent checks rather than green runs.
-6. **Elapsed active time and true provider billing are unknown** and are not estimated.
+6. **True provider billing is unknown.** The dollar figure is a list-price estimate from
+   `band usage rooms`. Active room time is measured (about 10 hours, §9); it is room activity,
+   not model-seconds.
 7. **`room.json` was downloaded after the work was complete**, so it holds the whole run but
    not any later activity; it is the unedited Band export (7,216 messages) and `harness check`
    passes with it present.

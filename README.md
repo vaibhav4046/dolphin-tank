@@ -8,6 +8,7 @@ application is **Pocketful** — Dolphin Tank is the factory that builds it.
 
 **Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
 **Run:** room `5dd42746-f387-4763-afe0-f96d8f504f71`, five seats, Claude Code / `claude-sonnet-5-5`
+**License:** MIT, see [LICENSE](LICENSE). **Active room time:** about 10 hours measured from `room.json` (68.9 h wall clock, the rest waiting on provider usage-limit windows), method in [FACTORY.md](FACTORY.md) §9.
 **Status:** 2026-10-03 20:00 UTC. **All four stages independently accepted**, the last at
 `1dd5560` (stage 4 source unchanged since). Stage 4 was cross-attacked clean by the two seats that
 did not write each part. `room.json` is the unedited full-session download (7,216 messages, 2026-09-30T23:05Z to
