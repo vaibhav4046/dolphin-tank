@@ -1,20 +1,41 @@
 # Dolphin Tank
 
-**An evidence-first autonomous software factory.**
-Five BAND seats plan, implement, attack and independently verify each other's work. The judged
-application is **Pocketful** — Dolphin Tank is the factory that builds it.
+**AI agents say "done". Dolphin Tank makes them prove it.**
 
-> Passing tests is not acceptance. Reproducible evidence is acceptance.
+Dolphin Tank is a software factory made of five AI agents in one BAND room.
+Four build and attack the code. One independent reviewer, **Jury**, may only accept a stage on
+evidence it reproduced itself on a clean clone. The factory built **Pocketful**, a four-stage
+wallet and payments service in Go with a browser app, with no human-written stage code.
 
-**Track:** Pocketful (WeAreDevelopers × BAND — Dark Factory)
-**Run:** room `5dd42746-f387-4763-afe0-f96d8f504f71`, five seats, Claude Code / `claude-sonnet-5-5`
-**License:** MIT, see [LICENSE](LICENSE). **Active room time:** about 10 hours measured from `room.json` (68.9 h wall clock, the rest waiting on provider usage-limit windows), method in [FACTORY.md](FACTORY.md) §9.
-**Status:** 2026-10-03 20:00 UTC. **All four stages independently accepted**, the last at
-`1dd5560` (stage 4 source unchanged since). Stage 4 was cross-attacked clean by the two seats that
-did not write each part. `room.json` is the unedited full-session download (7,216 messages, 2026-09-30T23:05Z to
-2026-10-03T20:00Z); `harness check` passes.
+[Website and film](https://dolphin-tank.vercel.app) · [Deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) · [FACTORY.md](FACTORY.md) · [room.json](room.json)
+
+| | |
+|---|---|
+| **The problem** | AI coding agents report success without proof. When the same model writes and approves its own work, bugs ship and nobody can tell. |
+| **The fix** | Split the authority. **Route** plans. **Forge** builds the backend. **Loom** builds the browser app. **Trace** attacks the system. **Jury** alone accepts or rejects, and never fixes what it rejects. |
+| **The result** | Pocketful, four stages. 4 of 4 stages pass the official harness, in isolated mode, from a fresh clone of this repository. |
+| **The proof it is not a rubber stamp** | At stage 3 Jury **rejected** the build with two reproduced bugs (an overdraft of 8001 against 8000 was accepted, and an available balance showed -4000 in 25 of 25 views). The agents fixed both, a cross-attack found a third, and Jury re-verified before it accepted. See [the rejection](#the-rejection-that-changed-the-work). |
+| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 95 commits. |
+| **Autonomy, stated up front** | 7 human messages in the room: 4 stage dispatches and 3 resume messages. The run is not fully hands-off. [FACTORY.md](FACTORY.md) section 8 lists all seven. |
+
+## How it meets the three judging criteria
+
+| Criterion | What we did | Where to look |
+|---|---|---|
+| **Factory, 50%** | Generic mandates that any team can point at a new problem. A stand-up runbook with the exact commands. Cost and time measured. A loop that catches bad work and repairs it. | [`mandates/`](mandates/), [FACTORY.md](FACTORY.md) sections 9 to 11a |
+| **App, 25%** | A coherent browser app with refused, uncertain, empty and error states, tested by Jury in Chromium at 375, 768 and 1280 px. | [stage-4/](stage-4/), [screenshots](https://dolphin-tank.vercel.app/#product) |
+| **Agent teamwork, 25%** | Five agents shared the work: 1,018 to 1,770 room messages each, none above 31% of cost. A review changed the build. One dispatch per stage. | [PROVENANCE.md](evidence/operator/PROVENANCE.md), [`room.json`](room.json) |
 
 ---
+
+## Run details
+
+**Track:** Pocketful (WeAreDevelopers x BAND, Dark Factory)
+**Room:** `5dd42746-f387-4763-afe0-f96d8f504f71`, five agents, Claude Code with `claude-sonnet-5-5`
+**License:** MIT, see [LICENSE](LICENSE). **Active room time:** about 10 hours measured from `room.json`, out of 68.9 h wall clock. The method is in [FACTORY.md](FACTORY.md) section 9.
+**Status:** all four stages independently accepted, the last at `1dd5560`. `room.json` is the unedited full-session download (7,216 messages, 2026-09-30T23:05Z to 2026-10-03T20:00Z). `harness check` passes.
+
+> Passing tests is not acceptance. Reproducible evidence is acceptance.
 
 ## What the factory built
 
