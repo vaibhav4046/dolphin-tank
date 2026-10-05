@@ -274,6 +274,63 @@ any seat.
 We are not claiming this run is unambiguously compliant on that point. It is stated here so a
 judge reads it from us first.
 
+### Operator activity during the run
+
+Disclosed as a count, with no argument attached.
+
+Method. The run window is the first and last timestamp in `room.json`:
+2026-09-30T23:05:19.754Z to 2026-10-03T20:00:36.066Z. Every commit in the repository was taken
+by **author** time. A commit counts as referenced when its SHA appears as a hex token in the
+`content` or `metadata` of any room message, at full length or as a 7-character prefix.
+
+| Measure | Count |
+|---|---:|
+| Commits in the repository | 98 |
+| Commits with author time inside the run window | 82 |
+| Of those, referenced by SHA in a room message | **82 (100%)** |
+| Of those, **not** referenced by SHA in any room message | **0** |
+| Commits with author time outside the window | 16 |
+| Outside-window commits that touch `stage-1/` .. `stage-4/` | **0** |
+| Commits anywhere in history that touch `stage-1/` .. `stage-4/` | 40 |
+| Distinct Git author identities in the whole repository | 1 |
+
+So there is no commit inside the run window without a room message naming it, and no commit
+outside the window that touches stage code.
+
+The 16 outside the window are one commit before the run and fifteen after it:
+
+| SHA | Author time | Side | Subject | Files | Touches `stage-*/` |
+|---|---|---|---|---:|---|
+| `f190358` | 2026-10-01T00:05:01 | before | chore: freeze generic seat mandates | 7 | no |
+| `b1919d1` | 2026-10-03T21:08:15 | after | docs: record stage 4 fully accepted at 1dd5560 | 3 | no |
+| `8aaf697` | 2026-10-03T21:22:34 | after | evidence: add room.json (unedited full-session export) | 4 | no |
+| `e07ad9c` | 2026-10-03T22:25:38 | after | docs: final measured figures | 3 | no |
+| `5abdc13` | 2026-10-03T22:43:56 | after | evidence: final fresh-clone verification at e79ea48 | 9 | no |
+| `15dd391` | 2026-10-03T22:50:34 | after | docs: correct elapsed time and cross-attack summary | 2 | no |
+| `359531a` | 2026-10-03T23:55:09 | after | docs: final measured figures and release scoreboard | 3 | no |
+| `e7ea0b6` | 2026-10-04T00:22:05 | after | docs: link the showcase, demo video and deck | 2 | no |
+| `87762c4` | 2026-10-04T01:03:56 | after | docs: replace the restarts count with the measured figure | 2 | no |
+| `153ff39` | 2026-10-04T09:00:15 | after | docs: measured active room time, human word counts, MIT licence | 4 | no |
+| `4c2273c` | 2026-10-04T17:35:01 | after | docs: concrete stand-up runbook, what failed | 4 | no |
+| `8392d23` | 2026-10-04T20:32:35 | after | evidence(operator): verification of the public anonymous clone | 2 | no |
+| `2b470df` | 2026-10-04T22:12:55 | after | docs: README opens with the problem and the proof | 2 | no |
+| `fbe4ece` | 2026-10-05T01:03:36 | after | evidence(operator): re-verify the published head anonymously | 2 | no |
+| `3f5b6e6` | 2026-10-05T12:19:58 | after | evidence(operator): record the run 1 vs run 2 swap decision | 2 | no |
+| `424a3af` | 2026-10-05T21:15:05 | after | evidence, tools: machine count of who edited stage code | 5 | no |
+
+`f190358` is the freeze of the five seat mandates, written before the first dispatch so the
+mandates could not be tailored to what the seats were about to build. The fifteen after the run
+are operator documentation and verification evidence. None of the sixteen touches stage code.
+
+Two limits on this disclosure:
+
+- It is scoped to commits. A file change made and never committed would not appear. The separate
+  machine count in `evidence/operator/PROVENANCE.md` covers the tool calls, and reports that the
+  coordinator seat made zero stage-code edits.
+- `evidence/operator/PROVENANCE.md` was generated at an earlier revision and its coverage counts
+  (80 commits, 64 announced) are stale against the 98 commits above. Its per-commit index is
+  unaffected, because each row is keyed by SHA.
+
 ## 9. Measured cost and elapsed time
 
 From `band usage rooms`, which reports catalog **estimates at list prices, not provider
@@ -419,6 +476,30 @@ WSL2. Only commands and incidents that actually happened are listed.
 What this costs: five seats, one coordinator, about **$197 of model spend** (list-price estimate,
 not a bill) and about 10 hours of measured active room time for an accepted four-stage financial
 service, including one full rejection/repair cycle and one cross-attack that found a third defect.
+
+### Minimum stand-up
+
+Ten commands, all of them already shown above, for standing this factory up on a new problem.
+Nothing here is new and nothing here was not run.
+
+```sh
+band preflight                                   # readiness: Docker, agent runtime, login
+band agent create --name <Name> --description "<one line>" \
+  --cwd <ABSOLUTE result repo> --session seat-<name> \
+  --transport <runtime> --runtime-model <model> \
+  --instructions "$(cat mandates/<name>.md)"    # one seat per role
+band chat new --session seat-<coordinator> --with <owner>/<seat>
+band chat add <room-id> <owner>/<seat>           # one at a time, then verify
+band room participants <room-id>                # confirm all five joined
+band room send <room-id> "$(cat dispatch.txt)" --mention <coordinator-id>
+band restart --session seat-<name> --host-session default-<room-id>   # on a provider limit
+python -m harness check --track <track> <repo>                        # eligibility
+python -m harness run --track <track> --repo <fresh clone> --all --mode isolated
+python tools/room_stats.py room.json             # proof the room log backs the claims
+```
+
+Before the first dispatch, copy `mandates/` out of git and change only the handle table and the
+two header lines. Keep them generic. Dispatch from Git Bash, not PowerShell.
 
 ## 11a. What we tried that failed
 
