@@ -7,6 +7,8 @@ Four build and attack the code. One independent reviewer, **Jury**, may only acc
 evidence it reproduced itself on a clean clone. The factory built **Pocketful**, a four-stage
 wallet and payments service in Go with a browser app, with no human-written stage code.
 
+**Start here if you are judging:** [`JUDGE-GUIDE.md`](JUDGE-GUIDE.md) maps every rubric question to a file, a commit or a room timestamp.
+
 [Website and film](https://dolphin-tank.vercel.app) · [Deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) · [FACTORY.md](FACTORY.md) · [room.json](room.json)
 
 | | |
@@ -15,7 +17,7 @@ wallet and payments service in Go with a browser app, with no human-written stag
 | **The fix** | Split the authority. **Route** plans. **Forge** builds the backend. **Loom** builds the browser app. **Trace** attacks the system. **Jury** alone accepts or rejects, and never fixes what it rejects. |
 | **The result** | Pocketful, four stages. 4 of 4 stages pass the official harness, in isolated mode, from a fresh clone of this repository. |
 | **The proof it is not a rubber stamp** | At stage 3 Jury **rejected** the build with two reproduced bugs (an overdraft of 8001 against 8000 was accepted, and an available balance showed -4000 in 25 of 25 views). The agents fixed both, a cross-attack found a third, and Jury re-verified before it accepted. See [the rejection](#the-rejection-that-changed-the-work). |
-| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 95 commits. |
+| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 100 commits, of which 82 have author time inside the run window. |
 | **Autonomy, stated up front** | 7 human messages in the room: 4 stage dispatches and 3 resume messages. The run is not fully hands-off. [FACTORY.md](FACTORY.md) section 8 lists all seven. |
 
 ## How it meets the three judging criteria
@@ -141,8 +143,11 @@ runtimes so Band would redeliver the queued handoffs, which is a daemon operatio
 fact that of 7,216 room messages exactly **seven are human** — four legitimate stage dispatches
 and three provider-quota resumes — and that **no seat ever asked the operator for anything**:
 every seat→operator message is a status report, not a question. `go test -race` cannot run on the operator host (no cgo); the reviewer ran
-it inside a container. All commits share one Git identity, so distribution is evidenced by the
-room log and [`PROVENANCE.md`](evidence/operator/PROVENANCE.md) rather than by authorship.
+it inside a container. All commits use a single Git identity,
+`vaibhav4046 <115102797+vaibhav4046@users.noreply.github.com>`, so Git authorship shows nothing
+about who did the work; distribution is shown by `room.json`, and all 40 commits that touch
+`stage-1/`..`stage-4/` have their SHA quoted in the room log, verified by script with no exceptions
+([`evidence/operator/PROVENANCE.md`](evidence/operator/PROVENANCE.md)).
 `room.json` was downloaded from the Band console as **Download full session** and committed
 byte-for-byte unchanged (SHA-256 `e9b69df9...62f97e`). It was read for credential shapes before
 commit; none were found.
