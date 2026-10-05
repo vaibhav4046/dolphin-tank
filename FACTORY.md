@@ -235,9 +235,37 @@ own problems and never stopped to ask — the run holds.
 **What is not true:** the guide's letter says to send nothing between dispatches. Three messages
 were sent. Calling that crash recovery does not create an exemption the guide grants.
 
+### The three resume messages and the limit event behind each
+
+Every resume follows a provider usage-limit error recorded in the same export. Two limits are
+reported per row: the nearest one before the resume, and the last one belonging to the seat the
+resume actually addressed. They are not always the same event, so both are given.
+
+| # | Resume time (UTC) | Addressed | Nearest usage-limit error before it | Gap | Last limit for the addressed seat | Gap |
+|---|---|---|---|---|---|---|
+| R1 | 2026-10-01T05:21:28 | `@jury` | 2026-09-30T23:57:20.140Z, sender Jury, "You've hit your session limit · resets 5am (Europe/London)" | 5h 24m | same event (Jury) | 5h 24m |
+| R2 | 2026-10-01T15:49:08 | `@route` | 2026-10-01T10:32:35.817Z, sender Loom, "You've hit your session limit · resets 4:10pm (Europe/London)" | 5h 16m | 2026-10-01T05:43:08.252Z, sender Route, "You've hit your session limit · resets 11:10am (Europe/London)" | 10h 06m |
+| R3 | 2026-10-02T17:42:15 | `@route` | 2026-10-02T12:25:25.213Z, sender Forge, "You've hit your session limit · resets 5:40pm (Europe/London)" | 5h 16m | 2026-10-02T07:55:39.858Z, sender Route, "You've hit your session limit · resets 12:40pm (Europe/London)" | 9h 46m |
+
+Each of the three came after a provider limit had stopped a seat, and each added no requirement.
+The room text says so in its own words: R1 ends "No new requirements."; R2 ends "No new
+requirements and no change of scope."; R3 ends "No new requirements, no scope change."
+
+R1 is the one that addressed `@jury` directly. In R2 and R3 the nearest limit error belongs to a
+different seat (Loom, then Forge) while the resume went to `@route`, because Route was the
+coordinator and had itself also hit limits. All 30 usage-limit events by seat: Trace 9, Forge 7,
+Loom 6, Jury 4, Route 4. The export holds 32 `error` events in total; the other two are Claude Code
+background-task failures, not provider limits.
+
+Reproduce with:
+
+```sh
+python tools/room_stats.py room.json
+```
+
 **Operator runtime restarts are not messages.** The room export holds 30 usage-limit error events
-(session and weekly limits) and the room does not resume on its own. Recovering meant restarting
-the affected seat runtimes so Band would redeliver the queued handoffs. That is a daemon
+(session and weekly limits) and the room does not resume on its own. Recovering meant restarting the
+affected seat runtimes so Band would redeliver the queued handoffs. That is a daemon
 operation and it was done many times; the restarts were not counted, so no number is claimed.
 The human message count above is 7, measured from the raw export after all of them, so none of
 the restarts added anything to the room. Apart from those seven, the operator sent no message to

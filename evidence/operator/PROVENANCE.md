@@ -46,7 +46,12 @@ anything under `stage-N/`.
 | (no room announcement) | 5 |
 | Jury | 5 |
 
-## Files touched per stage folder, by announcing seat
+## Commits touching each stage folder, attributed to the ANNOUNCING seat
+
+Read this table as **commit announcements, not authorship**. A seat is credited with a commit
+when a room message from that seat named the commit SHA. The coordinator relays and announces
+commits that other seats wrote, so Route's high counts mean Route announced many commits, not
+that Route wrote the code. For who actually edited stage code, see the machine count below.
 
 | Stage folder | (no room announcement) | Forge | Loom | Route | Trace |
 |---|---|---|---|---|---|
@@ -54,6 +59,45 @@ anything under `stage-N/`.
 | `stage-2/` | 0 | 57 | 0 | 38 | 13 |
 | `stage-3/` | 0 | 45 | 11 | 87 | 16 |
 | `stage-4/` | 0 | 6 | 15 | 116 | 12 |
+
+## Who edited stage code (machine count)
+
+Counted from `room.json`, not from commit subjects. Every `Edit`, `Write`, `MultiEdit` and
+`NotebookEdit` tool call in the room was read, and its target path was classified.
+
+Command:
+
+```sh
+python tools/seat_edits.py room.json
+```
+
+| Seat | Edit-family calls (all) | targeting stage-N code | of those, inside `band-work/result/` | distinct stage files touched |
+|---|---:|---:|---:|---:|
+| Forge | 127 | 89 | 89 | 34 |
+| Trace | 129 | 88 | 88 | 26 |
+| Loom | 89 | 46 | 46 | 35 |
+| **Jury** | 120 | **1** | **0** | 1 |
+| **Route** | 36 | **0** | **0** | 0 |
+| TOTAL | 501 | 224 | 223 | 96 |
+
+Three things this table is careful about, because a naive count gets all three wrong:
+
+- **`evidence/stage-N/` is not stage code.** Paths such as `evidence/stage-3/decisions.md`
+  contain `stage-3` in the name but are evidence files. They are counted separately: 57
+  evidence writes across the five seats.
+- **One stage-N target was outside the repository.** The single Jury entry is
+  `C:/Users/lalwa/AppData/Local/Temp/s4jury/wt-refunds/stage-4/jury_s4_refund_test.go`,
+  a scratch test file in a temp directory, edited at 2026-10-03T03:00:04.879Z. It is not
+  shipped stage-4 code. In-repo stage-N edits are therefore 223, not 224.
+- **Route edited no stage code at all.** Route's 36 edit-family calls were 7 writes to
+  `evidence/` paths and 29 whose target is unreadable (see below). Route coordinated and
+  relayed; it did not write the deliverable.
+
+**Limit, stated plainly.** The console export truncates tool-call `args` at 2,000 characters.
+220 of the 501 edit-family calls have a `content` field long enough that the `file_path` key,
+which is stored after it, was cut off. All 220 sit exactly at the truncation limit. Their target
+cannot be read back, so they are counted in the "all" column only and are **not** added to the
+stage-N column. The stage-N figures are therefore a floor, not a ceiling.
 
 ## Full index
 
