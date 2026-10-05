@@ -96,3 +96,48 @@ the tests applied before judging, and passing it is directional feedback rather 
 against the withheld suite. The shipped stage-3 and stage-4 suites are 6 and 5 checks — 9% and 16%
 of their graded suites. The real assurance is the acceptor's own checks and mutation testing
 recorded under `evidence/stage-N/`, not this run.
+---
+
+## Addendum: re-verified at the published head
+
+The revision above was `4c2273c`. The repository has since advanced with two
+documentation-only commits (`8392d23`, `2b470df`). Rather than rewrite this file,
+the published head was verified again from scratch, anonymously, on 2026-10-05.
+
+```text
+git clone --depth 1 https://github.com/vaibhav4046/dolphin-tank.git
+HEAD  : 2b470df5d3cecce44967e6309ab0d78edb4b8029
+files : 1871
+clean : yes
+```
+
+**Stage code is byte-identical across all four stages** since the revision verified
+above, so the acceptance chain did not move. The two later commits touched
+`README.md` and this evidence file only.
+
+Room integrity re-read from the published `room.json`:
+
+```text
+roomId    : 5dd42746-f387-4763-afe0-f96d8f504f71
+scope     : full
+messages  : 7216
+seats     : 5 agent seats (Route, Forge, Loom, Trace, Jury) plus the operator
+human msgs: 7  (4 stage dispatches, 3 provider-quota resumes)
+reciprocal agent-to-agent pairs: 7
+```
+
+Official harness, grading configuration, against the published head:
+
+```text
+python -m harness check <clone> --track pocketful                        -> CHECK_EXIT=0
+python -m harness run --track pocketful --repo <clone> --all --mode isolated
+                                                                          -> RUN_EXIT=0
+
+stage-1: claimed=True share=1.0 highest_contiguous=1 overshoot=None
+stage-2: claimed=True share=1.0 highest_contiguous=2 overshoot=None
+stage-3: claimed=True share=1.0 highest_contiguous=3 overshoot=None
+stage-4: claimed=True share=1.0 highest_contiguous=4 overshoot=None
+```
+
+Every stage folder ships a `Dockerfile` and a `RUN.md`, and no nested `.git`
+exists inside any of them. Raw output: `band-work/checks/final-anon-verify/`.
