@@ -1,15 +1,24 @@
 # Dolphin Tank
 
-**AI agents say "done". Dolphin Tank makes them prove it.**
+**The shipped checks said yes. Our reviewer said no.**
 
-Dolphin Tank is a software factory made of five AI agents in one BAND room.
-Four build and attack the code. One independent reviewer, **Jury**, may only accept a stage on
-evidence it reproduced itself on a clean clone. The factory built **Pocketful**, a four-stage
-wallet and payments service in Go with a browser app, with no human-written stage code.
+Jury reproduced an accepted overdraft of 8001 against 8000 available, rejected stage 3, and required fresh evidence before accepting the repairs. Dolphin Tank is a five-seat BAND factory that separates writing code from accepting it.
 
-**Start here if you are judging:** [`JUDGE-GUIDE.md`](JUDGE-GUIDE.md) maps every rubric question to a file, a commit or a room timestamp.
+[Website and original film](https://dolphin-tank.vercel.app) · [Deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) · [FACTORY.md](FACTORY.md) · [room.json](room.json)
 
-[Website and film](https://dolphin-tank.vercel.app) · [Deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) · [FACTORY.md](FACTORY.md) · [room.json](room.json)
+## Judge in five minutes
+
+1. Read `JUDGE-GUIDE.md` for the rubric-to-evidence map.
+2. Read `FACTORY.md` section 6 for the rejection, reproduction and repair.
+3. Run the service from `stage-4/RUN.md`, then inspect the browser app.
+4. Follow `FINAL-VERIFICATION.md` at the exact submitted revision. Shipped checks are not the withheld evaluation.
+5. Inspect `room.json` and `evidence/operator/PROVENANCE.md` for seat contributions and commit references.
+
+**Track:** Pocketful. **Team:** solo entrant Vaibhav Lalwani. **Output:** four self-contained stage folders.
+
+**Autonomy, before the claims:** seven human text messages: four stage dispatches and three resumes after provider usage limits. This was not fully hands-off. The unchanged room export and FACTORY.md disclose all seven. Seat count and message volume are evidence locators, not score claims.
+
+**Build ownership:** stage code is BAND-seat output; presentation and post-run verification are separate. Estimated spend $196.92 is a list-price estimate, not a bill. Active room time is about 10.2 hours; wall clock was 68.9 hours.
 
 | | |
 |---|---|
@@ -17,7 +26,7 @@ wallet and payments service in Go with a browser app, with no human-written stag
 | **The fix** | Split the authority. **Route** plans. **Forge** builds the backend. **Loom** builds the browser app. **Trace** attacks the system. **Jury** alone accepts or rejects, and never fixes what it rejects. |
 | **The result** | Pocketful, four stages. 4 of 4 stages pass the official harness, in isolated mode, from a fresh clone of this repository. |
 | **The proof it is not a rubber stamp** | At stage 3 Jury **rejected** the build with two reproduced bugs (an overdraft of 8001 against 8000 was accepted, and an available balance showed -4000 in 25 of 25 views). The agents fixed both, a cross-attack found a third, and Jury re-verified before it accepted. See [the rejection](#the-rejection-that-changed-the-work). |
-| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill; how it was measured is in `evidence/operator/USAGE.md`). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 100 commits at the revision this line was written against and 103 after the disclosure commits — `git rev-list --count HEAD` is authoritative, and only the 82 in-window and 18 outside-window counts are stable properties of the run. |
+| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill; how it was measured is in `evidence/operator/USAGE.md`). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages. Of the repository's commits, 82 have author time inside the BAND run window and 18 outside it — those two counts are stable properties of the run. The live total moves as evidence is added; `git rev-list --count HEAD` is authoritative and [`proof-manifest.json`](proof-manifest.json) pins every figure used below to a revision. |
 | **Autonomy, stated up front** | 7 human messages in the room: 4 stage dispatches and 3 resume messages. The run is not fully hands-off. [FACTORY.md](FACTORY.md) section 8 lists all seven. |
 
 ## How it meets the three judging criteria

@@ -1,0 +1,16 @@
+{
+  "checked_at": "2026-10-06T02:12:11.658978+00:00",
+  "repository": "https://github.com/vaibhav4046/dolphin-tank",
+  "revision": "d984122cb4c597fc27a79482ff43354a8e5fa7f4",
+  "room_sha256": "e9b69df98e0b53d938bb3d3b789c3e50557053aed00f4820452f6439d762f97e",
+  "official_package_revision": "803560d2a678ace1414465c098eb0ab5380ffade",
+  "fresh_anonymous_clone": true,
+  "go_tests": "PASS, uncached stage-4 go test -count=1 ./...",
+  "browser_logic": "PASS 21/21",
+  "offline_harness_check": "PASS gates 1/2 and mandate half of gate 4",
+  "isolated_harness": "NOT RERUN: Docker/Podman unavailable",
+  "clean_container_gate": "NOT independently rerun",
+  "walkthrough": "real local stage-4 with seeded test balances; no product code edited",
+  "publication": "no push or submission",
+  "freeze": "owner has not confirmed final freeze"
+}
