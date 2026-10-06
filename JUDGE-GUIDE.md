@@ -33,8 +33,10 @@ Room: `5dd42746-f387-4763-afe0-f96d8f504f71`, exported `2026-10-03T20:16:49.392Z
 | Judging question | Evidence |
 |---|---|
 | More than one seat did it | Per-seat tool calls, machine counted: Forge 89, Trace 88, Loom 46 stage-code edits, Route 0. `tools/seat_edits.py`, `evidence/operator/PROVENANCE.md` |
+| **One git author, so `git log` alone proves nothing — and here is why that is not the weakness it looks like** | All commits share one identity (`vaibhav4046`), because a single operator held the credentials. Of the 40 commits touching `stage-1..4`, 17 carry an explicit `(forge)`/`(trace)`/`(loom)` tag, 4 are the mechanical `copy accepted stage-N-1 as baseline`, and 19 attribute in prose only. **Zero of the 40 were written by the operator.** We attribute by *tool-call target path in the unedited room export* instead of by git config — which is stronger, because it comes from the export rather than from a self-reported setting. Run `python tools/seat_edits.py room.json` |
 | Work distributed, not one seat carrying it | `python tools/room_stats.py room.json`. Agent tool_call share: Jury 26.0%, Trace 25.0%, Forge 19.7%, Route 15.2%, Loom 14.1% of 3,184 calls |
 | Review changed something | Jury rejected a stage that passed every shipped check; the repair reversed a risk the authors had logged as acceptable. `FACTORY.md` section 6 |
+| The repair was itself attacked, and nearly shipped still broken | The cross-attack `849b017` aimed at the repair rather than the build and found the rejected export re-opened defect F2 on import. Second repair `5e6f83f`, then independent re-verify. The rule we took from it: **a repair is only as good as the states it is reachable from.** `REPAIR-SCOPE.md` |
 | Handoffs carried the whole task | Every handoff carries the specification hash, the exact commit and the acceptance criteria. Sample handoff at 2026-09-30T23:14:27.744Z. `FACTORY.md` section 3 |
 | The code traces to the room | All 82 commits with author time inside the run window are named by SHA somewhere in the export, zero unreferenced — but **14 of those 82 are operator commits, not band output**, including one external-AI review. Read the weak "referenced" rule and the full disclosure in `FACTORY.md` section 8 and section 8.2 |
 | Autonomy: the dispatch is the only human input | **7 human text messages, and this is where we fall short.** 4 dispatches plus 3 resumes after provider usage limits. No seat ever asked a question and no requirement changed. Full account with timestamps and the limit event behind each resume: `FACTORY.md` section 8 |
@@ -59,6 +61,17 @@ Commands 3 and 4 need only Python 3.12 and the standard library.
 
 ## Known limits, stated by us
 
+- **Git authorship cannot settle who wrote what.** One shared identity, 17 of 40 stage commits
+  explicitly tagged, 19 attributed in prose only. Some teams give each seat its own Git identity;
+  we could not, because one operator held the credentials. Our attribution is the room export's
+  tool-call target paths, which is why `tools/seat_edits.py` exists. It reports a **floor**: the
+  console export truncates tool-call arguments at 2,000 characters, so 220 of 501 edit-family
+  calls have an unreadable target and are counted in the "all" column only. The Route 0 result is
+  a true zero, not a truncated one.
+- We are the slowest and most expensive strong entry in this hackathon (68.9 h, $196.92 against
+  rivals at $0-$75). The honest answer is in `README.md`, section "Why 68.9 hours": 32 provider
+  usage-limit events in the export, 10.2 h actually active, and the spend bought a reviewer that
+  said no.
 - Autonomy: 3 of the 7 human messages are resumes, not dispatches. See above.
 - 14 commits with author time inside the run window are operator commits, not band output. None
   touches `stage-1..4/`, none was sent to a seat as a message, and one contains an external Codex

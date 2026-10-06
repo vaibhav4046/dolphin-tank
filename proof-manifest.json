@@ -1,16 +1,45 @@
 {
-  "checked_at": "2026-10-06T02:12:11.658978+00:00",
+  "checked_at": "2026-10-06T05:40:00+00:00",
   "repository": "https://github.com/vaibhav4046/dolphin-tank",
-  "revision": "d984122cb4c597fc27a79482ff43354a8e5fa7f4",
+  "revision_note": "This manifest is written at a moving HEAD. Every figure below is either (a) pinned to a named revision, or (b) a stable property of the BAND run that no later documentation commit changes. `git rev-list --count HEAD` is authoritative for the live commit total.",
+  "stage_code_frozen_at": "f2d512b",
+  "stage_code_unchanged_since": "Prove it in one command: `git diff --stat f2d512b HEAD -- 'stage-1' 'stage-2' 'stage-3' 'stage-4'` prints nothing. Stage source has not changed since that revision; only documentation and evidence have.",
   "room_sha256": "e9b69df98e0b53d938bb3d3b789c3e50557053aed00f4820452f6439d762f97e",
+  "room_messages": 7216,
+  "human_messages": 7,
   "official_package_revision": "803560d2a678ace1414465c098eb0ab5380ffade",
-  "fresh_anonymous_clone": true,
-  "go_tests": "PASS, uncached stage-4 go test -count=1 ./...",
-  "browser_logic": "PASS 21/21",
-  "offline_harness_check": "PASS gates 1/2 and mandate half of gate 4",
-  "isolated_harness": "NOT RERUN: Docker/Podman unavailable",
-  "clean_container_gate": "NOT independently rerun",
-  "walkthrough": "real local stage-4 with seeded test balances; no product code edited",
-  "publication": "no push or submission",
-  "freeze": "owner has not confirmed final freeze"
+
+  "fresh_anonymous_clone": {
+    "status": "VERIFIED",
+    "how": "git clone https://github.com/vaibhav4046/dolphin-tank.git <dir> with GIT_TERMINAL_PROMPT=0 and no credentials, from the public URL.",
+    "revisions": ["4c2273c", "2b470df"],
+    "evidence": "evidence/operator/PUBLIC-CLONE-VERIFICATION.md"
+  },
+
+  "isolated_harness": {
+    "status": "PASS",
+    "mode": "official harness, --all --mode isolated, outbound network blocked by the harness's own --internal docker network",
+    "result": "all four folders claim their own stage; share 1.0; overshoot null on all four; highest_contiguous 4",
+    "runs": 2,
+    "run_from": "brand-new anonymous clone of the public repository, not the working tree",
+    "caveat": "The harness itself labels its own output \"preview\" and states the run is only a portion of the tests applied before judging. No hidden-test or ranking claim is made anywhere in this repository."
+  },
+
+  "go_tests": {
+    "status": "PASS",
+    "detail": "go vet clean and go test -count=1 ./... green in all four stage folders, run from a fresh clone. 43 / 88 / 185 / 216 top-level PASS, 0 FAIL.",
+    "not_run": "go test -race does not run on the operator's Windows host (no cgo). It ran inside a container at stage 3. See FACTORY.md section 9."
+  },
+  "browser_logic": "PASS 21/21 (stage-4 node --test jstest)",
+  "offline_harness_check": "PASS, gates 1 and 2 and the mandate half of gate 4",
+
+  "container_offline_gate": {
+    "status": "PASS",
+    "detail": "Each stage image builds from a cold cache with --no-cache, is FROM scratch, and serves /health on a docker --internal network with no default route, no working DNS and every outbound connect refused.",
+    "note": "Docker accepts `-p` together with `--network none` and silently publishes nothing, so a judge testing offline the obvious way sees connection-refused on the host side even though the container is healthy. Probe from a sibling container on the same --internal network instead."
+  },
+
+  "walkthrough": "Real local stage-4 run with seeded test balances; no product code was edited to produce it.",
+  "publication": "Repository pushed to the public URL. Showcase deployed. Submission not yet filed - the competition account is the owner's to authenticate.",
+  "freeze": "Evidence freeze at stage_code_frozen_at = f2d512b for product code; documentation and evidence remain open."
 }

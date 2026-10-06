@@ -6,6 +6,42 @@ Jury reproduced an accepted overdraft of 8001 against 8000 available, rejected s
 
 [Website and original film](https://dolphin-tank.vercel.app) · [Deck (PDF)](https://dolphin-tank.vercel.app/assets/media/dolphin-tank-deck.pdf) · [FACTORY.md](FACTORY.md) · [room.json](room.json)
 
+## Check it yourself — three commands
+
+Every claim below is one command and one expected line. Nothing here needs an account.
+
+```sh
+# 1. Has any stage's source changed since it was accepted?  Expect: no output.
+git diff --stat f2d512b HEAD -- 'stage-1' 'stage-2' 'stage-3' 'stage-4'
+
+# 2. Who actually wrote the product?  Expect: Route 0 in-repo stage edits.
+python tools/seat_edits.py room.json
+
+# 3. What really happened in the room?  Expect: 7216 messages, 7 human.
+python tools/room_stats.py room.json
+```
+
+The official harness, unmodified, from a brand-new **anonymous** clone of this repository:
+
+```sh
+git clone https://github.com/vaibhav4046/dolphin-tank.git /tmp/clone
+python -m harness check /tmp/clone --track pocketful     # exit 0
+python -m harness run --track pocketful --repo /tmp/clone --all --mode isolated
+# all four folders claim their own stage; overshoot: null on all four
+```
+
+The harness lives in the official competition kickoff repository, not here. It needs Docker and
+a UTF-8 locale — on Windows set `PYTHONUTF8=1`, otherwise the harness misreports a perfectly
+good `room.json` as corrupt.
+
+## Why 68.9 hours, honestly
+
+Wall clock was 68.9 h; **active** model time was 10.2 h (`python tools/active_time.py room.json`).
+The gap is not the factory thinking slowly — `room.json` contains **32 provider usage-limit
+events**, the longest single stall 9.5 h. About 86% of the elapsed clock was the provider
+sleeping. The spend bought the one thing the cheap runs did not have: a reviewer that actually
+said no.
+
 ## Judge in five minutes
 
 1. Read `JUDGE-GUIDE.md` for the rubric-to-evidence map.
