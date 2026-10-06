@@ -46,19 +46,58 @@ anything under `stage-N/`.
 | (no room announcement) | 5 |
 | Jury | 5 |
 
-## Commits touching each stage folder, attributed to the ANNOUNCING seat
+## Commits touching each stage folder
 
-Read this table as **commit announcements, not authorship**. A seat is credited with a commit
-when a room message from that seat named the commit SHA. The coordinator relays and announces
-commits that other seats wrote, so Route's high counts mean Route announced many commits, not
-that Route wrote the code. For who actually edited stage code, see the machine count below.
+Counted with `git log --format=%H -- stage-N`. These are **commit counts**, not file edits and
+not announcements.
 
-| Stage folder | (no room announcement) | Forge | Loom | Route | Trace |
-|---|---|---|---|---|---|
-| `stage-1/` | 2 | 11 | 14 | 0 | 10 |
-| `stage-2/` | 0 | 57 | 0 | 38 | 13 |
-| `stage-3/` | 0 | 45 | 11 | 87 | 16 |
-| `stage-4/` | 0 | 6 | 15 | 116 | 12 |
+| Stage folder | Commits touching it |
+|---|---:|
+| `stage-1/` | 8 |
+| `stage-2/` | 8 |
+| `stage-3/` | 16 |
+| `stage-4/` | 8 |
+| **union of `stage-1..4`** | **40** |
+
+(The union is smaller than 8+8+16+8 because stage 2, 3 and 4 were each created by copying the
+accepted previous stage, so a handful of commits touch more than one folder.)
+
+**The claim that matters, and the one that is checkable in one command:**
+
+> Of the 40 commits that touch anything under `stage-N/`, **40 are band commits and 0 are
+> operator commits.**
+
+```text
+$ python -c "..." # cross-join git log against provenance.json
+union of stage commits: 40
+by_origin of those: Counter({'band': 39, 'band-unannounced': 1})
+```
+
+Every operator commit in this repository is documentation or derived evidence. None of them
+touched a stage folder. That is the whole provenance claim, and unlike a per-seat breakdown it
+does not depend on how generously you read a coordinator's announcements.
+
+### Announcing seat, for completeness only
+
+Read this as **commit announcements, not authorship**. A seat is credited when a room message
+from that seat named the commit SHA. The coordinator relays and announces commits other seats
+wrote, so a high Route count would mean Route announced many commits, not that Route wrote the
+code. It is therefore **not** evidence of distribution and should not be read as such — see the
+machine count below for that.
+
+| Stage folder | Forge | Loom | Route | Trace | (no room announcement) | Total |
+|---|---:|---:|---:|---:|---:|---:|
+| `stage-1/` | 3 | 2 | 0 | 2 | 1 | 8 |
+| `stage-2/` | 3 | 0 | 3 | 2 | 0 | 8 |
+| `stage-3/` | 8 | 3 | 1 | 4 | 0 | 16 |
+| `stage-4/` | 3 | 2 | 1 | 2 | 0 | 8 |
+
+> **Correction, 2026-10-06.** An earlier version of this section published a per-seat
+> "commits touching each stage folder" table whose rows summed to 453. That table was wrong: it
+> counted file-level touch events against an 80-commit repository and then labelled them
+> commits. It has been replaced with the table above, recomputed from `git log` and
+> `evidence/operator/provenance.json`. The error understated nothing and overstated everything;
+> the replacement is the same claim the table was meant to support, and it is checkable.
 
 ## Who edited stage code (machine count)
 
