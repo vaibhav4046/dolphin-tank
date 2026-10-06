@@ -4,7 +4,7 @@ The strongest release evidence available: the **public repository, cloned with n
 built and scored with the official harness in grading configuration.
 
 - Repository: `https://github.com/vaibhav4046/dolphin-tank`
-- Revision: `4c2273c5331665891ace9e65683a5abb129a153f` — actually `4c2273c5331665891ace0e65683a5abb129a153f`
+- Revision: `4c2273c5331665891ace0e65683a5abb129a153f` (`git rev-parse 4c2273c`)
 - Verified: 2026-10-04 18:18–18:27 UTC
 - Operator: ZEUS (the OpenCode orchestration layer, not a BAND seat)
 
