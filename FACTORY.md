@@ -12,6 +12,23 @@ proven it says so. Nothing here is a submission-readiness certificate.
 
 ---
 
+## Quickstart for a reader
+
+This is a navigation layer for the documented setup, not a claim that the factory has been rerun on another track.
+
+- Recorded environment: Windows 11, BAND Desktop 0.4.12, Claude Code seats and Docker inside WSL2. Mandates name the exact recorded harness/model.
+- For product inspection: follow the selected stage's RUN.md. Each stage is complete and independently buildable.
+- For reproduction: obtain Python 3.12+, Git, a working Docker daemon and the official challenge package. Install `harness/requirements.txt` and the Chromium browser following its participant guide.
+- For a new factory: follow FACTORY.md section 11. Set up Route, Forge, Loom, Trace and Jury, each with its matching generic mandate and the same absolute result path. Check roster and reciprocal room messages before dispatch.
+- Keep a different problem in a separate room/repository. Do not alter or rerun the submitted room to improve its history.
+- Jury accepts only evidence it reran. It does not edit the code it rejects. Handoffs carry requirements, revision and acceptance conditions.
+- Provider limits stopped this recorded run. Three human resume messages remain part of its evidence and autonomy limitation; restarting a runtime is not proof that a future run needs no help.
+- At close, download the full room export, retain history, run the fresh-clone check and isolated stage chain, and keep output logs. Do not call a gate complete when its check was skipped.
+
+The full commands and observed setup incidents are in section 11; known limits are in section 10. These sections remain the source of the reproduction details.
+
+---
+
 ## 1. The thesis
 
 > **Passing tests is not acceptance. Reproducible evidence is acceptance.**
