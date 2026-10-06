@@ -16,6 +16,7 @@ Room: `5dd42746-f387-4763-afe0-f96d8f504f71`, exported `2026-10-03T20:16:49.392Z
 | Reusable: `FACTORY.md` and `mandates/` enough to stand it up | `FACTORY.md` section 11, 13-step runbook; section 11a records what failed |
 | Reusable: design choices and what they cost | `FACTORY.md` section 2 (topology) and section 9 (measured cost) |
 | Reusable: measured time | `FACTORY.md` section 9. 10.2 h active of 68.9 h wall clock, with a gap-threshold sensitivity table |
+| Reusable: what it cost, and how that number was obtained | `evidence/operator/USAGE.md` — the command, the timestamp, the room id, and an explicit statement that it is a Band CLI list-price estimate, not an invoice, with no raw console output captured |
 | Reusable: how the factory catches and recovers from bad work | Rejection at `3c7c411`; repairs `11e76f9` (Forge), `ac96360` (Trace), cross-attack `849b017`, final `5e6f83f`. Jury rebuilt from a clean clone before accepting. `history/rejections.md` |
 
 ## App, 25%
@@ -35,7 +36,7 @@ Room: `5dd42746-f387-4763-afe0-f96d8f504f71`, exported `2026-10-03T20:16:49.392Z
 | Work distributed, not one seat carrying it | `python tools/room_stats.py room.json`. Agent tool_call share: Jury 26.0%, Trace 25.0%, Forge 19.7%, Route 15.2%, Loom 14.1% of 3,184 calls |
 | Review changed something | Jury rejected a stage that passed every shipped check; the repair reversed a risk the authors had logged as acceptable. `FACTORY.md` section 6 |
 | Handoffs carried the whole task | Every handoff carries the specification hash, the exact commit and the acceptance criteria. Sample handoff at 2026-09-30T23:14:27.744Z. `FACTORY.md` section 3 |
-| The code traces to the room | All 82 commits with author time inside the run window are named by SHA in a room message. Zero unreferenced. `FACTORY.md` section 8, "Operator activity during the run" |
+| The code traces to the room | All 82 commits with author time inside the run window are named by SHA somewhere in the export, zero unreferenced — but **14 of those 82 are operator commits, not band output**, including one external-AI review. Read the weak "referenced" rule and the full disclosure in `FACTORY.md` section 8 and section 8.2 |
 | Autonomy: the dispatch is the only human input | **7 human text messages, and this is where we fall short.** 4 dispatches plus 3 resumes after provider usage limits. No seat ever asked a question and no requirement changed. Full account with timestamps and the limit event behind each resume: `FACTORY.md` section 8 |
 
 ## Reproduce it yourself
@@ -59,6 +60,12 @@ Commands 3 and 4 need only Python 3.12 and the standard library.
 ## Known limits, stated by us
 
 - Autonomy: 3 of the 7 human messages are resumes, not dispatches. See above.
+- 14 commits with author time inside the run window are operator commits, not band output. None
+  touches `stage-1..4/`, none was sent to a seat as a message, and one contains an external Codex
+  review. `FACTORY.md` section 8.2.
+- The Jury seat read `harness/cli.py` and listed `pocketful/test`, against a rule in the dispatch.
+  No test file or assertion was read, and no implementer seat did it. `FACTORY.md` section 10,
+  limitation 9.
 - Two low-severity accessibility findings are unpatched in `stage-4/`: no `h1` on the wallet
   route, and one link 4 px short of the touch target at 390 px. They were left alone on purpose,
   because the value of this submission is that no human edited the agents' code.

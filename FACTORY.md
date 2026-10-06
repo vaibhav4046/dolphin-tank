@@ -96,9 +96,18 @@ evidence · status
 
 | Stage | Ledger | Requirements |
 |---|---|---|
-| 1 | `evidence/stage-1/requirement-ledger.md` | R01–R90 |
-| 2 | `evidence/stage-2/requirement-ledger.md` | S01–S66 |
-| 3 | `evidence/stage-3/requirement-ledger.md` | T01–T65 |
+| 1 | `evidence/stage-1/requirement-ledger.md` | R01–R90 (90 rows) |
+| 2 | `evidence/stage-2/requirement-ledger.md` | S01–S66 (66 rows) |
+| 3 | `evidence/stage-3/requirement-ledger.md` | T01–T65 (65 rows) |
+| 4 | `evidence/stage-4/requirement-ledger.md` | U01–U43 and B01–B12 (52 rows) |
+
+Stage 4 is the awkward one and the ledger says so itself. The `U` rows are the written stage-4
+specification: `pocketful/spec/stage-4.md` is 71 lines and adds refund and batch-correction
+behaviour, but **no written UI rule at all**. The `B` rows are therefore not derived from the
+specification — they come from the operator's run brief for stage 4, and the ledger heads that
+section "operator brief; no new spec rule". The `U` numbering is also not contiguous: 40 of the
+43 ids are present (`U17`, `U18` and `U19` are absent). Stating that here rather than rounding it
+to "43 requirements".
 
 ## 5. Independent acceptance
 
@@ -158,8 +167,15 @@ Four things are worth noticing:
 
 ## 7. Verification actually performed
 
-Official harness, unmodified, from the official kickoff checkout. Evidence:
-`band-work/checks/zeus-freshclone-5e6f83f/` (operator workspace).
+Official harness, unmodified, from the official kickoff checkout.
+
+**Correction to this section (2026-10-06).** It previously headed the block below with
+`band-work/checks/zeus-freshclone-5e6f83f/`. That path **is not in this repository** — it lives
+in the operator's own workspace — and the run it names does not support the table. Its
+`summary.json` on disk covers **folders 1 to 3 only** and carries `"preview": true`; it has no
+row for `stage-4/`, and it does not name revision `f2d512b` at all. Quoting it as the evidence
+for a four-stage result was wrong. Everything below is now cited to files that are committed
+here, so a judge can open them.
 
 ```text
 git clone <result repo> /tmp/zeus-fresh-clone      # brand-new directory
@@ -168,8 +184,18 @@ python -m harness run --track pocketful --repo /tmp/zeus-fresh-clone \
 ```
 
 `--mode isolated` is the grading configuration: an internal network with outbound traffic
-blocked, so the result also proves the service needs no network at run time. Revision `f2d512b`,
-exit 0.
+blocked, so the result also proves the service needs no network at run time.
+
+| Committed evidence | What it is | Revision |
+|---|---|---|
+| `evidence/operator/FRESH-CLONE-VERIFICATION.md` | operator fresh clone, `--all --mode isolated`, exit 0. Source of the per-folder table below | `f2d512b` |
+| `evidence/operator/PUBLIC-CLONE-VERIFICATION.md` | **anonymous** `git clone --depth 1` of the public GitHub URL with `GIT_TERMINAL_PROMPT=0`; `harness check` exit 0 and `harness run --all --mode isolated` exit 0 | `4c2273c`, re-verified from scratch at `2b470df` |
+| `evidence/operator/final-fresh-e79ea48/report.json` | the machine-readable harness report (147/35/6/5, `claimed_stage` 4, `overshoot` null, `mode` isolated) | `e79ea48` |
+
+The anonymous public clone is the stronger of these, because it exercises the exact path a judge
+without Band Desktop membership or a GitHub account takes. It is the primary release evidence;
+the per-folder table below is quoted from the operator fresh-clone note, which is the only
+committed file that records those four rows.
 
 | Folder | suite 1 | suite 2 | suite 3 | suite 4 | claimed | overshoot |
 |---|---|---|---|---|:-:|:-:|
@@ -177,6 +203,21 @@ exit 0.
 | `stage-2/` | 147/147 | 35/35 | **fail** | – | **2** | none |
 | `stage-3/` | 147/147 | 35/35 | 6/6 | **fail** | **3** | none |
 | `stage-4/` | 147/147 | 35/35 | 6/6 | 5/5 | **4** | none |
+
+**This result still applies to the current head.** `git diff f2d512b HEAD -- stage-1 stage-2
+stage-3 stage-4` is empty: stage code is byte-identical between the revision that was verified
+and this revision, across every commit in between. Likewise
+`git diff 2b470df HEAD -- stage-1 stage-2 stage-3 stage-4` is empty, and every commit after the
+anonymous re-verification touched only `README.md`, `FACTORY.md`, `JUDGE-GUIDE.md`,
+`history/`, `tools/` and `evidence/operator/`. None of them can have changed what the harness
+measures.
+
+The fresh-clone verification runs that *are* committed live at
+`evidence/operator/final-fresh-e79ea48/` (all four stages),
+`evidence/operator/fresh-c1b8416/` (stages 1 and 2) and
+`evidence/operator/stage-2-dbf467c/` (stages 1 and 2, the external review in section 8.2).
+Those three directories are the complete list; there is no `evidence/operator/evidence/`
+directory in this repository.
 
 Every negative check is correct: no folder contains a later stage's answer, which is what the
 guide requires and what most teams get wrong by copying a final answer backwards. Because
@@ -285,11 +326,12 @@ by **author** time. A commit counts as referenced when its SHA appears as a hex 
 
 | Measure | Count |
 |---|---:|
-| Commits in the repository | 98 |
+| Commits in the repository | 100 |
 | Commits with author time inside the run window | 82 |
 | Of those, referenced by SHA in a room message | **82 (100%)** |
 | Of those, **not** referenced by SHA in any room message | **0** |
-| Commits with author time outside the window | 16 |
+| **Of those 82, written by the operator** | **14** (section 8.2) |
+| Commits with author time outside the window | 18 |
 | Outside-window commits that touch `stage-1/` .. `stage-4/` | **0** |
 | Commits anywhere in history that touch `stage-1/` .. `stage-4/` | 40 |
 | Distinct Git author identities in the whole repository | 1 |
@@ -297,44 +339,157 @@ by **author** time. A commit counts as referenced when its SHA appears as a hex 
 So there is no commit inside the run window without a room message naming it, and no commit
 outside the window that touches stage code.
 
-The 16 outside the window are one commit before the run and fifteen after it:
+Read the "referenced" row with its own weakness in view, because it is the weakest number in
+this document. The rule counts a commit SHA appearing **anywhere** in the export, including
+inside the `tool_result` echo of a `git log` a seat ran itself. Applying the stricter rule —
+the SHA must appear in a seat's own `text`, `thought` or `task` message — **12** of the 82 drop
+out, and **11** of those 12 are operator commits (the twelfth is Forge's `6e35abc`). So
+"82 (100%)" is not evidence that a human or a seat discussed each commit. It is evidence that
+each commit is *traceable inside the export*. The stronger statement is in 8.2.
 
-| SHA | Author time | Side | Subject | Files | Touches `stage-*/` |
+The 18 outside the window are one commit before the run and seventeen after it. Author times are
+**UTC**, matching the run window above; an earlier version of this table printed local time
+(+01:00) under a UTC heading, which was off by an hour on every row.
+
+| SHA | Author time (UTC) | Side | Subject | Files | Touches `stage-*/` |
 |---|---|---|---|---:|---|
-| `f190358` | 2026-10-01T00:05:01 | before | chore: freeze generic seat mandates | 7 | no |
-| `b1919d1` | 2026-10-03T21:08:15 | after | docs: record stage 4 fully accepted at 1dd5560 | 3 | no |
-| `8aaf697` | 2026-10-03T21:22:34 | after | evidence: add room.json (unedited full-session export) | 4 | no |
-| `e07ad9c` | 2026-10-03T22:25:38 | after | docs: final measured figures | 3 | no |
-| `5abdc13` | 2026-10-03T22:43:56 | after | evidence: final fresh-clone verification at e79ea48 | 9 | no |
-| `15dd391` | 2026-10-03T22:50:34 | after | docs: correct elapsed time and cross-attack summary | 2 | no |
-| `359531a` | 2026-10-03T23:55:09 | after | docs: final measured figures and release scoreboard | 3 | no |
-| `e7ea0b6` | 2026-10-04T00:22:05 | after | docs: link the showcase, demo video and deck | 2 | no |
-| `87762c4` | 2026-10-04T01:03:56 | after | docs: replace the restarts count with the measured figure | 2 | no |
-| `153ff39` | 2026-10-04T09:00:15 | after | docs: measured active room time, human word counts, MIT licence | 4 | no |
-| `4c2273c` | 2026-10-04T17:35:01 | after | docs: concrete stand-up runbook, what failed | 4 | no |
-| `8392d23` | 2026-10-04T20:32:35 | after | evidence(operator): verification of the public anonymous clone | 2 | no |
-| `2b470df` | 2026-10-04T22:12:55 | after | docs: README opens with the problem and the proof | 2 | no |
-| `fbe4ece` | 2026-10-05T01:03:36 | after | evidence(operator): re-verify the published head anonymously | 2 | no |
-| `3f5b6e6` | 2026-10-05T12:19:58 | after | evidence(operator): record the run 1 vs run 2 swap decision | 2 | no |
-| `424a3af` | 2026-10-05T21:15:05 | after | evidence, tools: machine count of who edited stage code | 5 | no |
+| `f190358` | 2026-09-30T23:05:01 | before | chore: freeze generic seat mandates | 6 | no |
+| `b1919d1` | 2026-10-03T20:08:15 | after | docs: record stage 4 fully accepted at 1dd5560 | 2 | no |
+| `8aaf697` | 2026-10-03T20:22:34 | after | evidence: add room.json (unedited full-session export) | 3 | no |
+| `e07ad9c` | 2026-10-03T21:25:38 | after | docs: final measured figures | 2 | no |
+| `5abdc13` | 2026-10-03T21:43:56 | after | evidence: final fresh-clone verification at e79ea48 | 12 | no |
+| `15dd391` | 2026-10-03T21:50:34 | after | docs: correct elapsed time and cross-attack summary | 1 | no |
+| `359531a` | 2026-10-03T22:55:09 | after | docs: final measured figures and release scoreboard | 2 | no |
+| `e7ea0b6` | 2026-10-03T23:22:05 | after | docs: link the showcase, demo video and deck | 1 | no |
+| `87762c4` | 2026-10-04T00:03:56 | after | docs: replace the restarts count with the measured figure | 1 | no |
+| `153ff39` | 2026-10-04T08:00:15 | after | docs: measured active room time, human word counts, MIT licence | 3 | no |
+| `4c2273c` | 2026-10-04T16:35:01 | after | docs: concrete stand-up runbook, what failed | 3 | no |
+| `8392d23` | 2026-10-04T19:32:35 | after | evidence(operator): verification of the public anonymous clone | 1 | no |
+| `2b470df` | 2026-10-04T21:12:55 | after | docs: README opens with the problem and the proof | 1 | no |
+| `fbe4ece` | 2026-10-05T00:03:36 | after | evidence(operator): re-verify the published head anonymously | 1 | no |
+| `3f5b6e6` | 2026-10-05T11:19:58 | after | evidence(operator): record the run 1 vs run 2 swap decision | 1 | no |
+| `424a3af` | 2026-10-05T20:15:05 | after | evidence, tools: machine count of who edited stage code | 4 | no |
+| `7b611f4` | 2026-10-05T21:48:18 | after | docs: operator activity disclosure, judge guide, stand-up block | 2 | no |
+| `d984122` | 2026-10-05T21:58:15 | after | docs: judge map at the top, exact commit count, verified identity claim | 1 | no |
 
 `f190358` is the freeze of the five seat mandates, written before the first dispatch so the
-mandates could not be tailored to what the seats were about to build. The fifteen after the run
-are operator documentation and verification evidence. None of the sixteen touches stage code.
+mandates could not be tailored to what the seats were about to build. The seventeen after the run
+are operator documentation and verification evidence. None of the eighteen touches stage code.
 
-Two limits on this disclosure:
+### 8.2 Fourteen operator commits **inside** the run window
+
+**This subsection did not exist before 2026-10-06 and the omission was ours.** Section 8 above
+originally disclosed only the commits outside the window and left the impression that all 82
+in-window commits were band output. They were not. Fourteen of them are operator commits, made
+while the room was live, and one of those fourteen contains work produced by an **AI outside the
+Band room entirely**. Every claim below is checkable, and the check is named.
+
+| SHA | Author time (UTC) | Open stage at that moment | Subject |
+|---|---|---|---|
+| `c1b8416` | 2026-10-01T10:53:02 | **2** (dispatched 05:34Z, not yet accepted) | docs: record factory provenance and independent stage 2 review |
+| `cc952b8` | 2026-10-01T11:07:37 | **2** | evidence: preserve fresh clone isolated stage 1 and 2 results |
+| `c830f82` | 2026-10-02T20:30:50 | **3** (stage 4 not dispatched until 22:48:17Z) | evidence(operator): provenance index |
+| `2e76ca0` | 2026-10-02T20:32:33 | **3** | docs: rewrite FACTORY.md against verified evidence |
+| `66b45bb` | 2026-10-02T20:33:33 | **3** | docs: rewrite README.md against verified evidence |
+| `1a3d864` | 2026-10-02T20:34:22 | **3** | docs(history): cross-attack finding L-F2-1 and declined D-IMPORT-FUTURE |
+| `8654d93` | 2026-10-02T20:42:58 | **3** | evidence(operator): fresh-clone verification and literal RUN.md execution |
+| `c6af733` | 2026-10-02T20:58:33 | **3** | evidence(operator): spec-literal conformance probe for stage 3 |
+| `4c20e6c` | 2026-10-03T08:49:15 | **4** (dispatched 10-02T22:48Z) | evidence(operator): fresh-clone verification of all four stages |
+| `85a3ee6` | 2026-10-03T08:52:03 | **4** | docs: bring README.md and FACTORY.md up to date with stage 4 |
+| `fd8bdc2` | 2026-10-03T09:21:17 | **4** | evidence(operator): product-quality gate for the stage-4 browser product |
+| `1296181` | 2026-10-03T09:22:02 | **4** | docs: disclose the two accessibility findings |
+| `ec466fb` | 2026-10-03T09:24:42 | **4** | docs: correct the measured autonomy figures |
+| `2a49cf2` | 2026-10-03T09:26:26 | **4** | evidence(operator): regenerate the provenance index |
+
+Open stage is derived from the four dispatch times (2026-09-30T23:05:20Z stage 1,
+2026-10-01T05:34:01Z stage 2, 2026-10-01T21:57:54Z stage 3, 2026-10-02T22:48:17Z stage 4).
+
+Four defences, each with the command that proves it.
+
+**1. None of them was ever sent as a room message to a seat, and the seven human text messages
+are still the only human input.** `python tools/room_stats.py room.json` prints the seven, and
+none of their bodies contains any of these SHAs. The only commit SHAs that appear in any human
+message are `11e76f9` and `849b017`, both in the third resume, and both are **band** commits
+(Forge's stage-3 F2 repair, and Trace's cross-attack of it). Eleven of the fourteen operator
+commits are named nowhere in any seat's narrative at all.
+
+Of the three that are named, two were named **by the coordinator, explicitly as operator
+commits**: at 2026-10-01T15:57Z Route wrote *"Two operator commits (`c1b8416`, `cc952b8`) landed
+on top of mine… I'm not treating the operator evidence commits (c1b8416, cc952b8) as
+acceptance."* That is a seat inside the room independently identifying operator work and
+refusing to treat it as its own acceptance — the opposite of the risk this subsection is about.
+The third, `2a49cf2`, appears once in Jury's final status line as the then-current HEAD, with no
+comment on it.
+
+**2. None of them touched stage code.** `git show --name-only --format= <sha>` for all
+fourteen touches only `FACTORY.md`, `README.md`, `JUDGE-GUIDE.md`, `history/rejections.md`,
+`tools/` and `evidence/operator/`. Stated as a machine result instead:
+
+```text
+git log --format=%H -- stage-1 stage-2 stage-3 stage-4 | sort -u | wc -l   ->  40
+python -c "...cross-join those 40 against provenance.json"
+   ->  Counter({'band': 39, 'band-unannounced': 1})     # operator: 0
+```
+
+**3. `c1b8416` carries an external AI review, and it was never fed back into the room.**
+`evidence/operator/stage-2-dbf467c/REVIEW.md` was written by **Codex acting as the operator**,
+outside the Band room, and committed 22 minutes after the stage-2 candidate `dbf467c`
+(10:30:56Z → 10:53:02Z) while stage 2 was still open. Stating what it found, plainly: **it found
+no defect in the stage-2 implementation.** Its harness run passed stage 1 147/147 and stage 2
+35/35 with stage 3 failing as expected; its browser pass recorded seven observations with no
+anomalies. Its only finding was a submission-packaging gap — `harness check` reported
+`room.json` missing — which was later closed by commit `8aaf697`. It also reported one review
+container that exited once with no application error, and explicitly declined to characterise
+that as a crash. **None of its findings were injected into the room as a requirement**, and that
+is checkable from the log itself: after the stage-2 dispatch at 2026-10-01T05:34:01Z every human
+message is one of the four remaining dispatches or the three provider-limit resumes, and no
+message from any source outside the room enters at any point. This is an external AI reviewing
+the band, in the same direction the band reviews itself, and never steering it.
+
+**4. The stage-3 probe scored the candidate and no stage-3 code changed afterwards.**
+`c6af733` ran 38 spec-literal checks against the stage-3 tree and reported `38 pass, 0 fail`,
+with all five defects it found being defects **in the probe itself**. Two commands:
+
+```text
+git show -s --format=%aI 5e6f83f   ->  2026-10-02T17:49:22Z   (the accepted stage 3)
+git show -s --format=%aI c6af733   ->  2026-10-02T20:58:33Z   (the probe)
+git merge-base --is-ancestor 5e6f83f c6af733   ->  exit 0     (probe postdates the candidate)
+git diff c6af733 HEAD -- stage-3               ->  empty, 0 lines
+```
+
+So the probe postdated the accepted candidate by 3 hours 9 minutes and 6 commits, and from the
+probe to the current head — 42 commits — **`stage-3/` has not changed by one byte.** The probe
+could not have influenced the code, because the code it looked at was already frozen.
+
+**The honest caveat, which no count can remove.** The operator wrote all fourteen of these files,
+so the room log does not attest to them. Their existence is a fact about the host, not about the
+room. What a judge can do is audit them independently, and that is why they are here in the
+repository rather than described from memory: every path is committed, every claim above names a
+command, and `git diff c6af733 HEAD -- stage-3` being empty is checkable in one line. What a
+judge cannot do is derive them from `room.json`, and we are not claiming they can.
+
+Two limits on the disclosure as a whole:
 
 - It is scoped to commits. A file change made and never committed would not appear. The separate
   machine count in `evidence/operator/PROVENANCE.md` covers the tool calls, and reports that the
   coordinator seat made zero stage-code edits.
-- `evidence/operator/PROVENANCE.md` was generated at an earlier revision and its coverage counts
-  (80 commits, 64 announced) are stale against the 98 commits above. Its per-commit index is
-  unaffected, because each row is keyed by SHA.
+- `evidence/operator/provenance.json` was generated at revision `ec466fb` and covers the 80
+  commits that existed then, so its totals (64 announced, 5 band-unannounced, 11 operator) are
+  stale against the 100 commits above and against the 14 operator commits in 8.2. Its per-commit
+  index is unaffected, because each row is keyed by SHA. Its `origin` field also disagrees with
+  8.2 on three commits, and the disagreement is instructive: it labels `c1b8416` and `cc952b8`
+  as `band`, because its rule keys on which seat *named* the SHA — and Route named them
+  precisely in order to say they were the operator's — and it has no row for `2a49cf2` at all,
+  which was committed after it was generated. Its 11 `operator` rows are 11 of the 14 in 8.2, and
+  the three that differ are exactly those three. Where the two disagree, this section is the
+  authority on which commits the operator wrote, because it is the statement the operator is
+  making about their own work.
 
 ## 9. Measured cost and elapsed time
 
 From `band usage rooms`, which reports catalog **estimates at list prices, not provider
-billing**:
+billing**. The full record of how that figure was obtained, including the fact that the raw CLI
+output was never captured to a file, is `evidence/operator/USAGE.md`:
 
 ```text
 room 5dd42746 (submitted run)   55 sessions   487,800,071 tokens   $196.92
@@ -417,6 +572,45 @@ third defect and four further cross-attacks that found nothing, cost about **$19
    accessible name on every interactive element across all 30 route × viewport combinations, a
    visible focus indicator on every tab stop, a skip link first in the tab order, and no console
    errors.
+9. **The acceptor broke the "do not read the tests or the harness" rule — four tool calls, six
+   forbidden-path operations.** All four dispatches said, verbatim: *"Do not read or copy files
+   under D:\project\dolphin-tank\dark-factory-wearedevs\pocketful\test or anything in the harness
+   folder."* Scanning every one of the 3,184 `tool_call` arguments in the export, the **Jury** seat
+   is the only seat that ever did. All four calls, quoted from `room.json`:
+
+   ```text
+   2026-10-02T22:30:18Z  Jury  "Look at harness folder and previous report"
+     ls dark-factory-wearedevs/harness | head -20 ;  grep -rn "python.*run\|\.sh" dark-factory-wearedevs/harness/README.md
+
+   2026-10-02T22:30:26Z  Jury  "Read harness CLI usage"
+     sed -n 1,80p harness/cli.py | cut -c1-200
+
+   2026-10-03T08:26:20Z  Jury  "Inspect supplied harness and earlier harness runs"
+     ls pocketful/test pocketful/test/* | head -40 ;  ls harness | head -20
+
+   2026-10-03T08:26:27Z  Jury  "Find how the supplied harness was invoked before"
+     sed -n 1,60p D:/project/dolphin-tank/dark-factory-wearedevs/harness/cli.py | cut -c1-200
+   ```
+
+   What that amounts to, itemised: **two directory listings** of the `harness/` folder, **one
+   `grep` over `harness/README.md`**, **one `ls` of `pocketful/test` and its contents**, and **two
+   reads of `harness/cli.py`** (its first 80 lines, then its first 60). No file under
+   `pocketful/test` was opened, no test body or assertion was read, and nothing was copied into
+   the repository or into a seat prompt. The tool-call descriptions make the purpose explicit —
+   *"Read harness CLI usage"*, *"Find how the supplied harness was invoked before"* — which is
+   consistent with what the commands do: learning the runner's invocation, not its assertions.
+
+   **No implementer seat ever did this, in any form.** Across the whole export the string
+   `pocketful/test` appears in exactly **one** command, and `harness/cli.py`, `harness/README.md`
+   or a listing of the `harness/` folder in exactly **four** — all four Jury. Forge, Loom and
+   Trace, the three seats that wrote the code, never touched either. So the failure mode the rule
+   exists to prevent, code shaped to the tests, is confined to the seat that writes no code and
+   whose only power is to reject. That is a mitigation, not an absolution: the acceptor did see
+   the harness's shape and the test tree's names, and a determined acceptor could in principle
+   have inferred an answer from a directory listing. Disclosed because it is in the export and a
+   judge will find it; we would rather they read it here first. Reproduce it by scanning the
+   `tool_call` arguments of `room.json` for `pocketful/test`, `harness/cli.py` and
+   `harness/README.md`.
 
 ## 11. Standing up this factory on a different problem
 
