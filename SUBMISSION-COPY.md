@@ -1,4 +1,4 @@
-﻿# SUBMISSION COPY — Dolphin Tank
+# SUBMISSION COPY — Dolphin Tank
 
 Paste-ready. Every figure below is verified and reproducible from the public repository at
 revision `948875d`. Nothing here claims a hidden test, a ranking, or a score.
