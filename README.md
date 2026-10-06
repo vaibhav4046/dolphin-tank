@@ -17,7 +17,7 @@ wallet and payments service in Go with a browser app, with no human-written stag
 | **The fix** | Split the authority. **Route** plans. **Forge** builds the backend. **Loom** builds the browser app. **Trace** attacks the system. **Jury** alone accepts or rejects, and never fixes what it rejects. |
 | **The result** | Pocketful, four stages. 4 of 4 stages pass the official harness, in isolated mode, from a fresh clone of this repository. |
 | **The proof it is not a rubber stamp** | At stage 3 Jury **rejected** the build with two reproduced bugs (an overdraft of 8001 against 8000 was accepted, and an available balance showed -4000 in 25 of 25 views). The agents fixed both, a cross-attack found a third, and Jury re-verified before it accepted. See [the rejection](#the-rejection-that-changed-the-work). |
-| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 100 commits, of which 82 have author time inside the run window. |
+| **Cost and time** | Estimated model spend $196.92 at list prices (not a bill; how it was measured is in `evidence/operator/USAGE.md`). 10.2 hours of active room time, measured from `room.json`. 7,216 room messages, 100 commits at the revision this line was written against and 103 after the disclosure commits — `git rev-list --count HEAD` is authoritative, and only the 82 in-window and 18 outside-window counts are stable properties of the run. |
 | **Autonomy, stated up front** | 7 human messages in the room: 4 stage dispatches and 3 resume messages. The run is not fully hands-off. [FACTORY.md](FACTORY.md) section 8 lists all seven. |
 
 ## How it meets the three judging criteria

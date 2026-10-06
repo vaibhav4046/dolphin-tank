@@ -326,7 +326,7 @@ by **author** time. A commit counts as referenced when its SHA appears as a hex 
 
 | Measure | Count |
 |---|---:|
-| Commits in the repository | 100 |
+| Commits in the repository | 103 at revision `2d0bd0c` — see the note under the table |
 | Commits with author time inside the run window | 82 |
 | Of those, referenced by SHA in a room message | **82 (100%)** |
 | Of those, **not** referenced by SHA in any room message | **0** |
@@ -335,6 +335,15 @@ by **author** time. A commit counts as referenced when its SHA appears as a hex 
 | Outside-window commits that touch `stage-1/` .. `stage-4/` | **0** |
 | Commits anywhere in history that touch `stage-1/` .. `stage-4/` | 40 |
 | Distinct Git author identities in the whole repository | 1 |
+
+**Read the commit-count row as a count at a revision, not as a constant.** It was 100 at the
+revision this section was written against, and the three commits that produced this disclosure
+made it 103. Every further documentation commit adds one. `git rev-list --count HEAD` is the
+command, and it will read one higher than any number printed in this file once another commit
+lands. That is not a defect we can design away — it is what a repository with an operator-written
+disclosure costs — and the reason every *other* number in this table is anchored to the run
+window rather than to the head: 82 in-window and 18 outside-window are stable properties of the
+run, and only the total moves.
 
 So there is no commit inside the run window without a room message naming it, and no commit
 outside the window that touches stage code.
@@ -475,7 +484,7 @@ Two limits on the disclosure as a whole:
   coordinator seat made zero stage-code edits.
 - `evidence/operator/provenance.json` was generated at revision `ec466fb` and covers the 80
   commits that existed then, so its totals (64 announced, 5 band-unannounced, 11 operator) are
-  stale against the 100 commits above and against the 14 operator commits in 8.2. Its per-commit
+  stale against the commit count above and against the 14 operator commits in 8.2. Its per-commit
   index is unaffected, because each row is keyed by SHA. Its `origin` field also disagrees with
   8.2 on three commits, and the disagreement is instructive: it labels `c1b8416` and `cc952b8`
   as `band`, because its rule keys on which seat *named* the SHA — and Route named them
